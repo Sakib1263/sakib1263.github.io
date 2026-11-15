@@ -1,0 +1,27 @@
+---
+import { kinetics } from '../data/kinetics';
+---
+
+<section class="reproduction" id="reproduce" aria-labelledby="reproduce-title">
+  <h2 class="section-title" id="reproduce-title">Run the insole workflow</h2>
+  <p>Use Python 3.12 and the <a href={kinetics.release}>tagged code release {kinetics.version}</a>. The demo uses a small U-Net and synthetic signals to exercise the insole workflow on CPU without study data or pretrained weights.</p>
+  <ol class="run-steps">
+    <li>
+      <h3>Get the release</h3>
+      <pre><code>{kinetics.clone}</code></pre>
+    </li>
+    <li>
+      <h3>Install and run the demo</h3>
+      <p>Create an environment with <code>python -m venv .venv</code>. Activate it with <code>source .venv/bin/activate</code> on Linux or macOS, or <code>.\.venv\Scripts\Activate.ps1</code> in PowerShell. Then run the following commands.</p>
+      <pre><code>{kinetics.demo}</code></pre>
+    </li>
+    <li>
+      <h3>Check the output</h3>
+      <p>The command prints <code>Saved run: …/runs/demo_Fy_LL_UNet_…</code>. Open that directory and check that <code>status.json</code> reports <code>"status": "complete"</code>. The run also writes <code>summary.json</code> and fold-level predictions. Those results describe synthetic inputs.</p>
+    </li>
+  </ol>
+  <h3>Work with the study data</h3>
+  <p>The <a href={kinetics.dataUrl}>processed treadmill and insole recordings</a> are publicly downloadable. Use the <a href={kinetics.dataGuide}>data preparation guide</a> to create the expected input files. Then inspect the target, scale, and participant splits before training.</p>
+  <pre><code>{kinetics.inspect}</code></pre>
+  <p>The release contains the maintained workflow. The article’s training-ready exports and pretrained checkpoints are separate from the release.</p>
+</section>

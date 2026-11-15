@@ -1,11 +1,13 @@
 ---
 import Base from '../layouts/Base.astro';
-import { displayAuthor, publications, topics } from '../data/papers';
+import { citationText, displayAuthor, openFullText, publicationId, publications, topics } from '../data/papers';
+import { projects } from '../data/research';
 import { doiUrl, profile, sitePath } from '../lib/site';
 
 const years = [...new Set(publications.map(({ year }) => year))];
 const types = [...new Set(publications.map(({ type }) => type))].sort();
 const topicList = Object.entries(topics);
+const projectsByDoi = new Map(projects.map(project => [project.doi, project]));
 ---
 
 <Base title="Publications" description="Browse Sakib Mahmud’s research publications by topic, issue year, or publication type.">
@@ -45,8 +47,11 @@ const topicList = Object.entries(topics);
     <p class="result-count" data-publication-count role="status">{publications.length} publications</p>
     <p class="empty-state" data-publication-empty hidden>Try a different search or clear the filters.</p>
     <div class="publication-list">
-      {publications.map(publication => (
-        <article class="publication" data-publication data-year={publication.year} data-type={publication.type} data-topic={publication.topic}>
+      {publications.map(publication => {
+        const id = publicationId(publication.doi);
+        const project = projectsByDoi.get(publication.doi);
+        return (
+        <article id={id} class="publication" data-publication data-year={publication.year} data-type={publication.type} data-topic={publication.topic}>
           <p class="publication-year">{publication.year}{publication.onlineYear && <small>Online {publication.onlineYear}</small>}</p>
           <div>
             <h2><a href={doiUrl(publication.doi)}>{publication.title}</a></h2>
@@ -62,10 +67,20 @@ const topicList = Object.entries(topics);
               {publication.articleNumber ? ` · Article ${publication.articleNumber}` : publication.pages && ` · ${publication.pages}`}
               {' · '}{publication.type}
             </p>
+            <div class="publication-actions">
+              {project && <><a href={sitePath(`research/${project.slug}/`)}>Project summary</a><a href={project.code}>Code ↗</a></>}
+              {openFullText[publication.doi] && <a href={openFullText[publication.doi]}>Open full text ↗</a>}
+              <a href={`#${id}`} aria-label={`Permalink to ${publication.title}`}>Permalink</a>
+              <button type="button" data-citation={citationText(publication)} aria-label={`Copy citation for ${publication.title}`} hidden>Copy citation</button>
+            </div>
+            <label class="citation-fallback" hidden>Copy this citation
+              <textarea rows="3" readonly></textarea>
+            </label>
+            <p class="citation-status" role="status"></p>
           </div>
           <p class="publication-topic">{topics[publication.topic as keyof typeof topics]}</p>
         </article>
-      ))}
+      ); })}
     </div>
   </section>
 </Base>
@@ -107,6 +122,37 @@ const topicList = Object.entries(topics);
     form.addEventListener('input', update);
     form.addEventListener('submit', event => event.preventDefault());
     form.addEventListener('reset', () => requestAnimationFrame(update));
+    window.addEventListener('hashchange', () => {
+      const selected = rows.find(({ row }) => '#' + row.id === window.location.hash)?.row;
+      if (selected?.hidden) {
+        form.reset();
+        update();
+        selected.scrollIntoView();
+      }
+    });
     update();
   }
+
+  document.querySelectorAll<HTMLButtonElement>('[data-citation]').forEach(button => {
+    button.hidden = false;
+    button.addEventListener('click', async () => {
+      const row = button.closest('article');
+      const fallback = row?.querySelector<HTMLLabelElement>('.citation-fallback');
+      const textarea = fallback?.querySelector('textarea');
+      const status = row?.querySelector<HTMLElement>('.citation-status');
+      if (!fallback || !textarea || !status) return;
+      const citation = button.dataset.citation ?? '';
+      status.textContent = '';
+      try {
+        await navigator.clipboard.writeText(citation);
+        fallback.hidden = true;
+        status.textContent = 'Citation copied.';
+      } catch {
+        textarea.value = citation;
+        fallback.hidden = false;
+        textarea.focus();
+        textarea.select();
+      }
+    });
+  });
 </script>

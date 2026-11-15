@@ -1,7 +1,8 @@
 import type { ImageMetadata } from 'astro';
-import wearables from '../assets/wearable-imu.png';
+import waveform from '../assets/insole-treadmill-waveform.png';
 import renal from '../assets/renal-ct.png';
 import sers from '../assets/sers-graphical-abstract.jpg';
+import { kinetics } from './kinetics';
 
 type ResearchLink = { label: string; href: string };
 
@@ -18,6 +19,8 @@ export type Project = {
   measures: { value: string; label: string }[];
   contribution: string;
   scope: string;
+  ongoing?: string;
+  workflow?: string[];
   related: string[];
   resources?: ResearchLink[];
   visual?: {
@@ -25,19 +28,20 @@ export type Project = {
     alt: string;
     caption: string;
     credit?: ResearchLink;
+    chart?: { title: string; horizontalAxis: string; verticalAxis: string };
   };
 };
 
 export const projects: Project[] = [
   {
-    slug: 'wearable-foot-kinetics',
+    slug: kinetics.slug,
     area: 'Wearable biomechanics',
     title: 'Estimating 3D foot kinetics from wearable signals',
     summary: 'Estimating forces, moments, and centre of pressure from the vertical loads measured by smart insoles.',
     question: 'How much of the force and moment profile measured by an instrumented treadmill can be recovered from insole signals?',
     doi: '10.1109/jbhi.2025.3605296',
-    code: 'https://github.com/Sakib1263/Unimodal-3D-Kinetics-Estimation-from-Insole-or-IMU',
-    approach: 'Ke2KeNet uses time series from 16 insole sensors per foot to estimate three force components, three moment components, and two centre-of-pressure coordinates. The study compared estimated waveforms with instrumented treadmill recordings across walking and running speeds.',
+    code: kinetics.repository,
+    approach: 'Ke2KeNet uses time series from 16 insole pressure sensors per foot. The study trained separate models for three force components, three moment components, and two centre-of-pressure coordinates, then compared the estimates with treadmill recordings across walking and running speeds.',
     result: 'For the average gait cycles in Table I, the reported Pearson correlation exceeded 0.95 for all target signals except the right-foot vertical moment.',
     measures: [
       { value: '9', label: 'Healthy participants in cross-validation' },
@@ -45,12 +49,16 @@ export const projects: Project[] = [
       { value: '8', label: 'Estimated signals per foot' },
     ],
     contribution: 'I led preprocessing, model development, subject- and speed-wise evaluation, analysis, and manuscript preparation.',
-    scope: 'The results come from a small healthy cohort under controlled treadmill conditions. Ongoing work investigates combining plantar sensing with foot and shank inertial measurements and evaluating transfer across datasets.',
+    scope: 'The results come from nine healthy participants under controlled treadmill conditions. The plot illustrates one participant’s walking trials and shows where the estimated moment departs from the reference.',
+    ongoing: 'I’m investigating how to combine plantar sensing with inertial measurements from the foot and shank, and how well models transfer across datasets.',
+    workflow: ['Smart-insole pressure signals', 'Estimated forces and moments', 'Comparison with treadmill measurements'],
     related: ['10.1007/s00521-023-09081-z', '10.3390/s22197599'],
     visual: {
-      image: wearables,
-      alt: 'Side view of a shoe and lower leg with inertial sensors on the instep and shank.',
-      caption: 'Conceptual sensor placement for ongoing IMU work. The published Ke2KeNet experiment used smart-insole signals.',
+      image: waveform,
+      alt: 'The estimated moment is above the treadmill mean for most of the right-foot walking cycle, with the largest separation around the middle of the cycle.',
+      caption: 'Participant 10, right foot, walking at 0.9–5.4 km/h. The black line is the treadmill mean and the red line is the Ke2KeNet estimate. Shading shows one standard deviation on either side of each mean. This example comes from the archived analysis for Figure 5b and shows a visible mid-cycle discrepancy.',
+      chart: { title: 'Mediolateral ground reaction moment', horizontalAxis: 'Gait cycle (%)', verticalAxis: 'Normalized amplitude (unitless)' },
+      credit: { label: 'Archived analysis notebook', href: 'https://github.com/Sakib1263/Unimodal-3D-Kinetics-Estimation-from-Insole-or-IMU/blob/2ffdb67e685e50068f79dfad37a7e26693e6a5ea/Combined_Insole_to_GRFM.ipynb' },
     },
   },
   {

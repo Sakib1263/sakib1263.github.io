@@ -1,7 +1,9 @@
 ---
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
-import { publicationFor } from '../../data/papers';
+import KineticsReproduction from '../../components/KineticsReproduction.astro';
+import { kinetics } from '../../data/kinetics';
+import { openFullText, publicationFor, publicationId } from '../../data/papers';
 import { projects } from '../../data/research';
 import { doiUrl, sitePath } from '../../lib/site';
 
@@ -13,6 +15,7 @@ const { project } = Astro.props;
 const { visual } = project;
 const paper = publicationFor(project.doi);
 const related = project.related.map(publicationFor);
+const imageWidth = visual ? Math.min(visual.image.width, 960) : 0;
 ---
 
 <Base title={project.title} description={project.summary} shareImage={visual?.image}>
@@ -25,11 +28,17 @@ const related = project.related.map(publicationFor);
       <p class="study-citation">{paper.venue} · {paper.year}{paper.onlineYear && ` (online ${paper.onlineYear})`}</p>
       <div class="actions">
         <a class="button button-primary" href={doiUrl(project.doi)}>Read the paper <span aria-hidden="true">↗</span></a>
+        {openFullText[project.doi] && <a class="text-link" href={openFullText[project.doi]}>Open full text <span aria-hidden="true">↗</span></a>}
         <a class="button button-secondary" href={project.code}>Source code <span aria-hidden="true">↗</span></a>
         {project.resources?.map(({ label, href }) => <a class="button button-secondary" href={href}>{label} <span aria-hidden="true">↗</span></a>)}
+        {project.slug === kinetics.slug && <a class="text-link" href="#reproduce">Run the workflow</a>}
+        <a class="text-link" href={sitePath(`publications/#${publicationId(project.doi)}`)}>Citation</a>
       </div>
     </header>
 
+    {project.workflow && <ol class="study-workflow" aria-label="Study workflow">
+      {project.workflow.map(step => <li>{step}</li>)}
+    </ol>}
     <div class:list={['detail-grid', { 'detail-grid-text': !visual }]}>
       <div class="prose detail-copy">
         <h2>Approach</h2>
@@ -45,11 +54,14 @@ const related = project.related.map(publicationFor);
         <p>{project.contribution}</p>
         <h2>Study scope</h2>
         <p>{project.scope}</p>
+        {project.ongoing && <><h2>Ongoing work</h2><p>{project.ongoing}</p></>}
       </div>
       {visual && (
         <figure class:list={['detail-figure', `art-${project.slug}`]}>
-          <div>
-            <Image src={visual.image} alt={visual.alt} width={visual.image.width > 860 ? 860 : visual.image.width} format="webp" />
+          <div class:list={{ 'waveform-plot': visual.chart }}>
+            {visual.chart && <div class="chart-heading"><h2>{visual.chart.title}</h2><p>{visual.chart.verticalAxis}</p></div>}
+            <Image src={visual.image} alt={visual.alt} width={imageWidth} widths={[320, 480, 640, 768, 960].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 720px) calc(100vw - 4rem), (max-width: 1240px) 40vw, 480px" format="webp" />
+            {visual.chart && <p>{visual.chart.horizontalAxis}</p>}
           </div>
           <figcaption>
             {visual.caption}
@@ -58,11 +70,12 @@ const related = project.related.map(publicationFor);
         </figure>
       )}
     </div>
+    {project.slug === kinetics.slug && <KineticsReproduction />}
     <section class="related-papers" aria-labelledby="related-title">
       <h2 class="section-title" id="related-title">Related publications</h2>
       <ul class="resource-list">
         {related.map(publication => (
-          <li><a href={doiUrl(publication.doi)}>{publication.title} <span aria-hidden="true">↗</span></a></li>
+          <li><a href={sitePath(`publications/#${publicationId(publication.doi)}`)}>{publication.title}</a></li>
         ))}
       </ul>
     </section>

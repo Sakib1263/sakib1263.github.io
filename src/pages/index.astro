@@ -5,7 +5,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import portrait from '../assets/sakib-mahmud.jpg';
 import { selectedPapers } from '../data/papers';
 import { featuredProjects } from '../data/research';
-import { doiUrl, profile, sitePath } from '../lib/site';
+import { cvPdfPath, doiUrl, profile, sitePath } from '../lib/site';
 ---
 
 <Base>
@@ -17,7 +17,7 @@ import { doiUrl, profile, sitePath } from '../lib/site';
       <p class="intro-detail">{profile.bio}</p>
       <div class="intro-actions">
         <a class="button button-primary" href={sitePath('research/')}>Explore research <span aria-hidden="true">→</span></a>
-        <a class="button button-secondary" href={sitePath('publications/')}>Publications</a>
+        <a class="button button-secondary" href={sitePath(cvPdfPath)} download>Download CV <span aria-hidden="true">↓</span></a>
       </div>
       <div class="profile-links">
         <a href={profile.scholar}>Google Scholar <span aria-hidden="true">↗</span></a>

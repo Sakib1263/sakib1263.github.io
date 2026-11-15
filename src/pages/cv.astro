@@ -1,22 +1,38 @@
 ---
 import Base from '../layouts/Base.astro';
-import { education, positions } from '../data/cv';
-import { profile, sitePath } from '../lib/site';
+import { cvResearch, cvUpdated, cvUpdatedLabel, education, positions } from '../data/cv';
+import { cvPdfPath, profile, sitePath } from '../lib/site';
 ---
 
-<Base title="CV" description="Selected research appointments and education of Sakib Mahmud.">
+<Base title="CV" description="Selected research, appointments, and education of Sakib Mahmud. Download the public academic CV as a PDF.">
   <section class="shell page-intro">
     <h1>Curriculum vitae</h1>
     <p class="page-lead">{profile.name} · {profile.role}, {profile.affiliation}</p>
     <p class="study-citation">{profile.department}</p>
+    <p class="cv-updated">Updated <time datetime={cvUpdated}>{cvUpdatedLabel}</time></p>
     <div class="actions">
+      <a class="button button-primary" href={sitePath(cvPdfPath)} download>Download CV (PDF) <span aria-hidden="true">↓</span></a>
       <a class="text-link" href={`mailto:${profile.email}`}>{profile.email}</a>
       <a class="text-link" href={sitePath('publications/')}>Publications <span aria-hidden="true">↗</span></a>
-      <button class="button button-secondary print-button" type="button" data-print hidden>Print or save as PDF</button>
+      <button class="button button-secondary print-button" type="button" data-print hidden>Print this page</button>
     </div>
   </section>
 
   <div class="shell content-end cv-content">
+    <section aria-labelledby="research-title">
+      <h2 class="section-title" id="research-title">Selected research contributions</h2>
+      <div class="resource-list">
+        {cvResearch.map(({ slug, title, contribution, publication }) => (
+          <article class="resource-row cv-row">
+            <div>
+              <h3><a href={sitePath(`research/${slug}/`)}>{title}</a></h3>
+              <p class="cv-organization">{publication.venue} · {publication.year}</p>
+              <p>{contribution}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
     <section aria-labelledby="positions-title">
       <h2 class="section-title" id="positions-title">Research and professional appointments</h2>
       <div class="resource-list">

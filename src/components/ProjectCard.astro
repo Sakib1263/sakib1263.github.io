@@ -7,12 +7,13 @@ import { sitePath } from '../lib/site';
 const { project } = Astro.props as { project: Project };
 const { visual } = project;
 const paper = publicationFor(project.doi);
+const imageWidth = visual ? Math.min(visual.image.width, 768) : 0;
 ---
 
 <article class="project-card">
   {visual && (
     <div class:list={['project-art', `art-${project.slug}`]}>
-      <Image src={visual.image} alt={visual.alt} width={visual.image.width > 750 ? 750 : visual.image.width} format="webp" />
+      <Image src={visual.image} alt={visual.alt} width={imageWidth} widths={[320, 480, 640, 768].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 720px) calc(100vw - 3.75rem), (max-width: 1240px) 30vw, 352px" format="webp" />
     </div>
   )}
   <div class="project-card-body">

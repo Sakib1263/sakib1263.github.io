@@ -8,9 +8,11 @@ export const profile = {
   github: 'https://github.com/Sakib1263',
   scholar: 'https://scholar.google.com/citations?user=jFVg8REAAAAJ',
   orcid: 'https://orcid.org/0000-0002-4599-2192',
-  focus: 'I develop machine learning methods for biomedical images and sensor signals.',
-  bio: 'My work includes delineating kidney stones on CT, estimating forces and moments from smart insoles, and aligning Raman spectra across instruments.',
+  focus: 'How reliably can we recover biomedical measurements from images and sensor signals?',
+  bio: 'I develop and evaluate machine learning methods for medical imaging, wearable biomechanics, and spectroscopy. I’m particularly interested in how performance varies across people and instruments.',
 };
+
+export const cvPdfPath = 'sakib-mahmud-cv.pdf';
 
 export const navigation = [
   { label: 'Research', path: 'research/' },
