@@ -3,6 +3,7 @@ import waveform from '../assets/insole-treadmill-waveform.png';
 import renal from '../assets/renal-ct.png';
 import sers from '../assets/sers-graphical-abstract.jpg';
 import { kinetics } from './kinetics';
+import { thesisUrl } from './papers';
 
 type ResearchLink = { label: string; href: string };
 
@@ -21,6 +22,7 @@ export type Project = {
   scope: string;
   ongoing?: string;
   workflow?: string[];
+  illustratedExample?: boolean;
   related: string[];
   resources?: ResearchLink[];
   visual?: {
@@ -134,21 +136,45 @@ export const projects: Project[] = [
     slug: 'prenatal-hydronephrosis',
     area: 'Medical imaging',
     title: 'Grading prenatal hydronephrosis from ultrasound',
-    summary: 'Localizing and segmenting fetal kidneys on ultrasound, then combining image-level predictions into a severity grade per subject.',
+    summary: 'Combining multiple fetal kidney ultrasound views into one severity grade, with the kidney outlined before classification.',
     question: 'Can a pipeline use segmented kidneys across several ultrasound views to estimate a subject-level severity grade?',
     doi: '10.1016/j.eswa.2024.124594',
     code: 'https://github.com/Sakib1263/AHN-Severity-Stratification',
-    approach: 'The workflow locates the kidney region, segments the kidney with KUSNet, and predicts a severity class with PHCNet. Weighted voting combines predictions from multiple ultrasound views into a subject-level result.',
-    result: 'The study evaluated segmentation and severity grading separately. For multiclass grading, the reported subject-level F1 score was 89.0%.',
+    approach: 'The study curated 2,062 ultrasound images from 163 subjects. The workflow locates the kidney region, outlines it with KUSNet, and predicts one of five severity grades with PHCNet. Weighted voting combines grades from different ultrasound views at the subject level.',
+    result: 'The paper reports a 92.1% Dice score for kidney segmentation. For five-grade classification with segmented views, Table 3 reports 93.9% subject-level accuracy and an 89.0% F1 score. The two tasks were evaluated separately.',
     measures: [
       { value: '92.1%', label: 'Kidney segmentation Dice' },
       { value: '93.9%', label: 'Subject-level grading accuracy' },
       { value: '163', label: 'Subjects in the curated cohort' },
     ],
     contribution: 'I contributed to study design and data curation, developed the methods and software, and wrote the original draft with the research team.',
-    scope: 'The study used the retrospective QU–HMC–AHN cohort. Reported performance reflects the curated images, reference grades, and evaluation described in the paper.',
+    scope: 'The study used five subject-independent folds on the retrospective QU–HMC–AHN cohort. Reported grading performance reflects the curated views and reference grades in that cohort. Prospective external validation would establish how the approach performs across sites and acquisition protocols.',
+    illustratedExample: true,
+    resources: [{ label: 'Related MSc thesis', href: thesisUrl }],
     related: ['10.1016/j.bspc.2026.109894', '10.3390/cancers15123189'],
   },
 ];
 
-export const featuredProjects = projects.filter(project => project.visual);
+const featuredSlugs = ['wearable-foot-kinetics', 'prenatal-hydronephrosis', 'cross-device-raman'];
+export const featuredProjects = featuredSlugs.map(slug => {
+  const project = projects.find(candidate => candidate.slug === slug);
+  if (!project) throw new Error(`Unknown featured project: ${slug}`);
+  return project;
+});
+
+export const currentResearch = [
+  {
+    area: 'Wearable biomechanics',
+    question: 'Can pressure and inertial signals reconstruct gait forces across cohorts?',
+    description: 'I’m exploring what we gain by combining plantar pressure with foot and shank motion, and whether the same model holds up when the cohort or recording protocol changes.',
+    project: 'wearable-foot-kinetics',
+    label: 'Read the insole kinetics study',
+  },
+  {
+    area: 'Medical imaging',
+    question: 'When does isolating anatomy improve a clinical imaging model?',
+    description: 'My renal imaging work focuses on how localization and segmentation affect the next decision, from delineating small stones on CT to grading severity across ultrasound views.',
+    project: 'prenatal-hydronephrosis',
+    label: 'Read the multi-view ultrasound study',
+  },
+];

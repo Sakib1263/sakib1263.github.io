@@ -4,7 +4,7 @@ import { expect, test } from '@playwright/test';
 const flagship = '/research/wearable-foot-kinetics/';
 const paperId = 'paper-10-1109-jbhi-2025-3605296';
 
-for (const path of ['/', '/research/', flagship, '/publications/', '/cv/', '/software/']) {
+for (const path of ['/', '/research/', flagship, '/research/prenatal-hydronephrosis/', '/publications/', '/cv/', '/software/']) {
   test(`checks accessibility at ${path}`, async ({ page }) => {
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready.then(() => true));
@@ -53,4 +53,32 @@ test('CV download works from the homepage', async ({ page, request }) => {
   const response = await request.get('/sakib-mahmud-cv.pdf');
   expect(response.ok()).toBe(true);
   expect((await response.body()).subarray(0, 5).toString()).toBe('%PDF-');
+});
+
+test('publication themes and selected filters remain shareable', async ({ page }) => {
+  await page.goto('/publications/');
+  await expect(page.getByRole('navigation', { name: 'Publication research areas' }).getByRole('link')).toHaveCount(6);
+  await expect(page.locator('[data-publication]:visible')).toHaveCount(61);
+  await page.getByRole('navigation', { name: 'Publication research areas' }).getByRole('link', { name: /medical imaging/i }).click();
+  await expect(page).toHaveURL(/\?topic=imaging#bibliography$/);
+  await expect(page.locator('[data-publication-group]:visible')).toHaveCount(1);
+  await page.getByRole('checkbox', { name: 'Selected papers only' }).check();
+  await expect(page).toHaveURL(/view=selected/);
+  const view = page.url();
+  await page.goto(view);
+  await expect(page.getByRole('combobox', { name: 'Topic', exact: true })).toHaveValue('imaging');
+  await expect(page.getByRole('checkbox', { name: 'Selected papers only' })).toBeChecked();
+  await expect(page.locator('[data-publication]:visible')).toHaveCount(5);
+  await page.getByRole('button', { name: 'Clear filters' }).click();
+  await expect(page.locator('[data-publication]:visible')).toHaveCount(61);
+  await expect(page).toHaveURL('/publications/#bibliography');
+
+  await page.goto('/publications/?view=selected');
+  await expect(page.locator('[data-publication]:visible')).toHaveCount(10);
+});
+
+test('a paper link wins over an incompatible filter', async ({ page }) => {
+  await page.goto(`/publications/?topic=imaging#${paperId}`);
+  await expect(page.locator(`#${paperId}`)).toBeVisible();
+  await expect(page).toHaveURL(`/publications/#${paperId}`);
 });

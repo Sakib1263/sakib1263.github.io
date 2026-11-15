@@ -5,7 +5,7 @@ import { featuredProjects, projects } from '../../data/research';
 import { publicationFor } from '../../data/papers';
 import { sitePath } from '../../lib/site';
 
-const additional = projects.filter(project => !project.visual);
+const additional = projects.filter(project => !featuredProjects.includes(project));
 ---
 
 <Base title="Research" description="Selected research by Sakib Mahmud in wearable biomechanics, medical imaging, spectroscopy, and physiological signal processing.">

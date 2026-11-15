@@ -16,6 +16,13 @@ const imageWidth = visual ? Math.min(visual.image.width, 768) : 0;
       <Image src={visual.image} alt={visual.alt} width={imageWidth} widths={[320, 480, 640, 768].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 720px) calc(100vw - 3.75rem), (max-width: 1240px) 30vw, 352px" format="webp" />
     </div>
   )}
+  {project.illustratedExample && (
+    <div class="project-art art-prenatal-hydronephrosis" aria-hidden="true">
+      <div class="ahn-example-views ahn-example-masks"><span></span><span></span><span></span></div>
+      <span class="ahn-card-arrow">→</span>
+      <span class="ahn-example-grade">II</span>
+    </div>
+  )}
   <div class="project-card-body">
     <p class="overline">{project.area} · {paper.year}</p>
     <h3>{project.title}</h3>

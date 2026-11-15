@@ -1,0 +1,29 @@
+---
+import { doiUrl } from '../lib/site';
+---
+
+<figure class="ahn-example">
+  <div class="ahn-example-body">
+    <p class="overline">Illustrated example</p>
+    <h2>From ultrasound views to one severity grade</h2>
+    <ol>
+      <li>
+        <div class="ahn-example-views" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div><strong>Locate the kidney</strong><p>Find the kidney region in each view.</p></div>
+      </li>
+      <li>
+        <div class="ahn-example-views ahn-example-masks" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div><strong>Segment and grade each view</strong><p>KUSNet outlines the kidney. PHCNet grades the segmented views. In this example all three give grade II.</p></div>
+      </li>
+      <li>
+        <div class="ahn-example-grade" aria-hidden="true">II</div>
+        <div><strong>Combine the grades</strong><p>Weighted voting gives one subject-level result: Society for Fetal Urology grade II.</p></div>
+      </li>
+    </ol>
+  </div>
+  <figcaption>Original schematic based on the study’s methods. The views and example grades are illustrative. <a href={doiUrl('10.1016/j.eswa.2024.124594')}>Study methods</a></figcaption>
+</figure>

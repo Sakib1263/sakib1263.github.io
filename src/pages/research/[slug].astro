@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import KineticsReproduction from '../../components/KineticsReproduction.astro';
+import HydronephrosisExample from '../../components/HydronephrosisExample.astro';
 import { kinetics } from '../../data/kinetics';
 import { openFullText, publicationFor, publicationId } from '../../data/papers';
 import { projects } from '../../data/research';
@@ -39,7 +40,7 @@ const imageWidth = visual ? Math.min(visual.image.width, 960) : 0;
     {project.workflow && <ol class="study-workflow" aria-label="Study workflow">
       {project.workflow.map(step => <li>{step}</li>)}
     </ol>}
-    <div class:list={['detail-grid', { 'detail-grid-text': !visual }]}>
+    <div class:list={['detail-grid', { 'detail-grid-text': !visual && !project.illustratedExample }]}>
       <div class="prose detail-copy">
         <h2>Approach</h2>
         <p>{project.approach}</p>
@@ -69,6 +70,7 @@ const imageWidth = visual ? Math.min(visual.image.width, 960) : 0;
           </figcaption>
         </figure>
       )}
+      {project.illustratedExample && <HydronephrosisExample />}
     </div>
     {project.slug === kinetics.slug && <KineticsReproduction />}
     <section class="related-papers" aria-labelledby="related-title">
