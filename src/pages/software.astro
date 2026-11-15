@@ -1,14 +1,11 @@
 ---
 import Base from '../layouts/Base.astro';
-import { projects, type Project } from '../data/research';
+import { projects } from '../data/research';
 import { doiUrl, profile } from '../lib/site';
 
-const software: { name: string; description: string; url?: string; project?: Project }[] = [
+const software: { name: string; description: string; url: string; paper?: string }[] = [
   { name: 'SuperONN-Layers', description: 'Reusable super-operational layers for PyTorch and TensorFlow/Keras.', url: 'https://github.com/Sakib1263/SuperONN-Layers' },
-  { name: 'Unimodal 3D kinetics estimation', description: 'Research repository for estimating foot kinetics from wearable measurements.', project: projects[0] },
-  { name: 'Kidney Stone Segmentation', description: 'Code for successive scope reduction and segmentation in abdominal CT.', project: projects[1] },
-  { name: 'SERS-D2DNet and SuperRaman', description: 'Code for cross-device Raman spectrum standardization and bacterial recognition experiments.', project: projects[2] },
-  { name: 'NABNet', description: 'Implementation for arterial blood pressure waveform reconstruction and component estimation.', project: projects[3] },
+  ...projects.map(({ title, summary, code, doi }) => ({ name: title, description: summary, url: code, paper: doiUrl(doi) })),
   { name: 'AHN Severity Stratification', description: 'Ultrasound workflow for region detection, kidney segmentation, and severity classification.', url: 'https://github.com/Sakib1263/AHN-Severity-Stratification' },
 ];
 ---
@@ -29,8 +26,8 @@ const software: { name: string; description: string; url?: string; project?: Pro
             <p>{item.description}</p>
           </div>
           <div class="resource-links">
-            <a class="text-link" href={item.project?.code ?? item.url} aria-label={`Code for ${item.name}`}>Code <span aria-hidden="true">↗</span></a>
-            {item.project && <a class="text-link secondary-link" href={doiUrl(item.project.doi)} aria-label={`Paper for ${item.name}`}>Paper <span aria-hidden="true">↗</span></a>}
+            <a class="text-link" href={item.url} aria-label={`Code for ${item.name}`}>Code <span aria-hidden="true">↗</span></a>
+            {item.paper && <a class="text-link secondary-link" href={item.paper} aria-label={`Paper for ${item.name}`}>Paper <span aria-hidden="true">↗</span></a>}
           </div>
         </article>
       ))}

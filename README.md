@@ -24,7 +24,7 @@ pnpm preview
 | Software and dataset links | [src/pages/software.astro](src/pages/software.astro) |
 | Shared styles | [src/styles/site.css](src/styles/site.css) |
 
-Add a publication by copying the structure of an existing entry and entering its title, ordered authors, issue or proceedings year, venue, type, and DOI. The list and BibTeX download read the same data. Keep the newest entries first. Project pages use stable slugs. Give new artwork descriptive alternative text and a figure credit where applicable.
+Add a publication by copying the structure of an existing entry and entering its title, ordered authors, issue or proceedings year, venue, type, and DOI. The list sorts by year and shares its data with the BibTeX download. Project pages use stable slugs. Give new artwork descriptive alternative text and a figure credit where applicable.
 
 The CV page includes a print layout for saving a PDF through the browser. The research images and their source information are listed on the corresponding project pages. The Raman graphical abstract is from Mahmud et al. (2026), DOI [10.1016/j.saa.2025.126931](https://doi.org/10.1016/j.saa.2025.126931), under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The fonts include their respective Open Font Licenses.
 

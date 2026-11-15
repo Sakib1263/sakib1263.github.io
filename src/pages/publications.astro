@@ -3,7 +3,8 @@ import Base from '../layouts/Base.astro';
 import publications from '../data/publications.json';
 import { doiUrl, profile, sitePath } from '../lib/site';
 
-const years = [...new Set(publications.map(({ year }) => year))].sort((left, right) => right - left);
+const entries = [...publications].sort((left, right) => right.year - left.year);
+const years = [...new Set(entries.map(({ year }) => year))];
 const types = [...new Set(publications.map(({ type }) => type))].sort();
 ---
 
@@ -38,7 +39,7 @@ const types = [...new Set(publications.map(({ type }) => type))].sort();
     <p class="result-count" data-publication-count role="status">{publications.length} publications</p>
     <p class="empty-state" data-publication-empty hidden>Try a different search or clear the filters.</p>
     <div class="publication-list">
-      {publications.map(publication => (
+      {entries.map(publication => (
         <article class="publication" data-publication data-year={publication.year} data-type={publication.type}>
           <p class="publication-year">{publication.year}</p>
           <div>
