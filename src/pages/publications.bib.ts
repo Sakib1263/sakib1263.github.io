@@ -1,10 +1,11 @@
 import type { APIRoute } from 'astro';
-import publications from '../data/publications.json';
+import { publications } from '../data/papers';
 
 const types = {
   'Journal article': 'article',
   Review: 'article',
   'Conference paper': 'inproceedings',
+  'Conference abstract': 'article',
   'Book chapter': 'incollection',
 };
 
@@ -21,6 +22,10 @@ export const GET: APIRoute = () => {
       `  author = {${publication.authors.map(escaped).join(' and ')}},`,
       `  year = {${publication.year}},`,
       `  ${venueField} = {${escaped(publication.venue)}},`,
+      ...(publication.volume ? [`  volume = {${publication.volume}},`] : []),
+      ...(publication.issue ? [`  number = {${publication.issue}},`] : []),
+      ...(publication.pages ? [`  pages = {${publication.pages.replace(/(?<=\d)[-–](?=\d)/g, '--')}},`] : []),
+      ...(publication.articleNumber ? [`  eid = {${publication.articleNumber}},`] : []),
       `  doi = {${publication.doi}}`,
       '}',
     ].join('\n');

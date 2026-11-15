@@ -3,7 +3,7 @@ import Base from '../layouts/Base.astro';
 import { sitePath } from '../lib/site';
 ---
 
-<Base title="Page not found">
+<Base title="Page not found" noIndex>
   <section class="shell page-intro content-end">
     <h1>Page not found</h1>
     <a class="text-link" href={sitePath()}><span aria-hidden="true">←</span> Return home</a>

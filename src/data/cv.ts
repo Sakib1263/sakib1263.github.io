@@ -3,31 +3,31 @@ export const positions = [
     role: 'Research Associate',
     organization: 'Qatar University',
     dates: 'July 2023–present',
-    summary: 'Biomedical machine learning, wearable sensing, study design, and model evaluation in the Department of Electrical Engineering.',
+    summary: 'Conduct and coordinate bioengineering research in machine learning, medical imaging, wearable sensing, and computational biomechanics. My work spans study design, dataset development, and model evaluation.',
   },
   {
     role: 'Data Scientist (contract)',
     organization: 'Iberdrola Innovation Middle East',
     dates: 'July 2023–July 2024',
-    summary: 'Applied machine learning for smart-meter data and building occupancy modelling.',
+    summary: 'Developed and evaluated machine learning methods for inferring electricity use and building occupancy from multichannel smart-meter data.',
   },
   {
     role: 'Research Assistant (part-time)',
     organization: 'Hamad Medical Corporation',
     dates: 'January 2022–August 2023',
-    summary: 'Collaborative medical imaging research and machine learning for diagnostic workflows.',
+    summary: 'Co-developed the prenatal hydronephrosis ultrasound dataset and worked on kidney localization, segmentation, and severity grading.',
   },
   {
     role: 'Summer Research Intern',
     organization: 'Qatar Computing Research Institute, HBKU',
     dates: 'May–July 2023',
-    summary: 'Bioinformatics research.',
+    summary: 'Explored variational autoencoders for finding abnormal gene expression in RNA sequencing data from Mendelian disease studies.',
   },
   {
     role: 'Research Assistant',
     organization: 'Qatar University',
     dates: 'August 2018–May 2020 (part-time), June 2020–June 2023 (full-time)',
-    summary: 'Biomedical signal processing, image analysis, and prototype development.',
+    summary: 'Developed electronic and photonic smart-insole prototypes, collected plantar pressure and temperature measurements, and contributed to biomedical signal and image analysis.',
   },
 ];
 

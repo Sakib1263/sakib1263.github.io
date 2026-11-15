@@ -2,12 +2,14 @@ export const profile = {
   name: 'Sakib Mahmud',
   role: 'Research Associate',
   affiliation: 'Qatar University',
+  department: 'Department of Electrical Engineering',
   location: 'Doha, Qatar',
   email: 'sakib.mahmud@qu.edu.qa',
   github: 'https://github.com/Sakib1263',
   scholar: 'https://scholar.google.com/citations?user=jFVg8REAAAAJ',
   orcid: 'https://orcid.org/0000-0002-4599-2192',
-  focus: 'I develop machine learning methods for biomedical imaging, wearable sensing, and spectroscopy.',
+  focus: 'I develop machine learning methods for biomedical images and sensor signals.',
+  bio: 'My work includes delineating kidney stones on CT, estimating forces and moments from smart insoles, and aligning Raman spectra across instruments.',
 };
 
 export const navigation = [

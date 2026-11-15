@@ -3,8 +3,9 @@ import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import portrait from '../assets/sakib-mahmud.jpg';
+import { selectedPapers } from '../data/papers';
 import { featuredProjects } from '../data/research';
-import { profile, sitePath } from '../lib/site';
+import { doiUrl, profile, sitePath } from '../lib/site';
 ---
 
 <Base>
@@ -13,9 +14,9 @@ import { profile, sitePath } from '../lib/site';
       <p class="overline intro-role"><span aria-hidden="true"></span>{profile.role} · {profile.affiliation}</p>
       <h1 id="intro-title">{profile.name}</h1>
       <p class="intro-lead">{profile.focus}</p>
-      <p class="intro-detail">My research includes kidney segmentation in CT, estimation of foot kinetics from smart insoles, and standardization of Raman spectra across instruments.</p>
+      <p class="intro-detail">{profile.bio}</p>
       <div class="intro-actions">
-        <a class="button button-primary" href={sitePath('research/')}>Explore research <span aria-hidden="true">↗</span></a>
+        <a class="button button-primary" href={sitePath('research/')}>Explore research <span aria-hidden="true">→</span></a>
         <a class="button button-secondary" href={sitePath('publications/')}>Publications</a>
       </div>
       <div class="profile-links">
@@ -26,15 +27,15 @@ import { profile, sitePath } from '../lib/site';
     </div>
     <figure class="portrait">
       <Image src={portrait} alt="Sakib Mahmud" widths={[384, 576, 768]} sizes="(max-width: 740px) 83vw, 340px" width={768} format="webp" loading="eager" fetchpriority="high" />
-      <figcaption><span aria-hidden="true"></span>{profile.location}</figcaption>
+      <figcaption><span>{profile.department}</span><span>{profile.location}</span></figcaption>
     </figure>
   </section>
 
   <section class="selected-section" aria-labelledby="selected-title">
     <div class="shell">
       <div class="section-heading">
-        <h2 id="selected-title">Selected research</h2>
-        <a class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">↗</span></a>
+        <h2 id="selected-title">Featured projects</h2>
+        <a class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">→</span></a>
       </div>
       <div class="project-grid">
         {featuredProjects.map(project => <ProjectCard project={project} />)}
@@ -42,10 +43,26 @@ import { profile, sitePath } from '../lib/site';
     </div>
   </section>
 
+  <section class="shell selected-papers" aria-labelledby="papers-title">
+    <div class="section-heading">
+      <h2 id="papers-title">Selected papers</h2>
+      <a class="text-link" href={sitePath('publications/')}>Full bibliography <span aria-hidden="true">→</span></a>
+    </div>
+    <div class="resource-list">
+      {selectedPapers.map(({ publication, context }) => (
+        <article class="paper-preview">
+          <p class="overline">{publication.venue} · {publication.onlineYear ? `Online ${publication.onlineYear}` : publication.year}</p>
+          <h3><a href={doiUrl(publication.doi)}>{publication.title} <span aria-hidden="true">↗</span></a></h3>
+          <p>{context}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
   <section class="shell connection" aria-labelledby="contact-title">
     <div>
       <h2 id="contact-title">Contact</h2>
-      <p>For questions about the research or software, contact me at Qatar University.</p>
+      <p>Research collaborations and questions about my work are welcome.</p>
     </div>
     <a class="text-link" href={`mailto:${profile.email}`}>{profile.email} <span aria-hidden="true">↗</span></a>
   </section>

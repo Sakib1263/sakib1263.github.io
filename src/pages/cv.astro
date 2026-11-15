@@ -8,6 +8,7 @@ import { profile, sitePath } from '../lib/site';
   <section class="shell page-intro">
     <h1>Curriculum vitae</h1>
     <p class="page-lead">{profile.name} · {profile.role}, {profile.affiliation}</p>
+    <p class="study-citation">{profile.department}</p>
     <div class="actions">
       <a class="text-link" href={`mailto:${profile.email}`}>{profile.email}</a>
       <a class="text-link" href={sitePath('publications/')}>Publications <span aria-hidden="true">↗</span></a>
