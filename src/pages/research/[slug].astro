@@ -1,0 +1,51 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import { projects } from '../../data/research';
+import { doiUrl, sitePath } from '../../lib/site';
+
+export function getStaticPaths() {
+  return projects.map(project => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const { visual } = project;
+---
+
+<Base title={project.title} description={project.summary}>
+  <article class="shell detail content-end">
+    <a class="text-link return-link" href={sitePath('research/')}><span aria-hidden="true">←</span> All research</a>
+    <header class="detail-heading">
+      <p class="overline">{project.area}</p>
+      <h1>{project.title}</h1>
+      <p class="page-lead">{project.summary}</p>
+      <div class="actions">
+        <a class="button button-primary" href={doiUrl(project.doi)}>Read the paper <span aria-hidden="true">↗</span></a>
+        <a class="button button-secondary" href={project.code}>Source code <span aria-hidden="true">↗</span></a>
+        {project.resources?.map(({ label, href }) => <a class="button button-secondary" href={href}>{label} <span aria-hidden="true">↗</span></a>)}
+      </div>
+    </header>
+
+    <div class:list={['detail-grid', { 'detail-grid-text': !visual }]}>
+      <div class="prose detail-copy">
+        <h2>Approach</h2>
+        <p>{project.approach}</p>
+        <h2>My contribution</h2>
+        <p>{project.contribution}</p>
+        <h2>Study scope</h2>
+        <p>{project.scope}</p>
+      </div>
+      {visual && (
+        <figure class:list={['detail-figure', `art-${project.slug}`]}>
+          <div>
+            <Image src={visual.image} alt={visual.alt} width={visual.image.width > 860 ? 860 : visual.image.width} format="webp" />
+          </div>
+          <figcaption>
+            {visual.caption}
+            {visual.credit && <> <a href={visual.credit.href}>{visual.credit.label}</a></>}
+          </figcaption>
+        </figure>
+      )}
+    </div>
+  </article>
+</Base>

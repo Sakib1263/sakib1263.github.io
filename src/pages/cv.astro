@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import { education, positions } from '../data/cv';
+import { profile, sitePath } from '../lib/site';
+---
+
+<Base title="CV" description="Selected research appointments and education of Sakib Mahmud.">
+  <section class="shell page-intro">
+    <h1>Curriculum vitae</h1>
+    <p class="page-lead">{profile.name} · {profile.role}, {profile.affiliation}</p>
+    <div class="actions">
+      <a class="text-link" href={`mailto:${profile.email}`}>{profile.email}</a>
+      <a class="text-link" href={sitePath('publications/')}>Publications <span aria-hidden="true">↗</span></a>
+      <button class="button button-secondary print-button" type="button" data-print hidden>Print or save as PDF</button>
+    </div>
+  </section>
+
+  <div class="shell content-end cv-content">
+    <section aria-labelledby="positions-title">
+      <h2 class="section-title" id="positions-title">Research and professional appointments</h2>
+      <div class="resource-list">
+        {positions.map(position => (
+          <article class="resource-row cv-row">
+            <div>
+              <h3>{position.role}</h3>
+              <p class="cv-organization">{position.organization}</p>
+              <p>{position.summary}</p>
+            </div>
+            <p class="cv-date">{position.dates}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section aria-labelledby="education-title">
+      <h2 class="section-title" id="education-title">Education</h2>
+      <div class="resource-list">
+        {education.map(degree => (
+          <article class="resource-row cv-row">
+            <div>
+              <h3>{degree.role}</h3>
+              <p class="cv-organization">{degree.organization}</p>
+              {degree.summary && <p>{degree.summary}</p>}
+            </div>
+            <p class="cv-date">{degree.dates}</p>
+          </article>
+        ))}
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  const printButton = document.querySelector<HTMLButtonElement>('[data-print]');
+  if (printButton) {
+    printButton.hidden = false;
+    printButton.addEventListener('click', () => window.print());
+  }
+</script>

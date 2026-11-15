@@ -1,0 +1,1090 @@
+[
+  {
+    "title": "Machine learning-enabled label-free SERS for microbial sensing: Toward robust, generalizable, and deployable workflows",
+    "authors": [
+      "Sakib Mahmud",
+      "Md. Sakib Bin Islam",
+      "Mansura Naznine",
+      "Md. Shaheenur Islam Sumon",
+      "Susu M. Zughaier",
+      "Yiping Zhao",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2026,
+    "venue": "Talanta",
+    "type": "Review",
+    "doi": "10.1016/j.talanta.2026.130241"
+  },
+  {
+    "title": "Enhancing kidney stone segmentation in computed tomography images through successive scope reduction and intra-framework feature transfer",
+    "authors": [
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Tariq O. Abbas",
+      "Faycal Bensaali"
+    ],
+    "year": 2026,
+    "venue": "Biomedical Signal Processing and Control",
+    "type": "Journal article",
+    "doi": "10.1016/j.bspc.2026.109894"
+  },
+  {
+    "title": "SERS on analyte-enriched blood for rapid, culture-free sepsis recognition and causative pathogen identification with super-operational neural networks",
+    "authors": [
+      "Manal Hassan",
+      "Md Sakib Bin Islam",
+      "Sakib Mahmud",
+      "Mahmoud Elgamal",
+      "Md Shaheenur Islam Sumon",
+      "Ali Ait Hssain",
+      "Emad Ibrahim",
+      "Amit Kumar",
+      "Yiping Zhao",
+      "Saad Bin Abul Kashem",
+      "Mehmet Burcin Unlu",
+      "Gozde Durmus",
+      "Muhammad E. H. Chowdhury",
+      "Susu M. Zughaier"
+    ],
+    "year": 2026,
+    "venue": "Talanta",
+    "type": "Journal article",
+    "doi": "10.1016/j.talanta.2025.129332"
+  },
+  {
+    "title": "A comprehensive review of deep reinforcement learning applications from centralized power generation to modern energy internet frameworks",
+    "authors": [
+      "Sakib Mahmud",
+      "Aya Nabil Sayed",
+      "Yassine Himeur",
+      "Armstrong Nhlabatsi",
+      "Faycal Bensaali"
+    ],
+    "year": 2026,
+    "venue": "Renewable and Sustainable Energy Reviews",
+    "type": "Review",
+    "doi": "10.1016/j.rser.2025.116481"
+  },
+  {
+    "title": "Deep learning-based cross-device standardization of surface-enhanced Raman spectroscopy for enhanced bacterial recognition",
+    "authors": [
+      "Sakib Mahmud",
+      "Faizul Rakib Sayem",
+      "Manal Hassan",
+      "Yanjun Yang",
+      "Muhammad E. H. Chowdhury",
+      "Susu M. Zughaier",
+      "Faycal Bensaali",
+      "Yiping Zhao"
+    ],
+    "year": 2026,
+    "venue": "Spectrochimica Acta Part A",
+    "type": "Journal article",
+    "doi": "10.1016/j.saa.2025.126931"
+  },
+  {
+    "title": "3D Foot Kinetics Estimation From Distributed VGRF From Smart Insoles via 1D Domain Transformation",
+    "authors": [
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Faycal Bensaali"
+    ],
+    "year": 2025,
+    "venue": "IEEE Journal of Biomedical and Health Informatics",
+    "type": "Journal article",
+    "doi": "10.1109/jbhi.2025.3605296"
+  },
+  {
+    "title": "A cascaded deep learning framework for simultaneous non-intrusive load and occupancy monitoring using multi-channel aggregated smart meter data",
+    "authors": [
+      "Sakib Mahmud",
+      "Mahdi Houchati",
+      "Muhammad E. H. Chowdhury",
+      "Faycal Bensaali"
+    ],
+    "year": 2025,
+    "venue": "Journal of Building Engineering",
+    "type": "Journal article",
+    "doi": "10.1016/j.jobe.2025.113731"
+  },
+  {
+    "title": "Deep learning-based beat-to-beat arterial blood pressure estimation using distant radar signals",
+    "authors": [
+      "Farhana Ahmed Chowdhury",
+      "Md Kamal Hosain",
+      "Md Shafayet Hossain",
+      "Muhammad E. H. Chowdhury",
+      "Sakib Mahmud",
+      "Muhammad Ashad Kabir",
+      "Abdulrahman Alqahtani",
+      "Anwarul Hasan"
+    ],
+    "year": 2025,
+    "venue": "Neural Computing and Applications",
+    "type": "Journal article",
+    "doi": "10.1007/s00521-025-11327-x"
+  },
+  {
+    "title": "Optimizing energy efficiency through precise occupancy detection: A tailored CNN architecture for smart buildings and beyond",
+    "authors": [
+      "Aya Nabil Sayed",
+      "Sakib Mahmud",
+      "Faycal Bensaali",
+      "Muhammad E. H. Chowdhury",
+      "Yassine Himeur"
+    ],
+    "year": 2025,
+    "venue": "Neural Computing and Applications",
+    "type": "Journal article",
+    "doi": "10.1007/s00521-025-11348-6"
+  },
+  {
+    "title": "Multimodal feature fusion and ensemble learning for non-intrusive occupancy monitoring using smart meters",
+    "authors": [
+      "Sakib Mahmud",
+      "Faycal Bensaali",
+      "Muhammad E. H. Chowdhury",
+      "Mahdi Houchati"
+    ],
+    "year": 2025,
+    "venue": "Building and Environment",
+    "type": "Journal article",
+    "doi": "10.1016/j.buildenv.2025.112635"
+  },
+  {
+    "title": "Rapid wall shear stress prediction for aortic aneurysms using deep learning: a fast alternative to CFD",
+    "authors": [
+      "Md. Ahasan Atick Faisal",
+      "Onur Mutlu",
+      "Sakib Mahmud",
+      "Anas Tahir",
+      "Muhammad E. H. Chowdhury",
+      "Faycal Bensaali",
+      "Abdulrahman Alnabti",
+      "Mehmet Metin Yavuz",
+      "Ayman El-Menyar",
+      "Hassan Al-Thani",
+      "Huseyin Cagatay Yalcin"
+    ],
+    "year": 2025,
+    "venue": "Medical & Biological Engineering & Computing",
+    "type": "Journal article",
+    "doi": "10.1007/s11517-025-03311-3"
+  },
+  {
+    "title": "A novel 1D generative adversarial network-based framework for atrial fibrillation detection using restored wrist photoplethysmography signals",
+    "authors": [
+      "Faizul Rakib Sayem",
+      "Mosabber Uddin Ahmed",
+      "Saadia Binte Alam",
+      "Sakib Mahmud",
+      "Md. Mamun Sheikh",
+      "Abdulrahman Alqahtani",
+      "Md. Ahasan Atick Faisal",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2024,
+    "venue": "Biomedical Signal Processing and Control",
+    "type": "Journal article",
+    "doi": "10.1016/j.bspc.2024.107233"
+  },
+  {
+    "title": "Stress transfer, stress shielding, and micro-movement analysis in the implanted femoral bone region with various hip implant stem materials: a finite element approach",
+    "authors": [
+      "Md Mohiuddin Soliman",
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Touhidul Alam",
+      "Abdulmajeed M. Alenezi",
+      "Norbahiah Misran",
+      "Mohamed S. Soliman",
+      "Mohammad Tariqul Islam"
+    ],
+    "year": 2024,
+    "venue": "Materials Today Communications",
+    "type": "Journal article",
+    "doi": "10.1016/j.mtcomm.2024.110932"
+  },
+  {
+    "title": "GearFaultNet: Novel network for automatic and early detection of gearbox faults",
+    "authors": [
+      "Proma Dutta",
+      "Kanchon Kanti Podder",
+      "Md. Shaheenur Islam Sumon",
+      "Muhammad E. H. Chowdhury",
+      "Amith Khandakar",
+      "Nasser Al-Emadi",
+      "Moajjem Hossain Chowdhury",
+      "M. Murugappan",
+      "Mohamed Arselene Ayari",
+      "Sakib Mahmud",
+      "S. M. Muyeen"
+    ],
+    "year": 2024,
+    "venue": "IEEE Access",
+    "type": "Journal article",
+    "doi": "10.1109/access.2024.3412274"
+  },
+  {
+    "title": "QU-GM: An IoT Based Glucose Monitoring System From Photoplethysmography, Blood Pressure, and Demographic Data Using Machine Learning",
+    "authors": [
+      "Md Nazmul Islam Shuzan",
+      "Moajjem Hossain Chowdhury",
+      "Muhammad E. H. Chowdhury",
+      "Khalid Abualsaud",
+      "Elias Yaacoub",
+      "Md Ahasan Atick Faisal",
+      "Mazun Alshahwani",
+      "Noora Al Bordeni",
+      "Fatima Al-Kaabi",
+      "Sara Al-Mohannadi",
+      "Sakib Mahmud",
+      "Nizar Zorba"
+    ],
+    "year": 2024,
+    "venue": "IEEE Access",
+    "type": "Journal article",
+    "doi": "10.1109/access.2024.3404971"
+  },
+  {
+    "title": "ECG waveform generation from radar signals: A deep learning perspective",
+    "authors": [
+      "Farhana Ahmed Chowdhury",
+      "Md. Kamal Hosain",
+      "Md. Sakib Bin Islam",
+      "Md Shafayet Hossain",
+      "Promit Basak",
+      "Sakib Mahmud",
+      "M. Murugappan",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2024,
+    "venue": "Computers in Biology and Medicine",
+    "type": "Journal article",
+    "doi": "10.1016/j.compbiomed.2024.108555"
+  },
+  {
+    "title": "Restoration of magnetohydrodynamic-corrupted 12-lead electrocardiogram to enhance cardiac monitoring during magnetic resonance imaging",
+    "authors": [
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Moajjem Hossain Chowdhury",
+      "Abdulrahman Alqahtani",
+      "Zaid Bin Mahbub",
+      "Faycal Bensaali",
+      "Serkan Kiranyaz"
+    ],
+    "year": 2024,
+    "venue": "Engineering Applications of Artificial Intelligence",
+    "type": "Journal article",
+    "doi": "10.1016/j.engappai.2024.108483"
+  },
+  {
+    "title": "ExoventQ: A novel low-cost portable negative pressure ventilator design and implementation",
+    "authors": [
+      "Shahd Sameer Mohammed Gaben",
+      "Nada Abughanam",
+      "Nabil Ibtehaz",
+      "Sakib Mahmud",
+      "Ghada Al Noaimi",
+      "Abdulrahman Alqahtani",
+      "Amith Khandakar",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2024,
+    "venue": "IEEE Access",
+    "type": "Journal article",
+    "doi": "10.1109/access.2024.3390566"
+  },
+  {
+    "title": "Automated grading of prenatal hydronephrosis severity from segmented kidney ultrasounds using deep learning",
+    "authors": [
+      "Sakib Mahmud",
+      "Tariq O. Abbas",
+      "Muhammad E. H. Chowdhury",
+      "Adam Mushtak",
+      "Saidul Kabir",
+      "Sreekumar Muthiyal",
+      "Alaa Koko",
+      "Ahmed Balla Abdalla Altyeb",
+      "Abdulrahman Alqahtani",
+      "Amith Khandakar",
+      "Sheikh Mohammed Shariful Islam"
+    ],
+    "year": 2024,
+    "venue": "Expert Systems with Applications",
+    "type": "Journal article",
+    "doi": "10.1016/j.eswa.2024.124594"
+  },
+  {
+    "title": "Wearable wrist-to-finger photoplethysmogram translation through restoration using super operational neural networks based 1D-CycleGAN for enhancing cardiovascular monitoring",
+    "authors": [
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Serkan Kiranyaz",
+      "Malisha Islam Tapotee",
+      "Purnata Saha",
+      "Anas M. Tahir",
+      "Amith Khandakar",
+      "Abdulrahman Alqahtani"
+    ],
+    "year": 2024,
+    "venue": "Expert Systems with Applications",
+    "type": "Journal article",
+    "doi": "10.1016/j.eswa.2024.123167"
+  },
+  {
+    "title": "M2ECG: Wearable mechanocardiograms to electrocardiogram estimation using deep learning",
+    "authors": [
+      "Malisha Islam Tapotee",
+      "Purnata Saha",
+      "Sakib Mahmud",
+      "Abdulrahman Alqahtani",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2024,
+    "venue": "IEEE Access",
+    "type": "Journal article",
+    "doi": "10.1109/access.2024.3353463"
+  },
+  {
+    "title": "GCDN-Net: Garbage classifier deep neural network for recyclable urban waste management",
+    "authors": [
+      "Md Mosarrof Hossen",
+      "Azad Ashraf",
+      "Mazhar Hasan",
+      "Molla E. Majid",
+      "Mohammad Nashbat",
+      "Saad Bin Abul Kashem",
+      "Ali K. Ansaruddin Kunju",
+      "Amith Khandakar",
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2023,
+    "venue": "Waste Management",
+    "type": "Journal article",
+    "doi": "10.1016/j.wasman.2023.12.014"
+  },
+  {
+    "title": "Restoration of motion-corrupted EEG signals using attention-guided operational CycleGAN",
+    "authors": [
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Serkan Kiranyaz",
+      "Nasser Al Emadi",
+      "Anas M. Tahir",
+      "Md Shafayet Hossain",
+      "Amith Khandakar",
+      "Somaya Al-Maadeed"
+    ],
+    "year": 2023,
+    "venue": "Engineering Applications of Artificial Intelligence",
+    "type": "Journal article",
+    "doi": "10.1016/j.engappai.2023.107514"
+  },
+  {
+    "title": "LGI-rPPG-Net: A shallow encoder-decoder model for rPPG signal estimation from facial video streams",
+    "authors": [
+      "Moajjem Hossain Chowdhury",
+      "Muhammad E. H. Chowdhury",
+      "Mamun Bin Ibne Reaz",
+      "Sawal Hamid Md Ali",
+      "Seyed Mehdi Rakhtala",
+      "M. Murugappan",
+      "Sakib Mahmud",
+      "Md Nazmul Islam Shuzan",
+      "Ahmad Ashrif A. Bakar",
+      "Mohd Ibrahim Bin Shapiai Abd Razak",
+      "Muhammad Salman Khan",
+      "Amith Khandakar"
+    ],
+    "year": 2023,
+    "venue": "Biomedical Signal Processing and Control",
+    "type": "Journal article",
+    "doi": "10.1016/j.bspc.2023.105687"
+  },
+  {
+    "title": "Deep learning framework for liver segmentation from T1-weighted MRI images",
+    "authors": [
+      "Md. Sakib Abrar Hossain",
+      "Sidra Gul",
+      "Muhammad E. H. Chowdhury",
+      "Muhammad Salman Khan",
+      "Md. Shaheenur Islam Sumon",
+      "Enamul Haque Bhuiyan",
+      "Amith Khandakar",
+      "Maqsud Hossain",
+      "Abdus Sadique",
+      "Israa Al-Hashimi",
+      "Mohamed Arselene Ayari",
+      "Sakib Mahmud",
+      "Abdulrahman Alqahtani"
+    ],
+    "year": 2023,
+    "venue": "Sensors",
+    "type": "Journal article",
+    "doi": "10.3390/s23218890"
+  },
+  {
+    "title": "Robust and novel attention-guided MultiResUNet model for 3D ground reaction force and moment prediction from foot kinematics",
+    "authors": [
+      "Md. Ahasan Atick Faisal",
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Amith Khandakar",
+      "Mosabber Uddin Ahmed",
+      "Abdulrahman Alqahtani",
+      "Mohammed Alhatou"
+    ],
+    "year": 2023,
+    "venue": "Neural Computing and Applications",
+    "type": "Journal article",
+    "doi": "10.1007/s00521-023-09081-z"
+  },
+  {
+    "title": "Advancement in total hip implant: A comprehensive review of mechanics and performance parameters across diverse novelties",
+    "authors": [
+      "Md Mohiuddin Soliman",
+      "Mohammad Tariqul Islam",
+      "Muhammad E. H. Chowdhury",
+      "Abdulrahman Alqahtani",
+      "Farayi Musharavati",
+      "Touhidul Alam",
+      "Ahmed S. Alshammari",
+      "Norbahiah Misran",
+      "Mohamed S. Soliman",
+      "Sakib Mahmud",
+      "Amith Khandakar"
+    ],
+    "year": 2023,
+    "venue": "Journal of Materials Chemistry B",
+    "type": "Review",
+    "doi": "10.1039/d3tb01469j"
+  },
+  {
+    "title": "Laser-induced graphene based smart insole to measure plantar temperature",
+    "authors": [
+      "Amith Khandakar",
+      "Md. Ahasan Atick Faisal",
+      "Muhammad E. H. Chowdhury",
+      "Mamun Bin Ibne Reaz",
+      "Sawal Hamid Md Ali",
+      "Mohd Ibrahim Bin Shapiai Abd. Razak",
+      "Ahmad Ashrif A. Bakar",
+      "Sakib Mahmud",
+      "Rayaz A. Malik"
+    ],
+    "year": 2023,
+    "venue": "IEEE Sensors Journal",
+    "type": "Journal article",
+    "doi": "10.1109/jsen.2023.3317768"
+  },
+  {
+    "title": "A novel deep learning technique for morphology-preserved fetal ECG extraction from maternal ECG using 1D-CycleGAN",
+    "authors": [
+      "Promit Basak",
+      "A.H.M. Nazmus Sakib",
+      "Muhammad E. H. Chowdhury",
+      "Nasser Al-Emadi",
+      "Huseyin Cagatay Yalcin",
+      "Shona Pedersen",
+      "Sakib Mahmud",
+      "Serkan Kiranyaz",
+      "Somaya Al-Maadeed"
+    ],
+    "year": 2023,
+    "venue": "Expert Systems with Applications",
+    "type": "Journal article",
+    "doi": "10.1016/j.eswa.2023.121196"
+  },
+  {
+    "title": "Kidney cancer diagnosis and surgery selection by machine learning from CT scans combined with clinical metadata",
+    "authors": [
+      "Sakib Mahmud",
+      "Tariq O. Abbas",
+      "Adam Mushtak",
+      "Johayra Prithula",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2023,
+    "venue": "Cancers",
+    "type": "Journal article",
+    "doi": "10.3390/cancers15123189"
+  },
+  {
+    "title": "A deep learning framework for the detection of abnormality in cerebral blood flow velocity using transcranial Doppler ultrasound",
+    "authors": [
+      "Naima Nasrin Nisha",
+      "Kanchon Kanti Podder",
+      "Muhammad E. H. Chowdhury",
+      "Mamun Rabbani",
+      "Md. Sharjis Ibne Wadud",
+      "Somaya Al-Maadeed",
+      "Sakib Mahmud",
+      "Amith Khandakar",
+      "Susu M. Zughaier"
+    ],
+    "year": 2023,
+    "venue": "Diagnostics",
+    "type": "Journal article",
+    "doi": "10.3390/diagnostics13122000"
+  },
+  {
+    "title": "Fetal ECG extraction from maternal ECG using a deeply supervised LinkNet++ model",
+    "authors": [
+      "Arafat Rahman",
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Huseyin Cagatay Yalcin",
+      "Amith Khandakar",
+      "Onur Mutlu",
+      "Zaid Bin Mahbub",
+      "Reema Yousef Kamal",
+      "Shona Pedersen"
+    ],
+    "year": 2023,
+    "venue": "Engineering Applications of Artificial Intelligence",
+    "type": "Journal article",
+    "doi": "10.1016/j.engappai.2023.106414"
+  },
+  {
+    "title": "MultiResUNet3+: A full-scale connected multi-residual UNet model to denoise electrooculogram and electromyogram artifacts from corrupted electroencephalogram signals",
+    "authors": [
+      "Md Shafayet Hossain",
+      "Sakib Mahmud",
+      "Amith Khandakar",
+      "Nasser Al-Emadi",
+      "Farhana Ahmed Chowdhury",
+      "Zaid Bin Mahbub",
+      "Mamun Bin Ibne Reaz",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2023,
+    "venue": "Bioengineering",
+    "type": "Journal article",
+    "doi": "10.3390/bioengineering10050579"
+  },
+  {
+    "title": "PCovNet+: A CNN-VAE anomaly detection framework with LSTM embeddings for smartwatch-based COVID-19 detection",
+    "authors": [
+      "Farhan Fuad Abir",
+      "Muhammad E. H. Chowdhury",
+      "Malisha Islam Tapotee",
+      "Adam Mushtak",
+      "Amith Khandakar",
+      "Sakib Mahmud",
+      "Md Anwarul Hasan"
+    ],
+    "year": 2023,
+    "venue": "Engineering Applications of Artificial Intelligence",
+    "type": "Journal article",
+    "doi": "10.1016/j.engappai.2023.106130"
+  },
+  {
+    "title": "Self-Attention MHDNet: A novel deep learning model for detection of R-peaks in ECG signals corrupted with magnetohydrodynamic effect",
+    "authors": [
+      "Moajjem Hossain Chowdhury",
+      "Muhammad E. H. Chowdhury",
+      "Muhammad Salman Khan",
+      "Md Asad Ullah",
+      "Sakib Mahmud",
+      "Amith Khandakar",
+      "Alvee Hassan",
+      "Anas M. Tahir",
+      "Anwarul Hasan"
+    ],
+    "year": 2023,
+    "venue": "Bioengineering",
+    "type": "Journal article",
+    "doi": "10.3390/bioengineering10050542"
+  },
+  {
+    "title": "Automated measurement of penile curvature using deep learning-based novel quantification method",
+    "authors": [
+      "Sriman Bidhan Baray",
+      "Mohamed Abdelmoniem",
+      "Sakib Mahmud",
+      "Saidul Kabir",
+      "Md. Ahasan Atick Faisal",
+      "Muhammad E. H. Chowdhury",
+      "Tariq O. Abbas"
+    ],
+    "year": 2023,
+    "venue": "Frontiers in Pediatrics",
+    "type": "Journal article",
+    "doi": "10.3389/fped.2023.1149318"
+  },
+  {
+    "title": "Deep learning-based middle cerebral artery blood flow abnormality detection using flow velocity waveform derived from transcranial Doppler ultrasound",
+    "authors": [
+      "Kanchon Kanti Podder",
+      "Muhammad E. H. Chowdhury",
+      "Somaya Al-Maadeed",
+      "Naima Nasrin Nisha",
+      "Sakib Mahmud",
+      "Fatema Hamadelneil",
+      "Taif Almkhlef",
+      "Hind Aljofairi",
+      "Adam Mushtak",
+      "Amith Khandakar",
+      "Susu Zughaier"
+    ],
+    "year": 2023,
+    "venue": "Biomedical Signal Processing and Control",
+    "type": "Journal article",
+    "doi": "10.1016/j.bspc.2023.104882"
+  },
+  {
+    "title": "NDDNet: A deep learning model for predicting neurodegenerative diseases from gait pattern",
+    "authors": [
+      "Md. Ahasan Atick Faisal",
+      "Muhammad E. H. Chowdhury",
+      "Zaid Bin Mahbub",
+      "Shona Pedersen",
+      "Mosabber Uddin Ahmed",
+      "Amith Khandakar",
+      "Mohammed Alhatou",
+      "Mohammad Nabil",
+      "Iffat Ara",
+      "Enamul Haque Bhuiyan",
+      "Sakib Mahmud",
+      "Mohammed AbdulMoniem"
+    ],
+    "year": 2023,
+    "venue": "Applied Intelligence",
+    "type": "Journal article",
+    "doi": "10.1007/s10489-023-04557-w"
+  },
+  {
+    "title": "Design and performance evaluation of a novel spiral head-stem trunnion for hip implant using finite element analysis",
+    "authors": [
+      "Md Mohiuddin Soliman",
+      "Muhammad E. H. Chowdhury",
+      "Mohammad Tariqul Islam",
+      "Farayi Musharavati",
+      "Sakib Mahmud",
+      "Muhammad Hafizh",
+      "Mohamed Arselene Ayari",
+      "Amith Khandakar",
+      "Mohammad Kaosar Alam",
+      "Erfan Zal Nezhad"
+    ],
+    "year": 2023,
+    "venue": "Materials",
+    "type": "Journal article",
+    "doi": "10.3390/ma16041466"
+  },
+  {
+    "title": "Fiber Bragg gratings-based smart insole to measure plantar pressure and temperature",
+    "authors": [
+      "Sakib Mahmud",
+      "Amith Khandakar",
+      "Muhammad E. H. Chowdhury",
+      "Mohammed AbdulMoniem",
+      "Mamun Bin Ibne Reaz",
+      "Zaid Bin Mahbub",
+      "Kishor Kumar Sadasivuni",
+      "M. Murugappan",
+      "Mohammed Alhatou"
+    ],
+    "year": 2023,
+    "venue": "Sensors and Actuators A: Physical",
+    "type": "Journal article",
+    "doi": "10.1016/j.sna.2022.114092"
+  },
+  {
+    "title": "Surface acoustic wave sensors for hip implant: A numerical and computational feasibility investigation using finite element methods",
+    "authors": [
+      "Muhammad Hafizh",
+      "Md Mohiuddin Soliman",
+      "Yazan Qiblawey",
+      "Muhammad E. H. Chowdhury",
+      "Mohammad Tariqul Islam",
+      "Farayi Musharavati",
+      "Sakib Mahmud",
+      "Amith Khandakar",
+      "Mohammad Nabil",
+      "Erfan Zal Nezhad"
+    ],
+    "year": 2023,
+    "venue": "Biosensors",
+    "type": "Journal article",
+    "doi": "10.3390/bios13010079"
+  },
+  {
+    "title": "NABNet: A nested attention-guided BiConvLSTM network for robust prediction of blood pressure components from reconstructed arterial blood pressure waveforms using PPG and ECG",
+    "authors": [
+      "Sakib Mahmud",
+      "Nabil Ibtehaz",
+      "Amith Khandakar",
+      "M. Sohel Rahman",
+      "Antonio J. R. Gonzales",
+      "Tawsifur Rahman",
+      "Md. Shafayet Hossain",
+      "Md. Sakib Abrar Hossain",
+      "Md. Ahasan Atick Faisal",
+      "Farhan Fuad Abir",
+      "Farayi Musharavati",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2023,
+    "venue": "Biomedical Signal Processing and Control",
+    "type": "Journal article",
+    "doi": "10.1016/j.bspc.2022.104247"
+  },
+  {
+    "title": "MLMRS-Net: Electroencephalography (EEG) motion artifacts removal using a multi-layer multi-resolution spatially pooled 1D signal reconstruction network",
+    "authors": [
+      "Sakib Mahmud",
+      "Md. Shafayet Hossain",
+      "Muhammad E. H. Chowdhury",
+      "Mamun Bin Ibne Reaz"
+    ],
+    "year": 2023,
+    "venue": "Neural Computing and Applications",
+    "type": "Journal article",
+    "doi": "10.1007/s00521-022-08111-6"
+  },
+  {
+    "title": "PPG2ABP: Translating Photoplethysmogram (PPG) Signals to Arterial Blood Pressure (ABP) Waveforms",
+    "authors": [
+      "Nabil Ibtehaz",
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Amith Khandakar",
+      "Muhammad Salman Khan",
+      "Mohamed Arselene Ayari",
+      "Anas M. Tahir",
+      "M. Sohel Rahman"
+    ],
+    "year": 2022,
+    "venue": "Bioengineering",
+    "type": "Journal article",
+    "doi": "10.3390/bioengineering9110692"
+  },
+  {
+    "title": "Lightweight end-to-end deep learning solution for estimating respiration rate from photoplethysmogram signal",
+    "authors": [
+      "Moajjem Hossain Chowdhury",
+      "Md Nazmul Islam Shuzan",
+      "Muhammad E. H. Chowdhury",
+      "Mamun Bin Ibne Reaz",
+      "Sakib Mahmud",
+      "Nasser Al Emadi",
+      "Mohamed Arselene Ayari",
+      "Sawal Hamid Md Ali",
+      "Ahmad Ashrif A. Bakar",
+      "Syed Mahfuzur Rahman",
+      "Amith Khandakar"
+    ],
+    "year": 2022,
+    "venue": "Bioengineering",
+    "type": "Journal article",
+    "doi": "10.3390/bioengineering9100558"
+  },
+  {
+    "title": "A review of biomaterials and associated performance metrics analysis in pre-clinical finite-element models and implementation stages for total hip implant systems",
+    "authors": [
+      "Md Mohiuddin Soliman",
+      "Muhammad E. H. Chowdhury",
+      "Mohammad Tariqul Islam",
+      "Farayi Musharavati",
+      "Mohammad Nabil",
+      "Muhammad Hafizh",
+      "Amith Khandakar",
+      "Sakib Mahmud",
+      "Erfan Zal Nezhad",
+      "Md Nazmul Islam Shuzan",
+      "Farhan Fuad Abir"
+    ],
+    "year": 2022,
+    "venue": "Polymers",
+    "type": "Review",
+    "doi": "10.3390/polym14204308"
+  },
+  {
+    "title": "Design and implementation of a smart insole system to measure plantar pressure and temperature",
+    "authors": [
+      "Amith Khandakar",
+      "Sakib Mahmud",
+      "Muhammad E. H. Chowdhury",
+      "Mamun Bin Ibne Reaz",
+      "Serkan Kiranyaz",
+      "Zaid Bin Mahbub",
+      "Sawal Hamid Md Ali",
+      "Ahmad Ashrif A. Bakar",
+      "Mohamed Arselene Ayari",
+      "Mohammed Alhatou",
+      "Mohammed Abdul-Moniem",
+      "Md Ahasan Atick Faisal"
+    ],
+    "year": 2022,
+    "venue": "Sensors",
+    "type": "Journal article",
+    "doi": "10.3390/s22197599"
+  },
+  {
+    "title": "PCovNet: A presymptomatic COVID-19 detection framework using deep learning on wearables data",
+    "authors": [
+      "Farhan Fuad Abir",
+      "Khalid Alyafei",
+      "Muhammad E. H. Chowdhury",
+      "Amith Khandakar",
+      "Rashid Ahmed",
+      "Muhammad Maqsud Hossain",
+      "Sakib Mahmud",
+      "Ashiqur Rahman",
+      "Tareq O Abbas",
+      "Susu M. Zughaier",
+      "Khalid Kamal Naji"
+    ],
+    "year": 2022,
+    "venue": "Computers in Biology and Medicine",
+    "type": "Journal article",
+    "doi": "10.1016/j.compbiomed.2022.105682"
+  },
+  {
+    "title": "QUCoughScope: An intelligent application to detect COVID-19 patients using cough and breath sounds",
+    "authors": [
+      "Tawsifur Rahman",
+      "Nabil Ibtehaz",
+      "Amith Khandakar",
+      "Md Sakib Abrar Hossain",
+      "Yosra Magdi Salih Mekki",
+      "Maymouna Ezeddin",
+      "Enamul Haque Bhuiyan",
+      "Mohamed Arselene Ayari",
+      "Anas Tahir",
+      "Yazan Qiblawey",
+      "Sakib Mahmud",
+      "Susu M. Zughaier",
+      "Tariq Abbas",
+      "Somaya Al-Maadeed",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2022,
+    "venue": "Diagnostics",
+    "type": "Journal article",
+    "doi": "10.3390/diagnostics12040920"
+  },
+  {
+    "title": "A Shallow U-Net Architecture for Reliably Predicting Blood Pressure (BP) from Photoplethysmogram (PPG) and Electrocardiogram (ECG) Signals",
+    "authors": [
+      "Sakib Mahmud",
+      "Nabil Ibtehaz",
+      "Amith Khandakar",
+      "Anas M. Tahir",
+      "Tawsifur Rahman",
+      "Khandaker Reajul Islam",
+      "Md Shafayet Hossain",
+      "M. Sohel Rahman",
+      "Farayi Musharavati",
+      "Mohamed Arselene Ayari",
+      "Mohammad Tariqul Islam",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2022,
+    "venue": "Sensors",
+    "type": "Journal article",
+    "doi": "10.3390/s22030919"
+  },
+  {
+    "title": "An investigation to study the effects of Tai Chi on human gait dynamics using classical machine learning",
+    "authors": [
+      "Md. Ahasan Atick Faisal",
+      "Muhammad E. H. Chowdhury",
+      "Amith Khandakar",
+      "Md Shafayet Hossain",
+      "Mohammed Alhatou",
+      "Sakib Mahmud",
+      "Iffat Ara",
+      "Shah Imran Sheikh",
+      "Mosabber Uddin Ahmed"
+    ],
+    "year": 2022,
+    "venue": "Computers in Biology and Medicine",
+    "type": "Journal article",
+    "doi": "10.1016/j.compbiomed.2021.105184"
+  },
+  {
+    "title": "HipXNet: Deep learning approaches to detect aseptic loosening of hip implants using X-ray images",
+    "authors": [
+      "Tawsifur Rahman",
+      "Amith Khandakar",
+      "Khandaker Reajul Islam",
+      "Md Mohiuddin Soliman",
+      "Mohammad Tariqul Islam",
+      "Ahmed Elsayed",
+      "Yazan Qiblawey",
+      "Sakib Mahmud",
+      "Ashiqur Rahman",
+      "Farayi Musharavati",
+      "Erfan Zalnezhad",
+      "Muhammad E. H. Chowdhury"
+    ],
+    "year": 2022,
+    "venue": "IEEE Access",
+    "type": "Journal article",
+    "doi": "10.1109/access.2022.3173424"
+  },
+  {
+    "title": "COVID-19 infection localization and severity grading from chest X-ray images",
+    "authors": [
+      "Anas M. Tahir",
+      "Muhammad E. H. Chowdhury",
+      "Amith Khandakar",
+      "Tawsifur Rahman",
+      "Yazan Qiblawey",
+      "Uzair Khurshid",
+      "Serkan Kiranyaz",
+      "Nabil Ibtehaz",
+      "M. Sohel Rahman",
+      "Somaya Al-Maadeed",
+      "Sakib Mahmud",
+      "Maymouna Ezeddin",
+      "Khaled Hameed",
+      "Tahir Hamid"
+    ],
+    "year": 2021,
+    "venue": "Computers in Biology and Medicine",
+    "type": "Journal article",
+    "doi": "10.1016/j.compbiomed.2021.105002"
+  },
+  {
+    "title": "Detection and severity classification of COVID-19 in CT images using deep learning",
+    "authors": [
+      "Yazan Qiblawey",
+      "Anas Tahir",
+      "Muhammad E. H. Chowdhury",
+      "Amith Khandakar",
+      "Serkan Kiranyaz",
+      "Tawsifur Rahman",
+      "Nabil Ibtehaz",
+      "Sakib Mahmud",
+      "Somaya Al-Maadeed",
+      "Farayi Musharavati"
+    ],
+    "year": 2021,
+    "venue": "Diagnostics",
+    "type": "Journal article",
+    "doi": "10.3390/diagnostics11050893"
+  },
+  {
+    "title": "COVID-19 vaccine willingness and hesitancy among residents in Qatar: a quantitative analysis based on machine learning",
+    "authors": [
+      "Muhammad Hafizh",
+      "Yousif Badri",
+      "Sakib Mahmud",
+      "Amir Hafez",
+      "Pilsung Choe"
+    ],
+    "year": 2021,
+    "venue": "Journal of Human Behavior in the Social Environment",
+    "type": "Journal article",
+    "doi": "10.1080/10911359.2021.1973642"
+  },
+  {
+    "title": "Towards next-generation cannulation simulators",
+    "authors": [
+      "Abdulrahman Mahmoud",
+      "Uzair Khurshid",
+      "Aiman Abducarim",
+      "Sakib Mahmud",
+      "Omrane Abdallah",
+      "Elshaikh Mohamed",
+      "Abdullah Alsalemi",
+      "Faycal Bensaali",
+      "Abbes Amira",
+      "Ali Ait Hssain",
+      "Guillaume Alinier",
+      "Ibrahim Hassan"
+    ],
+    "year": 2019,
+    "venue": "Qatar Medical Journal",
+    "type": "Journal article",
+    "doi": "10.5339/qmj.2019.qccc.61"
+  },
+  {
+    "title": "Towards the design and implementation of a human circulatory system for extracorporeal membrane oxygenation simulation",
+    "authors": [
+      "Uzair Khurshid",
+      "Abdulrahman Mahmoud",
+      "Aiman Abducarim",
+      "Sakib Mahmud",
+      "Omrane Abdallah",
+      "Elshaikh Mohamed",
+      "Faycal Bensaali",
+      "Abbes Amira",
+      "Abdullah Alsalemi",
+      "Ali Ait Hssain",
+      "Guillaume Alinier",
+      "Ibrahim Hassan"
+    ],
+    "year": 2018,
+    "venue": "The Egyptian Journal of Critical Care Medicine",
+    "type": "Journal article",
+    "doi": "10.1016/j.ejccm.2018.12.017"
+  },
+  {
+    "title": "Rotational Vibration-Based Piezoelectric Energy Harvesting with Bandwidth Enhancement Through Magnetic Oscillators",
+    "authors": [
+      "Muhammad Hafizh",
+      "Abdelrahman Ali",
+      "Sakib Mahmud",
+      "Mohamed A. Ayari",
+      "Asan G. A. Muthalif"
+    ],
+    "year": 2024,
+    "venue": "In Proceedings of Ninth International Congress on Information and Communication Technology, 2024",
+    "type": "Book chapter",
+    "doi": "10.1007/978-981-97-3302-6_3"
+  },
+  {
+    "title": "Deep Learning Technique to Denoise Electromyogram Artifacts from Single-Channel Electroencephalogram Signals",
+    "authors": [
+      "Muhammad E. H. Chowdhury",
+      "Md Shafayet Hossain",
+      "Sakib Mahmud",
+      "Amith Khandakar"
+    ],
+    "year": 2022,
+    "venue": "8th International Conference on Signal, Image Processing and Embedded Systems (SIGEM), 2022",
+    "type": "Conference paper",
+    "doi": "10.5121/csit.2022.122006"
+  },
+  {
+    "title": "Classification of Viral, Bacterial, and COVID-19 Pneumonia using Deep Learning Framework from Chest X-Ray Images",
+    "authors": [
+      "Muhammad E. H. Chowdhury",
+      "Tawsifur Rahman",
+      "Amith Khandakar",
+      "Sakib Mahmud"
+    ],
+    "year": 2022,
+    "venue": "8th International Conference on Signal, Image Processing and Embedded Systems (SIGEM), 2022",
+    "type": "Conference paper",
+    "doi": "10.5121/csit.2022.122001"
+  },
+  {
+    "title": "Preliminary Implementation of the Next Generation Cannulation Simulator",
+    "authors": [
+      "Abdulrahman Mahmoud",
+      "Ali Ait Hssain",
+      "Guillaume Alinier",
+      "Ibrahim Fawzy Hassan",
+      "Uzair Khurshid",
+      "Aiman Abducarim",
+      "Sakib Mahmud",
+      "Omrane Abdallah",
+      "Elshaikh Mohamed",
+      "Abdullah Alsalemi",
+      "Faycal Bensaali",
+      "Abbes Amira"
+    ],
+    "year": 2019,
+    "venue": "IEEE Student Conference on Research and Development (SCOReD), 2019",
+    "type": "Conference paper",
+    "doi": "10.1109/scored.2019.8896240"
+  }
+]
