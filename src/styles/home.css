@@ -31,11 +31,13 @@
 .home-contact-jump { align-items: center; min-height: 44px; padding-inline: .28rem; font-size: .92rem; }
 
 .home-portrait {
-  width: 100%;
-  aspect-ratio: 1 / 1.12;
+  width: min(100%, 19rem);
+  aspect-ratio: 1 / 1.04;
+  justify-self: center;
   overflow: hidden;
-  border: 1px solid var(--border);
-  border-radius: 8px;
+  border: 2px solid var(--surface);
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px var(--border);
   background: var(--surface);
 }
 
@@ -131,7 +133,7 @@
 
 @media (max-width: 620px) {
   .home-hero-layout { grid-template-columns: minmax(0, 1fr); gap: 1rem; }
-  .home-portrait { width: min(100%, 28rem); aspect-ratio: 5 / 4; }
+  .home-portrait { max-width: 18rem; }
 }
 
 @media (max-width: 480px) {
