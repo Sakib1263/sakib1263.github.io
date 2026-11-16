@@ -1,4 +1,5 @@
 ---
+import SiteLink from '../components/SiteLink.astro';
 import { Image } from 'astro:assets';
 import type { Project } from '../data/research';
 import { publicationFor } from '../data/papers';
@@ -25,7 +26,7 @@ const imageWidth = visual ? Math.min(visual.image.width, 384) : 0;
   )}
   <div class="project-card-body">
     <p class="overline">{project.area} · {paper.year}</p>
-    <h3><a href={sitePath(`research/${project.slug}/`)}>{project.title}</a></h3>
+    <h3><SiteLink href={sitePath(`research/${project.slug}/`)}>{project.title}</SiteLink></h3>
     <p>{project.summary}</p>
   </div>
 </article>

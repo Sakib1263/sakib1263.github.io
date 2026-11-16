@@ -1,4 +1,5 @@
 ---
+import SiteLink from '../components/SiteLink.astro';
 import { doiUrl } from '../lib/site';
 ---
 
@@ -25,5 +26,5 @@ import { doiUrl } from '../lib/site';
       </li>
     </ol>
   </div>
-  <figcaption>Original schematic based on the study’s methods. The views and example grades are illustrative. <a href={doiUrl('10.1016/j.eswa.2024.124594')}>Study methods</a></figcaption>
+  <figcaption>Original schematic based on the study’s methods. The views and example grades are illustrative. <SiteLink href={doiUrl('10.1016/j.eswa.2024.124594')}>Study methods</SiteLink></figcaption>
 </figure>

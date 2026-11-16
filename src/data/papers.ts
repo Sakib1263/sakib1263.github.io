@@ -87,7 +87,7 @@ export const thesisUrl = 'https://qspace.qu.edu.qa/bitstream/handle/10576/45080/
 
 export const paperResources: Readonly<Record<string, { label: string; href: string }[]>> = {
   '10.1109/jbhi.2025.3605296': [
-    { label: 'Open dataset', href: 'https://doi.org/10.5281/zenodo.7422031' },
+    { label: 'Study dataset (Huawei Wang)', href: 'https://doi.org/10.5281/zenodo.7422031' },
   ],
   '10.1016/j.saa.2025.126931': [
     { label: 'Dataset access request', href: 'https://zenodo.org/records/23372983' },
@@ -121,9 +121,3 @@ const readingNotes = {
 };
 
 export const selectedPapers = Object.entries(readingNotes).map(([doi, context]) => ({ publication: publicationFor(doi), context }));
-export const citedPaperNotes: Readonly<Record<string, number>> = {
-  '10.1016/j.compbiomed.2021.105002': 221,
-  '10.3390/bioengineering9110692': 186,
-  '10.3390/diagnostics11050893': 134,
-  '10.3390/cancers15123189': 86,
-};

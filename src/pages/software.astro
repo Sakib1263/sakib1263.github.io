@@ -1,6 +1,6 @@
 ---
+import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
-import { kinetics } from '../data/kinetics';
 import { publicationId } from '../data/papers';
 import { projects } from '../data/research';
 import { profile, sitePath } from '../lib/site';
@@ -15,7 +15,7 @@ const software: { name: string; description: string; url: string; paper?: string
   <section class="shell page-intro">
     <h1>Software &amp; Data</h1>
     <p class="page-lead">Explore the implementations behind my papers, along with reusable code and dataset records.</p>
-    <a class="text-link" href={profile.github}>GitHub profile <span aria-hidden="true">↗</span></a>
+    <SiteLink class="text-link" href={profile.github}>GitHub profile <span aria-hidden="true">↗</span></SiteLink>
   </section>
   <section class="shell content-end" aria-labelledby="code-title">
     <h2 class="section-title" id="code-title">Research software</h2>
@@ -28,8 +28,8 @@ const software: { name: string; description: string; url: string; paper?: string
             <p>{item.description}</p>
           </div>
           <div class="resource-links">
-            <a class="text-link" href={item.url} aria-label={`Code for ${item.name}`}>Code <span aria-hidden="true">↗</span></a>
-            {item.paper && <a class="text-link secondary-link" href={item.paper} aria-label={`Paper for ${item.name}`}>Paper <span aria-hidden="true">↗</span></a>}
+            <SiteLink class="text-link" href={item.url} aria-label={`Code for ${item.name}`}>Code <span aria-hidden="true">↗</span></SiteLink>
+            {item.paper && <SiteLink class="text-link secondary-link" href={item.paper} aria-label={`Paper for ${item.name}`}>Paper <span aria-hidden="true">↗</span></SiteLink>}
           </div>
         </article>
       ))}
@@ -38,22 +38,11 @@ const software: { name: string; description: string; url: string; paper?: string
     <div class="resource-list">
       <article class="resource-row">
         <div>
-          <p class="overline">Public download</p>
-          <h3>Processed treadmill and insole recordings</h3>
-          <p>Huawei Wang’s Zenodo record contains processed movement data used in the insole kinetics study. The associated workflow guide describes how to prepare files for the current code.</p>
-        </div>
-        <div class="resource-links">
-          <a class="text-link" href={kinetics.dataUrl}>Zenodo record <span aria-hidden="true">↗</span></a>
-          <a class="text-link secondary-link" href={sitePath(`research/${kinetics.slug}/#reproduce`)}>Run the workflow</a>
-        </div>
-      </article>
-      <article class="resource-row">
-        <div>
           <p class="overline">Access by request</p>
           <h3>Multi-Instrument SERS Dataset</h3>
           <p>The record describes 29,545 Raman spectra across 20 analyte classes, acquired on four portable instruments and one laboratory reference. Access to the data files is restricted and can be requested through Zenodo.</p>
         </div>
-        <a class="text-link" href="https://zenodo.org/records/23372983">Zenodo record <span aria-hidden="true">↗</span></a>
+        <SiteLink class="text-link" href="https://zenodo.org/records/23372983">Zenodo record <span aria-hidden="true">↗</span></SiteLink>
       </article>
     </div>
   </section>

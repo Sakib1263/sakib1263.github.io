@@ -25,6 +25,10 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
     }
     if ('data-publication' in attributes) page.papers.push(attributes.id);
     if (tag === 'img' && !('alt' in attributes)) errors.push(`${key}: image without alt text`);
+    if (tag === 'a' && attributes.href && attributes.class !== 'skip-link'
+      && (attributes.target !== '_blank' || !attributes.rel?.split(/\s+/).includes('noopener'))) {
+      errors.push(`${key}: link does not open safely in a new tab: ${attributes.href}`);
+    }
     for (const attribute of ['href', 'src']) {
       if (attributes[attribute]) page.links.push(attributes[attribute]);
     }

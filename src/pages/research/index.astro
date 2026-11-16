@@ -1,4 +1,5 @@
 ---
+import SiteLink from '../../components/SiteLink.astro';
 import Base from '../../layouts/Base.astro';
 import ProjectCard from '../../components/ProjectCard.astro';
 import { featuredProjects, projects } from '../../data/research';
@@ -25,7 +26,7 @@ const additional = projects.filter(project => !featuredProjects.includes(project
         <article class="resource-row">
           <div>
             <p class="overline">{project.area} · {publicationFor(project.doi).year}</p>
-            <h3><a href={sitePath(`research/${project.slug}/`)}>{project.title}</a></h3>
+            <h3><SiteLink href={sitePath(`research/${project.slug}/`)}>{project.title}</SiteLink></h3>
             <p>{project.summary}</p>
           </div>
         </article>

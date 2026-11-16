@@ -1,0 +1,183 @@
+{
+  "year": 2025,
+  "quartileSource": "https://www.scimagojr.com/journalrank.php?year=2025",
+  "quartileDownloadArchive": "https://github.com/barais/hal-irisa-scripts/blob/main/data/scimagojr_2025.csv",
+  "journals": {
+    "0924-669X": {
+      "quartile": "Q2",
+      "scopusSourceId": "23674",
+      "impactFactor": "3.5",
+      "impactFactorSource": "https://link.springer.com/journal/10489"
+    },
+    "2306-5354": {
+      "quartile": "Q2",
+      "scopusSourceId": "21100886380",
+      "impactFactor": "4.4",
+      "impactFactorSource": "https://www.mdpi.com/journal/bioengineering/imprint"
+    },
+    "1746-8094": {
+      "quartile": "Q1",
+      "scopusSourceId": "4700152237",
+      "impactFactor": "5.7",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "2079-6374": {
+      "quartile": "Q1",
+      "scopusSourceId": "21100293900",
+      "impactFactor": "6.2",
+      "impactFactorSource": "https://www.mdpi.com/journal/biosensors/imprint"
+    },
+    "0360-1323": {
+      "quartile": "Q1",
+      "scopusSourceId": "26874",
+      "impactFactor": "8.4",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "2072-6694": {
+      "quartile": "Q1",
+      "scopusSourceId": "19700188419",
+      "impactFactor": "4.8",
+      "impactFactorSource": "https://www.mdpi.com/journal/cancers/announcements/17198"
+    },
+    "0010-4825": {
+      "quartile": "Q1",
+      "scopusSourceId": "17957"
+    },
+    "2075-4418": {
+      "quartile": "Q2",
+      "scopusSourceId": "21100852989",
+      "impactFactor": "3.8",
+      "impactFactorSource": "https://www.mdpi.com/journal/diagnostics/imprint"
+    },
+    "0952-1976": {
+      "quartile": "Q1",
+      "scopusSourceId": "24182",
+      "impactFactor": "9.0",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "0957-4174": {
+      "quartile": "Q1",
+      "scopusSourceId": "24201",
+      "impactFactor": "9.4",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "2296-2360": {
+      "quartile": "Q1",
+      "scopusSourceId": "21100851481",
+      "impactFactor": "2.2",
+      "impactFactorSource": "https://www.frontiersin.org/journals/pediatrics/about"
+    },
+    "2169-3536": {
+      "quartile": "Q1",
+      "scopusSourceId": "21100374601",
+      "impactFactor": "4.2",
+      "impactFactorSource": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf"
+    },
+    "2168-2194": {
+      "quartile": "Q1",
+      "scopusSourceId": "21100256982",
+      "impactFactor": "7.7",
+      "impactFactorSource": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf"
+    },
+    "1530-437X": {
+      "quartile": "Q1",
+      "scopusSourceId": "15047",
+      "impactFactor": "4.5",
+      "impactFactorSource": "https://open.ieee.org/wp-content/uploads/IEEE-Title-List-September-2026-CAPES.pdf"
+    },
+    "2352-7102": {
+      "quartile": "Q1",
+      "scopusSourceId": "21100389518",
+      "impactFactor": "8.1",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "1091-1359": {
+      "quartile": "Q1",
+      "scopusSourceId": "12247",
+      "impactFactor": "1.8",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "2050-750X": {
+      "quartile": "Q1",
+      "scopusSourceId": "21100229202",
+      "impactFactor": "6.2",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "1996-1944": {
+      "quartile": "Q2",
+      "scopusSourceId": "76627",
+      "impactFactor": "3.7",
+      "impactFactorSource": "https://www.mdpi.com/journal/materials/imprint"
+    },
+    "2352-4928": {
+      "quartile": "Q1",
+      "scopusSourceId": "21100369777",
+      "impactFactor": "4.9",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "0140-0118": {
+      "quartile": "Q2",
+      "scopusSourceId": "17979",
+      "impactFactor": "3.1",
+      "impactFactorSource": "https://link.springer.com/journal/11517"
+    },
+    "0941-0643": {
+      "quartile": "Q1",
+      "scopusSourceId": "24800"
+    },
+    "2073-4360": {
+      "quartile": "Q1",
+      "scopusSourceId": "54222",
+      "impactFactor": "5.8",
+      "impactFactorSource": "https://www.mdpi.com/journal/polymers/imprint"
+    },
+    "0253-8253": {
+      "quartile": "Q3",
+      "scopusSourceId": "17701"
+    },
+    "1364-0321": {
+      "quartile": "Q1",
+      "scopusSourceId": "27567",
+      "impactFactor": "18.0",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "1424-8220": {
+      "quartile": "Q1",
+      "scopusSourceId": "130124",
+      "impactFactor": "4.0",
+      "impactFactorSource": "https://www.mdpi.com/journal/sensors/imprint"
+    },
+    "0924-4247": {
+      "quartile": "Q1",
+      "scopusSourceId": "13660",
+      "impactFactor": "5.1",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "1386-1425": {
+      "quartile": "Q1",
+      "scopusSourceId": "24530",
+      "impactFactor": "4.8",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "0039-9140": {
+      "quartile": "Q1",
+      "scopusSourceId": "24555",
+      "impactFactor": "6.7",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    },
+    "2090-7303": {
+      "quartile": "Q4",
+      "quartileYear": 2019,
+      "scopusSourceId": "21100854908",
+      "quartileSource": "https://github.com/cfpgomes/SMS-article-2/blob/main/scimagojr%202019.csv",
+      "impactFactor": "0.2",
+      "impactFactorSource": "https://criticalcarereviews.com/evidence-library/journals/"
+    },
+    "0956-053X": {
+      "quartile": "Q1",
+      "scopusSourceId": "26490",
+      "impactFactor": "7.3",
+      "impactFactorSource": "https://github.com/syedrizwanhassan/JCR-2026-/blob/main/JCR%20Impact%20Factor%20List%202025%20%28June%202026%29.xlsx"
+    }
+  }
+}

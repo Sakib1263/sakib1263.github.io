@@ -1,4 +1,5 @@
 ---
+import SiteLink from '../components/SiteLink.astro';
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import ProjectCard from '../components/ProjectCard.astro';
@@ -26,13 +27,13 @@ const portraitWidths = [128, 256].filter(width => width < portraitWidth).concat(
       <p class="intro-lead">{profile.focus}</p>
       <p class="intro-detail">{profile.bio}</p>
       <div class="intro-actions">
-        <a class="button button-primary" href="#current-research">Explore research <span aria-hidden="true">↓</span></a>
-        <a class="button button-secondary" href={sitePath(cvPdfPath)} download>Download CV <span aria-hidden="true">↓</span></a>
+        <SiteLink class="button button-primary" href="#current-research">Explore research <span aria-hidden="true">↓</span></SiteLink>
+        <SiteLink class="button button-secondary" href={sitePath(cvPdfPath)} download>Download CV <span aria-hidden="true">↓</span></SiteLink>
       </div>
       <div class="profile-links">
-        <a href={profile.scholar}>Google Scholar <span aria-hidden="true">↗</span></a>
-        <a href={profile.orcid}>ORCID <span aria-hidden="true">↗</span></a>
-        <a href={profile.github}>GitHub <span aria-hidden="true">↗</span></a>
+        <SiteLink href={profile.scholar}>Google Scholar <span aria-hidden="true">↗</span></SiteLink>
+        <SiteLink href={profile.orcid}>ORCID <span aria-hidden="true">↗</span></SiteLink>
+        <SiteLink href={profile.github}>GitHub <span aria-hidden="true">↗</span></SiteLink>
       </div>
     </div>
   </section>
@@ -41,7 +42,7 @@ const portraitWidths = [128, 256].filter(width => width < portraitWidth).concat(
     <div class="shell">
       <div class="section-heading">
         <h2 id="selected-title">Featured projects</h2>
-        <a class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">→</span></a>
+        <SiteLink class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">→</span></SiteLink>
       </div>
       <div class="project-list">
         {featuredProjects.map(project => <ProjectCard project={project} />)}
@@ -54,13 +55,13 @@ const portraitWidths = [128, 256].filter(width => width < portraitWidth).concat(
     <section class="selected-papers" aria-labelledby="papers-title">
       <div class="section-heading">
         <h2 id="papers-title">Selected papers</h2>
-        <a class="text-link" href={sitePath('publications/?view=selected#bibliography')}>All selected papers <span aria-hidden="true">→</span></a>
+        <SiteLink class="text-link" href={sitePath('publications/?view=selected#bibliography')}>All selected papers <span aria-hidden="true">→</span></SiteLink>
       </div>
       <div class="resource-list">
         {selectedPapers.slice(0, 3).map(({ publication, context }) => (
           <article class="paper-preview">
             <p class="overline">{publication.venue} · {publication.onlineYear ? `Online ${publication.onlineYear}` : publication.year}</p>
-            <h3><a href={sitePath(`publications/#${publicationId(publication.doi)}`)}>{publication.title}</a></h3>
+            <h3><SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)}>{publication.title}</SiteLink></h3>
             <p>{context}</p>
           </article>
         ))}
@@ -73,6 +74,6 @@ const portraitWidths = [128, 256].filter(width => width < portraitWidth).concat(
       <h2 id="contact-title">Contact</h2>
       <p>I welcome conversations about PhD research and collaborations on evaluating biomedical models across cohorts, clinical sites, and instruments.</p>
     </div>
-    <a class="text-link" href={`mailto:${profile.email}?subject=Research%20inquiry`}>{profile.email} <span aria-hidden="true">↗</span></a>
+    <SiteLink class="text-link" href={`mailto:${profile.email}?subject=Research%20inquiry`}>{profile.email} <span aria-hidden="true">↗</span></SiteLink>
   </section>
 </Base>
