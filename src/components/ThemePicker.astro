@@ -1,0 +1,89 @@
+---
+import { themes } from '../lib/themes';
+import '../styles/theme-picker.css';
+
+const swatches = ['background', 'surface', 'text', 'primary', 'accent'];
+---
+
+<details class="theme-picker" data-theme-picker hidden>
+  <summary><span class="theme-indicator" aria-hidden="true"></span>Theme</summary>
+  <div class="theme-panel">
+    <fieldset>
+      <legend>Color theme</legend>
+      <label class="theme-option">
+        <input type="radio" name="color-theme" value="system" checked />
+        <span>System</span>
+      </label>
+      {Object.entries(themes).map(([id, { label }]) => (
+        <label class="theme-option">
+          <input type="radio" name="color-theme" value={id} />
+          <span>{label}</span>
+          <span class="theme-preview" data-palette={id} aria-hidden="true">
+            {swatches.map(color => <span class={`swatch-${color}`}></span>)}
+          </span>
+        </label>
+      ))}
+    </fieldset>
+  </div>
+</details>
+
+<script>
+  import { isThemeId, themes, themeStorageKey } from '../lib/themes';
+
+  const root = document.documentElement;
+  const picker = document.querySelector<HTMLDetailsElement>('[data-theme-picker]');
+  const trigger = picker?.querySelector('summary');
+
+  if (picker && trigger) {
+    const options = Array.from(picker.querySelectorAll<HTMLInputElement>('input[type="radio"]'));
+    const themeColors = Array.from(document.querySelectorAll<HTMLMetaElement>('meta[data-system-color]'));
+
+    function applyTheme(value: string | null) {
+      const theme = isThemeId(value) ? value : null;
+      // Switch color schemes together so text and its background change in the same frame.
+      root.toggleAttribute('data-theme-animate', theme !== null && theme !== root.dataset.theme
+        && themes[theme].scheme === getComputedStyle(root).colorScheme);
+      if (theme) root.dataset.theme = theme;
+      else delete root.dataset.theme;
+
+      for (const option of options) option.checked = option.value === (theme ?? 'system');
+      for (const meta of themeColors) {
+        meta.content = theme ? themes[theme].colors.background : (meta.dataset.systemColor ?? meta.content);
+      }
+    }
+
+    applyTheme(root.dataset.theme ?? null);
+    picker.hidden = false;
+
+    picker.addEventListener('change', event => {
+      const input = event.target;
+      if (!(input instanceof HTMLInputElement)) return;
+      applyTheme(input.value);
+      try {
+        if (isThemeId(input.value)) localStorage.setItem(themeStorageKey, input.value);
+        else localStorage.removeItem(themeStorageKey);
+      } catch {
+        // The current page can still apply the theme when storage is disabled.
+      }
+    });
+
+    picker.addEventListener('keydown', event => {
+      if (event.key !== 'Escape' || !picker.open) return;
+      event.preventDefault();
+      picker.open = false;
+      trigger.focus();
+    });
+
+    document.addEventListener('click', event => {
+      if (event.target instanceof Node && !picker.contains(event.target)) picker.open = false;
+    });
+
+    picker.addEventListener('focusout', event => {
+      if (event.relatedTarget instanceof Node && !picker.contains(event.relatedTarget)) picker.open = false;
+    });
+
+    window.addEventListener('storage', event => {
+      if (event.key === themeStorageKey || event.key === null) applyTheme(event.newValue);
+    });
+  }
+</script>

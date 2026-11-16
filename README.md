@@ -29,6 +29,8 @@ pnpm preview
 | Dataset records, DOI links, and contributor credits | [src/data/datasets.ts](src/data/datasets.ts) |
 | Research software catalog | [src/pages/software.astro](src/pages/software.astro) |
 | Shared styles | [src/styles/site.css](src/styles/site.css) |
+| Theme palettes and defaults | [src/lib/themes.ts](src/lib/themes.ts) |
+| Contrast, borders, and focus colors | [src/styles/theme.css](src/styles/theme.css) |
 
 Add a publication by copying an existing entry. Use the publisher's title, the published author order in `Family, Given` form, the issue or proceedings year, and the DOI. Add an online publication year when it is known and differs from the issue year. Assign one of the existing topic keys. The publication list, citation text, DOI-based permalinks, and BibTeX download share this data. Add an open full-text URL in `src/data/papers.ts` when the publisher or a repository makes the complete article publicly accessible. To share a filtered view, set the filters and copy the resulting address. For example, `/publications/?topic=imaging&view=selected#bibliography` shows the selected imaging papers.
 
@@ -39,6 +41,8 @@ Journal metrics are keyed by the publication's ISSN. Use the best subject quarti
 Add a project to its research area in `src/data/research-catalog.ts` with a stable slug, a summary, the approach, and your contribution. Link supporting publications by DOI and related projects by slug. When adding results, record the comparison and the evaluation population or dataset. Give new artwork descriptive alternative text and a figure credit where applicable.
 
 Replace `public/sakib-mahmud-cv.pdf` to update the downloadable CV. The build serves that file directly. Update `cvUpdated` when changing the web CV. The research figures include source links on their project pages. The Raman graphical abstract is from Mahmud et al. (2026), DOI [10.1016/j.saa.2025.126931](https://doi.org/10.1016/j.saa.2025.126931), under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The site serves [Inter](https://rsms.me/inter/) from local WOFF2 files under the [SIL Open Font License](src/assets/fonts/inter-OFL.txt).
+
+Use **Theme** in the header to preview any palette across the site. The browser saves a manual choice. **System** follows the device’s preference, with Modern Professional for light mode and Midnight Tech for dark mode. Page styles use the shared CSS variables. The theme tests check the palette values and contrast pairs.
 
 ## Verify changes
 

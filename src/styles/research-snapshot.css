@@ -1,6 +1,6 @@
 .research-snapshot {
   margin-bottom: 1rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: 7px;
   background: var(--surface);
 }
@@ -19,7 +19,7 @@
   align-items: center;
   gap: .25rem;
   min-height: 28px;
-  color: var(--accent-dark);
+  color: var(--link);
   font-size: .84rem;
   font-weight: 630;
 }
@@ -41,16 +41,16 @@
 
 .citation-metrics > div {
   padding: .44rem .45rem;
-  background: var(--wash);
+  background: var(--surface-subtle);
   border-radius: 5px;
   min-width: 0;
 }
 
-.citation-metrics dt { color: var(--muted); font-size: .79rem; font-weight: 630; }
+.citation-metrics dt { color: var(--text-muted); font-size: .79rem; font-weight: 630; }
 .citation-metrics dd { margin: .15rem 0 0; }
 .citation-metrics strong {
   display: block;
-  color: var(--ink);
+  color: var(--text);
   font-size: clamp(1.33rem, 2.7vw, 1.9rem);
   font-variant-numeric: tabular-nums;
   line-height: 1.2;
@@ -58,7 +58,7 @@
 }
 
 .citation-metrics small, .snapshot-date, .citation-history-note {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: .76rem;
   line-height: 1.45;
 }
@@ -66,7 +66,7 @@
 .citation-metrics small { display: block; margin-top: .22rem; }
 .snapshot-date, .citation-history-note { margin-top: .3rem; }
 
-.citation-history figcaption { color: var(--accent-dark); font-size: .84rem; font-weight: 670; }
+.citation-history figcaption { color: var(--link); font-size: .84rem; font-weight: 670; }
 .citation-bars {
   display: grid;
   grid-template-columns: repeat(var(--citation-years), minmax(0, 1fr));
@@ -80,7 +80,7 @@
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: .76rem;
   font-variant-numeric: tabular-nums;
 }
@@ -93,20 +93,20 @@
   align-items: center;
   width: 100%;
   height: 5.05rem;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid var(--border);
 }
 
-.citation-count { color: var(--ink); font-weight: 620; }
+.citation-count { color: var(--text); font-weight: 620; }
 .citation-unit { position: absolute; width: 1px; height: 1px; clip-path: inset(50%); overflow: hidden; white-space: nowrap; }
 .citation-bar {
   width: min(54%, 2.5rem);
   height: calc(var(--citation-height) * .79);
   border-radius: 3px 3px 0 0;
-  background: var(--accent);
+  background: var(--primary);
 }
 
-.citation-bars li:last-child .citation-bar { background: var(--accent-dark); }
-.snapshot-profiles { border-top: 1px solid var(--line); }
+.citation-bars li:last-child .citation-bar { background: var(--accent-strong); }
+.snapshot-profiles { border-top: 1px solid var(--border); }
 .snapshot-profiles nav { display: flex; flex-wrap: wrap; gap: .12rem 1rem; padding: .16rem .8rem; }
 
 @media (max-width: 680px) {

@@ -1,15 +1,21 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
+import ThemePicker from '../components/ThemePicker.astro';
+import '../styles/theme.css';
 import '../styles/site.css';
 import { getImage } from 'astro:assets';
 import portrait from '../assets/sakib-mahmud.jpg';
 import { navigation, profile, sitePath } from '../lib/site';
+import { darkTheme, lightTheme, themeCss, themes, themeStorageKey } from '../lib/themes';
 
 const { title, description = profile.bio, shareImage = portrait, noIndex = false } = Astro.props;
 const pageTitle = title ? `${title} | ${profile.name}` : `${profile.name} | Biomedical AI Research`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const share = await getImage({ src: shareImage, width: Math.min(shareImage.width, 750), format: 'jpg' });
 const shareUrl = new URL(share.src, Astro.site).href;
+const lightBackground = themes[lightTheme].colors.background;
+const darkBackground = themes[darkTheme].colors.background;
+const themeBackgrounds = Object.fromEntries(Object.entries(themes).map(([id, theme]) => [id, theme.colors.background]));
 const structuredData = {
   '@context': 'https://schema.org',
   '@type': 'ProfilePage',
@@ -31,7 +37,22 @@ const structuredData = {
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f9f9f6" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content={lightBackground} data-system-color={lightBackground} />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content={darkBackground} data-system-color={darkBackground} />
+    <script is:inline define:vars={{ themeStorageKey, themeBackgrounds }}>
+      try {
+        const saved = localStorage.getItem(themeStorageKey);
+        if (saved && Object.hasOwn(themeBackgrounds, saved)) {
+          document.documentElement.dataset.theme = saved;
+          for (const meta of document.querySelectorAll('meta[data-system-color]')) {
+            meta.content = themeBackgrounds[saved];
+          }
+        }
+      } catch {
+        // Use the system preference when storage is unavailable.
+      }
+    </script>
+    <style is:inline set:html={themeCss}></style>
     <meta property="og:type" content="website" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
@@ -47,7 +68,10 @@ const structuredData = {
     <a target="_self" class="skip-link" href="#main">Skip to content</a>
     <header class="site-header">
       <div class="shell masthead">
-        <SiteLink class="brand" href={sitePath()}>{profile.name}</SiteLink>
+        <div class="masthead-identity">
+          <SiteLink class="brand" href={sitePath()}>{profile.name}</SiteLink>
+          <ThemePicker />
+        </div>
         <nav aria-label="Main navigation">
           {navigation.map(({ label, path }) => {
             const href = sitePath(path);

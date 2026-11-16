@@ -7,7 +7,7 @@
 }
 
 .publication-profiles h2 {
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: .83rem;
   font-weight: 640;
   letter-spacing: 0;
@@ -27,20 +27,20 @@
   align-items: center;
   min-height: 34px;
   padding: .28rem .62rem;
-  border: 1px solid var(--line);
+  border: 1px solid var(--border);
   border-radius: 5px;
   background: var(--surface);
-  color: var(--accent-dark);
+  color: var(--link);
   font-size: .86rem;
   font-weight: 640;
   text-decoration: none;
 }
 
-.publication-profiles a:hover { background: var(--wash); color: var(--ink); text-decoration: underline; }
+.publication-profiles a:hover { background: var(--surface-subtle); color: var(--text); text-decoration: underline; }
 
 .bibliography-heading p {
   margin-block: .3rem .65rem;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: .93rem;
   line-height: 1.55;
 }
@@ -51,8 +51,8 @@
   align-items: end;
   gap: .5rem .65rem;
   padding: .65rem;
-  background: var(--wash);
-  border: 1px solid var(--line);
+  background: var(--surface-subtle);
+  border: 1px solid var(--border);
   border-radius: 6px;
 }
 
@@ -68,12 +68,12 @@
   min-height: 44px;
   padding: .52rem .55rem;
   background: var(--surface);
-  border: 1px solid #798e89;
+  border: 1px solid var(--border-control);
   border-radius: 4px;
   font-weight: 450;
 }
 
-.publication-filters input::placeholder { color: var(--muted); }
+.publication-filters input::placeholder { color: var(--text-muted); }
 .publication-filters .search-field { grid-column: 1 / 4; }
 .publication-filters .selection-filter {
   display: flex;
@@ -84,12 +84,30 @@
 }
 
 .publication-filters .selection-filter input {
+  appearance: none;
+  display: grid;
+  place-items: center;
   flex: 0 0 auto;
   width: 1.05rem;
   height: 1.05rem;
   min-height: 0;
   margin: 0;
-  accent-color: var(--accent-dark);
+  padding: 0;
+  border-radius: 3px;
+}
+
+.publication-filters .selection-filter input:checked {
+  border-color: var(--primary);
+  background: var(--primary);
+}
+
+.publication-filters .selection-filter input:checked::before {
+  content: '';
+  width: .31rem;
+  height: .54rem;
+  border: solid var(--on-primary);
+  border-width: 0 2px 2px 0;
+  transform: translateY(-.05rem) rotate(45deg);
 }
 
 .reset-filters { padding-inline: .75rem; }
@@ -100,22 +118,22 @@
   flex-wrap: wrap;
   gap: .3rem 1rem;
   padding-block: .65rem .5rem;
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: .83rem;
 }
 
-.result-count { color: var(--ink); font-weight: 650; }
-.empty-state { border-top: 1px solid var(--line); color: var(--muted); padding-top: 1rem; }
+.result-count { color: var(--text); font-weight: 650; }
+.empty-state { border-top: 1px solid var(--border); color: var(--text-muted); padding-top: 1rem; }
 .publication-group:not([hidden]) ~ .publication-group:not([hidden]) { margin-top: var(--catalog-section-gap); }
 
-.publication-year { color: var(--ink); font-size: .96rem; font-weight: 700; }
-.publication-year small { display: block; font-size: .72rem; font-weight: 520; color: var(--muted); }
-.publication-first-author { color: var(--accent-dark); font-weight: 700; }
+.publication-year { color: var(--text); font-size: .96rem; font-weight: 700; }
+.publication-year small { display: block; font-size: .72rem; font-weight: 520; color: var(--text-muted); }
+.publication-first-author { color: var(--link); font-weight: 700; }
 .publication h4 { margin: 0; font-size: 1.09rem; font-weight: 685; line-height: 1.4; overflow-wrap: break-word; }
-.publication h4 a { color: var(--ink); text-decoration-color: #879e9c; }
-.publication h4 a:hover { color: var(--accent); text-decoration-color: currentColor; }
-.publication-authors, .publication-venue { margin-top: .2rem; font-size: .85rem; line-height: 1.5; color: var(--muted); }
-.publication-authors strong { color: var(--ink); }
+.publication h4 a { color: var(--text); text-decoration-color: var(--border-control); }
+.publication h4 a:hover { color: var(--link); text-decoration-color: currentColor; }
+.publication-authors, .publication-venue { margin-top: .2rem; font-size: .85rem; line-height: 1.5; color: var(--text-muted); }
+.publication-authors strong { color: var(--text); }
 .journal-metrics {
   display: inline-flex;
   flex-wrap: wrap;
@@ -128,19 +146,19 @@
 .journal-quartile {
   padding: .13rem .33rem;
   border-radius: 4px;
-  background: #e4eee8;
-  color: var(--accent-dark);
+  background: var(--surface-tint);
+  color: var(--link);
   font-weight: 700;
 }
 .journal-impact { font-weight: 610; }
-.publication-locator { color: var(--muted); }
+.publication-locator { color: var(--text-muted); }
 .publication-summary { margin-top: .46rem; font-size: .93rem; line-height: 1.56; }
 
 .publication-details { margin-top: .3rem; }
 .publication-details summary {
   width: fit-content;
   padding-block: .2rem;
-  color: var(--accent-dark);
+  color: var(--link);
   cursor: pointer;
   font-size: .86rem;
   font-weight: 680;
@@ -151,18 +169,18 @@
 .publication-contribution {
   margin-block: .25rem .55rem;
   padding: .5rem .75rem;
-  border-left: 2px solid var(--accent);
+  border-left: 2px solid var(--accent-strong);
   background: var(--surface);
-  color: var(--muted);
+  color: var(--text-muted);
   font-size: .9rem;
   line-height: 1.55;
 }
 
-.catalog-actions button { padding: 0; border: 0; background: transparent; color: var(--accent); cursor: pointer; }
-.catalog-actions button:hover { color: var(--ink); }
-.citation-status:not(:empty) { margin-top: .3rem; color: var(--accent-dark); font-size: .85rem; }
-.citation-fallback { display: grid; margin-top: .4rem; gap: .25rem; color: var(--muted); font-size: .85rem; }
-.citation-fallback textarea { width: 100%; padding: .45rem; font: inherit; color: var(--ink); border: 1px solid #798e89; border-radius: 3px; }
+.catalog-actions button { padding: 0; border: 0; background: transparent; color: var(--link); cursor: pointer; }
+.catalog-actions button:hover { color: var(--text); }
+.citation-status:not(:empty) { margin-top: .3rem; color: var(--link); font-size: .85rem; }
+.citation-fallback { display: grid; margin-top: .4rem; gap: .25rem; color: var(--text-muted); font-size: .85rem; }
+.citation-fallback textarea { width: 100%; padding: .45rem; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border-control); border-radius: 3px; }
 
 @media (max-width: 620px) {
   .publication-profiles { align-items: start; flex-direction: column; }
@@ -174,4 +192,9 @@
 
 @media print {
   .publication-profiles, .publication-filters { display: none; }
+}
+
+@media (forced-colors: active) {
+  .publication-filters .selection-filter input { appearance: auto; }
+  .publication-filters .selection-filter input:checked::before { content: none; }
 }

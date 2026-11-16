@@ -1,11 +1,11 @@
-.research-intro-detail { margin-top: .28rem; color: var(--muted); font-size: .87rem; line-height: 1.5; }
+.research-intro-detail { margin-top: .28rem; color: var(--text-muted); font-size: .87rem; line-height: 1.5; }
 .research-group + .research-group { margin-top: var(--catalog-section-gap); }
 .research-entry { grid-template-columns: minmax(0, 8.3rem) minmax(0, 1fr); }
 .research-entry h3 { line-height: 1.42; font-weight: 685; }
-.research-entry h3 a { color: var(--ink); text-decoration-color: #879e9c; }
-.research-entry h3 a:hover { color: var(--accent); text-decoration-color: currentColor; }
-.research-period { color: var(--ink); font-weight: 670; }
-.research-status { color: var(--accent-dark); font-weight: 650; }
+.research-entry h3 a { color: var(--text); text-decoration-color: var(--border-control); }
+.research-entry h3 a:hover { color: var(--link); text-decoration-color: currentColor; }
+.research-period { color: var(--text); font-weight: 670; }
+.research-status { color: var(--link); font-weight: 650; }
 .research-summary { margin-top: .25rem; font-size: .93rem; line-height: 1.55; }
 
 .research-project-intro .overline { margin-top: .3rem; }
@@ -16,12 +16,12 @@
 .research-detail section + section { margin-top: var(--catalog-section-gap); }
 .research-section-copy { max-width: 74ch; margin: .55rem .25rem .15rem; font-size: .97rem; line-height: 1.65; }
 .research-detail .study-workflow { margin: .9rem 0 0; }
-.research-detail .study-workflow li { border-left-color: var(--accent); font-size: .87rem; }
+.research-detail .study-workflow li { font-size: .87rem; }
 .research-detail .detail-figure, .research-detail .ahn-example { margin-top: 1rem; }
 .research-detail .detail-figure img { width: 100%; }
 .research-detail .study-measures { margin-bottom: 0; }
 .research-detail .related-papers li { padding-inline: .25rem; }
-.research-detail .related-papers small { display: block; margin-top: .2rem; color: var(--muted); }
+.research-detail .related-papers small { display: block; margin-top: .2rem; color: var(--text-muted); }
 
 @media (max-width: 620px) {
   .research-entry { grid-template-columns: minmax(0, 1fr); }
