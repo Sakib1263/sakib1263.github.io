@@ -75,8 +75,8 @@ h3 { font-size: 1.1rem; line-height: 1.35; font-weight: 680; }
 .button-primary:hover { background: var(--accent); color: white; }
 .button-secondary { background: var(--surface); color: var(--accent-dark); border-color: #a8b9b5; }
 .button-secondary:hover { background: var(--wash); color: var(--ink); }
-.portrait { grid-area: portrait; width: 100%; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
-.portrait img { width: 100%; aspect-ratio: 1; object-fit: cover; object-position: top; }
+.portrait { grid-area: portrait; width: min(100%, 13rem); justify-self: end; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--surface); }
+.portrait img { width: 100%; }
 
 .selected-section { padding-block: clamp(1.75rem, 3.6vw, 2.7rem); border-block: 1px solid var(--line); background: var(--surface); }
 .section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: .45rem 1rem; flex-wrap: wrap; margin-bottom: .9rem; }

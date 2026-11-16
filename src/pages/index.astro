@@ -7,6 +7,9 @@ import portrait from '../assets/sakib-mahmud.jpg';
 import { publicationId, selectedPapers } from '../data/papers';
 import { featuredProjects } from '../data/research';
 import { cvPdfPath, profile, sitePath } from '../lib/site';
+
+const portraitWidth = Math.min(portrait.width, 416);
+const portraitWidths = [128, 256].filter(width => width < portraitWidth).concat(portraitWidth);
 ---
 
 <Base>
@@ -17,7 +20,7 @@ import { cvPdfPath, profile, sitePath } from '../lib/site';
       <p class="intro-location">{profile.department} · {profile.location}</p>
     </div>
     <div class="portrait">
-      <Image src={portrait} alt="Portrait of Sakib Mahmud" widths={[128, 256, 384, 512]} sizes="(max-width: 720px) 112px, 224px" width={512} format="webp" loading="eager" fetchpriority="high" />
+      <Image src={portrait} alt="Portrait of Sakib Mahmud" widths={portraitWidths} sizes="(max-width: 720px) 112px, 208px" width={portraitWidth} format="webp" loading="eager" fetchpriority="high" />
     </div>
     <div class="intro-copy">
       <p class="intro-lead">{profile.focus}</p>
