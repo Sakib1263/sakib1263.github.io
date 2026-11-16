@@ -16,18 +16,6 @@
   line-height: 1.5;
 }
 
-.cv-print {
-  min-height: 28px;
-  padding: 0;
-  color: var(--accent);
-  background: none;
-  border: 0;
-  text-decoration: underline;
-  text-underline-offset: .2em;
-  cursor: pointer;
-}
-
-.cv-print:hover { color: var(--ink); }
 .cv-index { --catalog-index-columns: 4; }
 .cv-catalog section + section { margin-top: 2rem; }
 .cv-entry { grid-template-columns: minmax(0, 8.6rem) minmax(0, 1fr); gap: .55rem .85rem; }

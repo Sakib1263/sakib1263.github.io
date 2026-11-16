@@ -29,14 +29,12 @@ const experience = [
           <p class="cv-header-detail">{profile.department} · {profile.location}</p>
         </div>
         <div class="actions">
-          <SiteLink class="button button-primary" href="#education-title">Education &amp; coursework <span aria-hidden="true">↓</span></SiteLink>
           <SiteLink class="button button-secondary" href={sitePath(cvPdfPath)} download>Download CV (PDF) <span aria-hidden="true">↓</span></SiteLink>
         </div>
       </div>
       <div class="cv-header-meta">
         <SiteLink href={`mailto:${profile.email}`}>{profile.email}</SiteLink>
         <p>Updated <time datetime={cvUpdated}>{cvUpdatedLabel}</time></p>
-        <button class="cv-print print-button" type="button" data-print hidden>Print this page</button>
       </div>
     </section>
 
@@ -163,11 +161,3 @@ const experience = [
     </div>
   </div>
 </Base>
-
-<script>
-  const printButton = document.querySelector<HTMLButtonElement>('[data-print]');
-  if (printButton) {
-    printButton.hidden = false;
-    printButton.addEventListener('click', () => window.print());
-  }
-</script>

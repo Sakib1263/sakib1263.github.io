@@ -119,7 +119,7 @@ const journalMetrics: Readonly<Record<string, {
                 const firstAuthor = displayAuthor(publication.authors[0]).toLowerCase() === profile.name.toLowerCase();
                 const eventVenue = 'eventVenue' in publication.bibliography ? publication.bibliography.eventVenue : undefined;
                 return (
-                  <article id={id} class="catalog-entry publication" data-publication data-year={publication.year} data-type={publication.type} data-topic={publication.topic} data-selected={selected}>
+                  <article id={id} class="catalog-entry publication" data-publication data-doi={publication.doi} data-year={publication.year} data-type={publication.type} data-topic={publication.topic} data-selected={selected}>
                     <div class="catalog-meta">
                       <p class="publication-year">{publication.year}{publication.onlineYear && <small>Online {publication.onlineYear}</small>}</p>
                       <span>{publication.type}</span>

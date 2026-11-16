@@ -56,7 +56,9 @@ test('site navigation and section links stay in the current tab', async ({ page,
 
 test('dataset records link to their release and companion paper', async ({ page, context }) => {
   await page.goto('/software/');
-  await page.getByRole('link', { name: 'Browse datasets' }).click();
+  await expect(page.getByRole('link', { name: 'Browse datasets' })).toHaveCount(0);
+  const sections = page.getByRole('navigation', { name: 'Software & Data sections' });
+  await sections.getByRole('link', { name: 'Datasets', exact: true }).click();
   await expect(page).toHaveURL('/software/#datasets');
   const listing = page.getByRole('region', { name: 'Datasets', exact: true });
   await expect(listing.getByRole('article')).toHaveCount(3);
@@ -93,7 +95,11 @@ test('the CV highlights education and provides a navigable experience timeline o
   await page.setViewportSize({ width: 320, height: 780 });
   await page.goto('/cv/');
   await expect(page.locator('main h2').nth(1)).toHaveText('Education');
-  await page.getByRole('link', { name: 'Education & coursework' }).click();
+  await expect(page.getByRole('link', { name: 'Education & coursework' })).toHaveCount(0);
+  await expect(page.getByText('Print this page', { exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Download CV (PDF)' })).toBeVisible();
+  const sections = page.getByRole('navigation', { name: 'CV sections' });
+  await sections.getByRole('link', { name: 'Education', exact: true }).click();
   await expect(page).toHaveURL('/cv/#education-title');
   const msc = page.locator('#msc-electrical-engineering');
   await expect(msc.getByText('CGPA 3.31 / 4.00')).toBeVisible();
@@ -105,7 +111,6 @@ test('the CV highlights education and provides a navigable experience timeline o
   await expect(bsc.getByText('Artificial Neural Networks')).toBeVisible();
   await expect(bsc.locator('.cv-course-list li')).toHaveCount(20);
 
-  const sections = page.getByRole('navigation', { name: 'CV sections' });
   await sections.getByRole('link', { name: 'Experience', exact: true }).click();
   await expect(page).toHaveURL('/cv/#positions-title');
   const experience = page.getByRole('region', { name: 'Research and professional experience' });
@@ -158,6 +163,79 @@ test('a paper link wins over an incompatible filter', async ({ page }) => {
   await page.goto(`/publications/?topic=imaging#${paperId}`);
   await expect(page.locator(`#${paperId}`)).toBeVisible();
   await expect(page).toHaveURL(`/publications/#${paperId}`);
+});
+
+test('publication search accepts pasted DOIs and punctuation in ordinary searches', async ({ page }) => {
+  await page.goto('/publications/');
+  const search = page.getByRole('searchbox', { name: 'Search', exact: true });
+  const results = page.locator('[data-publication]:visible');
+  for (const query of [
+    '10.1109/JBHI.2025.3605296',
+    ' DOI: 10.1109/JBHI.2025.3605296. ',
+    'https://dx.doi.org/10.1109%2FJBHI.2025.3605296?ref=profile',
+  ]) {
+    await search.fill(query);
+    await expect(results).toHaveCount(1);
+    await expect(results).toHaveAttribute('id', paperId);
+  }
+  await search.fill('  KIDNEY–STONE,   SEGMENTATION  ');
+  await expect(results).toHaveCount(1);
+  await expect(results).toHaveAttribute('id', 'paper-10-1016-j-bspc-2026-109894');
+  await search.press('Enter');
+  await expect(results).toHaveCount(1);
+  await search.fill('   ');
+  await expect(results).toHaveCount(61);
+  expect(new URL(page.url()).searchParams.has('query')).toBe(false);
+});
+
+test('publication facets combine with search and restore on back and forward', async ({ page }) => {
+  await page.goto('/publications/');
+  const search = page.getByRole('searchbox', { name: 'Search', exact: true });
+  const topic = page.getByRole('combobox', { name: 'Topic', exact: true });
+  const year = page.getByRole('combobox', { name: 'Issue year', exact: true });
+  const type = page.getByRole('combobox', { name: 'Type', exact: true });
+  const selected = page.getByRole('checkbox', { name: 'Selected papers only' });
+  const results = page.locator('[data-publication]:visible');
+  const empty = page.locator('[data-publication-empty]');
+
+  await topic.selectOption('biomechanics');
+  await type.selectOption('Journal article');
+  await selected.check();
+  await year.selectOption('2026');
+  await search.fill('https://doi.org/10.1109/jbhi.2025.3605296');
+  await expect(results).toHaveAttribute('id', paperId);
+  await year.selectOption('2025');
+  await expect(results).toHaveCount(0);
+  await expect(page.locator('[data-publication-group]:visible')).toHaveCount(0);
+  await expect(page.locator('[data-publication-count]')).toHaveText('0 of 61 publications');
+  await expect(empty).toBeVisible();
+
+  await page.goBack();
+  await expect(year).toHaveValue('2026');
+  await expect(topic).toHaveValue('biomechanics');
+  await expect(type).toHaveValue('Journal article');
+  await expect(selected).toBeChecked();
+  await expect(results).toHaveAttribute('id', paperId);
+  await page.goForward();
+  await expect(year).toHaveValue('2025');
+  await expect(empty).toBeVisible();
+  await page.getByRole('button', { name: 'Clear filters' }).click();
+  await expect(search).toHaveValue('');
+  await expect(selected).not.toBeChecked();
+  await expect(empty).toBeHidden();
+  await expect(results).toHaveCount(61);
+  await expect(page).toHaveURL('/publications/');
+});
+
+test('shared publication links handle invalid filters and hidden topic anchors', async ({ page }) => {
+  await page.goto('/publications/?topic=biomechanics&topic=imaging&year=never&type=unknown&view=other&ref=cv#cluster-imaging');
+  await expect(page).toHaveURL('/publications/?topic=biomechanics&ref=cv#bibliography');
+  await expect(page.getByRole('combobox', { name: 'Topic', exact: true })).toHaveValue('biomechanics');
+  await expect(page.getByRole('combobox', { name: 'Issue year', exact: true })).toHaveValue('');
+  await expect(page.getByRole('combobox', { name: 'Type', exact: true })).toHaveValue('');
+  await expect(page.getByRole('checkbox', { name: 'Selected papers only' })).not.toBeChecked();
+  await expect(page.locator('[data-publication]:visible')).toHaveCount(7);
+  await expect(page.locator('#cluster-biomechanics')).toBeVisible();
 });
 
 test('the publication list fits a narrow screen and can search contributions', async ({ page }) => {

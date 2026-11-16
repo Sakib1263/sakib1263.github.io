@@ -106,7 +106,7 @@
 
 .result-count { color: var(--ink); font-weight: 650; }
 .empty-state { border-top: 1px solid var(--line); color: var(--muted); padding-top: 1rem; }
-.publication-group + .publication-group { margin-top: 1.8rem; }
+.publication-group:not([hidden]) ~ .publication-group:not([hidden]) { margin-top: 1.8rem; }
 
 .publication-year { color: var(--ink); font-size: .96rem; font-weight: 700; }
 .publication-year small { display: block; font-size: .72rem; font-weight: 520; color: var(--muted); }

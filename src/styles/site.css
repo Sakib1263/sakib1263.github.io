@@ -201,7 +201,7 @@ h3 { font-size: 1.1rem; line-height: 1.35; font-weight: 680; }
 @media print {
   @page { margin: 14mm; }
   :root { background: white; color: black; }
-  .site-header, .site-footer, .skip-link, .print-button, .page-intro a[download] { display: none !important; }
+  .site-header, .site-footer, .skip-link, .page-intro a[download] { display: none !important; }
   .shell { width: 100%; }
   .page-intro { padding: 0 0 1rem; }
   h1 { font-size: 30pt; }
