@@ -1,8 +1,7 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
-import { awards, certifications, cvResearch, cvUpdated, cvUpdatedLabel, education, internships, languages, positions, technicalSkills } from '../data/cv';
-import { publicationId } from '../data/papers';
+import { awards, certifications, cvUpdated, cvUpdatedLabel, education, internships, languages, positions, technicalSkills } from '../data/cv';
 import { cvPdfPath, profile, sitePath } from '../lib/site';
 import '../styles/catalog.css';
 import '../styles/cv.css';
@@ -11,7 +10,6 @@ const sections = [
   { id: 'education-title', label: 'Education' },
   { id: 'positions-title', label: 'Experience' },
   { id: 'internships-title', label: 'Earlier internships' },
-  { id: 'research-title', label: 'Selected research' },
   { id: 'skills-title', label: 'Technical skills' },
   { id: 'certifications-title', label: 'Certifications' },
   { id: 'awards-title', label: 'Awards & distinctions' },
@@ -126,32 +124,6 @@ const experience = [
               ))}
             </>
           ))}
-        </section>
-
-        <section aria-labelledby="research-title">
-          <header class="catalog-section-heading">
-            <h2 id="research-title">Selected research contributions</h2>
-            <p>My role in four studies across biomechanics, medical imaging, and spectroscopy.</p>
-          </header>
-          {cvResearch.map(({ slug, title, contribution, publication }) => (
-            <article class="catalog-entry cv-entry">
-              <div class="catalog-meta">
-                <span class="cv-date">{publication.year}</span>
-                <span>{publication.venue}</span>
-              </div>
-              <div>
-                <h3><SiteLink href={sitePath(`research/${slug}/`)}>{title}</SiteLink></h3>
-                <p class="cv-summary">{contribution}</p>
-                <div class="catalog-actions">
-                  <SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)}>Publication entry</SiteLink>
-                </div>
-              </div>
-            </article>
-          ))}
-          <div class="actions">
-            <SiteLink class="text-link" href={sitePath('publications/')}>All publications <span aria-hidden="true">→</span></SiteLink>
-            <SiteLink class="text-link" href={sitePath('software/')}>Software &amp; Data <span aria-hidden="true">→</span></SiteLink>
-          </div>
         </section>
 
         <section aria-labelledby="skills-title">

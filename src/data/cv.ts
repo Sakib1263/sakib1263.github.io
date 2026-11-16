@@ -1,16 +1,8 @@
 import { sitePath } from '../lib/site';
-import { publicationFor, publicationId } from './papers';
-import { projects } from './research';
+import { publicationId } from './papers';
 
 export const cvUpdated = '2026-11-16';
 export const cvUpdatedLabel = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(cvUpdated));
-
-const selectedProjectSlugs = ['wearable-foot-kinetics', 'kidney-stone-segmentation', 'cross-device-raman', 'prenatal-hydronephrosis'];
-export const cvResearch = selectedProjectSlugs.map(slug => {
-  const project = projects.find(item => item.slug === slug);
-  if (!project) throw new Error(`Unknown CV project: ${slug}`);
-  return { ...project, publication: publicationFor(project.doi) };
-});
 
 type CvLink = { label: string; href: string };
 
