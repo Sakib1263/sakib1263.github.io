@@ -1,9 +1,9 @@
 import type { APIRoute } from 'astro';
-import { projects } from '../data/research';
+import { researchProjects } from '../data/research-catalog';
 import { navigation, sitePath } from '../lib/site';
 
 export const GET: APIRoute = ({ site }) => {
-  const pages = ['', ...navigation.map(page => page.path), ...projects.map(project => `research/${project.slug}/`)];
+  const pages = ['', ...navigation.map(page => page.path), ...researchProjects.map(project => `research/${project.slug}/`)];
   const entries = pages.map(path => `  <url><loc>${new URL(sitePath(path), site).href}</loc></url>`);
   return new Response([
     '<?xml version="1.0" encoding="UTF-8"?>',

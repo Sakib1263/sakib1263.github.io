@@ -26,6 +26,30 @@ test('mobile navigation stays visible and the flagship fits at 320 pixels', asyn
   expect(viewport.content).toBeLessThanOrEqual(viewport.width);
 });
 
+test('research areas lead to project details, supporting publications, and ongoing work', async ({ page, context }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.goto('/research/');
+  const researchAreas = page.getByRole('navigation', { name: 'Research areas', exact: true });
+  await expect(researchAreas.getByRole('link')).toHaveCount(7);
+  await expect(page.locator('.research-entry')).toHaveCount(42);
+  await researchAreas.getByRole('link', { name: 'Biomedical devices & simulation' }).click();
+  await expect(page).toHaveURL('/research/#devices');
+  await page.getByRole('link', { name: 'Hip implant mechanics, sensing, and loosening detection', exact: true }).click();
+  await expect(page).toHaveURL('/research/hip-implant-mechanics-and-imaging/');
+  await expect(page.getByRole('heading', { name: 'My contribution', exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'Dataset details', exact: true })).toHaveAttribute('href', '/software/#hip-implant-xray');
+  await expect(page.getByRole('link', { name: 'Read the paper', exact: true })).toHaveAttribute('target', '_blank');
+  await page.getByRole('link', { name: 'All research' }).click();
+  await expect(page).toHaveURL('/research/#hip-implant-mechanics-and-imaging');
+  await page.getByRole('link', { name: 'Multimodal wearable estimation of 3D gait kinetics', exact: true }).click();
+  await expect(page).toHaveURL('/research/multimodal-wearable-kinetics/');
+  await expect(page.getByText('Wearable biomechanics · Ongoing research')).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Reported results' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Estimating 3D foot kinetics from wearable signals' })).toHaveAttribute('href', flagship);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  expect(context.pages()).toEqual([page]);
+});
+
 test('project and paper links round-trip and the citation copies', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto(flagship);

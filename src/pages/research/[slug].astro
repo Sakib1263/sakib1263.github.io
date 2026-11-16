@@ -7,86 +7,129 @@ import HydronephrosisExample from '../../components/HydronephrosisExample.astro'
 import { datasetsByStudy } from '../../data/datasets';
 import { kinetics } from '../../data/kinetics';
 import { openFullText, publicationFor, publicationId } from '../../data/papers';
-import { projects } from '../../data/research';
+import { researchProjectFor, researchProjects } from '../../data/research-catalog';
+import type { ResearchProject } from '../../data/research';
 import { doiUrl, sitePath } from '../../lib/site';
+import '../../styles/catalog.css';
+import '../../styles/research.css';
 
 export function getStaticPaths() {
-  return projects.map(project => ({ params: { slug: project.slug }, props: { project } }));
+  return researchProjects.map(project => ({ params: { slug: project.slug }, props: { project } }));
 }
+
+interface Props { project: ResearchProject }
 
 const { project } = Astro.props;
 const { visual } = project;
-const paper = publicationFor(project.doi);
-const dataset = datasetsByStudy.get(project.doi);
-const related = project.related.map(publicationFor);
+const paper = project.doi ? publicationFor(project.doi) : undefined;
+const dataset = project.doi ? datasetsByStudy.get(project.doi) : undefined;
+const fullText = project.doi ? openFullText[project.doi] : undefined;
+const relatedPapers = (project.related ?? []).map(publicationFor);
+const relatedProjects = (project.relatedProjects ?? []).map(researchProjectFor);
 const imageWidth = visual ? Math.min(visual.image.width, 960) : 0;
+const workflowAvailable = project.slug === kinetics.slug;
+const hasResults = Boolean(project.result || project.measures?.length);
+const sections = [
+  { id: 'approach', label: 'Approach' },
+  ...(hasResults ? [{ id: 'results', label: 'Reported results' }] : []),
+  { id: 'contribution', label: 'My contribution' },
+  ...(project.scope ? [{ id: 'scope', label: 'Study scope' }] : []),
+  ...(project.ongoing ? [{ id: 'ongoing', label: 'Ongoing work' }] : []),
+  ...(workflowAvailable ? [{ id: 'reproduce', label: 'Run the workflow' }] : []),
+  ...(relatedPapers.length ? [{ id: 'related-title', label: 'Related publications' }] : []),
+  ...(relatedProjects.length ? [{ id: 'related-projects', label: 'Related projects' }] : []),
+];
 ---
 
 <Base title={project.title} description={project.summary} shareImage={visual?.image}>
-  <article class="shell detail content-end">
-    <SiteLink class="text-link return-link" href={sitePath('research/')}><span aria-hidden="true">←</span> All research</SiteLink>
-    <header class="detail-heading">
-      <p class="overline">{project.area}</p>
+  <article class="shell">
+    <header class="page-intro catalog-intro research-project-intro">
+      <SiteLink class="text-link return-link" href={sitePath(`research/#${project.slug}`)}><span aria-hidden="true">←</span> All research</SiteLink>
+      <p class="overline">{project.area}{project.status && ` · ${project.status}`}</p>
       <h1>{project.title}</h1>
-      <p class="page-lead">{project.question}</p>
-      <p class="study-citation">{paper.venue} · {paper.year}{paper.onlineYear && ` (online ${paper.onlineYear})`}</p>
-      <div class="actions">
-        <SiteLink class="button button-primary" href={doiUrl(project.doi)}>Read the paper <span aria-hidden="true">↗</span></SiteLink>
-        {openFullText[project.doi] && <SiteLink class="text-link" href={openFullText[project.doi]}>Open full text <span aria-hidden="true">↗</span></SiteLink>}
-        <SiteLink class="button button-secondary" href={project.code}>Source code <span aria-hidden="true">↗</span></SiteLink>
-        {project.resources?.map(({ label, href }) => <SiteLink class="button button-secondary" href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
+      <p class="page-lead">{project.question ?? project.summary}</p>
+      {[project.context, project.period].some(Boolean) && <p class="research-intro-detail">{[project.context, project.period].filter(Boolean).join(' · ')}</p>}
+      {paper && <p class="study-citation">{paper.venue} · {paper.year}{paper.onlineYear && ` (online ${paper.onlineYear})`}</p>}
+      {(paper || project.code || project.resources?.length) && <div class="actions">
+        {paper && <SiteLink class="button button-primary" href={doiUrl(paper.doi)}>Read the paper <span aria-hidden="true">↗</span></SiteLink>}
+        {fullText && <SiteLink class="text-link" href={fullText}>Open full text <span aria-hidden="true">↗</span></SiteLink>}
+        {project.code && <SiteLink class="button button-secondary" href={project.code}>Source code <span aria-hidden="true">↗</span></SiteLink>}
+        {project.resources?.map(({ label, href }) => <SiteLink class="text-link" href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
         {dataset && <>
-          <SiteLink class="button button-secondary" href={sitePath(`software/#${dataset.id}`)}>Dataset details</SiteLink>
+          <SiteLink class="text-link" href={sitePath(`software/#${dataset.id}`)}>Dataset details</SiteLink>
           <SiteLink class="text-link" href={doiUrl(dataset.doi)}>{dataset.platform} record <span aria-hidden="true">↗</span></SiteLink>
         </>}
-        {project.slug === kinetics.slug && <SiteLink class="text-link" href="#reproduce">Run the workflow</SiteLink>}
-        <SiteLink class="text-link" href={sitePath(`publications/#${publicationId(project.doi)}`)}>Citation</SiteLink>
-      </div>
+        {workflowAvailable && <SiteLink class="text-link" href="#reproduce">Run the workflow</SiteLink>}
+        {paper && <SiteLink class="text-link" href={sitePath(`publications/#${publicationId(paper.doi)}`)}>Citation</SiteLink>}
+      </div>}
     </header>
 
-    {project.workflow && <ol class="study-workflow" aria-label="Study workflow">
-      {project.workflow.map(step => <li>{step}</li>)}
-    </ol>}
-    <div class:list={['detail-grid', { 'detail-grid-text': !visual && !project.illustratedExample }]}>
-      <div class="prose detail-copy">
-        <h2>Approach</h2>
-        <p>{project.approach}</p>
-        <h2>Reported results</h2>
-        <p>{project.result}</p>
-        <dl class="study-measures">
-          {project.measures.map(({ value, label }) => (
-            <div><dt>{label}</dt><dd>{value}</dd></div>
-          ))}
-        </dl>
-        <h2>My contribution</h2>
-        <p>{project.contribution}</p>
-        <h2>Study scope</h2>
-        <p>{project.scope}</p>
-        {project.ongoing && <><h2>Ongoing work</h2><p>{project.ongoing}</p></>}
+    <div class="catalog-layout content-end">
+      <nav class="catalog-index research-index" aria-label="Project sections">
+        <h2>On this page</h2>
+        <ul>{sections.map(({ id, label }) => <li><SiteLink href={`#${id}`}><span>{label}</span></SiteLink></li>)}</ul>
+      </nav>
+
+      <div class="research-detail">
+        <section aria-labelledby="approach">
+          <header class="catalog-section-heading"><h2 id="approach">Approach</h2></header>
+          <p class="research-section-copy">{project.approach}</p>
+          {project.workflow && <ol class="study-workflow" aria-label="Study workflow">
+            {project.workflow.map(step => <li>{step}</li>)}
+          </ol>}
+          {visual && (
+            <figure class:list={['detail-figure', `art-${project.slug}`]}>
+              <div class:list={{ 'waveform-plot': visual.chart }}>
+                {visual.chart && <div class="chart-heading"><h3>{visual.chart.title}</h3><p>{visual.chart.verticalAxis}</p></div>}
+                <Image src={visual.image} alt={visual.alt} width={imageWidth} widths={[320, 480, 640, 768, 960].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 850px) calc(100vw - 4rem), 700px" format="webp" />
+                {visual.chart && <p>{visual.chart.horizontalAxis}</p>}
+              </div>
+              <figcaption>
+                {visual.caption}
+                {visual.credit && <> <SiteLink href={visual.credit.href}>{visual.credit.label}</SiteLink></>}
+              </figcaption>
+            </figure>
+          )}
+          {project.illustratedExample && <HydronephrosisExample />}
+        </section>
+
+        {hasResults && <section aria-labelledby="results">
+          <header class="catalog-section-heading"><h2 id="results">Reported results</h2></header>
+          {project.result && <p class="research-section-copy">{project.result}</p>}
+          {project.measures?.length && <dl class="study-measures">
+            {project.measures.map(({ value, label }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
+          </dl>}
+        </section>}
+
+        <section aria-labelledby="contribution">
+          <header class="catalog-section-heading"><h2 id="contribution">My contribution</h2></header>
+          <p class="research-section-copy">{project.contribution}</p>
+        </section>
+        {project.scope && <section aria-labelledby="scope">
+          <header class="catalog-section-heading"><h2 id="scope">Study scope</h2></header>
+          <p class="research-section-copy">{project.scope}</p>
+        </section>}
+        {project.ongoing && <section aria-labelledby="ongoing">
+          <header class="catalog-section-heading"><h2 id="ongoing">Ongoing work</h2></header>
+          <p class="research-section-copy">{project.ongoing}</p>
+        </section>}
+        {workflowAvailable && <KineticsReproduction />}
+
+        {relatedPapers.length > 0 && <section class="related-papers" aria-labelledby="related-title">
+          <header class="catalog-section-heading"><h2 id="related-title">Related publications</h2></header>
+          <ul>
+            {relatedPapers.map(publication => (
+              <li><SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)}>{publication.title}</SiteLink><small>{publication.venue} · {publication.year}</small></li>
+            ))}
+          </ul>
+        </section>}
+        {relatedProjects.length > 0 && <section class="related-papers" aria-labelledby="related-projects">
+          <header class="catalog-section-heading"><h2 id="related-projects">Related projects</h2></header>
+          <ul>
+            {relatedProjects.map(related => <li><SiteLink href={sitePath(`research/${related.slug}/`)}>{related.title}</SiteLink></li>)}
+          </ul>
+        </section>}
       </div>
-      {visual && (
-        <figure class:list={['detail-figure', `art-${project.slug}`]}>
-          <div class:list={{ 'waveform-plot': visual.chart }}>
-            {visual.chart && <div class="chart-heading"><h2>{visual.chart.title}</h2><p>{visual.chart.verticalAxis}</p></div>}
-            <Image src={visual.image} alt={visual.alt} width={imageWidth} widths={[320, 480, 640, 768, 960].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 720px) calc(100vw - 4rem), (max-width: 1240px) 40vw, 480px" format="webp" />
-            {visual.chart && <p>{visual.chart.horizontalAxis}</p>}
-          </div>
-          <figcaption>
-            {visual.caption}
-            {visual.credit && <> <SiteLink href={visual.credit.href}>{visual.credit.label}</SiteLink></>}
-          </figcaption>
-        </figure>
-      )}
-      {project.illustratedExample && <HydronephrosisExample />}
     </div>
-    {project.slug === kinetics.slug && <KineticsReproduction />}
-    <section class="related-papers" aria-labelledby="related-title">
-      <h2 class="section-title" id="related-title">Related publications</h2>
-      <ul class="resource-list">
-        {related.map(publication => (
-          <li><SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)}>{publication.title}</SiteLink></li>
-        ))}
-      </ul>
-    </section>
   </article>
 </Base>

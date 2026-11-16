@@ -1,38 +1,67 @@
 ---
 import SiteLink from '../../components/SiteLink.astro';
 import Base from '../../layouts/Base.astro';
-import ProjectCard from '../../components/ProjectCard.astro';
-import { featuredProjects, projects } from '../../data/research';
-import { publicationFor } from '../../data/papers';
+import { datasetsByStudy } from '../../data/datasets';
+import { publicationFor, publicationId } from '../../data/papers';
+import { researchGroups, researchProjects } from '../../data/research-catalog';
 import { sitePath } from '../../lib/site';
-
-const additional = projects.filter(project => !featuredProjects.includes(project));
+import '../../styles/catalog.css';
+import '../../styles/research.css';
 ---
 
-<Base title="Research" description="Selected research by Sakib Mahmud in wearable biomechanics, medical imaging, spectroscopy, and physiological signal processing.">
-  <section class="shell page-intro">
-    <h1>Research</h1>
-    <p class="page-lead">I develop models for biomedical images and signals, with particular attention to how we measure performance across people and instruments.</p>
-    <SiteLink class="text-link" href={sitePath('software/')}>Browse software and datasets <span aria-hidden="true">→</span></SiteLink>
-  </section>
-  <section class="shell content-end" aria-labelledby="featured-studies">
-    <h2 class="section-title" id="featured-studies">Featured projects</h2>
-    <div class="project-list">
-      {featuredProjects.map(project => <ProjectCard project={project} />)}
-    </div>
-    <section class="research-more" aria-labelledby="more-studies">
-      <h2 class="section-title" id="more-studies">More studies</h2>
-      <div class="resource-list">
-      {additional.map(project => (
-        <article class="resource-row">
-          <div>
-            <p class="overline">{project.area} · {publicationFor(project.doi).year}</p>
-            <h3><SiteLink href={sitePath(`research/${project.slug}/`)}>{project.title}</SiteLink></h3>
-            <p>{project.summary}</p>
-          </div>
-        </article>
-      ))}
-      </div>
+<Base title="Research" description="Sakib Mahmud’s research projects in wearable biomechanics, medical imaging, physiological signals, Raman spectroscopy, biomedical devices, genomics, and applied machine learning.">
+  <div class="shell">
+    <section class="page-intro catalog-intro">
+      <h1>Research</h1>
+      <p class="page-lead">I develop methods to recover biomedical measurements from images and sensor signals. My work examines how well those methods transfer across people, instruments, and datasets.</p>
+      <p class="research-intro-detail">{researchProjects.length} projects across {researchGroups.length} research areas</p>
     </section>
-  </section>
+
+    <div class="catalog-layout content-end">
+      <nav class="catalog-index research-index" aria-label="Research areas">
+        <h2>Research areas</h2>
+        <ul>
+          {researchGroups.map(({ id, title, projects }) => (
+            <li>
+              <SiteLink href={`#${id}`}><span>{title}</span><span class="catalog-count" aria-hidden="true">{projects.length}</span></SiteLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="research-catalog">
+        {researchGroups.map(({ id, title, description, projects }) => (
+          <section class="research-group" aria-labelledby={id}>
+            <header class="catalog-section-heading">
+              <h2 id={id}>{title}</h2>
+              <p>{description}</p>
+            </header>
+            {projects.map(project => {
+              const paper = project.doi && publicationFor(project.doi);
+              const dataset = project.doi && datasetsByStudy.get(project.doi);
+              const period = project.period || (paper && `${paper.year}${paper.onlineYear ? ` · Online ${paper.onlineYear}` : ''}`);
+              return (
+                <article class="catalog-entry research-entry" id={project.slug}>
+                  <div class="catalog-meta">
+                    {period && <span class="research-period">{period}</span>}
+                    {project.status && <span class="research-status">{project.status}</span>}
+                    {!project.status && paper && <span>{paper.type}</span>}
+                  </div>
+                  <div>
+                    <h3><SiteLink href={sitePath(`research/${project.slug}/`)}>{project.title}</SiteLink></h3>
+                    <p class="research-summary">{project.summary}</p>
+                    {(paper || project.code || dataset) && <div class="catalog-actions">
+                      {paper && <SiteLink aria-label={`Publication for ${project.title}`} href={sitePath(`publications/#${publicationId(paper.doi)}`)}>Publication</SiteLink>}
+                      {project.code && <SiteLink aria-label={`Code for ${project.title}`} href={project.code}>Code <span aria-hidden="true">↗</span></SiteLink>}
+                      {dataset && <SiteLink aria-label={`Dataset for ${project.title}`} href={sitePath(`software/#${dataset.id}`)}>Dataset</SiteLink>}
+                    </div>}
+                  </div>
+                </article>
+              );
+            })}
+          </section>
+        ))}
+      </div>
+    </div>
+  </div>
 </Base>

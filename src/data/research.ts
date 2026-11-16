@@ -7,23 +7,27 @@ import { thesisUrl } from './papers';
 
 type ResearchLink = { label: string; href: string };
 
-export type Project = {
+export type ResearchProject = {
   slug: string;
   area: string;
   title: string;
   summary: string;
-  question: string;
-  doi: string;
-  code: string;
+  question?: string;
+  doi?: string;
+  code?: string;
+  period?: string;
+  status?: string;
+  context?: string;
   approach: string;
-  result: string;
-  measures: { value: string; label: string }[];
+  result?: string;
+  measures?: { value: string; label: string }[];
   contribution: string;
-  scope: string;
+  scope?: string;
   ongoing?: string;
   workflow?: string[];
   illustratedExample?: boolean;
-  related: string[];
+  related?: string[];
+  relatedProjects?: string[];
   resources?: ResearchLink[];
   visual?: {
     image: ImageMetadata;
@@ -33,6 +37,8 @@ export type Project = {
     chart?: { title: string; horizontalAxis: string; verticalAxis: string };
   };
 };
+
+export type Project = ResearchProject & { doi: string; code: string };
 
 export const projects: Project[] = [
   {
@@ -55,6 +61,7 @@ export const projects: Project[] = [
     ongoing: 'I’m investigating how to combine plantar sensing with inertial measurements from the foot and shank, and how well models transfer across datasets.',
     workflow: ['Smart-insole pressure signals', 'Estimated forces and moments', 'Comparison with treadmill measurements'],
     related: ['10.1007/s00521-023-09081-z', '10.3390/s22197599'],
+    relatedProjects: ['multimodal-wearable-kinetics', 'kinematics-to-3d-kinetics'],
     visual: {
       image: waveform,
       alt: 'The estimated moment is above the treadmill mean for most of the right-foot walking cycle, with the largest separation around the middle of the cycle.',
@@ -81,6 +88,7 @@ export const projects: Project[] = [
     contribution: 'I designed the successive scope-reduction and feature-transfer approach and led model development, experiments, analysis, and manuscript preparation.',
     scope: 'The five folds separate subjects. The scans came from a single hospital, so the reported scores describe that cohort and protocol.',
     related: ['10.3390/cancers15123189', '10.1016/j.eswa.2024.124594'],
+    relatedProjects: ['renal-tumour-modelling', 'prenatal-hydronephrosis'],
     visual: {
       image: renal,
       alt: 'Axial abdominal CT slice with a class activation overlay.',
@@ -96,6 +104,7 @@ export const projects: Project[] = [
     question: 'Can spectra recorded on different instruments support more consistent recognition of the same analyte classes?',
     doi: '10.1016/j.saa.2025.126931',
     code: 'https://github.com/Sakib1263/SERS-D2DNet-SuperRaman',
+    context: 'Qatar University · Qatar National Research Fund-supported bacterial diagnostics research',
     approach: 'SERS-D2DNet transforms spectra from four portable devices toward a Renishaw reference. The study then uses SuperRaman to classify the original and transformed spectra across 20 analyte classes, using 50 spectra per class to train the classifiers.',
     result: 'Classification accuracy increased after transformation for all four portable devices in Table 5. The largest gains were for Enwave and Rapid ID.',
     measures: [
@@ -105,6 +114,7 @@ export const projects: Project[] = [
     contribution: 'I led the modelling and evaluation of the spectral transformation and recognition workflow, including implementation, generalization analysis, visualization, and writing.',
     scope: 'These comparisons cover the analytes and acquisition conditions tested in the study. The Zenodo record describes the dataset and how to request access to the restricted files.',
     related: ['10.1016/j.talanta.2026.130241', '10.1016/j.talanta.2025.129332'],
+    relatedProjects: ['generalizable-microbial-sers', 'microbial-sers-validation'],
     visual: {
       image: sers,
       alt: 'Graphical abstract showing spectra from portable and reference Raman instruments, device transformation, and bacterial classification.',
@@ -129,7 +139,7 @@ export const projects: Project[] = [
     ],
     contribution: 'I led data preparation, implementation, experiments, analysis, visualization, and manuscript preparation.',
     scope: 'These errors come from retrospective evaluation on intensive-care waveform records. The partition kept records from the same patient together.',
-    related: ['10.1007/s00521-025-11327-x', '10.3390/bioengineering9110692'],
+    related: ['10.1007/s00521-025-11327-x', '10.3390/bioengineering9110692', '10.3390/s22030919', '10.3390/bioengineering9100558'],
   },
   {
     slug: 'prenatal-hydronephrosis',
@@ -139,7 +149,9 @@ export const projects: Project[] = [
     question: 'Can a pipeline use segmented kidneys across several ultrasound views to estimate a subject-level severity grade?',
     doi: '10.1016/j.eswa.2024.124594',
     code: 'https://github.com/Sakib1263/AHN-Severity-Stratification',
-    approach: 'The study curated 2,062 ultrasound images from 163 subjects. The workflow locates the kidney region, outlines it with KUSNet, and predicts one of five severity grades with PHCNet. Weighted voting combines grades from different ultrasound views at the subject level.',
+    period: '2022–2023',
+    context: 'Hamad Medical Corporation, Sidra Medicine and Qatar University',
+    approach: 'The study collected ultrasound images from 164 subjects. After curation, 2,062 images from 163 subjects were annotated for the kidney region. The workflow locates the region, outlines it with KUSNet, and predicts one of five severity grades with PHCNet. Weighted voting combines grades across ultrasound views at the subject level.',
     result: 'The paper reports a 92.1% Dice score for kidney segmentation. For five-grade classification with segmented views, Table 3 reports 93.9% subject-level accuracy and an 89.0% F1 score. The two tasks were evaluated separately.',
     measures: [
       { value: '92.1%', label: 'Kidney segmentation Dice' },
@@ -147,7 +159,7 @@ export const projects: Project[] = [
       { value: '163', label: 'Subjects in the curated cohort' },
     ],
     contribution: 'I contributed to study design and data curation, developed the methods and software, and wrote the original draft with the research team.',
-    scope: 'The study used five subject-independent folds on the retrospective QU–HMC–AHN cohort. Reported grading performance reflects the curated views and reference grades in that cohort. Prospective external validation would establish how the approach performs across sites and acquisition protocols.',
+    scope: 'Segmentation and grading used five subject-independent folds on the retrospective QU–HMC–AHN cohort. The earlier region-detection stage used a separate two-fold evaluation. Reported grading performance reflects the curated views and reference grades in that cohort.',
     illustratedExample: true,
     resources: [{ label: 'Related MSc thesis', href: thesisUrl }],
     related: ['10.1016/j.bspc.2026.109894', '10.3390/cancers15123189'],
