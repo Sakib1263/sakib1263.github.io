@@ -5,7 +5,7 @@
   background: var(--surface);
 }
 
-.snapshot-heading, .snapshot-live-heading {
+.snapshot-heading {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -14,7 +14,7 @@
 }
 
 .snapshot-heading { border-radius: 6px 6px 0 0; }
-.snapshot-heading a, .snapshot-profiles a, .snapshot-live-heading a {
+.snapshot-heading a, .snapshot-profiles a {
   display: inline-flex;
   align-items: center;
   gap: .25rem;
@@ -69,7 +69,7 @@
 .citation-history figcaption { color: var(--accent-dark); font-size: .84rem; font-weight: 670; }
 .citation-bars {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(var(--citation-years), minmax(0, 1fr));
   gap: .25rem;
   margin: .28rem 0 0;
   padding: 0;
@@ -106,12 +106,8 @@
 }
 
 .citation-bars li:last-child .citation-bar { background: var(--accent-dark); }
-.snapshot-profiles, .snapshot-live { border-top: 1px solid var(--line); }
+.snapshot-profiles { border-top: 1px solid var(--line); }
 .snapshot-profiles nav { display: flex; flex-wrap: wrap; gap: .12rem 1.05rem; padding: .26rem .9rem; }
-.snapshot-live summary { min-height: 42px; padding: .66rem .9rem; cursor: pointer; color: var(--accent-dark); font-size: .84rem; font-weight: 670; }
-.snapshot-live summary:hover { text-decoration: underline; }
-.snapshot-live summary > span { margin-inline-start: .3rem; color: var(--muted); font-weight: 480; }
-.snapshot-live-heading { padding-inline: .9rem; color: var(--muted); font-size: .83rem; }
 
 @media (max-width: 680px) {
   .citation-snapshot { grid-template-columns: minmax(0, 1fr); gap: .95rem; }

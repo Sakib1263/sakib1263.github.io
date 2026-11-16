@@ -19,7 +19,7 @@ pnpm preview
 | --- | --- |
 | Name, affiliation, and professional links | [src/lib/site.ts](src/lib/site.ts) |
 | Research areas and project case studies | [src/data/research-catalog.ts](src/data/research-catalog.ts) |
-| Research profile metrics and checked dates | [src/data/research-metrics.ts](src/data/research-metrics.ts) |
+| Google Scholar metrics and check date | [src/data/google-scholar.json](src/data/google-scholar.json) |
 | Featured project summaries, results, and figures | [src/data/research.ts](src/data/research.ts) |
 | Publications, author order, and citation metadata | [src/data/publications.json](src/data/publications.json) |
 | Journal quartiles, impact factors, and source records | [src/data/journal-metrics.json](src/data/journal-metrics.json) |
@@ -38,8 +38,6 @@ Journal metrics are keyed by the publication's ISSN. Use the best subject quarti
 
 Add a project to its research area in `src/data/research-catalog.ts` with a stable slug, a summary, the approach, and your contribution. Link supporting publications by DOI and related projects by slug. When adding results, record the comparison and the evaluation population or dataset. Give new artwork descriptive alternative text and a figure credit where applicable.
 
-Update the Google Scholar snapshot from the public profile and record the check date. The optional OpenAlex view refreshes when opened and shows the dated saved snapshot if the request fails.
-
 Replace `public/sakib-mahmud-cv.pdf` to update the downloadable CV. The build serves that file directly. Update `cvUpdated` when changing the web CV. The research figures include source links on their project pages. The Raman graphical abstract is from Mahmud et al. (2026), DOI [10.1016/j.saa.2025.126931](https://doi.org/10.1016/j.saa.2025.126931), under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The site serves [Inter](https://rsms.me/inter/) from local WOFF2 files under the [SIL Open Font License](src/assets/fonts/inter-OFL.txt).
 
 ## Verify changes
@@ -47,6 +45,7 @@ Replace `public/sakib-mahmud-cv.pdf` to update the downloadable CV. The build se
 ```sh
 pnpm build
 pnpm check:build
+node --test scripts/refresh-google-scholar.test.mjs
 pnpm exec playwright install chromium
 pnpm test
 ```
@@ -60,3 +59,11 @@ In the repository's **Settings → Pages**, select **GitHub Actions** as the sou
 The default canonical origin is `https://sakib1263.github.io`. If moving the site to a different origin or a project subdirectory, configure `SITE_URL` and, when applicable, `SITE_BASE` in the build environment. [Astro deployment guide](https://docs.astro.build/en/guides/deploy/github/)
 
 The Google verification file in `public/` supports Search Console ownership on the current domain. The sitemap for Search Console is available at `/sitemap.xml`.
+
+## Monthly Google Scholar refresh
+
+1. Create a [free SerpApi account](https://serpapi.com/pricing) and copy its private API key from the [dashboard](https://serpapi.com/manage-api-key).
+2. In this repository, open [Actions secrets](https://github.com/Sakib1263/sakib1263.github.io/settings/secrets/actions). Create a repository secret named `SERPAPI_API_KEY` and enter the key there.
+3. Open [Deploy GitHub Pages](https://github.com/Sakib1263/sakib1263.github.io/actions/workflows/pages.yml), choose **Run workflow** on `main`, and leave **Refresh Google Scholar before publishing** selected to trigger the first check.
+
+The scheduled run starts on the first day of each month at 9:23 a.m. Qatar time. One [SerpApi author lookup](https://serpapi.com/google-scholar-author-api) supplies the citation metrics and yearly chart values. A successful refresh saves the dated data and builds the site from that revision. If the request fails or the key is missing, the last saved snapshot remains available.

@@ -1,0 +1,24 @@
+{
+  "authorId": "jFVg8REAAAAJ",
+  "authorName": "Sakib Mahmud",
+  "checkedOn": "2026-11-16",
+  "totals": {
+    "citations": 2314,
+    "hIndex": 27,
+    "i10Index": 46
+  },
+  "recent": {
+    "since": 2021,
+    "citations": 2304,
+    "hIndex": 26,
+    "i10Index": 46
+  },
+  "yearly": [
+    { "year": 2021, "citations": 35 },
+    { "year": 2022, "citations": 148 },
+    { "year": 2023, "citations": 314 },
+    { "year": 2024, "citations": 574 },
+    { "year": 2025, "citations": 641 },
+    { "year": 2026, "citations": 575 }
+  ]
+}

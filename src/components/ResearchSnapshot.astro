@@ -1,11 +1,18 @@
 ---
-import CitationSnapshot from './CitationSnapshot.astro';
 import SiteLink from './SiteLink.astro';
-import { openAlexAuthor, openAlexSnapshot, scholarSnapshot } from '../data/research-metrics';
+import snapshot from '../data/google-scholar.json';
 import { profile, researchProfiles } from '../lib/site';
 import '../styles/research-snapshot.css';
 
 const otherProfiles = researchProfiles.filter(({ label }) => ['Scopus', 'Web of Science', 'ORCID'].includes(label));
+const number = new Intl.NumberFormat('en-GB');
+const date = new Intl.DateTimeFormat('en-GB', { dateStyle: 'medium', timeZone: 'UTC' });
+const metrics = [
+  { key: 'citations', label: 'Citations' },
+  { key: 'hIndex', label: 'h-index' },
+  { key: 'i10Index', label: 'i10-index' },
+] as const;
+const maximum = Math.max(1, ...snapshot.yearly.map(entry => entry.citations));
 ---
 
 <section class="research-snapshot" aria-labelledby="research-profile">
@@ -17,24 +24,42 @@ const otherProfiles = researchProfiles.filter(({ label }) => ['Scopus', 'Web of 
     <SiteLink href={profile.scholar}>Google Scholar <span aria-hidden="true">↗</span></SiteLink>
   </header>
 
-  <CitationSnapshot source="Google Scholar" snapshot={scholarSnapshot} />
+  <div class="citation-snapshot">
+    <div>
+      <dl class="citation-metrics" aria-label="Google Scholar all-time metrics">
+        {metrics.map(({ key, label }) => (
+          <div>
+            <dt>{label}</dt>
+            <dd>
+              <strong>{number.format(snapshot.totals[key])}</strong>
+              <small>{number.format(snapshot.recent[key])} since {snapshot.recent.since}</small>
+            </dd>
+          </div>
+        ))}
+      </dl>
+      <p class="snapshot-date">Checked on <time datetime={snapshot.checkedOn}>{date.format(new Date(snapshot.checkedOn))}</time></p>
+    </div>
+
+    <figure class="citation-history" aria-label="Google Scholar yearly citation counts">
+      <figcaption>Yearly citations</figcaption>
+      <ol class="citation-bars" role="list" style={`--citation-years:${snapshot.yearly.length}`}>
+        {snapshot.yearly.map(({ year, citations }) => (
+          <li>
+            <span class="citation-year">{year}</span>
+            <span class="citation-column">
+              <span class="citation-count">{number.format(citations)}<span class="citation-unit"> citations</span></span>
+              <span class="citation-bar" style={`--citation-height:${citations / maximum * 100}%`} aria-hidden="true"></span>
+            </span>
+          </li>
+        ))}
+      </ol>
+      <p class="citation-history-note">Counts through the date shown.</p>
+    </figure>
+  </div>
 
   <div class="snapshot-profiles">
     <nav aria-label="Other research profiles">
       {otherProfiles.map(({ href, label }) => <SiteLink href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
     </nav>
   </div>
-
-  <details class="snapshot-live" data-openalex-author={openAlexAuthor} data-orcid={profile.orcid}>
-    <summary>Live citation metrics <span>OpenAlex</span></summary>
-    <div class="snapshot-live-heading">
-      <p>OpenAlex citation metrics</p>
-      <SiteLink href={openAlexAuthor}>OpenAlex profile <span aria-hidden="true">↗</span></SiteLink>
-    </div>
-    <CitationSnapshot source="OpenAlex" snapshot={openAlexSnapshot} refreshable />
-  </details>
 </section>
-
-<script>
-  import '../scripts/research-metrics';
-</script>

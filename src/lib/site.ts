@@ -1,3 +1,5 @@
+import { authorId as scholarId } from '../data/google-scholar.json';
+
 export const profile = {
   name: 'Sakib Mahmud',
   role: 'Research Associate',
@@ -6,7 +8,7 @@ export const profile = {
   location: 'Doha, Qatar',
   email: 'sakib.mahmud@qu.edu.qa',
   github: 'https://github.com/Sakib1263',
-  scholar: 'https://scholar.google.com/citations?user=jFVg8REAAAAJ',
+  scholar: `https://scholar.google.com/citations?user=${scholarId}`,
   orcid: 'https://orcid.org/0000-0002-4599-2192',
   focus: 'How reliably can we recover biomedical measurements from images and sensor signals?',
   bio: 'I develop and evaluate machine learning methods for medical imaging, wearable biomechanics, and spectroscopy. I’m particularly interested in how performance varies across people and instruments.',

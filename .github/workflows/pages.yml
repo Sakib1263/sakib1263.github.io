@@ -5,7 +5,14 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  schedule:
+    - cron: '23 6 1 * *'
   workflow_dispatch:
+    inputs:
+      refresh_google_scholar:
+        description: Refresh Google Scholar before publishing
+        type: boolean
+        default: true
 
 permissions:
   contents: read
@@ -15,16 +22,53 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  refresh-scholar:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.refresh_google_scholar))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    outputs:
+      revision: ${{ steps.save.outputs.revision }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          package-manager-cache: false
+      - name: Refresh Google Scholar
+        env:
+          SERPAPI_API_KEY: ${{ secrets.SERPAPI_API_KEY }}
+        run: node scripts/refresh-google-scholar.mjs
+      - name: Save the validated snapshot
+        id: save
+        run: |
+          if git diff --quiet -- src/data/google-scholar.json; then
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -- src/data/google-scholar.json
+          git commit -m 'Refresh Google Scholar citation snapshot'
+          git push origin HEAD:refs/heads/main
+          printf 'revision=%s\n' "$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+
   build:
+    needs: refresh-scholar
+    if: >-
+      ${{ !cancelled() && (needs.refresh-scholar.result == 'success' || needs.refresh-scholar.result == 'skipped') &&
+          (github.event_name != 'schedule' || needs.refresh-scholar.outputs.revision != '') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
         with:
           persist-credentials: false
+          ref: ${{ needs.refresh-scholar.outputs.revision || github.sha }}
       - uses: withastro/action@v6
         with:
           node-version: 24
           package-manager: pnpm@11.25.0
+      - name: Check Google Scholar refresh handling
+        run: node --test scripts/refresh-google-scholar.test.mjs
       - name: Check internal links and bibliography
         run: pnpm check:build
       - name: Install Chromium for regression tests
@@ -34,7 +78,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    if: ${{ !cancelled() && needs.build.result == 'success' && github.event_name != 'pull_request' && github.ref == 'refs/heads/main' }}
     runs-on: ubuntu-latest
     permissions:
       pages: write
