@@ -1,0 +1,246 @@
+{
+  "10.1016/j.talanta.2026.130241": {
+    "summary": "Reviewed 129 studies on label-free surface-enhanced Raman spectroscopy (SERS) for microbial sensing. The review traced six stages from sample preparation to validation and found external testing in only 6.2% of studies.",
+    "contribution": "I designed the review, led the evidence synthesis and validation audit, and prepared the figures, tables, and manuscript."
+  },
+  "10.1016/j.bspc.2026.109894": {
+    "summary": "Developed a CT pipeline that narrows the search to kidney and stone slices before segmentation. On the study cohort, Dice was 97.44% with scope reduction and 90.13% when that step was omitted.",
+    "contribution": "I designed the scope-reduction and feature-transfer strategy and led model development, evaluation, analysis, and writing."
+  },
+  "10.1016/j.talanta.2025.129332": {
+    "summary": "Used analyte-enriched blood spectra and super-operational neural networks to recognise sepsis and identify pathogens. The study included an independent external cohort of 70 samples.",
+    "contribution": "I developed the workflow from raw spectra through preprocessing, split design, model training, evaluation, and interpretation. I also helped document the experimental protocol."
+  },
+  "10.1016/j.rser.2025.116481": {
+    "summary": "Reviewed deep reinforcement learning across generation, storage, grid operations, and energy markets. The review mapped algorithms to operating problems and examined barriers to deployment, including safety and transfer from simulation.",
+    "contribution": "I led the review design, literature synthesis, taxonomy, comparative analysis, visualisations, and writing."
+  },
+  "10.1016/j.saa.2025.126931": {
+    "summary": "Mapped SERS spectra from four portable instruments to a laboratory reference and evaluated bacterial classification after alignment. The study also examined how many reference spectra were needed for adaptation.",
+    "contribution": "I led development and evaluation of the spectral alignment and classification models and prepared the analysis, figures, and manuscript."
+  },
+  "10.1109/jbhi.2025.3605296": {
+    "summary": "Reconstructed three-dimensional ground reaction forces, moments, and centre of pressure from distributed insole pressures. The study used instrumented-treadmill references and participant-held-out evaluation.",
+    "contribution": "I led preprocessing, development and evaluation of Ke2KeNet, and manuscript preparation. I also analysed which plantar regions carried the most useful information."
+  },
+  "10.1016/j.jobe.2025.113731": {
+    "summary": "Paired appliance-level load disaggregation with occupancy detection from multichannel smart-meter data. A cascaded model evaluated how individual device events could help infer occupancy on the ECO dataset.",
+    "contribution": "I led study design, data curation, software development, validation, analysis, visualisation, and writing."
+  },
+  "10.1007/s00521-025-11327-x": {
+    "summary": "Evaluated whether distant radar could recover continuous beat-to-beat arterial blood pressure waveforms from raw in-phase and quadrature signals across recording scenarios.",
+    "contribution": "I proposed investigating one-dimensional signal reconstruction for this task and contributed to model implementation, evaluation, interpretation, and manuscript review."
+  },
+  "10.1007/s00521-025-11348-6": {
+    "summary": "Encoded environmental sensor time series as images to estimate indoor occupancy. The study evaluated a tailored convolutional network across three benchmark datasets.",
+    "contribution": "I redesigned the occupancy classifier and contributed to the experimental setup, analysis, and manuscript."
+  },
+  "10.1016/j.buildenv.2025.112635": {
+    "summary": "Combined appliance-event, statistical, and time-of-day features to infer occupancy from smart meters. The study evaluated feature fusion, ensemble classifiers, and device selection on the ECO dataset.",
+    "contribution": "I led conceptualisation, data curation, methodology, software development, analysis, visualisation, and original drafting."
+  },
+  "10.1007/s11517-025-03311-3": {
+    "summary": "Predicted wall shear stress in abdominal aortic aneurysms by representing three-dimensional geometries from multiple views. The study compared model outputs with computational fluid dynamics estimates on real and synthetic geometries.",
+    "contribution": "I contributed to model implementation and integration, iterative evaluation, and troubleshooting with the modelling team."
+  },
+  "10.1016/j.bspc.2024.107233": {
+    "summary": "Restored wrist photoplethysmography (PPG) with a one-dimensional CycleGAN and tested whether restoration improved atrial fibrillation detection across two test splits.",
+    "contribution": "I adapted CycleGAN to one-dimensional physiological signals and contributed to study design, formal analysis, and writing."
+  },
+  "10.1016/j.mtcomm.2024.110932": {
+    "summary": "Compared six hip-stem materials under walking, standing, and sitting loads using finite element simulations. The study examined stress transfer, stress shielding, and implant micromovement.",
+    "contribution": "I reconstructed the Summit stem in CAD, helped prepare the biomechanical simulations, and contributed to interpretation and writing."
+  },
+  "10.1109/access.2024.3412274": {
+    "summary": "Used four-channel vibration data to identify gearbox faults with a lightweight one-dimensional network, evaluated against ResNet baselines.",
+    "contribution": "I contributed to model evaluation and analysis, interpreted the results, and reviewed the manuscript."
+  },
+  "10.1109/access.2024.3404971": {
+    "summary": "Combined PPG, blood pressure, and demographic data to estimate glucose and classify diabetes severity in a 139-participant study. The regression evaluation included Clarke Error Grid analysis.",
+    "contribution": "I contributed to machine-learning and physiological-signal analysis, technical evaluation, and manuscript review."
+  },
+  "10.1016/j.compbiomed.2024.108555": {
+    "summary": "Reconstructed ECG waveforms from contactless radar with a multiresolution network, evaluating performance during rest, the Valsalva manoeuvre, and apnoea.",
+    "contribution": "I contributed to methodology, model development, quantitative evaluation, and original drafting."
+  },
+  "10.1016/j.engappai.2024.108483": {
+    "summary": "Evaluated two methods for recovering 12-lead ECG and R-peak timing from magnetohydrodynamic distortion in MRI at 1, 3, and 7 tesla.",
+    "contribution": "I led study design, data curation, model and software development, experiments, analysis, and manuscript preparation."
+  },
+  "10.1109/access.2024.3390566": {
+    "summary": "Built and tested a portable negative-pressure ventilation prototype with continuous and cyclic operation, closed-loop pressure control, and emergency safety mechanisms.",
+    "contribution": "I supported engineering analysis and prototype evaluation, interpreted test results, and helped write and revise the paper."
+  },
+  "10.1016/j.eswa.2024.124594": {
+    "summary": "Combined kidney localisation, segmentation, and multi-view ultrasound classification to estimate prenatal hydronephrosis severity. The study evaluated grading at the subject level for 164 subjects.",
+    "contribution": "I led ultrasound data curation, developed the segmentation and grading models, and drafted the manuscript."
+  },
+  "10.1016/j.eswa.2024.123167": {
+    "summary": "Restored noisy wrist PPG and translated it towards finger PPG morphology. The study assessed whether translation improved pulse rate and pulse rate variability estimates against ECG-derived references.",
+    "contribution": "I led development of the two-stage Super-ONN CycleGAN workflow, ran the experiments, and prepared the analysis and manuscript."
+  },
+  "10.1109/access.2024.3353463": {
+    "summary": "Reconstructed ECG from wearable measurements of cardiac vibration and rotation. The study evaluated waveform similarity and whether heart rate could be recovered on held-out participants.",
+    "contribution": "I contributed to methodology, data analysis, model evaluation, interpretation, and manuscript review."
+  },
+  "10.1016/j.wasman.2023.12.014": {
+    "summary": "Classified recyclable waste from images for both single-label and multi-label tasks. The study evaluated the method on the 25,000-image GIGO dataset and used Score-CAM to inspect which regions influenced predictions.",
+    "contribution": "I helped develop the deep-learning framework and contributed to evaluation, experimental analysis, interpretation, and manuscript review."
+  },
+  "10.1016/j.engappai.2023.107514": {
+    "summary": "Used an attention-guided operational CycleGAN to restore motion-corrupted EEG. Evaluation on held-out participants examined signal recovery in the time and frequency domains.",
+    "contribution": "I led study design, development of AGO-CycleGAN, experiments, analysis, visualisation, and writing."
+  },
+  "10.1016/j.bspc.2023.105687": {
+    "summary": "Estimated contactless PPG waveforms from facial video using a shallow encoder-decoder. The evaluation compared both waveform fidelity and agreement of derived heart rates.",
+    "contribution": "I prepared the deep-learning pipeline, helped process the video and physiological data, and contributed to evaluation and manuscript review."
+  },
+  "10.3390/s23218890": {
+    "summary": "Benchmarked 24 architectures for liver segmentation in T1-weighted MRI. The study also evaluated a cascaded segmentation approach and described a workflow for cloud-based model updates.",
+    "contribution": "I contributed to software implementation, data curation, original drafting, and manuscript revision."
+  },
+  "10.1007/s00521-023-09081-z": {
+    "summary": "Estimated three-dimensional ground reaction forces and moments from five shoe-mounted motion markers. The study evaluated the attention-guided model across two public gait datasets.",
+    "contribution": "I contributed to methodology, model development, cross-dataset evaluation, and manuscript writing."
+  },
+  "10.1039/d3tb01469j": {
+    "summary": "Reviewed how total hip implant materials and geometries affect stress shielding, micromotion, wear, and loosening. The synthesis examined trade-offs in design and gaps in biomechanical evaluation.",
+    "contribution": "I helped synthesise the literature on implant mechanics, finite element modelling, and performance measures and contributed to interpretation and manuscript revision."
+  },
+  "10.1109/jsen.2023.3317768": {
+    "summary": "Used laser-induced graphene sensors in a smart insole to map plantar temperature in real time. Experiments characterised sensitivity, operating range, and response and recovery times.",
+    "contribution": "I helped assess the sensing system experimentally, interpreted the results, and reviewed the manuscript."
+  },
+  "10.1016/j.eswa.2023.121196": {
+    "summary": "Used a one-dimensional CycleGAN to recover full fetal ECG morphology from maternal recordings. Two PhysioNet datasets were used to evaluate waveform recovery, fetal QRS detection, and fetal heart rate.",
+    "contribution": "I contributed to the deep-learning methodology, model assessment, interpretation, and manuscript review."
+  },
+  "10.3390/cancers15123189": {
+    "summary": "Combined CT-derived features with clinical records to classify renal tumours and estimate the surgical approach in the study cohort. Feature analysis identified tumour volume and cancer stage as informative.",
+    "contribution": "I contributed to study design, methodology, software, data curation, validation, visualisation, analysis, and manuscript drafting as part of my MSc research."
+  },
+  "10.3390/diagnostics13122000": {
+    "summary": "Classified abnormal middle cerebral artery blood-flow velocity from transcranial Doppler ultrasound waveforms using an attention-based residual network.",
+    "contribution": "I helped develop the MATLAB software, preprocess the data, analyse and visualise the results, and write and revise the paper."
+  },
+  "10.1016/j.engappai.2023.106414": {
+    "summary": "Used a deeply supervised LinkNet++ to recover fetal ECG from maternal recordings. Leave-one-subject-out evaluation on two datasets assessed waveform fidelity and fetal QRS timing.",
+    "contribution": "I contributed to the LinkNet++ methodology, model development, experiments, validation, analysis, and manuscript writing."
+  },
+  "10.3390/bioengineering10050579": {
+    "summary": "Used a multiscale residual U-Net to remove eye-movement and muscle artefacts from EEG. Comparisons assessed artefact reduction in both the time and frequency domains.",
+    "contribution": "I contributed to study design, methodology, data curation, formal analysis, and manuscript drafting and revision."
+  },
+  "10.1016/j.engappai.2023.106130": {
+    "summary": "Used a convolutional variational autoencoder with LSTM features to identify unusual resting heart rate patterns in smartwatch records. The study examined anomalies before and after symptom onset in a cohort of 68 people with COVID-19.",
+    "contribution": "I contributed to method and experiment analysis, interpretation, and manuscript review."
+  },
+  "10.3390/bioengineering10050542": {
+    "summary": "Detected ECG R peaks under magnetohydrodynamic distortion from MRI. The study evaluated an attention-based detector on 3- and 7-tesla recordings.",
+    "contribution": "I contributed to methodology, software development, validation, and manuscript drafting and revision."
+  },
+  "10.3389/fped.2023.1149318": {
+    "summary": "Estimated penile curvature from images of nine 3D models. The pipeline localised and segmented the models and derived the curvature angle from their masks.",
+    "contribution": "I assisted with the experiments and helped prepare and revise the manuscript."
+  },
+  "10.1016/j.bspc.2023.104882": {
+    "summary": "Combined generative waveform enhancement with a two-stream classifier to distinguish abnormal middle cerebral artery flow from transcranial Doppler recordings.",
+    "contribution": "I contributed to data curation, analysis of flow velocity signals, and original drafting."
+  },
+  "10.1007/s10489-023-04557-w": {
+    "summary": "Combined ground reaction force waveforms and gait-cycle features to distinguish healthy gait from gait patterns associated with Parkinson’s disease, Huntington’s disease, and ALS in a 64-participant dataset.",
+    "contribution": "I contributed to gait data analysis and model evaluation, interpreted findings, and reviewed and revised the manuscript."
+  },
+  "10.3390/ma16041466": {
+    "summary": "Simulated a spiral trunnion at the head-stem interface of a hip implant. The study compared predicted wear, sliding distance, and fixation stability with a conventional design.",
+    "contribution": "I designed the spiral geometry in Fusion 360 and contributed to the finite element methodology, implementation, and analysis."
+  },
+  "10.1016/j.sna.2022.114092": {
+    "summary": "Built a fibre Bragg grating insole to measure plantar pressure and temperature simultaneously. Static and gait experiments evaluated the prototype and its real-time pressure and temperature maps.",
+    "contribution": "I led system development and evaluation, data collection and analysis, validation, and manuscript preparation."
+  },
+  "10.3390/bios13010079": {
+    "summary": "Modelled a surface acoustic wave sensor for detecting hip implant loosening. Finite element simulations compared voltage response and stress at two implant locations under three loading conditions.",
+    "contribution": "I contributed to simulation software, investigation, and formal analysis."
+  },
+  "10.1016/j.bspc.2022.104247": {
+    "summary": "Reconstructed arterial blood pressure from PPG and ECG, then combined waveform and pressure-component estimates to recover a waveform in physical units. The evaluation examined systolic and diastolic pressure errors.",
+    "contribution": "I led development of NABNet, data preparation, experiments, analysis, visualisation, and writing."
+  },
+  "10.1007/s00521-022-08111-6": {
+    "summary": "Removed motion artefacts from single-channel EEG with a multiresolution reconstruction network. Leave-one-subject-out evaluation assessed signal recovery on held-out participants.",
+    "contribution": "I led development of MLMRS-Net, preprocessing, implementation, experiments, quantitative analysis, and manuscript preparation."
+  },
+  "10.3390/bioengineering9110692": {
+    "summary": "Translated PPG into arterial blood pressure waveforms with two cascaded networks. The evaluation measured waveform error and errors in derived systolic, diastolic, and mean arterial pressure.",
+    "contribution": "I contributed to data curation, methodology, validation, analysis, and drafting. I also worked with the first author to revise the study for publication."
+  },
+  "10.3390/bioengineering9100558": {
+    "summary": "Estimated respiration rate directly from PPG with a compact ConvMixer network. The study evaluated two public datasets and tested limited fine-tuning across datasets.",
+    "contribution": "I contributed to data curation, technical analysis, and manuscript review."
+  },
+  "10.3390/polym14204308": {
+    "summary": "Reviewed biomaterial selection and preclinical finite element evaluation for total hip implants, covering the effects of stiffness mismatch, stress shielding, wear, fatigue, and micromotion.",
+    "contribution": "I contributed to the computational and technical analysis and helped design and prepare figures for the review."
+  },
+  "10.3390/s22197599": {
+    "summary": "Built a wireless insole prototype with 16 pressure sensors and eight temperature sensors per insole. The system displayed plantar pressure and temperature maps in real time.",
+    "contribution": "I contributed to methodology, experimental investigation, and manuscript review."
+  },
+  "10.1016/j.compbiomed.2022.105682": {
+    "summary": "Modelled resting heart rate with an LSTM variational autoencoder to identify anomalies in wearable data around COVID-19 symptom onset. The study examined how its evaluation setup affected the balance between precision and recall.",
+    "contribution": "I contributed to wearable-data analysis, model evaluation, interpretation, and manuscript review."
+  },
+  "10.3390/diagnostics12040920": {
+    "summary": "Compared cough and breath audio for classifying COVID-19 in symptomatic and asymptomatic groups and integrated the classification workflow into an application prototype.",
+    "contribution": "I contributed to technical analysis and validation of the audio pipeline, interpretation, and manuscript review."
+  },
+  "10.3390/s22030919": {
+    "summary": "Estimated blood pressure from PPG and ECG with a shallow one-dimensional U-Net. Evaluation used records from 942 MIMIC-II patients and an external dataset of 40 participants.",
+    "contribution": "I led study design, data curation, methodology, implementation, validation, analysis, visualisation, and writing."
+  },
+  "10.1016/j.compbiomed.2021.105184": {
+    "summary": "Analysed gait data from a longitudinal Tai Chi study of 57 participants. The analysis used scaled gait features and subject-wise validation to assess group differences during walking tasks.",
+    "contribution": "I contributed to gait-data analysis, classical machine-learning evaluation, interpretation, and manuscript review."
+  },
+  "10.1109/access.2022.3173424": {
+    "summary": "Localised hip implants on X-rays and assessed aseptic loosening with a classification pipeline. The authors released the annotated radiography dataset used in the study.",
+    "contribution": "I contributed to pipeline development and evaluation, data analysis, interpretation, and manuscript writing and review."
+  },
+  "10.1016/j.compbiomed.2021.105002": {
+    "summary": "Segmented lungs and infection regions in chest radiographs to localise COVID-19 pneumonia and estimate the extent of involvement for severity grading.",
+    "contribution": "I helped curate the benchmark dataset and contributed to dataset and model evaluation, interpretation, and manuscript review."
+  },
+  "10.3390/diagnostics11050893": {
+    "summary": "Segmented lungs and infection regions in chest CT scans, then used the extent of involvement to classify COVID-19 severity.",
+    "contribution": "I contributed to investigation, data curation, validation, and manuscript review and editing."
+  },
+  "10.1080/10911359.2021.1973642": {
+    "summary": "Used survey responses from Qatar residents to model vaccine attitudes and examine factors associated with willingness and hesitancy.",
+    "contribution": "I contributed to quantitative and machine-learning analysis, interpretation, and manuscript preparation and review."
+  },
+  "10.5339/qmj.2019.qccc.61": {
+    "summary": "Developed an extracorporeal membrane oxygenation (ECMO) cannulation trainer with ultrasound-compatible pads and a closed-loop circulation model. The design incorporated sensing for simulated procedural errors.",
+    "contribution": "I contributed to prototype design and implementation, experimental and technical work, and preparation of the documentation and manuscript."
+  },
+  "10.1016/j.ejccm.2018.12.017": {
+    "summary": "Developed and tested a simulated human circulation system for ECMO training with pulsatile flow to support cannulation practice.",
+    "contribution": "I helped design, build, and test the prototype. I developed the Arduino control code for the pump motor and contributed to technical documentation and writing."
+  },
+  "10.1007/978-981-97-3302-6_3": {
+    "summary": "Used magnetic oscillators to broaden the operating bandwidth of a rotational piezoelectric energy harvester. The study paired analytical modelling with prototype measurements.",
+    "contribution": "I contributed to technical analysis, interpretation of the results, and manuscript review."
+  },
+  "10.5121/csit.2022.122006": {
+    "summary": "Compared four one-dimensional convolutional models for removing muscle artefacts from single-channel EEG using EEGdenoiseNet. The evaluation examined recovery in the time and frequency domains and preservation of relative EEG band power.",
+    "contribution": "I contributed to the methodology, experiments, analysis, and manuscript preparation."
+  },
+  "10.5121/csit.2022.122001": {
+    "summary": "Benchmarked 21 pretrained convolutional encoders on chest radiographs to distinguish COVID-19, viral pneumonia, bacterial pneumonia, and normal images.",
+    "contribution": "I contributed to model evaluation and analysis, and to manuscript preparation and review."
+  },
+  "10.1109/scored.2019.8896240": {
+    "summary": "Presented a preliminary ECMO cannulation trainer that could reproduce complications such as low-pressure flow and guidewire or cannula mispositioning.",
+    "contribution": "I contributed to prototype design, implementation, and testing, as well as technical documentation and manuscript preparation."
+  }
+}

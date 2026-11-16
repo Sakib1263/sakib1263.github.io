@@ -83,6 +83,21 @@ test('a paper link wins over an incompatible filter', async ({ page }) => {
   await expect(page).toHaveURL(`/publications/#${paperId}`);
 });
 
+test('the publication list fits a narrow screen and can search contributions', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.goto('/publications/');
+  await expect(page.getByRole('navigation', { name: 'Research profiles' }).getByRole('link')).toHaveCount(5);
+  await expect(page.locator('[data-publication] .publication-summary')).toHaveCount(61);
+  await expect(page.locator('[data-publication] .publication-contribution')).toHaveCount(61);
+  await page.getByRole('searchbox', { name: 'Search', exact: true }).fill('Arduino control code');
+  await expect(page.locator('[data-publication]:visible')).toHaveCount(1);
+  const paper = page.locator('[data-publication]:visible');
+  await expect(paper.locator('.publication-contribution')).toBeHidden();
+  await paper.getByText('My contribution', { exact: true }).click();
+  await expect(paper.locator('.publication-contribution')).toContainText('Arduino control code');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+});
+
 test.describe('publication navigation without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
@@ -91,5 +106,8 @@ test.describe('publication navigation without JavaScript', () => {
     await page.getByRole('navigation', { name: 'Publication research areas' }).getByRole('link', { name: /medical imaging/i }).click();
     await expect(page).toHaveURL(/#cluster-imaging$/);
     await expect(page.locator('#cluster-imaging')).toBeInViewport();
+    const paper = page.locator('#paper-10-1016-j-bspc-2026-109894');
+    await paper.getByText('My contribution', { exact: true }).click();
+    await expect(paper.locator('.publication-contribution')).toContainText('feature-transfer');
   });
 });

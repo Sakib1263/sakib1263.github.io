@@ -5,6 +5,7 @@ if (form && count && empty) initializeFilters(form, count, empty);
 
 function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTMLElement) {
   const fields = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[name]')];
+  const topicLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-topic-link]')];
   const normalize = (text: string) => text.normalize('NFKD').replace(/\p{Diacritic}/gu, '').toLowerCase();
   const groups = [...document.querySelectorAll<HTMLElement>('[data-publication-group]')].map(section => ({
     section,
@@ -15,6 +16,8 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
         row.querySelector('[data-paper-title]')?.getAttribute('href'),
         row.querySelector('.publication-authors')?.textContent,
         row.querySelector('.publication-venue')?.textContent,
+        row.querySelector('.publication-summary')?.textContent,
+        row.querySelector('.publication-contribution')?.textContent,
       ].join(' ')),
     })),
   }));
@@ -44,6 +47,10 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
     }
     count.textContent = matches === total ? `${total} publications` : `${matches} of ${total} publications`;
     empty.hidden = matches > 0;
+    for (const link of topicLinks) {
+      if (link.dataset.topicLink === topic) link.setAttribute('aria-current', 'true');
+      else link.removeAttribute('aria-current');
+    }
   }
 
   function writeUrl(clearResultAnchor = false) {

@@ -14,6 +14,14 @@ export const profile = {
 
 export const cvPdfPath = 'sakib-mahmud-cv.pdf';
 
+export const researchProfiles = [
+  { label: 'Google Scholar', href: profile.scholar },
+  { label: 'ResearchGate', href: 'https://www.researchgate.net/profile/Sakib-Mahmud-7' },
+  { label: 'Web of Science', href: 'https://www.webofscience.com/wos/author/record/OIT-8107-2025' },
+  { label: 'Scopus', href: 'https://www.scopus.com/authid/detail.uri?authorId=57211999810' },
+  { label: 'ORCID', href: profile.orcid },
+];
+
 export const navigation = [
   { label: 'Research', path: 'research/' },
   { label: 'Publications', path: 'publications/' },

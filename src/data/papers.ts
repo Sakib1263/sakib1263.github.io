@@ -1,4 +1,5 @@
 import records from './publications.json';
+import details from './publication-details.json';
 
 export const topics = {
   biomechanics: 'Wearables & biomechanics',
@@ -30,6 +31,14 @@ export function publicationFor(doi: string) {
   return publication;
 }
 
+const detailsByDoi: Readonly<Record<string, { summary: string; contribution: string }>> = details;
+
+export function publicationDetails(doi: string) {
+  const detail = detailsByDoi[doi];
+  if (!detail) throw new Error(`Missing publication summary and contribution: ${doi}`);
+  return detail;
+}
+
 export function displayAuthor(author: string) {
   const comma = author.indexOf(', ');
   return comma < 0 ? author : `${author.slice(comma + 2)} ${author.slice(0, comma)}`;
@@ -57,6 +66,21 @@ export const openFullText: Readonly<Record<string, string>> = {
   '10.3390/diagnostics11050893': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8155971/',
   '10.3390/cancers15123189': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10296307/',
   '10.1016/j.rser.2025.116481': 'https://www.sciencedirect.com/science/article/pii/S1364032125011542',
+  '10.1007/s11517-025-03311-3': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC12204922/',
+  '10.3390/s23218890': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10650219/',
+  '10.3390/diagnostics13122000': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10297317/',
+  '10.3390/bioengineering10050579': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10215884/',
+  '10.3390/bioengineering10050542': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10215845/',
+  '10.3389/fped.2023.1149318': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10150132/',
+  '10.3390/ma16041466': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9962303/',
+  '10.1016/j.engappai.2023.106130': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC10047244/',
+  '10.3390/bios13010079': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9855817/',
+  '10.3390/bioengineering9100558': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9598342/',
+  '10.3390/polym14204308': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9607025/',
+  '10.3390/s22197599': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9572216/',
+  '10.1016/j.compbiomed.2022.105682': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9170596/',
+  '10.3390/diagnostics12040920': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC9028864/',
+  '10.3390/s22030919': 'https://pmc.ncbi.nlm.nih.gov/articles/PMC8840244/',
 };
 
 export const thesisUrl = 'https://qspace.qu.edu.qa/bitstream/handle/10576/45080/Sakib%20Mahmud_%20OGS%20Approved%20Thesis.pdf?isAllowed=n&sequence=1';
@@ -76,7 +100,10 @@ export const paperResources: Readonly<Record<string, { label: string; href: stri
     { label: 'UCI dataset', href: 'https://archive.ics.uci.edu/dataset/340/cuff+less+blood+pressure+estimation' },
   ],
   '10.1016/j.compbiomed.2021.105002': [
-    { label: 'Radiography dataset used in the study', href: 'https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database/data' },
+    { label: 'COVID-QU-Ex dataset', href: 'https://doi.org/10.34740/kaggle/dsv/3122958' },
+  ],
+  '10.1109/access.2022.3173424': [
+    { label: 'Hip implant X-ray dataset', href: 'https://doi.org/10.34740/kaggle/dsv/3078704' },
   ],
 };
 
@@ -94,7 +121,6 @@ const readingNotes = {
 };
 
 export const selectedPapers = Object.entries(readingNotes).map(([doi, context]) => ({ publication: publicationFor(doi), context }));
-export const readingNotesByDoi = new Map(selectedPapers.map(({ publication, context }) => [publication.doi, context]));
 export const citedPaperNotes: Readonly<Record<string, number>> = {
   '10.1016/j.compbiomed.2021.105002': 221,
   '10.3390/bioengineering9110692': 186,
