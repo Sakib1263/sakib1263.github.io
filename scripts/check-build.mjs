@@ -16,7 +16,7 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
   if (!file.isFile() || !file.name.endsWith('.html')) continue;
   const path = join(file.parentPath, file.name);
   const key = relative(root, path).replaceAll('\\', '/');
-  const page = { url: null, ids: new Set(), links: [], papers: [] };
+  const page = { url: null, ids: new Set(), links: [], anchors: [], papers: [] };
   visit(parse(readFileSync(path, 'utf8')), (tag, attributes) => {
     if (tag === 'link' && attributes.rel === 'canonical') page.url = new URL(attributes.href);
     if ('id' in attributes) {
@@ -25,10 +25,7 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
     }
     if ('data-publication' in attributes) page.papers.push(attributes.id);
     if (tag === 'img' && !('alt' in attributes)) errors.push(`${key}: image without alt text`);
-    if (tag === 'a' && attributes.href && attributes.class !== 'skip-link'
-      && (attributes.target !== '_blank' || !attributes.rel?.split(/\s+/).includes('noopener'))) {
-      errors.push(`${key}: link does not open safely in a new tab: ${attributes.href}`);
-    }
+    if (tag === 'a' && attributes.href) page.anchors.push(attributes);
     for (const attribute of ['href', 'src']) {
       if (attributes[attribute]) page.links.push(attributes[attribute]);
     }
@@ -44,8 +41,20 @@ if (!homeUrl) throw new Error('Missing built homepage or canonical URL. Run pnpm
 const basePath = homeUrl.pathname;
 let internalCount = 0;
 for (const [key, page] of pages) {
+  const pageUrl = page.url ?? new URL(key, homeUrl);
+  for (const { href, target, rel } of page.anchors) {
+    const destination = new URL(href, pageUrl);
+    const external = (destination.protocol === 'https:' || destination.protocol === 'http:')
+      && destination.origin !== homeUrl.origin;
+    if (external && (target !== '_blank' || !rel?.split(/\s+/).includes('noopener'))) {
+      errors.push(`${key}: external link does not open safely in a new tab: ${href}`);
+    }
+    if (!external && target !== undefined && target !== '_self') {
+      errors.push(`${key}: link should stay in the current tab: ${href}`);
+    }
+  }
   for (const link of page.links) {
-    const target = new URL(link, page.url ?? new URL(key, homeUrl));
+    const target = new URL(link, pageUrl);
     if (target.origin !== homeUrl.origin) continue;
     internalCount++;
     if (!target.pathname.startsWith(basePath)) {

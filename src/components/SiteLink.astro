@@ -2,6 +2,11 @@
 import type { HTMLAttributes } from 'astro/types';
 
 type Props = Omit<HTMLAttributes<'a'>, 'target' | 'rel'>;
+
+const siteUrl = Astro.site ?? Astro.url;
+const destination = new URL(Astro.props.href ?? '', siteUrl);
+const external = (destination.protocol === 'https:' || destination.protocol === 'http:')
+  && destination.origin !== siteUrl.origin;
 ---
 
-<a {...Astro.props} target="_blank" rel="noopener"><slot /></a>
+<a {...Astro.props} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}><slot /></a>
