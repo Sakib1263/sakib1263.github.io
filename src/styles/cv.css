@@ -10,14 +10,14 @@
   align-items: center;
   flex-wrap: wrap;
   gap: .25rem 1.1rem;
-  margin-top: 1rem;
+  margin-top: .65rem;
   color: var(--muted);
   font-size: .83rem;
   line-height: 1.5;
 }
 
-.cv-catalog section + section { margin-top: 2rem; }
-.cv-entry { grid-template-columns: minmax(0, 8.6rem) minmax(0, 1fr); gap: .55rem .85rem; }
+.cv-catalog section + section { margin-top: var(--catalog-section-gap); }
+.cv-entry { grid-template-columns: minmax(0, 8.6rem) minmax(0, 1fr); gap: .32rem .85rem; }
 .cv-entry h3 { font-weight: 685; line-height: 1.4; }
 .cv-entry h4 { margin: 0 0 .23rem; color: var(--accent-dark); font-size: .86rem; line-height: 1.35; }
 .cv-organization { margin-top: .15rem; color: var(--muted); line-height: 1.5; font-size: .88rem; font-weight: 580; }
@@ -33,26 +33,26 @@
 
 .cv-degree h3 { font-size: 1.19rem; letter-spacing: -.015em; }
 .cv-degree-project {
-  margin-block: .76rem .8rem;
+  margin-block: .58rem .65rem;
   padding-inline-start: .7rem;
   border-inline-start: 2px solid var(--line);
 }
 .cv-project-title { font-size: .96rem; font-weight: 650; line-height: 1.43; }
 .cv-supervisor { margin-top: .24rem; color: var(--muted); font-size: .83rem; line-height: 1.5; }
-.cv-summary { margin-top: .45rem; font-size: .92rem; line-height: 1.56; }
+.cv-summary { margin-top: .34rem; font-size: .92rem; line-height: 1.56; }
 
 .cv-course-groups {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: .65rem .85rem;
-  margin-top: .4rem;
+  gap: .48rem .85rem;
+  margin-top: .32rem;
 }
 .cv-course-groups h5 { margin: 0; font-size: .81rem; line-height: 1.4; font-weight: 650; }
 .cv-course-list, .cv-honours {
   display: flex;
   flex-wrap: wrap;
-  gap: .3rem .42rem;
-  margin: .35rem 0 0;
+  gap: .23rem .36rem;
+  margin: .28rem 0 0;
   padding: 0;
   list-style: none;
   color: var(--muted);
@@ -69,7 +69,10 @@
 
 .cv-list, .cv-languages { margin: 0; padding: 0; }
 .cv-list { list-style: none; }
-.cv-compact-entry { padding-block: .7rem; }
+.cv-compact-entry {
+  grid-template-columns: 6.4rem minmax(0, 1fr);
+  padding-block: .49rem;
+}
 .cv-compact-entry .catalog-meta { padding-top: .12rem; }
 .cv-compact-entry h3, .cv-skills h3, .cv-languages dt {
   font-size: .92rem;
@@ -89,14 +92,14 @@
 .cv-skills { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .cv-languages { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 .cv-skills li, .cv-languages > div {
-  padding: .75rem .3rem;
+  padding: .59rem .3rem;
   border-bottom: 1px solid var(--line);
 }
 
 .cv-highlights {
   display: grid;
-  gap: .38rem;
-  margin: .48rem 0 .28rem;
+  gap: .28rem;
+  margin: .36rem 0 .2rem;
   padding-inline-start: 1.12rem;
   color: var(--muted);
   font-size: .89rem;
@@ -104,8 +107,8 @@
 }
 .cv-highlights li::marker { color: var(--accent); }
 .cv-subsection-heading {
-  padding: .7rem .3rem .58rem;
-  margin-top: .55rem;
+  padding: .55rem .3rem .45rem;
+  margin-top: .4rem;
   border-bottom: 1px solid var(--line);
   color: var(--accent-dark);
   font-size: 1rem;
