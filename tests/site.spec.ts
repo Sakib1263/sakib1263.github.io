@@ -153,6 +153,11 @@ test('the CV highlights education and provides a navigable experience timeline o
   const bsc = page.locator('#bsc-electrical-engineering');
   await expect(bsc.getByText('Artificial Neural Networks')).toBeVisible();
   await expect(bsc.locator('.cv-course-list li')).toHaveCount(20);
+  for (const degree of [msc, bsc]) {
+    const supervisor = degree.getByRole('link', { name: 'Muhammad E. H. Chowdhury', exact: true });
+    await expect(supervisor).toHaveAttribute('href', 'https://scholar.google.com/citations?user=BrBVR_UAAAAJ&hl=en');
+    await expect(supervisor).toHaveAttribute('target', '_blank');
+  }
 
   await sections.getByRole('link', { name: 'Experience', exact: true }).click();
   await expect(page).toHaveURL('/cv/#positions-title');
@@ -161,6 +166,19 @@ test('the CV highlights education and provides a navigable experience timeline o
   await expect(experience.getByRole('heading', { name: 'Administrative Assistant', exact: true })).toBeVisible();
   await sections.getByRole('link', { name: 'Earlier internships' }).click();
   await expect(page).toHaveURL('/cv/#internships-title');
+
+  await sections.getByRole('link', { name: 'Certifications', exact: true }).click();
+  await expect(page).toHaveURL('/cv/#certifications-title');
+  const credentials = page.getByRole('region', { name: 'Certifications & specializations' });
+  await expect(credentials.getByRole('listitem')).toHaveCount(9);
+  await expect(credentials.getByRole('link')).toHaveCount(8);
+  await expect(credentials.locator('a[target="_blank"][rel="noopener"]')).toHaveCount(8);
+  await expect(credentials.getByRole('link', { name: 'Google Data Analytics Professional Certificate', exact: true }))
+    .toHaveAttribute('href', 'https://coursera.org/verify/professional-cert/ZFM267WNWX6N');
+  await expect(credentials.getByText('Azure Fundamentals (AZ-900), Azure Data Fundamentals (DP-900), and Azure AI Fundamentals (AI-900)')).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Technical skills' }).getByRole('listitem')).toHaveCount(9);
+  await expect(page.getByRole('region', { name: 'Awards & distinctions' }).getByRole('listitem')).toHaveCount(8);
+  await expect(page.getByRole('region', { name: 'Languages' }).getByText('Limited working proficiency')).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
   expect(context.pages()).toEqual([page]);
 });

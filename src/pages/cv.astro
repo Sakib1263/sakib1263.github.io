@@ -1,7 +1,7 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
-import { cvResearch, cvUpdated, cvUpdatedLabel, education, internships, positions, professionalTraining } from '../data/cv';
+import { awards, certifications, cvResearch, cvUpdated, cvUpdatedLabel, education, internships, languages, positions, technicalSkills } from '../data/cv';
 import { publicationId } from '../data/papers';
 import { cvPdfPath, profile, sitePath } from '../lib/site';
 import '../styles/catalog.css';
@@ -12,6 +12,10 @@ const sections = [
   { id: 'positions-title', label: 'Experience' },
   { id: 'internships-title', label: 'Earlier internships' },
   { id: 'research-title', label: 'Selected research' },
+  { id: 'skills-title', label: 'Technical skills' },
+  { id: 'certifications-title', label: 'Certifications' },
+  { id: 'awards-title', label: 'Awards & distinctions' },
+  { id: 'languages-title', label: 'Languages' },
 ];
 const experience = [
   { entries: positions },
@@ -19,7 +23,7 @@ const experience = [
 ];
 ---
 
-<Base title="CV" description="Sakib Mahmud’s education, coursework, research appointments, industry experience, and selected research contributions.">
+<Base title="CV" description="Sakib Mahmud’s education, research and industry experience, technical skills, certifications, awards, and languages.">
   <div class="shell">
     <section class="page-intro catalog-intro">
       <div class="catalog-heading">
@@ -70,7 +74,7 @@ const experience = [
                   <p class="cv-project-title">
                     {degree.projectUrl ? <SiteLink href={degree.projectUrl}>{degree.projectTitle} <span aria-hidden="true">↗</span></SiteLink> : degree.projectTitle}
                   </p>
-                  <p class="cv-supervisor">Supervised by {degree.supervisor}</p>
+                  <p class="cv-supervisor">Supervised by <SiteLink href={degree.supervisor.href}>{degree.supervisor.label}</SiteLink></p>
                   <p class="cv-summary">{degree.summary}</p>
                   <div class="catalog-actions">
                     {degree.links.map(({ label, href }) => <SiteLink href={href}>{label}</SiteLink>)}
@@ -91,14 +95,6 @@ const experience = [
               </div>
             </article>
           ))}
-          <div class="catalog-entry cv-entry cv-training">
-            <div>
-              <h3>Selected professional training</h3>
-              <ul class="cv-course-list">
-                {professionalTraining.map(training => <li>{training}</li>)}
-              </ul>
-            </div>
-          </div>
         </section>
 
         <section aria-labelledby="positions-title">
@@ -156,6 +152,68 @@ const experience = [
             <SiteLink class="text-link" href={sitePath('publications/')}>All publications <span aria-hidden="true">→</span></SiteLink>
             <SiteLink class="text-link" href={sitePath('software/')}>Software &amp; Data <span aria-hidden="true">→</span></SiteLink>
           </div>
+        </section>
+
+        <section aria-labelledby="skills-title">
+          <header class="catalog-section-heading">
+            <h2 id="skills-title">Technical skills</h2>
+          </header>
+          <ul class="cv-skills cv-list" role="list">
+            {technicalSkills.map(({ title, details }) => (
+              <li>
+                <h3>{title}</h3>
+                <p class="cv-detail">{details}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="certifications-title">
+          <header class="catalog-section-heading">
+            <h2 id="certifications-title">Certifications &amp; specializations</h2>
+          </header>
+          <ul class="cv-list" role="list">
+            {certifications.map(({ title, provider, href, details }) => (
+              <li class="catalog-entry cv-entry cv-compact-entry">
+                <span class="catalog-meta">{provider}</span>
+                <div>
+                  <h3>{href ? <SiteLink href={href}>{title} <span aria-hidden="true">↗</span></SiteLink> : title}</h3>
+                  {details && <p class="cv-detail">{details}</p>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="awards-title">
+          <header class="catalog-section-heading">
+            <h2 id="awards-title">Awards &amp; distinctions</h2>
+          </header>
+          <ul class="cv-list" role="list">
+            {awards.map(({ dates, title, details }) => (
+              <li class="catalog-entry cv-entry cv-compact-entry">
+                <span class="catalog-meta cv-date">{dates}</span>
+                <div>
+                  <h3>{title}</h3>
+                  <p class="cv-detail">{details}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <section aria-labelledby="languages-title">
+          <header class="catalog-section-heading">
+            <h2 id="languages-title">Languages</h2>
+          </header>
+          <dl class="cv-languages">
+            {languages.map(({ names, proficiency }) => (
+              <div>
+                <dt>{names}</dt>
+                <dd class="cv-detail">{proficiency}</dd>
+              </div>
+            ))}
+          </dl>
         </section>
       </div>
     </div>

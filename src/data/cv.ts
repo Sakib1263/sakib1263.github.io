@@ -14,6 +14,11 @@ export const cvResearch = selectedProjectSlugs.map(slug => {
 
 type CvLink = { label: string; href: string };
 
+const chowdhury: CvLink = {
+  label: 'Muhammad E. H. Chowdhury',
+  href: 'https://scholar.google.com/citations?user=BrBVR_UAAAAJ&hl=en',
+};
+
 function paperLink(label: string, doi: string): CvLink {
   return { label, href: sitePath(`publications/#${publicationId(doi)}`) };
 }
@@ -194,7 +199,7 @@ type Degree = {
   projectLabel: string;
   projectTitle: string;
   projectUrl?: string;
-  supervisor: string;
+  supervisor: CvLink;
   coursework: { title: string; courses: string[] }[];
   honours?: string[];
   links: CvLink[];
@@ -211,7 +216,7 @@ export const education: Degree[] = [
     projectLabel: 'Master’s thesis',
     projectTitle: 'Deep Learning Techniques for Kidney Disease Detection',
     projectUrl: 'https://qspace.qu.edu.qa/handle/10576/45080',
-    supervisor: 'Muhammad E. H. Chowdhury',
+    supervisor: chowdhury,
     coursework: [
       { title: 'Research and quantitative methods', courses: ['Applied Research Methodology', 'Applied Numerical Analysis', 'Applied Statistical Analysis'] },
       { title: 'Signals, communications, and control', courses: ['Digital Signal Processing', 'Digital Communications', 'Wireless Communications', 'Communication and Information Theory', 'Power System Dynamics and Control'] },
@@ -231,7 +236,7 @@ export const education: Degree[] = [
     summary: 'Developed a wearable prototype for diabetic-foot monitoring. Related studies evaluated electronic and fibre-optic smart insoles that measure plantar pressure and temperature.',
     projectLabel: 'Senior design project',
     projectTitle: 'Design and Implementation of a Novel Real-time Wearable System for Early Detection of Diabetic Foot Ulcer',
-    supervisor: 'Muhammad E. H. Chowdhury',
+    supervisor: chowdhury,
     coursework: [
       { title: 'Mathematics and engineering foundations', courses: ['Advanced Calculus', 'Linear Algebra', 'Probability and Statistics', 'Numerical Methods', 'Engineering Economics'] },
       { title: 'Circuits, electronics, and power', courses: ['Electric Circuits', 'Fundamentals of Electronics', 'Power Systems Analysis', 'Power Electronics', 'Electric Machines', 'Electromagnetics'] },
@@ -246,9 +251,106 @@ export const education: Degree[] = [
   },
 ];
 
-export const professionalTraining = [
-  'CITI Biomedical Comprehensive',
-  'Google Advanced Data Analytics Professional Certificate',
-  'IBM AI Engineering Professional Certificate',
-  'Microsoft Azure Fundamentals, Data Fundamentals, and AI Fundamentals',
+export const certifications: { title: string; provider: string; href?: string; details?: string }[] = [
+  {
+    title: 'Biomedical (Biomed) Comprehensive',
+    provider: 'CITI Program',
+    href: 'https://www.citiprogram.org/verify/?w441ecacb-e659-447f-9fb8-27a4f3da45c8-76515150',
+  },
+  {
+    title: 'Google Advanced Data Analytics Professional Certificate',
+    provider: 'Coursera',
+    href: 'https://coursera.org/verify/professional-cert/SPL2KOZ2XWU0',
+  },
+  {
+    title: 'Google Data Analytics Professional Certificate',
+    provider: 'Coursera',
+    href: 'https://coursera.org/verify/professional-cert/ZFM267WNWX6N',
+  },
+  {
+    title: 'IBM AI Engineering Professional Certificate',
+    provider: 'Coursera',
+    href: 'https://coursera.org/verify/professional-cert/6NMAXZD7R27R',
+  },
+  {
+    title: 'Google AI Essentials',
+    provider: 'Coursera',
+    href: 'https://coursera.org/verify/OTF4ZX9GWBHC',
+  },
+  {
+    title: 'Excel Skills for Business Specialization',
+    provider: 'Coursera',
+    href: 'https://coursera.org/verify/specialization/5X9U6H8PY8R8',
+  },
+  {
+    title: 'The Complete SQL Bootcamp: Go from Zero to Hero',
+    provider: 'Udemy',
+    href: 'https://www.udemy.com/certificate/UC-06cd2690-e220-4322-aaad-b76c35484e84/',
+  },
+  {
+    title: 'Microsoft Azure fundamentals certifications',
+    provider: 'Microsoft',
+    details: 'Azure Fundamentals (AZ-900), Azure Data Fundamentals (DP-900), and Azure AI Fundamentals (AI-900)',
+  },
+  {
+    title: 'Circular Economy – Sustainable Materials Management',
+    provider: 'Coursera',
+    href: 'https://www.coursera.org/account/accomplishments/certificate/VMJXU2U78ZU2',
+  },
+];
+
+export const awards = [
+  { dates: '2026–2027', title: 'Qatar University Internal Grant', details: 'Grant QUCG-CENG-26/27-942' },
+  { dates: '2022', title: 'Qatar National AI Competition', details: 'Participant in the IDEA category' },
+  { dates: '2021', title: '13th Annual QNRF–UREP Competition', details: 'Nomination for project UREP23-031-2-014' },
+  { dates: '2020', title: '12th Annual UREP Competition', details: 'Third place for project UREP22-003-2-001' },
+  { dates: '2020', title: 'Qatar University Honors Program and Distinguished Student Award', details: 'Completed the Honors Program and graduated with honours.' },
+  { dates: '2018', title: 'Qatar University College of Business Poster Competition', details: 'First place' },
+  { dates: '2018', title: 'Qatar University Mathematics Championship, Level 2', details: 'Fourth place' },
+  { dates: '2016–2018', title: 'Dean’s Award', details: 'Received in six semesters' },
+];
+
+export const technicalSkills = [
+  {
+    title: 'Bioengineering & healthcare',
+    details: 'Biomedical instrumentation, biosensors, wearable devices, physiological signals, medical imaging, image registration, computational biomechanics, diabetic-foot technologies, finite-element modelling, research translation, and digital health prototyping.',
+  },
+  {
+    title: 'Research development, governance & IP',
+    details: 'Competitive grant writing and multimillion-QAR proposals, IRB and ethics submissions, study protocols, biomedical dataset governance, patent and invention disclosure documentation, manuscripts, book chapters, technical reports, and multidisciplinary project coordination.',
+  },
+  {
+    title: 'AI & machine learning',
+    details: 'PyTorch, TensorFlow, and scikit-learn. Classical machine learning, deep learning, convolutional neural networks, generative models, time-series learning, computer vision, segmentation, and multimodal learning.',
+  },
+  {
+    title: 'Programming & data',
+    details: 'Python, MATLAB, R, C++, SQL, PostgreSQL, NumPy, SciPy, and pandas. Statistical analysis and data analytics.',
+  },
+  {
+    title: 'Signal & image processing',
+    details: 'Python and MATLAB for biomedical and electrical signals, medical imaging, image processing, signal restoration, and feature engineering.',
+  },
+  {
+    title: 'Embedded systems & instrumentation',
+    details: 'Arduino, ESP32, Raspberry Pi, NI ELVIS II+, and LabVIEW. Sensors, instrumentation, and Internet of Things prototyping.',
+  },
+  {
+    title: 'Engineering modelling',
+    details: 'ANSYS, COMSOL, Fusion 360, Blender, and MATLAB/Simulink. Finite-element analysis, 3D modelling, and physics-based simulation.',
+  },
+  {
+    title: 'Visualisation & productivity',
+    details: 'Matplotlib, Tableau, Power BI, R, Microsoft Word, Excel, PowerPoint, Visio, Teams, OneDrive, and LaTeX/Overleaf.',
+  },
+  {
+    title: 'Cloud & development',
+    details: 'Microsoft Azure, Google Cloud Platform, Visual Studio Code, and PyCharm. Git-based workflows and basic web and API deployment.',
+  },
+];
+
+export const languages = [
+  { names: 'Bangla', proficiency: 'Native' },
+  { names: 'English', proficiency: 'Bilingual' },
+  { names: 'Arabic, Urdu, and Hindi', proficiency: 'Limited working proficiency' },
 ];
