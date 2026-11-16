@@ -89,6 +89,34 @@ test('CV download works from the homepage', async ({ page, request }) => {
   expect((await response.body()).subarray(0, 5).toString()).toBe('%PDF-');
 });
 
+test('the CV highlights education and provides a navigable experience timeline on mobile', async ({ page, context }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.goto('/cv/');
+  await expect(page.locator('main h2').nth(1)).toHaveText('Education');
+  await page.getByRole('link', { name: 'Education & coursework' }).click();
+  await expect(page).toHaveURL('/cv/#education-title');
+  const msc = page.locator('#msc-electrical-engineering');
+  await expect(msc.getByText('CGPA 3.31 / 4.00')).toBeVisible();
+  await expect(msc.getByText('Applied Statistical Analysis')).toBeVisible();
+  await expect(msc.locator('.cv-course-list li')).toHaveCount(8);
+  await expect(msc.getByRole('link', { name: 'Deep Learning Techniques for Kidney Disease Detection' }))
+    .toHaveAttribute('href', 'https://qspace.qu.edu.qa/handle/10576/45080');
+  const bsc = page.locator('#bsc-electrical-engineering');
+  await expect(bsc.getByText('Artificial Neural Networks')).toBeVisible();
+  await expect(bsc.locator('.cv-course-list li')).toHaveCount(20);
+
+  const sections = page.getByRole('navigation', { name: 'CV sections' });
+  await sections.getByRole('link', { name: 'Experience', exact: true }).click();
+  await expect(page).toHaveURL('/cv/#positions-title');
+  const experience = page.getByRole('region', { name: 'Research and professional experience' });
+  await expect(experience.getByRole('article')).toHaveCount(12);
+  await expect(experience.getByRole('heading', { name: 'Administrative Assistant', exact: true })).toBeVisible();
+  await sections.getByRole('link', { name: 'Earlier internships' }).click();
+  await expect(page).toHaveURL('/cv/#internships-title');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  expect(context.pages()).toEqual([page]);
+});
+
 test('the publications page downloads the complete BibTeX file', async ({ page }) => {
   await page.goto('/publications/');
   const downloaded = page.waitForEvent('download');

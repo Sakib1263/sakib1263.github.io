@@ -163,12 +163,6 @@ h3 { font-size: 1.1rem; line-height: 1.35; font-weight: 680; }
 .related-papers ul { list-style: none; padding: 0; margin: 0; }
 .related-papers li { padding-block: .7rem; border-bottom: 1px solid var(--line); line-height: 1.48; }
 
-.cv-content section + section { margin-top: 2.15rem; }
-.cv-updated { margin-top: .36rem; color: var(--muted); font-size: .87rem; }
-.cv-row { align-items: start; }
-.cv-row .cv-organization { font-weight: 630; color: var(--ink); }
-.resource-row p.cv-date { font-size: .91rem; text-align: right; flex-shrink: 0; max-width: min(30%, 20em); }
-
 @media (max-width: 940px) {
   .shell { width: min(1040px, calc(100% - 3.25rem)); }
 }
@@ -191,8 +185,6 @@ h3 { font-size: 1.1rem; line-height: 1.35; font-weight: 680; }
   .study-workflow { grid-template-columns: 1fr; gap: .4rem; }
   .study-workflow li:not(:last-child)::after { content: "↓"; }
   .resource-row { align-items: flex-start; flex-direction: column; }
-  .cv-row { gap: .2rem; }
-  .resource-row p.cv-date { text-align: left; max-width: none; }
   .connection { align-items: start; }
 }
 
@@ -216,7 +208,6 @@ h3 { font-size: 1.1rem; line-height: 1.35; font-weight: 680; }
   .section-title { font-size: 19pt; }
   .page-lead, .resource-row p { font-size: 10pt; }
   .resource-row { break-inside: avoid; padding-block: .45rem; }
-  .cv-content section + section { margin-top: 1.15rem; }
   .content-end { padding-bottom: 0; }
 }
 .project-art.art-prenatal-hydronephrosis { display: flex; justify-content: center; align-items: center; gap: clamp(.12rem, 1vw, .5rem); background: #e3eee9; }

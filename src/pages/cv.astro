@@ -1,70 +1,166 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
-import { cvResearch, cvUpdated, cvUpdatedLabel, education, positions } from '../data/cv';
+import { cvResearch, cvUpdated, cvUpdatedLabel, education, internships, positions, professionalTraining } from '../data/cv';
+import { publicationId } from '../data/papers';
 import { cvPdfPath, profile, sitePath } from '../lib/site';
+import '../styles/catalog.css';
+import '../styles/cv.css';
+
+const sections = [
+  { id: 'education-title', label: 'Education' },
+  { id: 'positions-title', label: 'Experience' },
+  { id: 'internships-title', label: 'Earlier internships' },
+  { id: 'research-title', label: 'Selected research' },
+];
+const experience = [
+  { entries: positions },
+  { entries: internships, heading: 'Earlier internships and apprenticeships' },
+];
 ---
 
-<Base title="CV" description="Selected research, appointments, and education of Sakib Mahmud. Download the public academic CV as a PDF.">
-  <section class="shell page-intro">
-    <h1>Curriculum vitae</h1>
-    <p class="page-lead">{profile.name} · {profile.role}, {profile.affiliation}</p>
-    <p class="study-citation">{profile.department}</p>
-    <p class="cv-updated">Updated <time datetime={cvUpdated}>{cvUpdatedLabel}</time></p>
-    <div class="actions">
-      <SiteLink class="button button-primary" href={sitePath(cvPdfPath)} download>Download CV (PDF) <span aria-hidden="true">↓</span></SiteLink>
-      <SiteLink class="text-link" href={`mailto:${profile.email}`}>{profile.email}</SiteLink>
-      <SiteLink class="text-link" href={sitePath('publications/')}>Publications <span aria-hidden="true">↗</span></SiteLink>
-      <button class="button button-secondary print-button" type="button" data-print hidden>Print this page</button>
+<Base title="CV" description="Sakib Mahmud’s education, coursework, research appointments, industry experience, and selected research contributions.">
+  <div class="shell">
+    <section class="page-intro catalog-intro">
+      <div class="catalog-heading">
+        <div>
+          <h1>Curriculum vitae</h1>
+          <p class="page-lead">{profile.name} · {profile.role}, {profile.affiliation}</p>
+          <p class="cv-header-detail">{profile.department} · {profile.location}</p>
+        </div>
+        <div class="actions">
+          <SiteLink class="button button-primary" href="#education-title">Education &amp; coursework <span aria-hidden="true">↓</span></SiteLink>
+          <SiteLink class="button button-secondary" href={sitePath(cvPdfPath)} download>Download CV (PDF) <span aria-hidden="true">↓</span></SiteLink>
+        </div>
+      </div>
+      <div class="cv-header-meta">
+        <SiteLink href={`mailto:${profile.email}`}>{profile.email}</SiteLink>
+        <p>Updated <time datetime={cvUpdated}>{cvUpdatedLabel}</time></p>
+        <button class="cv-print print-button" type="button" data-print hidden>Print this page</button>
+      </div>
+    </section>
+
+    <div class="catalog-layout content-end">
+      <nav class="catalog-index cv-index" aria-label="CV sections">
+        <h2>On this page</h2>
+        <ul>
+          {sections.map(({ id, label }) => <li><SiteLink href={`#${id}`}><span>{label}</span></SiteLink></li>)}
+        </ul>
+      </nav>
+
+      <div class="cv-catalog">
+        <section aria-labelledby="education-title">
+          <header class="catalog-section-heading">
+            <h2 id="education-title">Education</h2>
+            <p>Degrees, research projects, and coursework at Qatar University.</p>
+          </header>
+          {education.map(degree => (
+            <article class="catalog-entry cv-entry cv-degree" id={degree.id}>
+              <div class="catalog-meta">
+                <span class="cv-date">{degree.dates}</span>
+                <span class="cv-gpa">CGPA {degree.gpa}</span>
+              </div>
+              <div>
+                <h3>{degree.role}</h3>
+                <p class="cv-organization">{degree.organization} · Doha, Qatar</p>
+                {degree.honours && <ul class="cv-honours" aria-label="Academic distinctions">
+                  {degree.honours.map(honour => <li>{honour}</li>)}
+                </ul>}
+
+                <div class="cv-degree-project">
+                  <h4>{degree.projectLabel}</h4>
+                  <p class="cv-project-title">
+                    {degree.projectUrl ? <SiteLink href={degree.projectUrl}>{degree.projectTitle} <span aria-hidden="true">↗</span></SiteLink> : degree.projectTitle}
+                  </p>
+                  <p class="cv-supervisor">Supervised by {degree.supervisor}</p>
+                  <p class="cv-summary">{degree.summary}</p>
+                  <div class="catalog-actions">
+                    {degree.links.map(({ label, href }) => <SiteLink href={href}>{label}</SiteLink>)}
+                  </div>
+                </div>
+
+                <h4>Coursework</h4>
+                <div class="cv-course-groups">
+                  {degree.coursework.map(({ title, courses }) => (
+                    <div>
+                      <h5>{title}</h5>
+                      <ul class="cv-course-list">
+                        {courses.map(course => <li>{course}</li>)}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </article>
+          ))}
+          <div class="catalog-entry cv-entry cv-training">
+            <div>
+              <h3>Selected professional training</h3>
+              <ul class="cv-course-list">
+                {professionalTraining.map(training => <li>{training}</li>)}
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section aria-labelledby="positions-title">
+          <header class="catalog-section-heading">
+            <h2 id="positions-title">Research and professional experience</h2>
+            <p>Academic, clinical, and industry work, with links to related projects and papers.</p>
+          </header>
+          {experience.map(({ entries, heading }) => (
+            <>
+              {heading && <h3 class="cv-subsection-heading" id="internships-title">{heading}</h3>}
+              {entries.map(position => (
+                <article class="catalog-entry cv-entry" id={position.id}>
+                  <div class="catalog-meta">
+                    <span class="cv-date">{position.dates}</span>
+                    {position.engagement && <span>{position.engagement}</span>}
+                  </div>
+                  <div>
+                    <h3>{position.role}</h3>
+                    <p class="cv-organization">{position.organization}</p>
+                    <p class="cv-summary">{position.summary}</p>
+                    {position.highlights && <ul class="cv-highlights">
+                      {position.highlights.map(highlight => <li>{highlight}</li>)}
+                    </ul>}
+                    {position.links && <div class="catalog-actions">
+                      {position.links.map(({ label, href }) => <SiteLink href={href}>{label}</SiteLink>)}
+                    </div>}
+                  </div>
+                </article>
+              ))}
+            </>
+          ))}
+        </section>
+
+        <section aria-labelledby="research-title">
+          <header class="catalog-section-heading">
+            <h2 id="research-title">Selected research contributions</h2>
+            <p>My role in four studies across biomechanics, medical imaging, and spectroscopy.</p>
+          </header>
+          {cvResearch.map(({ slug, title, contribution, publication }) => (
+            <article class="catalog-entry cv-entry">
+              <div class="catalog-meta">
+                <span class="cv-date">{publication.year}</span>
+                <span>{publication.venue}</span>
+              </div>
+              <div>
+                <h3><SiteLink href={sitePath(`research/${slug}/`)}>{title}</SiteLink></h3>
+                <p class="cv-summary">{contribution}</p>
+                <div class="catalog-actions">
+                  <SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)}>Publication entry</SiteLink>
+                </div>
+              </div>
+            </article>
+          ))}
+          <div class="actions">
+            <SiteLink class="text-link" href={sitePath('publications/')}>All publications <span aria-hidden="true">→</span></SiteLink>
+            <SiteLink class="text-link" href={sitePath('software/')}>Software &amp; Data <span aria-hidden="true">→</span></SiteLink>
+          </div>
+        </section>
+      </div>
     </div>
-  </section>
-
-  <div class="shell content-end cv-content">
-    <section aria-labelledby="research-title">
-      <h2 class="section-title" id="research-title">Selected research contributions</h2>
-      <div class="resource-list">
-        {cvResearch.map(({ slug, title, contribution, publication }) => (
-          <article class="resource-row cv-row">
-            <div>
-              <h3><SiteLink href={sitePath(`research/${slug}/`)}>{title}</SiteLink></h3>
-              <p class="cv-organization">{publication.venue} · {publication.year}</p>
-              <p>{contribution}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-    </section>
-    <section aria-labelledby="positions-title">
-      <h2 class="section-title" id="positions-title">Research and professional appointments</h2>
-      <div class="resource-list">
-        {positions.map(position => (
-          <article class="resource-row cv-row">
-            <div>
-              <h3>{position.role}</h3>
-              <p class="cv-organization">{position.organization}</p>
-              <p>{position.summary}</p>
-            </div>
-            <p class="cv-date">{position.dates}</p>
-          </article>
-        ))}
-      </div>
-    </section>
-
-    <section aria-labelledby="education-title">
-      <h2 class="section-title" id="education-title">Education</h2>
-      <div class="resource-list">
-        {education.map(degree => (
-          <article class="resource-row cv-row">
-            <div>
-              <h3>{degree.role}</h3>
-              <p class="cv-organization">{degree.organization}</p>
-              {degree.summary && <p>{degree.summary}</p>}
-            </div>
-            <p class="cv-date">{degree.dates}</p>
-          </article>
-        ))}
-      </div>
-    </section>
   </div>
 </Base>
 

@@ -85,13 +85,14 @@ export const GET: APIRoute = async ({ site }) => {
 
   heading('Education');
   for (const degree of education) {
-    entry(degree.role, `${degree.organization} · ${degree.dates}`, degree.summary);
+    entry(degree.role, `${degree.organization} · ${degree.dates} · CGPA ${degree.gpa}`, degree.summary);
   }
 
   newPage();
   heading('Research and professional appointments');
   for (const position of positions) {
-    entry(position.role, `${position.organization} · ${position.dates}`, position.summary);
+    const detail = [position.organization, position.dates, position.engagement].filter(Boolean).join(' · ');
+    entry(position.role, detail, position.summary);
   }
 
   const pages = pdf.getPages();
