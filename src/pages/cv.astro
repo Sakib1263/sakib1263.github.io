@@ -9,7 +9,6 @@ import '../styles/cv.css';
 const sections = [
   { id: 'education-title', label: 'Education' },
   { id: 'positions-title', label: 'Experience' },
-  { id: 'internships-title', label: 'Earlier internships' },
   { id: 'skills-title', label: 'Technical skills' },
   { id: 'certifications-title', label: 'Certifications' },
   { id: 'awards-title', label: 'Awards & distinctions' },
@@ -41,7 +40,7 @@ const experience = [
     </section>
 
     <div class="catalog-layout content-end">
-      <nav class="catalog-index cv-index" aria-label="CV sections">
+      <nav class="catalog-index" aria-label="CV sections">
         <h2>On this page</h2>
         <ul>
           {sections.map(({ id, label }) => <li><SiteLink href={`#${id}`}><span>{label}</span></SiteLink></li>)}

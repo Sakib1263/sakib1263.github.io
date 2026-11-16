@@ -16,7 +16,6 @@
   line-height: 1.5;
 }
 
-.cv-index { --catalog-index-columns: 4; }
 .cv-catalog section + section { margin-top: 2rem; }
 .cv-entry { grid-template-columns: minmax(0, 8.6rem) minmax(0, 1fr); gap: .55rem .85rem; }
 .cv-entry h3 { font-weight: 685; line-height: 1.4; }

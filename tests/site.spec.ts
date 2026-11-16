@@ -142,6 +142,9 @@ test('the CV highlights education and provides a navigable experience timeline o
   await expect(page.getByText('Print this page', { exact: true })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Download CV (PDF)' })).toBeVisible();
   const sections = page.getByRole('navigation', { name: 'CV sections' });
+  await expect(sections.getByRole('link')).toHaveText([
+    'Education', 'Experience', 'Technical skills', 'Certifications', 'Awards & distinctions', 'Languages',
+  ]);
   await sections.getByRole('link', { name: 'Education', exact: true }).click();
   await expect(page).toHaveURL('/cv/#education-title');
   const msc = page.locator('#msc-electrical-engineering');
@@ -164,8 +167,8 @@ test('the CV highlights education and provides a navigable experience timeline o
   const experience = page.getByRole('region', { name: 'Research and professional experience' });
   await expect(experience.getByRole('article')).toHaveCount(12);
   await expect(experience.getByRole('heading', { name: 'Administrative Assistant', exact: true })).toBeVisible();
-  await sections.getByRole('link', { name: 'Earlier internships' }).click();
-  await expect(page).toHaveURL('/cv/#internships-title');
+  await expect(experience.getByRole('heading', { name: 'Earlier internships and apprenticeships' })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Selected research contributions' })).toHaveCount(0);
 
   await sections.getByRole('link', { name: 'Certifications', exact: true }).click();
   await expect(page).toHaveURL('/cv/#certifications-title');
