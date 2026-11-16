@@ -89,21 +89,12 @@ export const paperResources: Readonly<Record<string, { label: string; href: stri
   '10.1109/jbhi.2025.3605296': [
     { label: 'Study dataset (Huawei Wang)', href: 'https://doi.org/10.5281/zenodo.7422031' },
   ],
-  '10.1016/j.saa.2025.126931': [
-    { label: 'Dataset access request', href: 'https://zenodo.org/records/23372983' },
-  ],
   '10.1016/j.eswa.2024.124594': [
     { label: 'Related MSc thesis', href: thesisUrl },
   ],
   '10.3390/bioengineering9110692': [
     { label: 'Original implementation', href: 'https://github.com/nibtehaz/PPG2ABP' },
     { label: 'UCI dataset', href: 'https://archive.ics.uci.edu/dataset/340/cuff+less+blood+pressure+estimation' },
-  ],
-  '10.1016/j.compbiomed.2021.105002': [
-    { label: 'COVID-QU-Ex dataset', href: 'https://doi.org/10.34740/kaggle/dsv/3122958' },
-  ],
-  '10.1109/access.2022.3173424': [
-    { label: 'Hip implant X-ray dataset', href: 'https://doi.org/10.34740/kaggle/dsv/3078704' },
   ],
 };
 

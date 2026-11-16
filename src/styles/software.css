@@ -1,0 +1,34 @@
+.software-index { --catalog-index-columns: 2; }
+.software-catalog section + section { margin-top: 1.8rem; }
+.software-meta-title { color: var(--ink); font-size: .96rem; font-weight: 700; }
+.software-entry h3 { font-weight: 685; line-height: 1.4; }
+
+.dataset-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .3rem .45rem;
+  list-style: none;
+  margin: .5rem 0 0;
+  padding: 0;
+  color: var(--muted);
+  font-size: .8rem;
+  line-height: 1.4;
+}
+
+.dataset-facts li {
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  padding: .14rem .38rem;
+  background: var(--surface);
+}
+
+.software-summary, .dataset-contribution, .dataset-credit {
+  max-width: 70ch;
+  margin-top: .48rem;
+  font-size: .92rem;
+  line-height: 1.56;
+}
+
+.dataset-contribution, .dataset-credit { color: var(--muted); font-size: .86rem; }
+.dataset-contribution strong { display: block; color: var(--ink); }
+.software-entry .catalog-actions { margin-top: .45rem; }

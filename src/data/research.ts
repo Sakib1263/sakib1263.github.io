@@ -105,7 +105,6 @@ export const projects: Project[] = [
     contribution: 'I led the modelling and evaluation of the spectral transformation and recognition workflow, including implementation, generalization analysis, visualization, and writing.',
     scope: 'These comparisons cover the analytes and acquisition conditions tested in the study. The Zenodo record describes the dataset and how to request access to the restricted files.',
     related: ['10.1016/j.talanta.2026.130241', '10.1016/j.talanta.2025.129332'],
-    resources: [{ label: 'Dataset record', href: 'https://zenodo.org/records/23372983' }],
     visual: {
       image: sers,
       alt: 'Graphical abstract showing spectra from portable and reference Raman instruments, device transformation, and bacterial classification.',

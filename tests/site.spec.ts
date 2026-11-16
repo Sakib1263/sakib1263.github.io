@@ -54,6 +54,30 @@ test('site navigation and section links stay in the current tab', async ({ page,
   await expect(page.getByRole('link', { name: 'ORCID' }).first()).toHaveAttribute('target', '_blank');
 });
 
+test('dataset records link to their release and companion paper', async ({ page, context }) => {
+  await page.goto('/software/');
+  await page.getByRole('link', { name: 'Browse datasets' }).click();
+  await expect(page).toHaveURL('/software/#datasets');
+  const listing = page.getByRole('region', { name: 'Datasets', exact: true });
+  await expect(listing.getByRole('article')).toHaveCount(3);
+  await expect(listing.getByText('Processed treadmill and insole recordings')).toHaveCount(0);
+  await expect(listing.getByText('Access by request')).toBeVisible();
+
+  const covid = page.locator('#covid-qu-ex');
+  const archive = covid.getByRole('link', { name: 'Kaggle record for COVID-QU-Ex Dataset' });
+  await expect(archive).toHaveAttribute('href', 'https://doi.org/10.34740/kaggle/dsv/3122958');
+  await expect(archive).toHaveAttribute('target', '_blank');
+  await expect(listing.getByRole('link', { name: 'Kaggle record for Aseptic Loose Hip Implant X-Ray Database' }))
+    .toHaveAttribute('href', 'https://doi.org/10.34740/kaggle/dsv/3078704');
+  await covid.getByRole('link', { name: 'Related paper for COVID-QU-Ex Dataset' }).click();
+  const paper = page.locator('#paper-10-1016-j-compbiomed-2021-105002');
+  await expect(paper).toBeVisible();
+  await paper.getByRole('link', { name: 'Dataset details' }).click();
+  await expect(page).toHaveURL('/software/#covid-qu-ex');
+  await expect(covid).toBeInViewport();
+  expect(context.pages()).toEqual([page]);
+});
+
 test('CV download works from the homepage', async ({ page, request }) => {
   await page.goto('/');
   const downloadEvent = page.waitForEvent('download');

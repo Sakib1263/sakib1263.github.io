@@ -1,6 +1,7 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
+import { datasetsByStudy } from '../data/datasets';
 import {
   citationText, displayAuthor, openFullText, paperResources,
   publicationId, publications, publicationDetails, selectedPapers, topicDescriptions, topics,
@@ -8,6 +9,7 @@ import {
 import { projects } from '../data/research';
 import journalData from '../data/journal-metrics.json';
 import { doiUrl, profile, researchProfiles, sitePath } from '../lib/site';
+import '../styles/catalog.css';
 import '../styles/publications.css';
 
 const years = [...new Set(publications.map(({ year }) => year))];
@@ -30,8 +32,8 @@ const journalMetrics: Readonly<Record<string, {
 
 <Base title="Publications" description="Browse Sakib Mahmud’s publications by research area, with study summaries, personal contributions, citations, and links to papers and research resources.">
   <div class="shell">
-    <section class="page-intro publications-intro">
-      <div class="publications-heading">
+    <section class="page-intro catalog-intro">
+      <div class="catalog-heading">
         <div>
           <h1>Publications</h1>
           <p class="page-lead">Study summaries and my contributions across six research areas.</p>
@@ -51,14 +53,14 @@ const journalMetrics: Readonly<Record<string, {
       </nav>
     </section>
 
-    <div class="bibliography-layout content-end">
-      <nav class="publication-clusters" aria-label="Publication research areas">
+    <div class="catalog-layout content-end">
+      <nav class="catalog-index" aria-label="Publication research areas">
         <h2>Research areas</h2>
         <ul>
           {clusters.map(({ topic, title, papers }) => (
             <li>
               <SiteLink data-topic-link={topic} href={sitePath(`publications/?topic=${topic}#cluster-${topic}`)}>
-                <span>{title}</span><span class="topic-count" aria-label={`${papers.length} publications`}>{papers.length}</span>
+                <span>{title}</span><span class="catalog-count" aria-label={`${papers.length} publications`}>{papers.length}</span>
               </SiteLink>
             </li>
           ))}
@@ -103,21 +105,22 @@ const journalMetrics: Readonly<Record<string, {
         <div class="publication-list">
           {clusters.map(cluster => (
             <section class="publication-group" data-publication-group aria-labelledby={`cluster-${cluster.topic}`}>
-              <header class="publication-group-heading" id={`cluster-${cluster.topic}`}>
+              <header class="catalog-section-heading" id={`cluster-${cluster.topic}`}>
                 <h3>{cluster.title}</h3>
                 <p>{cluster.description}</p>
               </header>
               {cluster.papers.map(publication => {
                 const id = publicationId(publication.doi);
                 const project = projectsByDoi.get(publication.doi);
+                const dataset = datasetsByStudy.get(publication.doi);
                 const { summary, contribution } = publicationDetails(publication.doi);
                 const metrics = journalMetrics[publication.bibliography.issn ?? ''];
                 const selected = selectedDois.has(publication.doi);
                 const firstAuthor = displayAuthor(publication.authors[0]).toLowerCase() === profile.name.toLowerCase();
                 const eventVenue = 'eventVenue' in publication.bibliography ? publication.bibliography.eventVenue : undefined;
                 return (
-                  <article id={id} class="publication" data-publication data-year={publication.year} data-type={publication.type} data-topic={publication.topic} data-selected={selected}>
-                    <div class="publication-meta">
+                  <article id={id} class="catalog-entry publication" data-publication data-year={publication.year} data-type={publication.type} data-topic={publication.topic} data-selected={selected}>
+                    <div class="catalog-meta">
                       <p class="publication-year">{publication.year}{publication.onlineYear && <small>Online {publication.onlineYear}</small>}</p>
                       <span>{publication.type}</span>
                       {firstAuthor && <span class="publication-first-author">First author</span>}
@@ -147,10 +150,14 @@ const journalMetrics: Readonly<Record<string, {
                         <summary>My contribution</summary>
                         <p class="publication-contribution">{contribution}</p>
                       </details>
-                      <div class="publication-actions">
+                      <div class="catalog-actions">
                         {project && <><SiteLink href={sitePath(`research/${project.slug}/`)}>Project summary</SiteLink><SiteLink href={project.code}>Code <span aria-hidden="true">↗</span></SiteLink></>}
                         {openFullText[publication.doi] && <SiteLink href={openFullText[publication.doi]}>Open full text <span aria-hidden="true">↗</span></SiteLink>}
                         {paperResources[publication.doi]?.map(({ label, href }) => <SiteLink href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
+                        {dataset && <>
+                          <SiteLink href={sitePath(`software/#${dataset.id}`)}>Dataset details</SiteLink>
+                          <SiteLink href={doiUrl(dataset.doi)}>{dataset.platform} record <span aria-hidden="true">↗</span></SiteLink>
+                        </>}
                         <SiteLink href={sitePath(`publications/#${id}`)} aria-label={`Permalink to ${publication.title}`}>Permalink</SiteLink>
                         <button type="button" data-citation={citationText(publication)} aria-label={`Copy citation for ${publication.title}`} hidden>Copy citation</button>
                       </div>

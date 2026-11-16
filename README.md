@@ -24,7 +24,8 @@ pnpm preview
 | Publication clusters, selection notes, and verified resources | [src/data/papers.ts](src/data/papers.ts) |
 | CV date, selected contributions, appointments, and education | [src/data/cv.ts](src/data/cv.ts) |
 | Insole release and reproduction commands | [src/data/kinetics.ts](src/data/kinetics.ts) |
-| Software and dataset links | [src/pages/software.astro](src/pages/software.astro) |
+| Dataset records, DOI links, and contributor credits | [src/data/datasets.ts](src/data/datasets.ts) |
+| Research software catalog | [src/pages/software.astro](src/pages/software.astro) |
 | Shared styles | [src/styles/site.css](src/styles/site.css) |
 
 Add a publication by copying an existing entry. Use the publisher's title, the published author order in `Family, Given` form, the issue or proceedings year, and the DOI. Add an online publication year when it is known and differs from the issue year. Assign one of the existing topic keys. The publication list, citation text, DOI-based permalinks, and BibTeX download share this data. Add an open full-text URL in `src/data/papers.ts` when the publisher or a repository makes the complete article publicly accessible. To share a filtered view, set the filters and copy the resulting address. For example, `/publications/?topic=imaging&view=selected#bibliography` shows the selected imaging papers.

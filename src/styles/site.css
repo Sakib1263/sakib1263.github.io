@@ -125,11 +125,6 @@ h3 { font-size: 1.1rem; line-height: 1.35; font-weight: 680; }
 .research-more .resource-row h3 { margin-top: .35rem; }
 .resource-row p:not(.overline) { margin-top: .3rem; color: var(--muted); max-width: 68ch; line-height: 1.5; }
 .resource-row .text-link { flex-shrink: 0; }
-.resource-links { display: flex; flex-wrap: wrap; gap: .45rem 1rem; }
-.secondary-link { color: var(--muted); }
-.data-heading { margin-top: 2.5rem; }
-.software-note { margin-bottom: 1rem; color: var(--muted); }
-.software-note + .resource-list .overline, #datasets + .resource-list .overline { margin-bottom: .35rem; }
 
 .detail { padding-top: clamp(1.7rem, 3.5vw, 2.65rem); }
 .return-link { margin-bottom: 1.1rem; font-size: .89rem; }

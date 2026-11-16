@@ -1,49 +1,117 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
-import { publicationId } from '../data/papers';
+import { datasets } from '../data/datasets';
+import { publicationFor, publicationId } from '../data/papers';
 import { projects } from '../data/research';
-import { profile, sitePath } from '../lib/site';
+import { doiUrl, profile, sitePath } from '../lib/site';
+import '../styles/catalog.css';
+import '../styles/software.css';
 
-const software: { name: string; description: string; url: string; paper?: string }[] = [
-  { name: 'SuperONN-Layers', description: 'Reusable super-operational layers for PyTorch and TensorFlow/Keras.', url: 'https://github.com/Sakib1263/SuperONN-Layers' },
-  ...projects.map(({ title, summary, code, doi }) => ({ name: title, description: summary, url: code, paper: sitePath(`publications/#${publicationId(doi)}`) })),
+const software = [
+  {
+    title: 'SuperONN-Layers',
+    area: 'Reusable library',
+    summary: 'Polynomial 1D and 2D super-operational layers for PyTorch and TensorFlow/Keras, including forward and transposed operations with fixed or trainable offsets.',
+    code: 'https://github.com/Sakib1263/SuperONN-Layers',
+  },
+  ...projects.map(({ title, area, summary, code, doi, slug }) => ({
+    title,
+    area,
+    summary,
+    code,
+    paper: sitePath(`publications/#${publicationId(doi)}`),
+    project: sitePath(`research/${slug}/`),
+  })),
+];
+
+const sections = [
+  { id: 'datasets', label: 'Datasets', count: datasets.length },
+  { id: 'code-title', label: 'Research software', count: software.length },
 ];
 ---
 
-<Base title="Software & Data" description="Public research code and dataset records maintained or co-authored by Sakib Mahmud.">
-  <section class="shell page-intro">
-    <h1>Software &amp; Data</h1>
-    <p class="page-lead">Explore the implementations behind my papers, along with reusable code and dataset records.</p>
-    <SiteLink class="text-link" href={profile.github}>GitHub profile <span aria-hidden="true">↗</span></SiteLink>
-  </section>
-  <section class="shell content-end" aria-labelledby="code-title">
-    <h2 class="section-title" id="code-title">Research software</h2>
-    <p class="software-note">The repositories below are publicly viewable. Each repository describes its license and available files.</p>
-    <div class="resource-list">
-      {software.map(item => (
-        <article class="resource-row">
-          <div>
-            <h3>{item.name}</h3>
-            <p>{item.description}</p>
-          </div>
-          <div class="resource-links">
-            <SiteLink class="text-link" href={item.url} aria-label={`Code for ${item.name}`}>Code <span aria-hidden="true">↗</span></SiteLink>
-            {item.paper && <SiteLink class="text-link secondary-link" href={item.paper} aria-label={`Paper for ${item.name}`}>Paper <span aria-hidden="true">↗</span></SiteLink>}
-          </div>
-        </article>
-      ))}
-    </div>
-    <h2 class="section-title data-heading" id="datasets">Datasets</h2>
-    <div class="resource-list">
-      <article class="resource-row">
+<Base title="Software & Data" description="Sakib Mahmud’s research software and dataset contributions, including Raman spectroscopy, chest radiographs, and hip implant imaging.">
+  <div class="shell">
+    <section class="page-intro catalog-intro">
+      <div class="catalog-heading">
         <div>
-          <p class="overline">Access by request</p>
-          <h3>Multi-Instrument SERS Dataset</h3>
-          <p>The record describes 29,545 Raman spectra across 20 analyte classes, acquired on four portable instruments and one laboratory reference. Access to the data files is restricted and can be requested through Zenodo.</p>
+          <h1>Software &amp; Data</h1>
+          <p class="page-lead">Dataset records, research implementations, and reproducible workflows.</p>
         </div>
-        <SiteLink class="text-link" href="https://zenodo.org/records/23372983">Zenodo record <span aria-hidden="true">↗</span></SiteLink>
-      </article>
+        <div class="actions">
+          <SiteLink class="button button-primary" href="#datasets">Browse datasets <span aria-hidden="true">↓</span></SiteLink>
+          <SiteLink class="text-link" href={profile.github}>GitHub profile <span aria-hidden="true">↗</span></SiteLink>
+        </div>
+      </div>
+    </section>
+
+    <div class="catalog-layout content-end">
+      <nav class="catalog-index software-index" aria-label="Software & Data sections">
+        <h2>On this page</h2>
+        <ul>
+          {sections.map(({ id, label, count }) => (
+            <li>
+              <SiteLink href={`#${id}`}><span>{label}</span><span class="catalog-count" aria-hidden="true">{count}</span></SiteLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <div class="software-catalog">
+        <section aria-labelledby="datasets">
+          <header class="catalog-section-heading">
+            <h2 id="datasets">Datasets</h2>
+            <p>What each release contains, how to access it, and my role in the study.</p>
+          </header>
+          {datasets.map(dataset => {
+            const study = publicationFor(dataset.studyDoi);
+            return (
+              <article class="catalog-entry software-entry" id={dataset.id}>
+                <div class="catalog-meta">
+                  <span class="software-meta-title">{dataset.year}</span>
+                  <span>{dataset.platform}</span>
+                  <span>{dataset.access}</span>
+                </div>
+                <div>
+                  <h3>{dataset.title}</h3>
+                  <ul class="dataset-facts" aria-label="Dataset contents">
+                    {dataset.facts.map(fact => <li>{fact}</li>)}
+                  </ul>
+                  <p class="software-summary">{dataset.summary}</p>
+                  <p class="dataset-contribution"><strong>My contribution</strong> {dataset.contribution}</p>
+                  {dataset.credit && <p class="dataset-credit">{dataset.credit}</p>}
+                  <div class="catalog-actions">
+                    <SiteLink href={doiUrl(dataset.doi)} aria-label={`${dataset.platform} record for ${dataset.title}`}>{dataset.platform} record <span aria-hidden="true">↗</span></SiteLink>
+                    <SiteLink href={sitePath(`publications/#${publicationId(study.doi)}`)} aria-label={`Related paper for ${dataset.title}`} title={study.title}>Related paper</SiteLink>
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </section>
+
+        <section aria-labelledby="code-title">
+          <header class="catalog-section-heading">
+            <h2 id="code-title">Research software</h2>
+            <p>Reusable layers and implementations accompanying my papers.</p>
+          </header>
+          {software.map(item => (
+            <article class="catalog-entry software-entry">
+              <p class="catalog-meta">{item.area}</p>
+              <div>
+                <h3>{item.title}</h3>
+                <p class="software-summary">{item.summary}</p>
+                <div class="catalog-actions">
+                  <SiteLink href={item.code} aria-label={`GitHub repository for ${item.title}`}>GitHub repository <span aria-hidden="true">↗</span></SiteLink>
+                  {'project' in item && <SiteLink href={item.project}>Project summary</SiteLink>}
+                  {'paper' in item && <SiteLink href={item.paper} aria-label={`Related paper for ${item.title}`}>Related paper</SiteLink>}
+                </div>
+              </div>
+            </article>
+          ))}
+        </section>
+      </div>
     </div>
-  </section>
+  </div>
 </Base>

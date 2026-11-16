@@ -4,6 +4,7 @@ import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import KineticsReproduction from '../../components/KineticsReproduction.astro';
 import HydronephrosisExample from '../../components/HydronephrosisExample.astro';
+import { datasetsByStudy } from '../../data/datasets';
 import { kinetics } from '../../data/kinetics';
 import { openFullText, publicationFor, publicationId } from '../../data/papers';
 import { projects } from '../../data/research';
@@ -16,6 +17,7 @@ export function getStaticPaths() {
 const { project } = Astro.props;
 const { visual } = project;
 const paper = publicationFor(project.doi);
+const dataset = datasetsByStudy.get(project.doi);
 const related = project.related.map(publicationFor);
 const imageWidth = visual ? Math.min(visual.image.width, 960) : 0;
 ---
@@ -33,6 +35,10 @@ const imageWidth = visual ? Math.min(visual.image.width, 960) : 0;
         {openFullText[project.doi] && <SiteLink class="text-link" href={openFullText[project.doi]}>Open full text <span aria-hidden="true">↗</span></SiteLink>}
         <SiteLink class="button button-secondary" href={project.code}>Source code <span aria-hidden="true">↗</span></SiteLink>
         {project.resources?.map(({ label, href }) => <SiteLink class="button button-secondary" href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
+        {dataset && <>
+          <SiteLink class="button button-secondary" href={sitePath(`software/#${dataset.id}`)}>Dataset details</SiteLink>
+          <SiteLink class="text-link" href={doiUrl(dataset.doi)}>{dataset.platform} record <span aria-hidden="true">↗</span></SiteLink>
+        </>}
         {project.slug === kinetics.slug && <SiteLink class="text-link" href="#reproduce">Run the workflow</SiteLink>}
         <SiteLink class="text-link" href={sitePath(`publications/#${publicationId(project.doi)}`)}>Citation</SiteLink>
       </div>
