@@ -5,7 +5,7 @@ import { getImage } from 'astro:assets';
 import portrait from '../assets/sakib-mahmud.jpg';
 import { navigation, profile, sitePath } from '../lib/site';
 
-const { title, description = profile.focus + ' ' + profile.bio, shareImage = portrait, noIndex = false } = Astro.props;
+const { title, description = profile.bio, shareImage = portrait, noIndex = false } = Astro.props;
 const pageTitle = title ? `${title} | ${profile.name}` : `${profile.name} | Biomedical AI Research`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const share = await getImage({ src: shareImage, width: Math.min(shareImage.width, 750), format: 'jpg' });

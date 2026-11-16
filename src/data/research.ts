@@ -176,16 +176,14 @@ export const featuredProjects = featuredSlugs.map(slug => {
 export const currentResearch = [
   {
     area: 'Wearable biomechanics',
-    question: 'Can pressure and inertial signals reconstruct gait forces across cohorts?',
-    description: 'I’m exploring what we gain by combining plantar pressure with foot and shank motion, and whether the same model holds up when the cohort or recording protocol changes.',
-    project: 'wearable-foot-kinetics',
-    label: 'Read the insole kinetics study',
+    title: 'Combining pressure and motion to estimate gait forces',
+    description: 'I am testing whether combining insole pressures with foot and shank motion improves gait force estimates across participants and recording setups.',
+    project: 'multimodal-wearable-kinetics',
   },
   {
     area: 'Medical imaging',
-    question: 'When does isolating anatomy improve a clinical imaging model?',
-    description: 'My renal imaging work focuses on how localization and segmentation affect the next decision, from delineating small stones on CT to grading severity across ultrasound views.',
-    project: 'prenatal-hydronephrosis',
-    label: 'Read the multi-view ultrasound study',
+    title: 'Segmenting liver and tumours across CT contrast phases',
+    description: 'I am adapting segmentation models for liver CT and studying how different contrast phases contribute to tumour delineation across cohorts.',
+    project: 'multiphase-liver-ct',
   },
 ];

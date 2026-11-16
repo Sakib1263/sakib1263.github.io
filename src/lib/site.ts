@@ -10,8 +10,8 @@ export const profile = {
   github: 'https://github.com/Sakib1263',
   scholar: `https://scholar.google.com/citations?user=${scholarId}`,
   orcid: 'https://orcid.org/0000-0002-4599-2192',
-  focus: 'How reliably can we recover biomedical measurements from images and sensor signals?',
-  bio: 'I develop and evaluate machine learning methods for medical imaging, wearable biomechanics, and spectroscopy. I’m particularly interested in how performance varies across people and instruments.',
+  focus: 'Machine learning for biomedical measurement',
+  bio: 'I develop methods to extract measurements from medical images, wearable sensors, and Raman spectra. I study how reliably these methods transfer across participants, datasets, and instruments.',
 };
 
 export const cvPdfPath = 'sakib-mahmud-cv.pdf';

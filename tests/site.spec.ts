@@ -134,6 +134,26 @@ test('CV download works from the homepage', async ({ page, request }) => {
   expect((await response.body()).subarray(0, 5).toString()).toBe('%PDF-');
 });
 
+test('the homepage portrait and contact are easy to find on narrow screens', async ({ page, context }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.goto('/');
+  const portrait = page.getByRole('img', { name: 'Portrait of Sakib Mahmud' });
+  await expect(portrait).toBeVisible();
+  await expect(portrait).toHaveAttribute('srcset', /\b768w\b/);
+  await expect.poll(async () => (await portrait.boundingBox())?.width ?? 0).toBeGreaterThan(250);
+  await expect.poll(() => portrait.evaluate(image => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
+  await expect(page.getByRole('region', { name: 'Featured research' }).getByRole('article')).toHaveCount(3);
+  await expect(page.getByRole('region', { name: 'Ongoing research' }).getByRole('article')).toHaveCount(2);
+
+  await page.getByRole('link', { name: 'Contact', exact: true }).click();
+  await expect(page).toHaveURL('/#contact');
+  const contact = page.getByRole('region', { name: 'Contact' });
+  await expect(contact.getByRole('link', { name: 'sakib.mahmud@qu.edu.qa' })).toHaveAttribute('href', /^mailto:sakib\.mahmud@qu\.edu\.qa/);
+  await expect(contact.getByRole('link', { name: 'Google Scholar' })).toHaveAttribute('target', '_blank');
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  expect(context.pages()).toEqual([page]);
+});
+
 test('the CV highlights education and provides a navigable experience timeline on mobile', async ({ page, context }) => {
   await page.setViewportSize({ width: 320, height: 780 });
   await page.goto('/cv/');

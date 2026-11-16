@@ -8,59 +8,66 @@ import portrait from '../assets/sakib-mahmud.jpg';
 import { publicationId, selectedPapers } from '../data/papers';
 import { featuredProjects } from '../data/research';
 import { cvPdfPath, profile, sitePath } from '../lib/site';
+import '../styles/home.css';
 
-const portraitWidth = Math.min(portrait.width, 416);
-const portraitWidths = [128, 256].filter(width => width < portraitWidth).concat(portraitWidth);
+const homePaperDois = new Set([
+  '10.1016/j.talanta.2026.130241',
+  '10.1016/j.bspc.2026.109894',
+  '10.1016/j.compbiomed.2021.105002',
+]);
+const homePapers = selectedPapers.filter(({ publication }) => homePaperDois.has(publication.doi));
 ---
 
 <Base>
-  <section class="shell intro" aria-labelledby="intro-title">
-    <div class="intro-identity">
-      <h1 id="intro-title">{profile.name}</h1>
-      <p class="intro-role">{profile.role} · {profile.affiliation}</p>
-      <p class="intro-location">{profile.department} · {profile.location}</p>
-    </div>
-    <div class="portrait">
-      <Image src={portrait} alt="Portrait of Sakib Mahmud" widths={portraitWidths} sizes="(max-width: 720px) 112px, 208px" width={portraitWidth} format="webp" loading="eager" fetchpriority="high" />
-    </div>
-    <div class="intro-copy">
-      <p class="intro-lead">{profile.focus}</p>
-      <p class="intro-detail">{profile.bio}</p>
-      <div class="intro-actions">
-        <SiteLink class="button button-primary" href="#current-research">Explore research <span aria-hidden="true">↓</span></SiteLink>
-        <SiteLink class="button button-secondary" href={sitePath(cvPdfPath)} download>Download CV <span aria-hidden="true">↓</span></SiteLink>
+  <section class="home-hero" aria-labelledby="intro-title">
+    <div class="shell home-hero-layout">
+      <div class="home-intro">
+        <h1 id="intro-title">{profile.name}</h1>
+        <p class="home-role">{profile.role} · {profile.affiliation}</p>
+        <p class="home-focus">{profile.focus}</p>
+        <p class="home-bio">{profile.bio}</p>
+        <div class="actions home-hero-actions">
+          <SiteLink class="button button-primary" href="#current-research">Explore research <span aria-hidden="true">↓</span></SiteLink>
+          <SiteLink class="button button-secondary" href={sitePath(cvPdfPath)} download>Download CV <span aria-hidden="true">↓</span></SiteLink>
+          <SiteLink class="text-link home-contact-jump" href="#contact">Contact <span aria-hidden="true">↓</span></SiteLink>
+        </div>
       </div>
-      <div class="profile-links">
-        <SiteLink href={profile.scholar}>Google Scholar <span aria-hidden="true">↗</span></SiteLink>
-        <SiteLink href={profile.orcid}>ORCID <span aria-hidden="true">↗</span></SiteLink>
-        <SiteLink href={profile.github}>GitHub <span aria-hidden="true">↗</span></SiteLink>
-      </div>
-    </div>
-  </section>
-
-  <section class="selected-section" aria-labelledby="selected-title">
-    <div class="shell">
-      <div class="section-heading">
-        <h2 id="selected-title">Featured projects</h2>
-        <SiteLink class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">→</span></SiteLink>
-      </div>
-      <div class="project-list">
-        {featuredProjects.map(project => <ProjectCard project={project} />)}
-      </div>
+      <figure class="home-portrait">
+        <Image
+          src={portrait}
+          alt="Portrait of Sakib Mahmud"
+          widths={[320, 480, 640, portrait.width]}
+          sizes="(max-width: 480px) calc(100vw - 2rem), (max-width: 620px) 448px, (max-width: 815px) 256px, (max-width: 1120px) 34vw, 354px"
+          width={portrait.width}
+          format="webp"
+          loading="eager"
+          fetchpriority="high"
+        />
+      </figure>
     </div>
   </section>
 
-  <div class="shell home-notes">
+  <section class="shell home-section" id="current-research" aria-labelledby="selected-title">
+    <div class="section-heading">
+      <h2 id="selected-title">Featured research</h2>
+      <SiteLink class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">→</span></SiteLink>
+    </div>
+    <div class="project-list">
+      {featuredProjects.map(project => <ProjectCard project={project} />)}
+    </div>
+  </section>
+
+  <div class="shell home-section home-notes">
     <CurrentResearch />
     <section class="selected-papers" aria-labelledby="papers-title">
       <div class="section-heading">
-        <h2 id="papers-title">Selected papers</h2>
-        <SiteLink class="text-link" href={sitePath('publications/?view=selected#bibliography')}>All selected papers <span aria-hidden="true">→</span></SiteLink>
+        <h2 id="papers-title">Selected publications</h2>
+        <SiteLink class="text-link" href={sitePath('publications/?view=selected#bibliography')}>More selected papers <span aria-hidden="true">→</span></SiteLink>
       </div>
       <div class="resource-list">
-        {selectedPapers.slice(0, 3).map(({ publication, context }) => (
+        {homePapers.map(({ publication, context }) => (
           <article class="paper-preview">
-            <p class="overline">{publication.venue} · {publication.onlineYear ? `Online ${publication.onlineYear}` : publication.year}</p>
+            <p class="overline">{publication.venue} · {publication.onlineYear ? `${publication.year} issue · Online ${publication.onlineYear}` : publication.year}</p>
             <h3><SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)}>{publication.title}</SiteLink></h3>
             <p>{context}</p>
           </article>
@@ -69,11 +76,21 @@ const portraitWidths = [128, 256].filter(width => width < portraitWidth).concat(
     </section>
   </div>
 
-  <section class="shell connection" id="contact" aria-labelledby="contact-title">
-    <div>
-      <h2 id="contact-title">Contact</h2>
-      <p>I welcome conversations about PhD research and collaborations on evaluating biomedical models across cohorts, clinical sites, and instruments.</p>
+  <section class="shell home-section" id="contact" aria-labelledby="contact-title">
+    <div class="home-contact">
+      <div>
+        <h2 id="contact-title">Contact</h2>
+        <p class="home-contact-message">I welcome enquiries about PhD opportunities and collaborations in medical imaging, wearable biomechanics, and biomedical sensing.</p>
+        <p class="home-affiliation">{profile.department} · {profile.affiliation} · {profile.location}</p>
+      </div>
+      <div class="home-contact-links">
+        <SiteLink class="home-email" href={`mailto:${profile.email}?subject=Research%20inquiry`}>{profile.email}</SiteLink>
+        <nav aria-label="Research and code profiles">
+          <SiteLink href={profile.scholar}>Google Scholar <span aria-hidden="true">↗</span></SiteLink>
+          <SiteLink href={profile.orcid}>ORCID <span aria-hidden="true">↗</span></SiteLink>
+          <SiteLink href={profile.github}>GitHub <span aria-hidden="true">↗</span></SiteLink>
+        </nav>
+      </div>
     </div>
-    <SiteLink class="text-link" href={`mailto:${profile.email}?subject=Research%20inquiry`}>{profile.email} <span aria-hidden="true">↗</span></SiteLink>
   </section>
 </Base>

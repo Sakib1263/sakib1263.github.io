@@ -4,17 +4,16 @@ import { currentResearch } from '../data/research';
 import { sitePath } from '../lib/site';
 ---
 
-<section class="current-research" id="current-research" aria-labelledby="current-title">
+<section class="current-research" aria-labelledby="current-title">
   <div class="section-heading">
-    <h2 id="current-title">Current research questions</h2>
+    <h2 id="current-title">Ongoing research</h2>
   </div>
   <div class="resource-list">
-    {currentResearch.map(({ area, question, description, project, label }) => (
+    {currentResearch.map(({ area, title, description, project }) => (
       <article>
         <p class="overline">{area}</p>
-        <h3>{question}</h3>
+        <h3><SiteLink href={sitePath(`research/${project}/`)}>{title}</SiteLink></h3>
         <p>{description}</p>
-        <SiteLink class="text-link" href={sitePath(`research/${project}/`)}>{label} <span aria-hidden="true">→</span></SiteLink>
       </article>
     ))}
   </div>

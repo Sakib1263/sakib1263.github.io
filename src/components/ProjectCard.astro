@@ -8,13 +8,13 @@ import { sitePath } from '../lib/site';
 const { project } = Astro.props as { project: Project };
 const { visual } = project;
 const paper = publicationFor(project.doi);
-const imageWidth = visual ? Math.min(visual.image.width, 384) : 0;
+const imageWidth = visual ? Math.min(visual.image.width, 640) : 0;
 ---
 
 <article class="project-card">
   {visual && (
     <div class:list={['project-art', `art-${project.slug}`]}>
-      <Image src={visual.image} alt={visual.alt} width={imageWidth} widths={[96, 192, 288].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 480px) 72px, (max-width: 720px) 112px, 176px" format="webp" />
+      <Image src={visual.image} alt={visual.alt} width={imageWidth} widths={[128, 256, 400].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 480px) 76px, (max-width: 720px) 136px, (max-width: 1120px) 30vw, 330px" format="webp" />
     </div>
   )}
   {project.illustratedExample && (
