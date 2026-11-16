@@ -24,9 +24,11 @@ const selectedDois = new Set(selectedPapers.map(({ publication }) => publication
 <Base title="Publications" description="Browse Sakib Mahmud’s publications by research area, with study summaries, personal contributions, citations, and links to papers and research resources.">
   <div class="shell">
     <section class="page-intro publications-intro">
-      <div>
-        <h1>Publications</h1>
-        <p class="page-lead">Study summaries and my contributions across six research areas.</p>
+      <div class="publications-heading">
+        <div>
+          <h1>Publications</h1>
+          <p class="page-lead">Study summaries and my contributions across six research areas.</p>
+        </div>
         <div class="actions">
           <a class="button button-primary" href={sitePath('publications/?view=selected#bibliography')}>{selectedDois.size} selected papers</a>
           <a class="text-link" href={sitePath('publications.bib')} download>Download BibTeX <span aria-hidden="true">↓</span></a>
@@ -36,7 +38,7 @@ const selectedDois = new Set(selectedPapers.map(({ publication }) => publication
         <h2 id="research-profiles">Research profiles</h2>
         <ul>
           {researchProfiles.map(({ label, href }) => (
-            <li><a href={href}>{label} <span aria-hidden="true">↗</span></a></li>
+            <li><a href={href}>{label}</a></li>
           ))}
         </ul>
       </nav>

@@ -19,7 +19,7 @@ pnpm preview
 | --- | --- |
 | Name, affiliation, and professional links | [src/lib/site.ts](src/lib/site.ts) |
 | Project summaries, findings, study limits, and figures | [src/data/research.ts](src/data/research.ts) |
-| Publications and author order | [src/data/publications.json](src/data/publications.json) |
+| Publications, author order, and citation metadata | [src/data/publications.json](src/data/publications.json) |
 | Publication clusters, selection notes, and verified resources | [src/data/papers.ts](src/data/papers.ts) |
 | CV date, selected contributions, appointments, and education | [src/data/cv.ts](src/data/cv.ts) |
 | Insole release and reproduction commands | [src/data/kinetics.ts](src/data/kinetics.ts) |
@@ -27,6 +27,8 @@ pnpm preview
 | Shared styles | [src/styles/site.css](src/styles/site.css) |
 
 Add a publication by copying an existing entry. Use the publisher's title, the published author order in `Family, Given` form, the issue or proceedings year, and the DOI. Add an online publication year when it is known and differs from the issue year. Assign one of the existing topic keys. The publication list, citation text, DOI-based permalinks, and BibTeX download share this data. Add an open full-text URL in `src/data/papers.ts` when the publisher or a repository makes the complete article publicly accessible. To share a filtered view, set the filters and copy the resulting address. For example, `/publications/?topic=imaging&view=selected#bibliography` shows the selected imaging papers.
+
+In the publication's `bibliography` object, add the publisher and any available ISSN, ISBN, and editors. Use the confirmed publication date in `YYYY-MM` or `YYYY-MM-DD` format. For proceedings, use `eventDate` and `eventVenue` for the dates and city of the conference. Use `articleNumber` for an electronic article number and `pages` for a page range.
 
 Project pages use stable slugs. When adding results, record the comparison and the evaluation population or dataset. Give new artwork descriptive alternative text and a figure credit where applicable.
 

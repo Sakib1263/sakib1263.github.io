@@ -17,7 +17,12 @@
     "doi": "10.1016/j.talanta.2026.130241",
     "onlineYear": 2026,
     "volume": "311",
-    "articleNumber": "130241"
+    "articleNumber": "130241",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2027-01",
+      "issn": "0039-9140"
+    }
   },
   {
     "title": "Enhancing kidney stone segmentation in computed tomography images through successive scope reduction and intra-framework feature transfer",
@@ -33,7 +38,13 @@
     "topic": "imaging",
     "doi": "10.1016/j.bspc.2026.109894",
     "volume": "119",
-    "articleNumber": "109894"
+    "articleNumber": "109894",
+    "issue": "Part B",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2026-06",
+      "issn": "1746-8094"
+    }
   },
   {
     "title": "SERS on analyte-enriched blood for rapid, culture-free sepsis recognition and causative pathogen identification with super operational neural networks",
@@ -59,7 +70,12 @@
     "topic": "spectroscopy",
     "doi": "10.1016/j.talanta.2025.129332",
     "volume": "301",
-    "articleNumber": "129332"
+    "articleNumber": "129332",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2026-05",
+      "issn": "0039-9140"
+    }
   },
   {
     "title": "A comprehensive review of deep reinforcement learning applications from centralized power generation to modern energy internet frameworks",
@@ -76,7 +92,12 @@
     "topic": "engineering",
     "doi": "10.1016/j.rser.2025.116481",
     "volume": "226",
-    "articleNumber": "116481"
+    "articleNumber": "116481",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2026-01",
+      "issn": "1364-0321"
+    }
   },
   {
     "title": "Deep learning-based cross-device standardization of surface-enhanced Raman spectroscopy for enhanced bacterial recognition",
@@ -96,7 +117,12 @@
     "topic": "spectroscopy",
     "doi": "10.1016/j.saa.2025.126931",
     "volume": "347",
-    "articleNumber": "126931"
+    "articleNumber": "126931",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2026-02",
+      "issn": "1386-1425"
+    }
   },
   {
     "title": "3D Foot Kinetics Estimation From Distributed VGRF From Smart Insoles via 1D Domain Transformation",
@@ -113,7 +139,12 @@
     "onlineYear": 2025,
     "volume": "30",
     "issue": "3",
-    "pages": "2656-2667"
+    "pages": "2656-2667",
+    "bibliography": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "date": "2026-03",
+      "issn": "2168-2194"
+    }
   },
   {
     "title": "A cascaded deep learning framework for simultaneous non-intrusive load and occupancy monitoring using multi-channel aggregated smart meter data",
@@ -129,7 +160,12 @@
     "topic": "engineering",
     "doi": "10.1016/j.jobe.2025.113731",
     "volume": "112",
-    "articleNumber": "113731"
+    "articleNumber": "113731",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2025-10",
+      "issn": "2352-7102"
+    }
   },
   {
     "title": "Deep learning-based beat-to-beat arterial blood pressure estimation using distant radar signals",
@@ -150,7 +186,12 @@
     "doi": "10.1007/s00521-025-11327-x",
     "volume": "37",
     "issue": "21",
-    "pages": "16677-16702"
+    "pages": "16677-16702",
+    "bibliography": {
+      "publisher": "Springer Science and Business Media LLC",
+      "date": "2025-07",
+      "issn": "0941-0643"
+    }
   },
   {
     "title": "Optimizing energy efficiency through precise occupancy detection: A tailored CNN architecture for smart buildings and beyond",
@@ -168,14 +209,19 @@
     "doi": "10.1007/s00521-025-11348-6",
     "volume": "37",
     "issue": "21",
-    "pages": "16487-16503"
+    "pages": "16487-16503",
+    "bibliography": {
+      "publisher": "Springer Science and Business Media LLC",
+      "date": "2025-07",
+      "issn": "0941-0643"
+    }
   },
   {
     "title": "Multimodal feature fusion and ensemble learning for non-intrusive occupancy monitoring using smart meters",
     "authors": [
       "Mahmud, Sakib",
       "Bensaali, Faycal",
-      "Chowdhury, Muhammad E․ H․",
+      "Chowdhury, Muhammad E. H.",
       "Houchati, Mahdi"
     ],
     "year": 2025,
@@ -184,7 +230,12 @@
     "topic": "engineering",
     "doi": "10.1016/j.buildenv.2025.112635",
     "volume": "271",
-    "articleNumber": "112635"
+    "articleNumber": "112635",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2025-03",
+      "issn": "0360-1323"
+    }
   },
   {
     "title": "Rapid wall shear stress prediction for aortic aneurysms using deep learning: a fast alternative to CFD",
@@ -208,7 +259,12 @@
     "doi": "10.1007/s11517-025-03311-3",
     "volume": "63",
     "issue": "7",
-    "pages": "2173-2190"
+    "pages": "2173-2190",
+    "bibliography": {
+      "publisher": "Springer Science and Business Media LLC",
+      "date": "2025-07",
+      "issn": "0140-0118"
+    }
   },
   {
     "title": "A novel 1D generative adversarial network-based framework for atrial fibrillation detection using restored wrist photoplethysmography signals",
@@ -228,7 +284,12 @@
     "topic": "signals",
     "doi": "10.1016/j.bspc.2024.107233",
     "volume": "101",
-    "articleNumber": "107233"
+    "articleNumber": "107233",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2025-03",
+      "issn": "1746-8094"
+    }
   },
   {
     "title": "Stress transfer, stress shielding, and micro-movement analysis in the implanted femoral bone region with various hip implant stem materials: A finite element approach",
@@ -248,7 +309,12 @@
     "topic": "devices",
     "doi": "10.1016/j.mtcomm.2024.110932",
     "volume": "41",
-    "articleNumber": "110932"
+    "articleNumber": "110932",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2024-12",
+      "issn": "2352-4928"
+    }
   },
   {
     "title": "GearFaultNet: Novel Network for Automatic and Early Detection of Gearbox Faults",
@@ -271,7 +337,12 @@
     "topic": "engineering",
     "doi": "10.1109/access.2024.3412274",
     "volume": "12",
-    "pages": "188755-188765"
+    "pages": "188755-188765",
+    "bibliography": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "date": "2024-06-11",
+      "issn": "2169-3536"
+    }
   },
   {
     "title": "QU-GM: An IoT Based Glucose Monitoring System From Photoplethysmography, Blood Pressure, and Demographic Data Using Machine Learning",
@@ -295,7 +366,12 @@
     "topic": "signals",
     "doi": "10.1109/access.2024.3404971",
     "volume": "12",
-    "pages": "77774-77790"
+    "pages": "77774-77790",
+    "bibliography": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "date": "2024-05-24",
+      "issn": "2169-3536"
+    }
   },
   {
     "title": "ECG waveform generation from radar signals: A deep learning perspective",
@@ -315,7 +391,12 @@
     "topic": "signals",
     "doi": "10.1016/j.compbiomed.2024.108555",
     "volume": "176",
-    "articleNumber": "108555"
+    "articleNumber": "108555",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2024-06",
+      "issn": "0010-4825"
+    }
   },
   {
     "title": "Restoration of magnetohydrodynamic-corrupted 12-lead electrocardiogram to enhance cardiac monitoring during magnetic resonance imaging",
@@ -334,7 +415,12 @@
     "topic": "signals",
     "doi": "10.1016/j.engappai.2024.108483",
     "volume": "133",
-    "articleNumber": "108483"
+    "articleNumber": "108483",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2024-07",
+      "issn": "0952-1976"
+    }
   },
   {
     "title": "ExoventQ: A Novel Low-Cost Portable Negative Pressure Ventilator Design and Implementation",
@@ -354,7 +440,12 @@
     "topic": "devices",
     "doi": "10.1109/access.2024.3390566",
     "volume": "12",
-    "pages": "61828-61847"
+    "pages": "61828-61847",
+    "bibliography": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "date": "2024-04-18",
+      "issn": "2169-3536"
+    }
   },
   {
     "title": "Automated grading of prenatal hydronephrosis severity from segmented kidney ultrasounds using deep learning",
@@ -377,7 +468,12 @@
     "topic": "imaging",
     "doi": "10.1016/j.eswa.2024.124594",
     "volume": "255",
-    "articleNumber": "124594"
+    "articleNumber": "124594",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2024-12",
+      "issn": "0957-4174"
+    }
   },
   {
     "title": "Wearable wrist to finger photoplethysmogram translation through restoration using super operational neural networks based 1D-CycleGAN for enhancing cardiovascular monitoring",
@@ -397,7 +493,12 @@
     "topic": "signals",
     "doi": "10.1016/j.eswa.2024.123167",
     "volume": "246",
-    "articleNumber": "123167"
+    "articleNumber": "123167",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2024-07",
+      "issn": "0957-4174"
+    }
   },
   {
     "title": "M2ECG: Wearable Mechanocardiograms to Electrocardiogram Estimation Using Deep Learning",
@@ -414,7 +515,12 @@
     "topic": "signals",
     "doi": "10.1109/access.2024.3353463",
     "volume": "12",
-    "pages": "12963-12975"
+    "pages": "12963-12975",
+    "bibliography": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "date": "2024-01-12",
+      "issn": "2169-3536"
+    }
   },
   {
     "title": "GCDN-Net: Garbage classifier deep neural network for recyclable urban waste management",
@@ -436,7 +542,12 @@
     "topic": "engineering",
     "doi": "10.1016/j.wasman.2023.12.014",
     "volume": "174",
-    "pages": "439-450"
+    "pages": "439-450",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2024-02",
+      "issn": "0956-053X"
+    }
   },
   {
     "title": "Restoration of motion-corrupted EEG signals using attention-guided operational CycleGAN",
@@ -456,7 +567,12 @@
     "topic": "signals",
     "doi": "10.1016/j.engappai.2023.107514",
     "volume": "128",
-    "articleNumber": "107514"
+    "articleNumber": "107514",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2024-02",
+      "issn": "0952-1976"
+    }
   },
   {
     "title": "LGI-rPPG-Net: A shallow encoder-decoder model for rPPG signal estimation from facial video streams",
@@ -480,7 +596,12 @@
     "topic": "signals",
     "doi": "10.1016/j.bspc.2023.105687",
     "volume": "89",
-    "articleNumber": "105687"
+    "articleNumber": "105687",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2024-03",
+      "issn": "1746-8094"
+    }
   },
   {
     "title": "Deep Learning Framework for Liver Segmentation from T1-Weighted MRI Images",
@@ -506,7 +627,12 @@
     "doi": "10.3390/s23218890",
     "volume": "23",
     "issue": "21",
-    "pages": "8890"
+    "pages": "8890",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2023-11-01",
+      "issn": "1424-8220"
+    }
   },
   {
     "title": "Robust and novel attention guided MultiResUnet model for 3D ground reaction force and moment prediction from foot kinematics",
@@ -527,7 +653,12 @@
     "onlineYear": 2023,
     "volume": "36",
     "issue": "3",
-    "pages": "1105-1121"
+    "pages": "1105-1121",
+    "bibliography": {
+      "publisher": "Springer Science and Business Media LLC",
+      "date": "2024-01",
+      "issn": "0941-0643"
+    }
   },
   {
     "title": "Advancement in total hip implant: a comprehensive review of mechanics and performance parameters across diverse novelties",
@@ -551,7 +682,12 @@
     "doi": "10.1039/d3tb01469j",
     "volume": "11",
     "issue": "44",
-    "pages": "10507-10537"
+    "pages": "10507-10537",
+    "bibliography": {
+      "publisher": "Royal Society of Chemistry (RSC)",
+      "date": "2023-10-11",
+      "issn": "2050-750X"
+    }
   },
   {
     "title": "Laser-Induced Graphene-Based Smart Insole to Measure Plantar Temperature",
@@ -573,7 +709,12 @@
     "doi": "10.1109/jsen.2023.3317768",
     "volume": "24",
     "issue": "2",
-    "pages": "1190-1199"
+    "pages": "1190-1199",
+    "bibliography": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "date": "2024-01-15",
+      "issn": "1530-437X"
+    }
   },
   {
     "title": "A novel deep learning technique for morphology preserved fetal ECG extraction from mother ECG using 1D-CycleGAN",
@@ -594,7 +735,12 @@
     "topic": "signals",
     "doi": "10.1016/j.eswa.2023.121196",
     "volume": "235",
-    "articleNumber": "121196"
+    "articleNumber": "121196",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2024-01",
+      "issn": "0957-4174"
+    }
   },
   {
     "title": "Kidney Cancer Diagnosis and Surgery Selection by Machine Learning from CT Scans Combined with Clinical Metadata",
@@ -612,7 +758,12 @@
     "doi": "10.3390/cancers15123189",
     "volume": "15",
     "issue": "12",
-    "pages": "3189"
+    "pages": "3189",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2023-06-14",
+      "issn": "2072-6694"
+    }
   },
   {
     "title": "A Deep Learning Framework for the Detection of Abnormality in Cerebral Blood Flow Velocity Using Transcranial Doppler Ultrasound",
@@ -634,7 +785,12 @@
     "doi": "10.3390/diagnostics13122000",
     "volume": "13",
     "issue": "12",
-    "pages": "2000"
+    "pages": "2000",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2023-06-08",
+      "issn": "2075-4418"
+    }
   },
   {
     "title": "Fetal ECG extraction from maternal ECG using deeply supervised LinkNet++ model",
@@ -655,7 +811,12 @@
     "topic": "signals",
     "doi": "10.1016/j.engappai.2023.106414",
     "volume": "123",
-    "articleNumber": "106414"
+    "articleNumber": "106414",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2023-08",
+      "issn": "0952-1976"
+    }
   },
   {
     "title": "MultiResUNet3+: A Full-Scale Connected Multi-Residual UNet Model to Denoise Electrooculogram and Electromyogram Artifacts from Corrupted Electroencephalogram Signals",
@@ -676,7 +837,12 @@
     "doi": "10.3390/bioengineering10050579",
     "volume": "10",
     "issue": "5",
-    "pages": "579"
+    "pages": "579",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2023-05-10",
+      "issn": "2306-5354"
+    }
   },
   {
     "title": "PCovNet+: A CNN-VAE anomaly detection framework with LSTM embeddings for smartwatch-based COVID-19 detection",
@@ -695,7 +861,12 @@
     "topic": "signals",
     "doi": "10.1016/j.engappai.2023.106130",
     "volume": "122",
-    "articleNumber": "106130"
+    "articleNumber": "106130",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2023-06",
+      "issn": "0952-1976"
+    }
   },
   {
     "title": "Self-Attention MHDNet: A Novel Deep Learning Model for the Detection of R-Peaks in the Electrocardiogram Signals Corrupted with Magnetohydrodynamic Effect",
@@ -717,7 +888,12 @@
     "doi": "10.3390/bioengineering10050542",
     "volume": "10",
     "issue": "5",
-    "pages": "542"
+    "pages": "542",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2023-04-28",
+      "issn": "2306-5354"
+    }
   },
   {
     "title": "Automated measurement of penile curvature using deep learning-based novel quantification method",
@@ -736,7 +912,12 @@
     "topic": "imaging",
     "doi": "10.3389/fped.2023.1149318",
     "volume": "11",
-    "articleNumber": "1149318"
+    "articleNumber": "1149318",
+    "bibliography": {
+      "publisher": "Frontiers Media SA",
+      "date": "2023-04-17",
+      "issn": "2296-2360"
+    }
   },
   {
     "title": "Deep learning-based middle cerebral artery blood flow abnormality detection using flow velocity waveform derived from transcranial Doppler ultrasound",
@@ -759,7 +940,12 @@
     "topic": "signals",
     "doi": "10.1016/j.bspc.2023.104882",
     "volume": "85",
-    "articleNumber": "104882"
+    "articleNumber": "104882",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2023-08",
+      "issn": "1746-8094"
+    }
   },
   {
     "title": "NDDNet: a deep learning model for predicting neurodegenerative diseases from gait pattern",
@@ -784,7 +970,12 @@
     "doi": "10.1007/s10489-023-04557-w",
     "volume": "53",
     "issue": "17",
-    "pages": "20034-20046"
+    "pages": "20034-20046",
+    "bibliography": {
+      "publisher": "Springer Science and Business Media LLC",
+      "date": "2023-09",
+      "issn": "0924-669X"
+    }
   },
   {
     "title": "Design and Performance Evaluation of a Novel Spiral Head-Stem Trunnion for Hip Implants Using Finite Element Analysis",
@@ -807,7 +998,12 @@
     "doi": "10.3390/ma16041466",
     "volume": "16",
     "issue": "4",
-    "pages": "1466"
+    "pages": "1466",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2023-02-09",
+      "issn": "1996-1944"
+    }
   },
   {
     "title": "Fiber Bragg Gratings based smart insole to measure plantar pressure and temperature",
@@ -828,7 +1024,12 @@
     "topic": "biomechanics",
     "doi": "10.1016/j.sna.2022.114092",
     "volume": "350",
-    "articleNumber": "114092"
+    "articleNumber": "114092",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2023-02",
+      "issn": "0924-4247"
+    }
   },
   {
     "title": "Surface Acoustic Wave (SAW) Sensors for Hip Implant: A Numerical and Computational Feasibility Investigation Using Finite Element Methods",
@@ -851,7 +1052,12 @@
     "doi": "10.3390/bios13010079",
     "volume": "13",
     "issue": "1",
-    "pages": "79"
+    "pages": "79",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2023-01-02",
+      "issn": "2079-6374"
+    }
   },
   {
     "title": "NABNet: A Nested Attention-guided BiConvLSTM network for a robust prediction of Blood Pressure components from reconstructed Arterial Blood Pressure waveforms using PPG and ECG signals",
@@ -875,7 +1081,12 @@
     "topic": "signals",
     "doi": "10.1016/j.bspc.2022.104247",
     "volume": "79",
-    "articleNumber": "104247"
+    "articleNumber": "104247",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2023-01",
+      "issn": "1746-8094"
+    }
   },
   {
     "title": "MLMRS-Net: Electroencephalography (EEG) motion artifacts removal using a multi-layer multi-resolution spatially pooled 1D signal reconstruction network",
@@ -893,7 +1104,12 @@
     "onlineYear": 2022,
     "volume": "35",
     "issue": "11",
-    "pages": "8371-8388"
+    "pages": "8371-8388",
+    "bibliography": {
+      "publisher": "Springer Science and Business Media LLC",
+      "date": "2023-04",
+      "issn": "0941-0643"
+    }
   },
   {
     "title": "PPG2ABP: Translating Photoplethysmogram (PPG) Signals to Arterial Blood Pressure (ABP) Waveforms",
@@ -914,7 +1130,12 @@
     "doi": "10.3390/bioengineering9110692",
     "volume": "9",
     "issue": "11",
-    "pages": "692"
+    "pages": "692",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2022-11-15",
+      "issn": "2306-5354"
+    }
   },
   {
     "title": "Lightweight End-to-End Deep Learning Solution for Estimating the Respiration Rate from Photoplethysmogram Signal",
@@ -938,7 +1159,12 @@
     "doi": "10.3390/bioengineering9100558",
     "volume": "9",
     "issue": "10",
-    "pages": "558"
+    "pages": "558",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2022-10-16",
+      "issn": "2306-5354"
+    }
   },
   {
     "title": "A Review of Biomaterials and Associated Performance Metrics Analysis in Pre-Clinical Finite Element Model and in Implementation Stages for Total Hip Implant System",
@@ -962,7 +1188,12 @@
     "doi": "10.3390/polym14204308",
     "volume": "14",
     "issue": "20",
-    "pages": "4308"
+    "pages": "4308",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2022-10-13",
+      "issn": "2073-4360"
+    }
   },
   {
     "title": "Design and Implementation of a Smart Insole System to Measure Plantar Pressure and Temperature",
@@ -987,7 +1218,12 @@
     "doi": "10.3390/s22197599",
     "volume": "22",
     "issue": "19",
-    "pages": "7599"
+    "pages": "7599",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2022-10-07",
+      "issn": "1424-8220"
+    }
   },
   {
     "title": "PCovNet: A presymptomatic COVID-19 detection framework using deep learning model using wearables data",
@@ -1010,7 +1246,12 @@
     "topic": "signals",
     "doi": "10.1016/j.compbiomed.2022.105682",
     "volume": "147",
-    "articleNumber": "105682"
+    "articleNumber": "105682",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2022-08",
+      "issn": "0010-4825"
+    }
   },
   {
     "title": "QUCoughScope: An Intelligent Application to Detect COVID-19 Patients Using Cough and Breath Sounds",
@@ -1038,7 +1279,12 @@
     "doi": "10.3390/diagnostics12040920",
     "volume": "12",
     "issue": "4",
-    "pages": "920"
+    "pages": "920",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2022-04-07",
+      "issn": "2075-4418"
+    }
   },
   {
     "title": "A Shallow U-Net Architecture for Reliably Predicting Blood Pressure (BP) from Photoplethysmogram (PPG) and Electrocardiogram (ECG) Signals",
@@ -1063,7 +1309,12 @@
     "doi": "10.3390/s22030919",
     "volume": "22",
     "issue": "3",
-    "pages": "919"
+    "pages": "919",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2022-01-25",
+      "issn": "1424-8220"
+    }
   },
   {
     "title": "An investigation to study the effects of Tai Chi on human gait dynamics using classical machine learning",
@@ -1084,7 +1335,12 @@
     "topic": "biomechanics",
     "doi": "10.1016/j.compbiomed.2021.105184",
     "volume": "142",
-    "articleNumber": "105184"
+    "articleNumber": "105184",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2022-03",
+      "issn": "0010-4825"
+    }
   },
   {
     "title": "HipXNet: Deep Learning Approaches to Detect Aseptic Loos-Ening of Hip Implants Using X-Ray Images",
@@ -1108,7 +1364,12 @@
     "topic": "imaging",
     "doi": "10.1109/access.2022.3173424",
     "volume": "10",
-    "pages": "53359-53373"
+    "pages": "53359-53373",
+    "bibliography": {
+      "publisher": "Institute of Electrical and Electronics Engineers (IEEE)",
+      "date": "2022-05-09",
+      "issn": "2169-3536"
+    }
   },
   {
     "title": "COVID-19 infection localization and severity grading from chest X-ray images",
@@ -1134,7 +1395,12 @@
     "topic": "imaging",
     "doi": "10.1016/j.compbiomed.2021.105002",
     "volume": "139",
-    "articleNumber": "105002"
+    "articleNumber": "105002",
+    "bibliography": {
+      "publisher": "Elsevier BV",
+      "date": "2021-12",
+      "issn": "0010-4825"
+    }
   },
   {
     "title": "Detection and Severity Classification of COVID-19 in CT Images Using Deep Learning",
@@ -1158,7 +1424,12 @@
     "doi": "10.3390/diagnostics11050893",
     "volume": "11",
     "issue": "5",
-    "pages": "893"
+    "pages": "893",
+    "bibliography": {
+      "publisher": "MDPI AG",
+      "date": "2021-05-17",
+      "issn": "2075-4418"
+    }
   },
   {
     "title": "COVID-19 vaccine willingness and hesitancy among residents in Qatar: a quantitative analysis based on machine learning",
@@ -1177,7 +1448,12 @@
     "onlineYear": 2021,
     "volume": "32",
     "issue": "7",
-    "pages": "899-922"
+    "pages": "899-922",
+    "bibliography": {
+      "publisher": "Informa UK Limited",
+      "date": "2022-10-03",
+      "issn": "1091-1359"
+    }
   },
   {
     "title": "Towards next generation cannulation simulators",
@@ -1202,7 +1478,13 @@
     "doi": "10.5339/qmj.2019.qccc.61",
     "volume": "2019",
     "issue": "2",
-    "articleNumber": "61"
+    "articleNumber": "61",
+    "bibliography": {
+      "publisher": "Hamad bin Khalifa University Press (HBKU Press)",
+      "date": "2019-11-07",
+      "issn": "0253-8253",
+      "issueTitle": "Qatar Critical Care Conference Proceedings"
+    }
   },
   {
     "title": "Towards the design and implementation of a human circulatory system for Extracorporeal Membrane Oxygenation simulation",
@@ -1227,7 +1509,12 @@
     "doi": "10.1016/j.ejccm.2018.12.017",
     "volume": "6",
     "issue": "3",
-    "pages": "87-89"
+    "pages": "87-89",
+    "bibliography": {
+      "publisher": "Springer Science and Business Media LLC",
+      "date": "2018-12",
+      "issn": "2090-7303"
+    }
   },
   {
     "title": "Rotational Vibration-Based Piezoelectric Energy Harvesting with Bandwidth Enhancement Through Magnetic Oscillators",
@@ -1243,7 +1530,26 @@
     "type": "Book chapter",
     "topic": "engineering",
     "doi": "10.1007/978-981-97-3302-6_3",
-    "pages": "27-36"
+    "pages": "27-36",
+    "volume": "1003",
+    "bibliography": {
+      "publisher": "Springer Singapore",
+      "date": "2024-07-25",
+      "issn": "2367-3370",
+      "bookSubtitle": "ICICT 2024, London, Volume 7",
+      "editors": [
+        "Yang, Xin-She",
+        "Sherratt, Simon",
+        "Dey, Nilanjan",
+        "Joshi, Amit"
+      ],
+      "series": "Lecture Notes in Networks and Systems",
+      "isbn": "978-981-97-3302-6",
+      "address": "Singapore",
+      "eventTitle": "Ninth International Congress on Information and Communication Technology",
+      "eventDate": "2024-02-19/2024-02-22",
+      "eventVenue": "London, United Kingdom"
+    }
   },
   {
     "title": "Deep Learning Technique to Denoise Electromyogram Artifacts from Single-Channel Electroencephalogram Signals",
@@ -1258,7 +1564,23 @@
     "type": "Conference paper",
     "topic": "signals",
     "doi": "10.5121/csit.2022.122006",
-    "pages": "85-98"
+    "pages": "85-98",
+    "volume": "12",
+    "issue": "20",
+    "bibliography": {
+      "publisher": "AIRCC Publishing Corporation",
+      "date": "2022-11-19",
+      "editors": [
+        "Wyld, David C.",
+        "Nagamalai, Dhinaharan"
+      ],
+      "series": "Computer Science & Information Technology",
+      "issn": "2231-5403",
+      "isbn": "978-1-925953-80-0",
+      "eventTitle": "8th International Conference on Signal, Image Processing and Embedded Systems (SIGEM 2022)",
+      "eventDate": "2022-11-19/2022-11-20",
+      "eventVenue": "Zurich, Switzerland"
+    }
   },
   {
     "title": "Classification of Viral, Bacterial, And Covid-19 Pneumonia using Deep Learning Framework from Chest X-Ray Images",
@@ -1273,7 +1595,23 @@
     "type": "Conference paper",
     "topic": "imaging",
     "doi": "10.5121/csit.2022.122001",
-    "pages": "1-21"
+    "pages": "1-21",
+    "volume": "12",
+    "issue": "20",
+    "bibliography": {
+      "publisher": "AIRCC Publishing Corporation",
+      "date": "2022-11-19",
+      "editors": [
+        "Wyld, David C.",
+        "Nagamalai, Dhinaharan"
+      ],
+      "series": "Computer Science & Information Technology",
+      "issn": "2231-5403",
+      "isbn": "978-1-925953-80-0",
+      "eventTitle": "8th International Conference on Signal, Image Processing and Embedded Systems (SIGEM 2022)",
+      "eventDate": "2022-11-19/2022-11-20",
+      "eventVenue": "Zurich, Switzerland"
+    }
   },
   {
     "title": "Preliminary Implementation of the Next Generation Cannulation Simulator",
@@ -1296,6 +1634,13 @@
     "type": "Conference paper",
     "topic": "devices",
     "doi": "10.1109/scored.2019.8896240",
-    "pages": "243-247"
+    "pages": "243-247",
+    "bibliography": {
+      "publisher": "IEEE",
+      "date": "2019-10",
+      "isbn": "978-1-7281-2614-2",
+      "eventDate": "2019-10-15/2019-10-17",
+      "eventVenue": "Bandar Seri Iskandar, Malaysia"
+    }
   }
 ]

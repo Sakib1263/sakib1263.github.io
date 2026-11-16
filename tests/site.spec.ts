@@ -55,6 +55,22 @@ test('CV download works from the homepage', async ({ page, request }) => {
   expect((await response.body()).subarray(0, 5).toString()).toBe('%PDF-');
 });
 
+test('the publications page downloads the complete BibTeX file', async ({ page }) => {
+  await page.goto('/publications/');
+  const downloaded = page.waitForEvent('download');
+  await page.getByRole('link', { name: 'Download BibTeX' }).click();
+  const file = await downloaded;
+  expect(file.suggestedFilename()).toBe('publications.bib');
+  const downloadStream = await file.createReadStream();
+  const chunks: Buffer[] = [];
+  for await (const chunk of downloadStream) chunks.push(chunk);
+  const bibliography = Buffer.concat(chunks).toString('utf8');
+  expect(bibliography.match(/^@\w+\{/gm)).toHaveLength(61);
+  expect(bibliography).toContain('isbn = {978-981-97-3302-6}');
+  expect(bibliography).toContain('editor = {Yang, Xin-She and Sherratt, Simon and Dey, Nilanjan and Joshi, Amit}');
+  expect(bibliography).toContain('eid = {130241}');
+});
+
 test('publication themes and selected filters remain shareable', async ({ page }) => {
   await page.goto('/publications/');
   await expect(page.getByRole('navigation', { name: 'Publication research areas' }).getByRole('link')).toHaveCount(6);

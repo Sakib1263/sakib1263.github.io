@@ -1,47 +1,60 @@
-.publications-intro {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(16rem, .52fr);
-  align-items: center;
-  gap: 1.25rem clamp(2rem, 6vw, 5rem);
+.page-intro.publications-intro { padding-bottom: .75rem; }
+
+.publications-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: .95rem 1.5rem;
 }
+
+.publications-heading .actions { margin-top: 0; }
 
 .publication-profiles {
-  padding: .9rem 1rem .85rem;
-  background: var(--wash);
-  border: 1px solid var(--line);
-  border-radius: 6px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .1rem clamp(1rem, 3vw, 2rem);
+  margin-top: 1.35rem;
+  padding-top: .68rem;
+  border-top: 1px solid var(--line);
 }
 
-.publication-profiles h2, .publication-clusters h2 {
+.publication-profiles h2 {
+  color: var(--muted);
+  font-size: .83rem;
+  font-weight: 640;
+  letter-spacing: 0;
+}
+
+.publication-clusters h2 {
   font-size: .96rem;
   font-weight: 700;
   letter-spacing: 0;
 }
 
-.publication-profiles ul, .publication-clusters ul {
-  list-style: none;
-  padding: 0;
-  margin: .45rem 0 0;
-}
+.publication-clusters ul { list-style: none; padding: 0; margin: .45rem 0 0; }
 
 .publication-profiles ul {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  column-gap: .65rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 clamp(.7rem, 2.2vw, 1.55rem);
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
 
 .publication-profiles a {
   display: inline-flex;
   align-items: center;
-  gap: .3rem;
-  min-height: 30px;
+  min-height: 32px;
   color: var(--accent-dark);
   font-size: .86rem;
-  font-weight: 615;
+  font-weight: 640;
+  text-decoration-color: #a1b2ac;
 }
 
-.publication-profiles a:hover { color: var(--ink); }
-.publication-profiles a span { font-size: .82em; }
+.publication-profiles a:hover { color: var(--ink); text-decoration-color: currentColor; }
 
 .bibliography-layout {
   display: grid;
@@ -240,7 +253,8 @@
 }
 
 @media (max-width: 620px) {
-  .publications-intro { grid-template-columns: minmax(0, 1fr); }
+  .publication-profiles { display: block; margin-top: 1.05rem; }
+  .publication-profiles ul { margin-top: .18rem; }
   .publication-clusters ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .publication-clusters li:nth-last-child(3) { border-bottom: 0; }
   .publication-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
