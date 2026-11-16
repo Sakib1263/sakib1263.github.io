@@ -19,6 +19,7 @@ pnpm preview
 | --- | --- |
 | Name, affiliation, and professional links | [src/lib/site.ts](src/lib/site.ts) |
 | Research areas and project case studies | [src/data/research-catalog.ts](src/data/research-catalog.ts) |
+| Research profile metrics and checked dates | [src/data/research-metrics.ts](src/data/research-metrics.ts) |
 | Featured project summaries, results, and figures | [src/data/research.ts](src/data/research.ts) |
 | Publications, author order, and citation metadata | [src/data/publications.json](src/data/publications.json) |
 | Journal quartiles, impact factors, and source records | [src/data/journal-metrics.json](src/data/journal-metrics.json) |
@@ -36,6 +37,8 @@ In the publication's `bibliography` object, add the publisher and any available 
 Journal metrics are keyed by the publication's ISSN. Use the best subject quartile from the SCImago release based on Scopus data. Use the Journal Impact Factor for the latest release, where available. Record the source, include the year for historical quartiles, and leave unverified fields empty.
 
 Add a project to its research area in `src/data/research-catalog.ts` with a stable slug, a summary, the approach, and your contribution. Link supporting publications by DOI and related projects by slug. When adding results, record the comparison and the evaluation population or dataset. Give new artwork descriptive alternative text and a figure credit where applicable.
+
+Update the Google Scholar snapshot from the public profile and record the check date. The optional OpenAlex view refreshes when opened and shows the dated saved snapshot if the request fails.
 
 Replace `public/sakib-mahmud-cv.pdf` to update the downloadable CV. The build serves that file directly. Update `cvUpdated` when changing the web CV. The research figures include source links on their project pages. The Raman graphical abstract is from Mahmud et al. (2026), DOI [10.1016/j.saa.2025.126931](https://doi.org/10.1016/j.saa.2025.126931), under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The site serves [Inter](https://rsms.me/inter/) from local WOFF2 files under the [SIL Open Font License](src/assets/fonts/inter-OFL.txt).
 

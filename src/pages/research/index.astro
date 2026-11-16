@@ -1,5 +1,6 @@
 ---
 import SiteLink from '../../components/SiteLink.astro';
+import ResearchSnapshot from '../../components/ResearchSnapshot.astro';
 import Base from '../../layouts/Base.astro';
 import { datasetsByStudy } from '../../data/datasets';
 import { publicationFor, publicationId } from '../../data/papers';
@@ -16,6 +17,8 @@ import '../../styles/research.css';
       <p class="page-lead">I develop methods to recover biomedical measurements from images and sensor signals. My work examines how well those methods transfer across people, instruments, and datasets.</p>
       <p class="research-intro-detail">{researchProjects.length} projects across {researchGroups.length} research areas</p>
     </section>
+
+    <ResearchSnapshot />
 
     <div class="catalog-layout content-end">
       <nav class="catalog-index research-index" aria-label="Research areas">

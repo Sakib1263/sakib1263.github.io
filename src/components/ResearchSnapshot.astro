@@ -1,0 +1,40 @@
+---
+import CitationSnapshot from './CitationSnapshot.astro';
+import SiteLink from './SiteLink.astro';
+import { openAlexAuthor, openAlexSnapshot, scholarSnapshot } from '../data/research-metrics';
+import { profile, researchProfiles } from '../lib/site';
+import '../styles/research-snapshot.css';
+
+const otherProfiles = researchProfiles.filter(({ label }) => ['Scopus', 'Web of Science', 'ORCID'].includes(label));
+---
+
+<section class="research-snapshot" aria-labelledby="research-profile">
+  <header class="catalog-section-heading snapshot-heading">
+    <div>
+      <h2 id="research-profile">Research profile</h2>
+      <p>Google Scholar citation metrics</p>
+    </div>
+    <SiteLink href={profile.scholar}>Google Scholar <span aria-hidden="true">↗</span></SiteLink>
+  </header>
+
+  <CitationSnapshot source="Google Scholar" snapshot={scholarSnapshot} />
+
+  <div class="snapshot-profiles">
+    <nav aria-label="Other research profiles">
+      {otherProfiles.map(({ href, label }) => <SiteLink href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
+    </nav>
+  </div>
+
+  <details class="snapshot-live" data-openalex-author={openAlexAuthor} data-orcid={profile.orcid}>
+    <summary>Live citation metrics <span>OpenAlex</span></summary>
+    <div class="snapshot-live-heading">
+      <p>OpenAlex citation metrics</p>
+      <SiteLink href={openAlexAuthor}>OpenAlex profile <span aria-hidden="true">↗</span></SiteLink>
+    </div>
+    <CitationSnapshot source="OpenAlex" snapshot={openAlexSnapshot} refreshable />
+  </details>
+</section>
+
+<script>
+  import '../scripts/research-metrics';
+</script>

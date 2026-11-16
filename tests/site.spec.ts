@@ -50,6 +50,48 @@ test('research areas lead to project details, supporting publications, and ongoi
   expect(context.pages()).toEqual([page]);
 });
 
+test('the research profile keeps Scholar totals and loads OpenAlex metrics on demand', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.clock.setFixedTime(new Date('2026-11-17T00:00:00+03:00'));
+  let requests = 0;
+  await page.route('https://api.openalex.org/authors/A5028434107?*', route => {
+    requests++;
+    return route.fulfill({ json: {
+      id: 'https://openalex.org/A5028434107',
+      orcid: 'https://orcid.org/0000-0002-4599-2192',
+      cited_by_count: 1900,
+      summary_stats: { h_index: 25, i10_index: 44 },
+      counts_by_year: Array.from({ length: 7 }, (_, index) => ({ year: 2026 - index, cited_by_count: 440 - index * 55 })),
+    } });
+  });
+  await page.goto('/research/');
+  const snapshot = page.getByRole('region', { name: 'Research profile', exact: true });
+  const scholar = snapshot.getByLabel('Google Scholar all-time metrics');
+  await expect(scholar).toContainText('2,314');
+  await expect(snapshot.getByRole('link', { name: 'Google Scholar', exact: true })).toHaveAttribute('target', '_blank');
+  expect(requests).toBe(0);
+
+  await snapshot.getByText('Live citation metrics', { exact: false }).click();
+  await expect(snapshot.getByRole('status')).toHaveText('Retrieved live on 17 Nov 2026');
+  await expect(snapshot.getByLabel('OpenAlex all-time metrics')).toContainText('1,900');
+  const history = snapshot.getByRole('figure', { name: 'OpenAlex yearly citation counts' });
+  await expect(history.getByRole('listitem').first()).toContainText('2021');
+  await expect(history.getByRole('listitem').last()).toContainText('440 citations');
+  await expect(scholar).toContainText('2,314');
+  expect(requests).toBe(1);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+});
+
+test('a failed live citation request leaves the dated snapshot available', async ({ page }) => {
+  await page.route('https://api.openalex.org/authors/A5028434107?*', route => route.fulfill({ status: 429 }));
+  await page.goto('/research/');
+  const response = page.waitForResponse(url => url.url().startsWith('https://api.openalex.org/authors/A5028434107?'));
+  await page.getByText('Live citation metrics', { exact: false }).click();
+  expect((await response).status()).toBe(429);
+  await expect(page.getByLabel('OpenAlex all-time metrics')).toContainText('1,837');
+  await expect(page.getByRole('status')).toHaveText('Saved snapshot from 16 Nov 2026');
+});
+
 test('project and paper links round-trip and the citation copies', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto(flagship);

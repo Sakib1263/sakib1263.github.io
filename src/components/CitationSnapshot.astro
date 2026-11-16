@@ -1,0 +1,53 @@
+---
+import { metricDate, metricNumber, type CitationSnapshot } from '../data/research-metrics';
+
+interface Props {
+  snapshot: CitationSnapshot;
+  source: string;
+  refreshable?: boolean;
+}
+
+const { snapshot, source, refreshable } = Astro.props;
+const metrics = [
+  { key: 'citations', label: 'Citations' },
+  { key: 'hIndex', label: 'h-index' },
+  { key: 'i10Index', label: 'i10-index' },
+] as const;
+const maximum = Math.max(1, ...snapshot.yearly.map(entry => entry.citations));
+---
+
+<div class="citation-snapshot">
+  <div>
+    <dl class="citation-metrics" aria-label={`${source} all-time metrics`}>
+      {metrics.map(({ key, label }) => (
+        <div>
+          <dt>{label}</dt>
+          <dd>
+            <strong data-metric={key}>{metricNumber.format(snapshot.totals[key])}</strong>
+            {snapshot.recent && <small>{metricNumber.format(snapshot.recent[key])} since {snapshot.recent.since}</small>}
+          </dd>
+        </div>
+      ))}
+    </dl>
+    <p class="snapshot-date" role={refreshable ? 'status' : undefined}>
+      <span data-metric-status>{refreshable ? 'Saved snapshot from' : 'Checked on'}</span>{' '}
+      <time datetime={snapshot.checkedOn} data-metric-date>{metricDate.format(new Date(snapshot.checkedOn))}</time>
+    </p>
+  </div>
+
+  <figure class="citation-history" aria-label={`${source} yearly citation counts`}>
+    <figcaption>Yearly citations</figcaption>
+    <ol class="citation-bars" role="list">
+      {snapshot.yearly.map(({ year, citations }) => (
+        <li data-citation-point>
+          <span class="citation-year" data-citation-year>{year}</span>
+          <span class="citation-column">
+            <span class="citation-count"><span data-citation-count>{metricNumber.format(citations)}</span><span class="citation-unit"> citations</span></span>
+            <span class="citation-bar" data-citation-bar style={`--citation-height:${citations / maximum * 100}%`} aria-hidden="true"></span>
+          </span>
+        </li>
+      ))}
+    </ol>
+    <p class="citation-history-note">Counts through the date shown.</p>
+  </figure>
+</div>
