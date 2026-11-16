@@ -28,7 +28,7 @@ const projectsByDoi = new Map(projects.map(project => [project.doi, project]));
   </section>
   <nav class="shell publication-clusters" aria-label="Publication research areas">
     {clusters.map(({ topic, title, description, papers }) => (
-      <a href={sitePath(`publications/?topic=${topic}#bibliography`)}>
+      <a href={sitePath(`publications/?topic=${topic}#cluster-${topic}`)}>
         <strong>{title}</strong><span>{papers.length} papers</span><p>{description}</p>
       </a>
     ))}

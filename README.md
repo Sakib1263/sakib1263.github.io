@@ -30,7 +30,7 @@ Add a publication by copying an existing entry. Use the publisher's title, the p
 
 Project pages use stable slugs. When adding results, record the comparison and the evaluation population or dataset. Give new artwork descriptive alternative text and a figure credit where applicable.
 
-The build generates `sakib-mahmud-cv.pdf` from the web CV data. Update `cvUpdated` when changing the public CV. The research figures include source links on their project pages. The Raman graphical abstract is from Mahmud et al. (2026), DOI [10.1016/j.saa.2025.126931](https://doi.org/10.1016/j.saa.2025.126931), under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The fonts include their respective Open Font Licenses.
+The build generates `sakib-mahmud-cv.pdf` from the web CV data. Update `cvUpdated` when changing the public CV. The research figures include source links on their project pages. The Raman graphical abstract is from Mahmud et al. (2026), DOI [10.1016/j.saa.2025.126931](https://doi.org/10.1016/j.saa.2025.126931), under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The site serves [Inter](https://rsms.me/inter/) from local WOFF2 files under the [SIL Open Font License](src/assets/fonts/inter-OFL.txt).
 
 ## Verify changes
 

@@ -60,7 +60,7 @@ test('publication themes and selected filters remain shareable', async ({ page }
   await expect(page.getByRole('navigation', { name: 'Publication research areas' }).getByRole('link')).toHaveCount(6);
   await expect(page.locator('[data-publication]:visible')).toHaveCount(61);
   await page.getByRole('navigation', { name: 'Publication research areas' }).getByRole('link', { name: /medical imaging/i }).click();
-  await expect(page).toHaveURL(/\?topic=imaging#bibliography$/);
+  await expect(page).toHaveURL(/\?topic=imaging#cluster-imaging$/);
   await expect(page.locator('[data-publication-group]:visible')).toHaveCount(1);
   await page.getByRole('checkbox', { name: 'Selected papers only' }).check();
   await expect(page).toHaveURL(/view=selected/);
@@ -81,4 +81,15 @@ test('a paper link wins over an incompatible filter', async ({ page }) => {
   await page.goto(`/publications/?topic=imaging#${paperId}`);
   await expect(page.locator(`#${paperId}`)).toBeVisible();
   await expect(page).toHaveURL(`/publications/#${paperId}`);
+});
+
+test.describe('publication navigation without JavaScript', () => {
+  test.use({ javaScriptEnabled: false });
+
+  test('a topic link lands on its own group', async ({ page }) => {
+    await page.goto('/publications/');
+    await page.getByRole('navigation', { name: 'Publication research areas' }).getByRole('link', { name: /medical imaging/i }).click();
+    await expect(page).toHaveURL(/#cluster-imaging$/);
+    await expect(page.locator('#cluster-imaging')).toBeInViewport();
+  });
 });

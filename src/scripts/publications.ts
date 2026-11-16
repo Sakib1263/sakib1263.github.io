@@ -46,7 +46,7 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
     empty.hidden = matches > 0;
   }
 
-  function writeUrl(clearPaperAnchor = false) {
+  function writeUrl(clearResultAnchor = false) {
     const url = new URL(location.href);
     const data = new FormData(form);
     for (const { name } of fields) {
@@ -54,7 +54,7 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
       if (value) url.searchParams.set(name, value);
       else url.searchParams.delete(name);
     }
-    if (clearPaperAnchor && url.hash.startsWith('#paper-')) url.hash = 'bibliography';
+    if (clearResultAnchor && /^#(?:paper|cluster)-/.test(url.hash)) url.hash = 'bibliography';
     if (url.href !== location.href) history.replaceState(history.state, '', url);
   }
 

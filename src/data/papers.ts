@@ -76,7 +76,7 @@ export const paperResources: Readonly<Record<string, { label: string; href: stri
     { label: 'UCI dataset', href: 'https://archive.ics.uci.edu/dataset/340/cuff+less+blood+pressure+estimation' },
   ],
   '10.1016/j.compbiomed.2021.105002': [
-    { label: 'Radiography dataset used in the study', href: 'https://www.kaggle.com/tawsifurrahman/covid19-radiography-database' },
+    { label: 'Radiography dataset used in the study', href: 'https://www.kaggle.com/datasets/tawsifurrahman/covid19-radiography-database/data' },
   ],
 };
 
