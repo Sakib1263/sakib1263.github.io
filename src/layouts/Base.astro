@@ -8,10 +8,10 @@ import portrait from '../assets/sakib-mahmud.jpg';
 import { navigation, profile, sitePath } from '../lib/site';
 import { darkTheme, lightTheme, themeCss, themes, themeStorageKey } from '../lib/themes';
 
-const { title, description = profile.bio, shareImage = portrait, noIndex = false } = Astro.props;
+const { title, description = profile.bio, shareImage = portrait, largeShareImage = false, noIndex = false } = Astro.props;
 const pageTitle = title ? `${title} | ${profile.name}` : `${profile.name} | Biomedical AI Research`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const share = await getImage({ src: shareImage, width: Math.min(shareImage.width, 750), format: 'jpg' });
+const share = await getImage({ src: shareImage, width: Math.min(shareImage.width, largeShareImage ? 1200 : 750), format: 'jpg' });
 const shareUrl = new URL(share.src, Astro.site).href;
 const lightBackground = themes[lightTheme].colors.background;
 const darkBackground = themes[darkTheme].colors.background;
@@ -58,7 +58,12 @@ const structuredData = {
     <meta property="og:description" content={description} />
     {!noIndex && <meta property="og:url" content={canonical.href} />}
     <meta property="og:image" content={shareUrl} />
-    <meta name="twitter:card" content="summary" />
+    {largeShareImage && <>
+      <meta property="og:image:width" content={share.attributes.width} />
+      <meta property="og:image:height" content={share.attributes.height} />
+      <meta property="og:image:alt" content={`${title} · Sakib Mahmud`} />
+    </>}
+    <meta name="twitter:card" content={largeShareImage ? 'summary_large_image' : 'summary'} />
     {Astro.url.pathname === sitePath() && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
     {noIndex ? <meta name="robots" content="noindex,follow" /> : <link rel="canonical" href={canonical.href} />}
     <link rel="icon" type="image/png" href={sitePath('favicon.png')} />

@@ -20,7 +20,7 @@ export function getStaticPaths() {
 interface Props { project: ResearchProject }
 
 const { project } = Astro.props;
-const { visual } = project;
+const { visual, resultVisual } = project;
 const paper = project.doi ? publicationFor(project.doi) : undefined;
 const dataset = project.doi ? datasetsByStudy.get(project.doi) : undefined;
 const fullText = project.doi ? openFullText[project.doi] : undefined;
@@ -41,13 +41,17 @@ const sections = [
 ];
 ---
 
-<Base title={project.title} description={project.summary} shareImage={visual?.image}>
+<Base title={project.title} description={project.summary} shareImage={project.evidence?.shareImage ?? visual?.image} largeShareImage={Boolean(project.evidence)}>
   <article class="shell">
     <header class="page-intro catalog-intro research-project-intro">
       <SiteLink class="text-link return-link" href={sitePath(`research/#${project.slug}`)}><span aria-hidden="true">←</span> All research</SiteLink>
       <p class="overline">{project.area}{project.status && ` · ${project.status}`}</p>
       <h1>{project.title}</h1>
       <p class="page-lead">{project.question ?? project.summary}</p>
+      {project.evidence && <dl class="research-evidence">
+        <div><dt>What I led</dt><dd>{project.evidence.role}</dd></div>
+        <div><dt>What the study found</dt><dd>{project.evidence.finding}</dd></div>
+      </dl>}
       {[project.context, project.period].some(Boolean) && <p class="research-intro-detail">{[project.context, project.period].filter(Boolean).join(' · ')}</p>}
       {paper && <p class="study-citation">{paper.venue} · {paper.year}{paper.onlineYear && ` (online ${paper.onlineYear})`}</p>}
       {(paper || project.code || project.resources?.length) && <div class="actions">
@@ -99,6 +103,12 @@ const sections = [
           {project.measures?.length && <dl class="study-measures">
             {project.measures.map(({ value, label }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
           </dl>}
+          {resultVisual && <figure class="detail-figure">
+            <div class="waveform-plot">
+              <Image src={resultVisual.image} alt={resultVisual.alt} width={1400} widths={[360, 640, 840, 1400]} sizes="(max-width: 850px) calc(100vw - 4rem), 700px" format="webp" />
+            </div>
+            <figcaption>{resultVisual.caption} <SiteLink href={resultVisual.source.href}>{resultVisual.source.label}</SiteLink></figcaption>
+          </figure>}
         </section>}
 
         <section aria-labelledby="contribution">

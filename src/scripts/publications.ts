@@ -1,7 +1,8 @@
 const form = document.querySelector<HTMLFormElement>('[data-publication-filters]');
 const count = document.querySelector<HTMLElement>('[data-publication-count]');
 const empty = document.querySelector<HTMLElement>('[data-publication-empty]');
-if (form && count && empty) initializeFilters(form, count, empty);
+const chronological = document.querySelector<HTMLElement>('[data-publication-chronological]');
+if (form && count && empty && chronological) initializeFilters(form, count, empty, chronological);
 
 function normalizeSearch(text: string) {
   return text.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
@@ -23,9 +24,11 @@ function findDoi(query: string, dois: Set<string>) {
   return dois.has(unwrapped) ? unwrapped : undefined;
 }
 
-function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTMLElement) {
+function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTMLElement, chronological: HTMLElement) {
   const fields = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[name]')];
   const search = form.querySelector<HTMLInputElement>('[name="query"]');
+  const advanced = form.querySelector<HTMLDetailsElement>('[data-publication-advanced]');
+  const narrow = matchMedia('(max-width: 620px)');
   const topicLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-topic-link]')];
   const groups = [...document.querySelectorAll<HTMLElement>('[data-publication-group]')].map(section => ({
     section,
@@ -44,7 +47,24 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
   }));
   const total = groups.reduce((sum, group) => sum + group.papers.length, 0);
   const dois = new Set(groups.flatMap(group => group.papers.map(paper => paper.doi)).filter(Boolean));
+  const newestPapers = groups.flatMap(group => group.papers).sort(({ row: left }, { row: right }) =>
+    Number(right.dataset.year) - Number(left.dataset.year)
+      || (right.dataset.date ?? '').localeCompare(left.dataset.date ?? ''));
   let searchHistoryEntry = false;
+  let newest = false;
+
+  function arrangePapers(showNewest: boolean) {
+    if (showNewest === newest) return;
+    newest = showNewest;
+    if (newest) chronological.append(...newestPapers.map(({ row }) => row));
+    else for (const { section, papers } of groups) section.append(...papers.map(({ row }) => row));
+  }
+
+  function updateAdvancedFilters() {
+    if (!advanced) return;
+    const data = new FormData(form);
+    advanced.open = !narrow.matches || ['topic', 'year', 'type'].some(name => data.get(name));
+  }
 
   function applyFilters() {
     const filters = new FormData(form);
@@ -55,6 +75,8 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
     const year = filters.get('year');
     const type = filters.get('type');
     const selectedOnly = filters.has('view');
+    const firstAuthorOnly = filters.has('author');
+    arrangePapers(filters.get('sort') === 'newest');
     let matches = 0;
     for (const { section, papers } of groups) {
       let visible = 0;
@@ -63,14 +85,16 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
           && (!year || row.dataset.year === year)
           && (!type || row.dataset.type === type)
           && (!selectedOnly || row.dataset.selected === 'true')
+          && (!firstAuthorOnly || row.dataset.firstAuthor === 'true')
           && (doiMatch ? doi === doiMatch : words.every(word => searchable.includes(word)));
         row.hidden = !show;
         if (show) visible++;
       }
-      section.hidden = visible === 0;
+      section.hidden = newest || visible === 0;
       matches += visible;
     }
     count.textContent = matches === total ? `${total} publications` : `${matches} of ${total} publications`;
+    chronological.hidden = !newest || matches === 0;
     empty.hidden = matches > 0;
     for (const link of topicLinks) {
       if (link.dataset.topicLink === topic) link.setAttribute('aria-current', 'true');
@@ -106,12 +130,16 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
   function restoreUrl() {
     searchHistoryEntry = false;
     setFields(new URLSearchParams(location.search));
+    updateAdvancedFilters();
     applyFilters();
     const anchor = location.hash.slice(1);
     const target = document.getElementById(anchor);
-    if (anchor.startsWith('paper-') && target?.hidden) {
-      setFields(new URLSearchParams());
-      applyFilters();
+    if (anchor.startsWith('paper-') && target) {
+      if (target.hidden) {
+        setFields(new URLSearchParams());
+        applyFilters();
+        updateAdvancedFilters();
+      }
       target.scrollIntoView();
     }
     const hiddenCluster = anchor.startsWith('cluster-') && (!target || Boolean(target.closest('[hidden]')));
@@ -125,6 +153,7 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
   }
 
   form.hidden = false;
+  narrow.addEventListener('change', updateAdvancedFilters);
   search?.addEventListener('input', () => {
     // Keep the state before the search without adding a history entry per character.
     const changed = filtersChanged(searchHistoryEntry ? 'replace' : 'push');

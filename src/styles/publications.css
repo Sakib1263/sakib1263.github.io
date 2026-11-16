@@ -47,7 +47,7 @@
 
 .publication-filters {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(5.8rem, .55fr) minmax(0, .95fr) auto;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 12rem);
   align-items: end;
   gap: .5rem .65rem;
   padding: .65rem;
@@ -74,7 +74,10 @@
 }
 
 .publication-filters input::placeholder { color: var(--text-muted); }
-.publication-filters .search-field { grid-column: 1 / 4; }
+.publication-filter-options, .publication-advanced { grid-column: 1 / -1; }
+.publication-filter-options { display: flex; align-items: center; flex-wrap: wrap; gap: .12rem .8rem; }
+.publication-advanced summary { display: none; }
+.publication-advanced-fields { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, .65fr) minmax(0, 1fr); gap: .5rem .65rem; }
 .publication-filters .selection-filter {
   display: flex;
   align-items: center;
@@ -110,7 +113,7 @@
   transform: translateY(-.05rem) rotate(45deg);
 }
 
-.reset-filters { padding-inline: .75rem; }
+.reset-filters { margin-inline-start: auto; padding-inline: .75rem; }
 .publication-list-info {
   display: flex;
   justify-content: space-between;
@@ -184,9 +187,14 @@
 
 @media (max-width: 620px) {
   .publication-profiles { align-items: start; flex-direction: column; }
-  .publication-filters { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .publication-filters .search-field, .publication-filters .selection-filter { grid-column: 1 / -1; }
+  .publication-filters { grid-template-columns: minmax(0, 1fr); }
+  .publication-filter-options { gap: .2rem .7rem; }
   .publication-filters .selection-filter { min-height: 30px; }
+  .publication-advanced summary { display: list-item; padding-block: .2rem; color: var(--link); font-size: .86rem; font-weight: 650; cursor: pointer; }
+  .publication-advanced[open] summary { margin-bottom: .4rem; }
+  .publication-advanced-fields { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .publication-advanced-fields label:first-child { grid-column: 1 / -1; }
+  .reset-filters { margin-inline-start: 0; }
   .publication-year small { display: inline; padding-left: .4rem; }
 }
 

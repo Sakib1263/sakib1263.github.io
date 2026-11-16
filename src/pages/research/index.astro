@@ -4,6 +4,7 @@ import ResearchSnapshot from '../../components/ResearchSnapshot.astro';
 import Base from '../../layouts/Base.astro';
 import { datasetsByStudy } from '../../data/datasets';
 import { publicationFor, publicationId } from '../../data/papers';
+import { caseStudyProjects } from '../../data/research';
 import { researchGroups, researchProjects } from '../../data/research-catalog';
 import { sitePath } from '../../lib/site';
 import '../../styles/catalog.css';
@@ -16,11 +17,17 @@ import '../../styles/research.css';
       <h1>Research</h1>
       <p class="page-lead">I develop methods to recover biomedical measurements from images and sensor signals. My work examines how well those methods transfer across people, instruments, and datasets.</p>
       <p class="research-intro-detail">{researchProjects.length} projects across {researchGroups.length} research areas</p>
+      <nav class="quick-study-links" aria-label="Featured research shortcuts">
+        {caseStudyProjects.map(({ slug, evidence, title }) => <SiteLink href={sitePath(`research/${slug}/`)}>{evidence?.label ?? title}</SiteLink>)}
+        <SiteLink href="#project-catalog">Jump to projects <span aria-hidden="true">↓</span></SiteLink>
+      </nav>
     </section>
 
     <ResearchSnapshot />
 
-    <div class="catalog-layout content-end">
+    <p class="research-direction">I’m now testing <SiteLink href={sitePath('research/multimodal-wearable-kinetics/')}>gait models that combine pressure and motion</SiteLink> and studying <SiteLink href={sitePath('research/multiphase-liver-ct/')}>how CT contrast phases affect liver and tumour segmentation</SiteLink>. Both projects ask how well a model transfers when the people, data, or acquisition conditions change.</p>
+
+    <div class="catalog-layout content-end" id="project-catalog">
       <nav class="catalog-index research-index" aria-label="Research areas">
         <h2>Research areas</h2>
         <ul>

@@ -2,6 +2,10 @@ import type { ImageMetadata } from 'astro';
 import waveform from '../assets/insole-treadmill-waveform.png';
 import renal from '../assets/renal-ct.png';
 import sers from '../assets/sers-graphical-abstract.jpg';
+import ramanComparison from '../assets/raman-before-after.jpg';
+import insoleShare from '../assets/share/wearable-foot-kinetics.jpg';
+import kidneyShare from '../assets/share/kidney-stone-segmentation.jpg';
+import ramanShare from '../assets/share/cross-device-raman.jpg';
 import { kinetics } from './kinetics';
 import { thesisUrl } from './papers';
 
@@ -22,6 +26,7 @@ export type ResearchProject = {
   result?: string;
   measures?: { value: string; label: string }[];
   contribution: string;
+  evidence?: { label: string; role: string; finding: string; shareImage: ImageMetadata };
   scope?: string;
   ongoing?: string;
   workflow?: string[];
@@ -29,6 +34,7 @@ export type ResearchProject = {
   related?: string[];
   relatedProjects?: string[];
   resources?: ResearchLink[];
+  resultVisual?: { image: ImageMetadata; alt: string; caption: string; source: ResearchLink };
   visual?: {
     image: ImageMetadata;
     alt: string;
@@ -57,6 +63,12 @@ export const projects: Project[] = [
       { value: '8', label: 'Estimated signals per foot' },
     ],
     contribution: 'I led preprocessing, model development, subject- and speed-wise evaluation, analysis, and manuscript preparation.',
+    evidence: {
+      label: 'Wearable foot kinetics',
+      role: 'I led model development and evaluation against an instrumented treadmill.',
+      finding: 'In nine healthy participants, average-cycle correlations exceeded 0.95 for all targets except the right-foot vertical moment.',
+      shareImage: insoleShare,
+    },
     scope: 'The results come from nine healthy participants under controlled treadmill conditions. The plot illustrates one participant’s walking trials and shows where the estimated moment departs from the reference.',
     ongoing: 'I’m investigating how to combine plantar sensing with inertial measurements from the foot and shank, and how well models transfer across datasets.',
     workflow: ['Smart-insole pressure signals', 'Estimated forces and moments', 'Comparison with treadmill measurements'],
@@ -86,6 +98,13 @@ export const projects: Project[] = [
       { value: '259', label: 'Subjects in the source CT cohort' },
     ],
     contribution: 'I designed the successive scope-reduction and feature-transfer approach and led model development, experiments, analysis, and manuscript preparation.',
+    evidence: {
+      label: 'Kidney stone segmentation',
+      role: 'I designed the slice-selection and feature-transfer methods and led evaluation.',
+      finding: 'In the single-hospital CT cohort, KSSNet reached 97.44% Dice with full slice selection and 90.13% without it.',
+      shareImage: kidneyShare,
+    },
+    workflow: ['Identify kidney-containing CT slices', 'Select slices containing stones', 'Trace the stone boundary with KSSNet'],
     scope: 'The five folds separate subjects. The scans came from a single hospital, so the reported scores describe that cohort and protocol.',
     related: ['10.3390/cancers15123189', '10.1016/j.eswa.2024.124594'],
     relatedProjects: ['renal-tumour-modelling', 'prenatal-hydronephrosis'],
@@ -112,9 +131,21 @@ export const projects: Project[] = [
       { value: '96.54% → 98.87%', label: 'Rapid ID accuracy' },
     ],
     contribution: 'I led the modelling and evaluation of the spectral transformation and recognition workflow, including implementation, generalization analysis, visualization, and writing.',
-    scope: 'These comparisons cover the analytes and acquisition conditions tested in the study. The Zenodo record describes the dataset and how to request access to the restricted files.',
+    evidence: {
+      label: 'Cross-device Raman spectroscopy',
+      role: 'I led development and evaluation of the spectral alignment and classification workflow.',
+      finding: 'Alignment improved classification for all four portable instruments on the prepared analyte dataset. Enwave accuracy rose from 97.58% to 99.98%.',
+      shareImage: ramanShare,
+    },
+    scope: 'The study used prepared analytes across five instruments, including the laboratory reference. The reported comparisons apply to those samples and acquisition conditions. The Zenodo record explains how to request the restricted files.',
     related: ['10.1016/j.talanta.2026.130241', '10.1016/j.talanta.2025.129332'],
     relatedProjects: ['generalizable-microbial-sers', 'microbial-sers-validation'],
+    resultVisual: {
+      image: ramanComparison,
+      alt: 'Four panels compare the original and transformed mean spectra with the Renishaw reference. Shaded bands show one standard deviation.',
+      caption: 'Figure 4a from Mahmud et al. (2026), cropped to the four device-level comparisons. Green shows the original spectra, red the transformed spectra, and black the Renishaw reference. Shading shows one standard deviation. CC BY 4.0.',
+      source: { label: 'Published figure and license', href: 'https://manara.qnl.qa/articles/journal_contribution/Deep_learning-based_cross-device_standardization_of_surface-enhanced_Raman_spectroscopy_for_enhanced_bacterial_recognition/30664580' },
+    },
     visual: {
       image: sers,
       alt: 'Graphical abstract showing spectra from portable and reference Raman instruments, device transformation, and bacterial classification.',
@@ -166,12 +197,14 @@ export const projects: Project[] = [
   },
 ];
 
-const featuredSlugs = ['wearable-foot-kinetics', 'prenatal-hydronephrosis', 'cross-device-raman'];
-export const featuredProjects = featuredSlugs.map(slug => {
+function projectFor(slug: string) {
   const project = projects.find(candidate => candidate.slug === slug);
   if (!project) throw new Error(`Unknown featured project: ${slug}`);
   return project;
-});
+}
+
+export const featuredProjects = ['wearable-foot-kinetics', 'prenatal-hydronephrosis', 'cross-device-raman'].map(projectFor);
+export const caseStudyProjects = ['wearable-foot-kinetics', 'kidney-stone-segmentation', 'cross-device-raman'].map(projectFor);
 
 export const currentResearch = [
   {

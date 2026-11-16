@@ -69,6 +69,29 @@ test('the research profile displays its saved Google Scholar metrics and yearly 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
 });
 
+test('featured research opens evidence and a distinct share card', async ({ page, request }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/research/');
+  const shortcuts = page.getByRole('navigation', { name: 'Featured research shortcuts' });
+  await expect(shortcuts.getByRole('link')).toHaveCount(4);
+  await shortcuts.getByRole('link', { name: 'Jump to projects' }).click();
+  await expect(page).toHaveURL('/research/#project-catalog');
+  const images = new Set<string>();
+  for (const slug of ['wearable-foot-kinetics', 'kidney-stone-segmentation', 'cross-device-raman']) {
+    await page.goto(`/research/${slug}/`);
+    await expect(page.getByText('What I led', { exact: true })).toBeInViewport();
+    await expect(page.getByText('What the study found', { exact: true })).toBeInViewport();
+    await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
+    await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1200');
+    const image = await page.locator('meta[property="og:image"]').getAttribute('content');
+    const url = new URL(image!);
+    expect((await request.get(url.pathname)).ok()).toBe(true);
+    images.add(url.pathname);
+  }
+  expect(images.size).toBe(3);
+  await expect(page.getByRole('img', { name: /compare the original and transformed mean spectra/ })).toBeVisible();
+});
+
 test('project and paper links round-trip and the citation copies', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto(flagship);
@@ -341,6 +364,27 @@ test('the publication list fits a narrow screen and can search contributions', a
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
 });
 
+test('first-author and cross-topic date views combine and retain a single copy of each paper', async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/publications/');
+  const filters = page.getByRole('form', { name: 'Filter publications' });
+  await expect(filters.getByRole('combobox', { name: 'Topic' })).toBeHidden();
+  await filters.getByText('More filters', { exact: true }).click();
+  await expect(filters.getByRole('combobox', { name: 'Topic' })).toBeVisible();
+  await filters.getByRole('checkbox', { name: 'First author only' }).check();
+  await expect(page.locator('[data-publication]:visible')).toHaveCount(16);
+  await filters.getByRole('combobox', { name: 'Display order' }).selectOption('newest');
+  await expect(page).toHaveURL(/author=first&sort=newest|sort=newest&author=first/);
+  await page.reload();
+  await expect(page.locator('[data-publication-chronological] [data-publication]:visible')).toHaveCount(16);
+  const years = await page.locator('[data-publication]:visible').evaluateAll(rows => rows.map(row => Number(row.getAttribute('data-year'))));
+  expect(years).toEqual([...years].sort((left, right) => right - left));
+  await expect(page.locator('[data-publication]')).toHaveCount(61);
+  await filters.getByRole('button', { name: 'Clear filters' }).click();
+  await expect(page.locator('[data-publication-group]:visible')).toHaveCount(6);
+  await expect(page.locator('[data-publication]:visible')).toHaveCount(61);
+});
+
 test.describe('publication navigation without JavaScript', () => {
   test.use({ javaScriptEnabled: false });
 
@@ -350,7 +394,7 @@ test.describe('publication navigation without JavaScript', () => {
     await expect(page).toHaveURL(/#cluster-imaging$/);
     await expect(page.locator('#cluster-imaging')).toBeInViewport();
     const paper = page.locator('#paper-10-1016-j-bspc-2026-109894');
-    await paper.getByText('My contribution', { exact: true }).click();
     await expect(paper.locator('.publication-contribution')).toContainText('feature-transfer');
+    await expect(paper.locator('.publication-contribution')).toBeVisible();
   });
 });

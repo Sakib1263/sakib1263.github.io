@@ -11,6 +11,9 @@
 
 .catalog-heading .actions { margin-top: 0; }
 
+.quick-study-links { display: flex; flex-wrap: wrap; gap: .1rem 1rem; margin-top: .55rem; }
+.quick-study-links a { display: inline-flex; align-items: center; gap: .3rem; min-height: 28px; font-size: .84rem; font-weight: 620; }
+
 .catalog-index h2 {
   font-size: .96rem;
   font-weight: 700;

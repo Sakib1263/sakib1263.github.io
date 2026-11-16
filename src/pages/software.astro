@@ -2,20 +2,57 @@
 import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
 import { datasets } from '../data/datasets';
+import { kinetics } from '../data/kinetics';
 import { publicationFor, publicationId } from '../data/papers';
 import { projects } from '../data/research';
 import { doiUrl, profile, sitePath } from '../lib/site';
 import '../styles/catalog.css';
 import '../styles/software.css';
 
+const ramanRevision = '52285baeaa5f3cdd5b09ae7898a12283fbdd04f4';
+type Link = { label: string; href: string };
+const softwareNotes: Partial<Record<string, { label: string; detail: string; version: Link; guide?: Link }>> = {
+  'superonn-layers': {
+    label: 'Versioned library',
+    detail: 'The release provides the library and its examples. Setup depends on whether you use the PyTorch or TensorFlow backend.',
+    version: { label: 'Release v0.5.1', href: 'https://github.com/Sakib1263/SuperONN-Layers/releases/tag/v0.5.1' },
+  },
+  'wearable-foot-kinetics': {
+    label: 'Versioned code and CPU demo',
+    detail: 'Python 3.12 runs a small synthetic insole workflow. The study workflow needs prepared insole or motion recordings, and the article checkpoints are separate from the release.',
+    version: { label: `Release ${kinetics.version}`, href: kinetics.release },
+    guide: { label: 'Run the workflow', href: sitePath(`research/${kinetics.slug}/#reproduce`) },
+  },
+  'cross-device-raman': {
+    label: 'Source snapshot with synthetic demo',
+    detail: 'The repository documents a Python 3.11–3.13 CPU notebook with synthetic data. Published-result reproduction remains unresolved and the study spectra require dataset access.',
+    version: { label: `Source at ${ramanRevision.slice(0, 7)}`, href: `https://github.com/Sakib1263/SERS-D2DNet-SuperRaman/tree/${ramanRevision}` },
+    guide: { label: 'Workflow notebook', href: `https://github.com/Sakib1263/SERS-D2DNet-SuperRaman/blob/${ramanRevision}/notebooks/00_control_center.ipynb` },
+  },
+  'kidney-stone-segmentation': {
+    label: 'Study source snapshot',
+    detail: 'The workflow expects prepared CT slices and stone masks. The public repository provides the study scripts and notebooks. Reproducing the reported Dice scores would require the study inputs and evaluation setup.',
+    version: { label: 'Study source at 801800d', href: 'https://github.com/Sakib1263/Kidney-Stone-Segmentation/tree/801800d71af008d95a7b38143d00a92ebf7c9cec' },
+    guide: { label: 'How to cite', href: 'https://github.com/Sakib1263/Kidney-Stone-Segmentation/blob/46f653d/CITATION.cff' },
+  },
+  'prenatal-hydronephrosis': {
+    label: 'Study source snapshot',
+    detail: 'The workflow uses prepared fetal kidney ultrasound views for region detection, segmentation, and severity grading. Full reproduction requires the study inputs and evaluation setup.',
+    version: { label: 'Study source at 1a5e1de', href: 'https://github.com/Sakib1263/AHN-Severity-Stratification/tree/1a5e1de545961f0e3aef6d406622567fd8e88cd4' },
+    guide: { label: 'How to cite', href: 'https://github.com/Sakib1263/AHN-Severity-Stratification/blob/f2fca50/CITATION.cff' },
+  },
+};
+
 const software = [
   {
+    slug: 'superonn-layers',
     title: 'SuperONN-Layers',
     area: 'Reusable library',
     summary: 'Polynomial 1D and 2D super-operational layers for PyTorch and TensorFlow/Keras, including forward and transposed operations with fixed or trainable offsets.',
     code: 'https://github.com/Sakib1263/SuperONN-Layers',
   },
   ...projects.map(({ title, area, summary, code, doi, slug }) => ({
+    slug,
     title,
     area,
     summary,
@@ -95,20 +132,26 @@ const sections = [
             <h2 id="code-title">Research software</h2>
             <p>Reusable layers and implementations accompanying my papers.</p>
           </header>
-          {software.map(item => (
-            <article class="catalog-entry software-entry">
-              <p class="catalog-meta">{item.area}</p>
-              <div>
-                <h3>{item.title}</h3>
-                <p class="software-summary">{item.summary}</p>
-                <div class="catalog-actions">
-                  <SiteLink href={item.code} aria-label={`GitHub repository for ${item.title}`}>GitHub repository <span aria-hidden="true">↗</span></SiteLink>
-                  {'project' in item && <SiteLink href={item.project}>Project summary</SiteLink>}
-                  {'paper' in item && <SiteLink href={item.paper} aria-label={`Related paper for ${item.title}`}>Related paper</SiteLink>}
+          {software.map(item => {
+            const notes = softwareNotes[item.slug];
+            return (
+              <article class="catalog-entry software-entry">
+                <div class="catalog-meta"><span>{item.area}</span>{notes && <strong>{notes.label}</strong>}</div>
+                <div>
+                  <h3>{item.title}</h3>
+                  <p class="software-summary">{item.summary}</p>
+                  {notes && <p class="dataset-credit">{notes.detail}</p>}
+                  <div class="catalog-actions">
+                    {notes && <SiteLink href={notes.version.href}>{notes.version.label} <span aria-hidden="true">↗</span></SiteLink>}
+                    {notes?.guide && <SiteLink href={notes.guide.href}>{notes.guide.label}</SiteLink>}
+                    <SiteLink href={item.code} aria-label={`GitHub repository for ${item.title}`}>GitHub repository <span aria-hidden="true">↗</span></SiteLink>
+                    {'project' in item && <SiteLink href={item.project}>Project summary</SiteLink>}
+                    {'paper' in item && <SiteLink href={item.paper} aria-label={`Related paper for ${item.title}`}>Related paper</SiteLink>}
+                  </div>
                 </div>
-              </div>
-            </article>
-          ))}
+              </article>
+            );
+          })}
         </section>
       </div>
     </div>
