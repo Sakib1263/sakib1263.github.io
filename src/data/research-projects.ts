@@ -110,7 +110,7 @@ const insoles: Collection = {
       doi: '10.1109/jsen.2023.3317768',
     },
   ],
-  related: ['diabetic-neuropathy-gait-emg', 'diabetic-foot-thermal-imaging', 'smart-insole-3d-gait-kinetics'],
+  related: ['diabetic-foot-thermal-imaging', 'smart-insole-3d-gait-kinetics'],
   visual: diabeticFootVisual,
   approach: diabeticFootApproach,
   workflow: diabeticFootWorkflow,

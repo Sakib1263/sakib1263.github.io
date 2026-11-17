@@ -33,6 +33,7 @@ import exoventTest from '../assets/research/exoventq-ventilation/fig12a-cyclic-t
 import gearboxConfusion from '../assets/research/gearbox-fault-detection/fig7-confusion-matrix.png';
 import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig6-occupancy.png';
 import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-trainer.jpg';
+import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 
 function existing(slug: string) {
   const project = projects.find(item => item.slug === slug);
@@ -74,7 +75,7 @@ const biomechanics: ResearchProject[] = [
     contribution: 'I integrated sensors and worked on data acquisition, experiments and analysis for the electronic prototype. I led system development and evaluation for the fibre-optic insole and contributed to testing the graphene temperature sensors.',
     scope: 'These studies evaluate measurement prototypes in controlled experiments. Clinical detection of ulcer onset requires a longitudinal study.',
     related: ['10.3390/s22197599', '10.1109/jsen.2023.3317768'],
-    relatedProjects: ['diabetic-foot-thermal-imaging', 'diabetic-neuropathy-gait-emg'],
+    relatedProjects: ['diabetic-foot-thermal-imaging'],
     visual: {
       image: insoleFbg,
       alt: 'Three panels: a rendered 3D model of the insole with a spiral optical fibre, the assembled prototype with its fibre cable, and the optical and electronic insoles placed inside a pair of sneakers.',
@@ -96,11 +97,20 @@ const biomechanics: ResearchProject[] = [
   {
     slug: 'diabetic-neuropathy-gait-emg', area: 'Wearable biomechanics',
     title: 'Wearable gait and EMG analysis for diabetic polyneuropathy',
-    summary: 'Using gait-cycle and muscle-activity measurements to investigate wearable monitoring for diabetic sensorimotor polyneuropathy.',
-    period: 'April–June 2021', context: 'Qatar University · Qatar National Research Fund project',
-    approach: 'The funded project investigated a wearable monitoring workflow using gait-cycle measurements and electromyography (EMG). My work used machine learning to analyse motion and muscle-activity data for distal symmetric polyneuropathy research.',
-    contribution: 'I worked on the wearable analysis pipeline and the preparation and interpretation of gait and EMG inputs.',
-    relatedProjects: ['smart-insoles-diabetic-foot', 'gait-pattern-modelling'],
+    summary: 'A low-cost wireless smart insole and machine-learning models that study altered vertical ground reaction forces in diabetic sensorimotor polyneuropathy.',
+    question: 'Can a low-cost wireless insole record the changes in foot loading that diabetic sensorimotor polyneuropathy causes, and can machine learning use them to separate healthy, diabetic and ulcer gait?',
+    period: '2019–2021',
+    context: 'Qatar University BSc senior design project · QNRF UREP23-031-2-014 · QNRF NPRP12S-0227-190164',
+    approach: dspnApproach,
+    workflow: dspnWorkflow,
+    visual: dspnVisual,
+    progress: dspnProgress,
+    contribution: 'I was first author of the UREP poster. In the senior design project I calibrated the temperature sensors, designed the third and fourth PCB revisions, redesigned the insole with a teammate, and built the machine-learning pipeline: signal segmentation and normalisation, feature extraction, classifier training and evaluation. Under the NPRP project I analysed gait-cycle and EMG data with machine learning.',
+    scope: 'The pandemic prevented the team from recording its own participants, so the classifiers were trained and tested on 76 subjects from a published force-plate dataset rather than on insole recordings. With so few subjects per class, the results show feasibility rather than clinical performance. The report’s next steps were to finish the hardware, record at least 500 participants with clinical approval, and move to deep learning.',
+    resources: [
+      { label: 'UREP poster', href: dspnPosterUrl },
+      { label: 'Senior design project report', href: dspnReportUrl },
+    ],
   },
   {
     slug: 'gait-pattern-modelling', area: 'Wearable biomechanics',

@@ -37,7 +37,7 @@ export const diabeticFootProgress: ResearchPhase[] = [
     status: 'BSc Electrical Engineering · Qatar University · 2020',
     paragraphs: [
       'The project began as my BSc senior design project in Electrical Engineering at Qatar University, “Design and Implementation of a Novel Real-time Wearable System for Early Detection of Diabetic Foot Ulcer”, supervised by Dr Muhammad E. H. Chowdhury. The aim was an insole that people with diabetes could wear at home to record plantar pressure and temperature continuously and flag early signs of ulceration.',
-      'The work continued through the QNRF Undergraduate Research Experience Program (UREP23-031-2-014, January–May 2020). That project developed electronic and photonic insoles and used classical machine learning to classify people with diabetes by disease severity. It was nominated at the 13th Annual QNRF–UREP Competition in 2021, where a poster presented a wearable smart insole for studying altered vertical ground reaction forces in diabetic sensorimotor polyneuropathy.',
+      'The work continued through the QNRF Undergraduate Research Experience Program (UREP23-031-2-014, January–May 2020), which supported development of the electronic and photonic insole prototypes.',
       'The prototypes matured into three Q1 journal papers, supported by QNRF NPRP12S-0227-190164 together with grants from Universiti Kebangsaan Malaysia. The electronic and fibre-optic insole papers are direct outcomes of the senior design project.',
     ],
     measures: [
@@ -176,4 +176,4 @@ export const diabeticFootProgress: ResearchPhase[] = [
   },
 ];
 
-export const diabeticFootNextSteps = 'Detecting ulcer onset will need longitudinal studies with people with diabetes. The ideas continue in three related projects: gait and EMG analysis for diabetic sensorimotor polyneuropathy, SmartWoundCare’s thermal and colour imaging of the foot, and the AI-powered smart-insole project, which uses distributed insole loading to estimate full 3D foot kinetics.';
+export const diabeticFootNextSteps = 'Detecting ulcer onset will need longitudinal studies with people with diabetes. The ideas continue in two related projects: SmartWoundCare’s thermal and colour imaging of the foot, and the AI-powered smart-insole project, which uses distributed insole loading to estimate full 3D foot kinetics.';
