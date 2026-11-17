@@ -7,7 +7,7 @@ import {
   publicationId, publications, publicationDetails, selectedPapers, topicDescriptions, topics,
 } from '../data/papers';
 import { caseStudyProjects } from '../data/research';
-import { researchProjectsByDoi } from '../data/research-catalog';
+import { researchStudiesByDoi } from '../data/research-catalog';
 import journalData from '../data/journal-metrics.json';
 import { doiUrl, profile, researchProfiles, sitePath } from '../lib/site';
 import '../styles/catalog.css';
@@ -133,7 +133,7 @@ const journalMetrics: Readonly<Record<string, {
               </header>
               {cluster.papers.map(publication => {
                 const id = publicationId(publication.doi);
-                const projects = researchProjectsByDoi.get(publication.doi.toLowerCase()) ?? [];
+                const projects = researchStudiesByDoi.get(publication.doi.toLowerCase()) ?? [];
                 const codeLinks = [...new Set(projects.flatMap(project => project.code ? [project.code] : []))];
                 const dataset = datasetsByStudy.get(publication.doi);
                 const { summary, contribution } = publicationDetails(publication.doi);
@@ -176,7 +176,7 @@ const journalMetrics: Readonly<Record<string, {
                       <div class="catalog-actions">
                         {projects.map(project => (
                           <SiteLink data-research-project={id} href={sitePath(`research/${project.slug}/`)}>
-                            {projects.length === 1 ? 'Research project' : project.title}
+                            {projects.length === 1 ? 'Research details' : project.title}
                           </SiteLink>
                         ))}
                         {codeLinks.map(href => <SiteLink href={href}>Code <span aria-hidden="true">↗</span></SiteLink>)}

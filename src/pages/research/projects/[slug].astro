@@ -1,0 +1,81 @@
+---
+import Base from '../../../layouts/Base.astro';
+import SiteLink from '../../../components/SiteLink.astro';
+import { datasetsByStudy } from '../../../data/datasets';
+import { publicationFor, publicationId } from '../../../data/papers';
+import { researchStudyFor } from '../../../data/research-catalog';
+import { collections, projectAreas } from '../../../data/research-projects';
+import { sitePath } from '../../../lib/site';
+import '../../../styles/catalog.css';
+import '../../../styles/research.css';
+
+export function getStaticPaths() {
+  return collections.map(project => ({ params: { slug: project.slug }, props: { project } }));
+}
+
+const { project } = Astro.props;
+const entries = projectAreas.flatMap(area => area.entries);
+const related = (project.related ?? []).map(slug => {
+  const entry = entries.find(item => item.slug === slug);
+  if (!entry) throw new Error(`Unknown related project: ${slug}`);
+  return entry;
+});
+---
+
+<Base title={project.title} description={project.summary}>
+  <article class="shell content-end">
+    <header class="page-intro catalog-intro research-project-intro">
+      <SiteLink class="text-link return-link" href={sitePath(`research/#${project.slug}`)}><span aria-hidden="true">←</span> All research</SiteLink>
+      <h1 class="research-overview-title">{project.title}</h1>
+      <p class="page-lead">{project.summary}</p>
+      <p class="research-intro-detail">{project.context}</p>
+      {project.resources?.length && <div class="catalog-actions">
+        {project.resources.map(({ label, href }) => <SiteLink href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
+      </div>}
+    </header>
+
+    <section class="research-project-role" aria-labelledby="project-role">
+      <h2 id="project-role">My contribution</h2>
+      <p>{project.contribution}</p>
+    </section>
+
+    <section aria-labelledby="project-stages">
+      <header class="catalog-section-heading"><h2 id="project-stages">Research stages and outputs</h2></header>
+      <ol class="research-stages" role="list">
+        {project.stages.map(stage => {
+          const study = stage.study ? researchStudyFor(stage.study) : undefined;
+          const doi = stage.doi ?? study?.doi;
+          const publication = doi ? publicationFor(doi) : undefined;
+          const dataset = doi ? datasetsByStudy.get(doi) : undefined;
+          return (
+            <li class="catalog-entry research-entry" id={stage.study}>
+              <div class="catalog-meta"><span class="research-period">{stage.period}</span></div>
+              <div>
+                <h3>{stage.title}</h3>
+                <p class="research-summary">{stage.description}</p>
+                <div class="catalog-actions">
+                  {study && <SiteLink href={sitePath(`research/${study.slug}/`)} aria-label={`Details for ${stage.title}`}>Details</SiteLink>}
+                  {publication && <SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)} aria-label={`Publication for ${stage.title}`}>Publication</SiteLink>}
+                  {study?.code && <SiteLink href={study.code} aria-label={`Code for ${stage.title}`}>Code <span aria-hidden="true">↗</span></SiteLink>}
+                  {dataset && <SiteLink href={sitePath(`software/#${dataset.id}`)} aria-label={`Dataset for ${stage.title}`}>Dataset</SiteLink>}
+                </div>
+              </div>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
+
+    {project.scope && <section class="research-project-role" aria-labelledby="project-scope">
+      <h2 id="project-scope">Scope and validation</h2>
+      <p>{project.scope}</p>
+    </section>}
+
+    {related.length > 0 && <section class="research-project-role" aria-labelledby="related-work">
+      <h2 id="related-work">Related projects</h2>
+      <div class="catalog-actions">
+        {related.map(item => <SiteLink href={sitePath(item.path)}>{item.title}</SiteLink>)}
+      </div>
+    </section>}
+  </article>
+</Base>

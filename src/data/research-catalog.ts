@@ -163,6 +163,7 @@ const signals: ResearchProject[] = [
     doi: '10.1016/j.bspc.2023.104882',
     approach: 'Extract velocity waveforms from audio from the internal carotid and middle cerebral arteries. Use one-dimensional generative restoration for degraded recordings and compare classifiers for healthy and intensive-care data. The companion publications study abnormal middle cerebral artery flow using enhanced waveforms and attention-based classifiers.',
     contribution: 'I worked on waveform extraction and restoration, classifier development, data curation and analysis, MATLAB implementation, and writing.',
+    workflow: ['Extract ICA and MCA flow waveforms', 'Restore degraded recordings', 'Evaluate abnormal-flow classifiers'],
     scope: 'The published comparisons use the available retrospective Doppler recordings and study labels.',
     related: ['10.3390/diagnostics13122000'],
   },
@@ -268,6 +269,7 @@ const devices: ResearchProject[] = [
     approach: 'Build three-dimensional implant, femur and pelvis models in Fusion 360 and evaluate implant and loading scenarios with ANSYS. The publications examine stem materials, a spiral head–stem interface, and the simulated response of a surface acoustic wave sensor. The HipXNet workstream localises implants in radiographs before classifying aseptic loosening.',
     result: 'The simulation studies reported differences in stress transfer, stress shielding and micromovement across designs. The HipXNet team released annotated radiograph subsets for localisation and loosening classification.',
     contribution: 'I designed the spiral geometry and reconstructed a commercial implant stem in CAD. I contributed to finite element modelling, the bench-test setup with Hamad Medical Corporation, and development and evaluation of HipXNet.',
+    workflow: ['Model the implant and surrounding bone', 'Evaluate materials, loading and sensing', 'Study loosening in radiographs'],
     scope: 'Finite element models compare specified materials, geometries and loads. The separate radiograph study uses retrospective labels. Each workstream has its own validation conditions.',
     related: ['10.1016/j.mtcomm.2024.110932', '10.3390/ma16041466', '10.3390/bios13010079', '10.1039/d3tb01469j', '10.3390/polym14204308'],
   },
@@ -279,6 +281,7 @@ const devices: ResearchProject[] = [
     context: 'Qatar University · Undergraduate Research Experience Program',
     approach: 'The prototype circulates fluid through a model of the human vasculature and uses ultrasound-compatible pads for cannulation practice. Sensors and control logic reproduce events such as low flow or problems with guidewire and cannula placement.',
     contribution: 'I helped design, build and test the prototype, wrote Arduino pump-control code, and contributed to technical documentation and publications. Training sessions at Hamad General Hospital and Al-Wakra Hospital provided clinical context for the work.',
+    workflow: ['Model pulsatile circulation', 'Build ultrasound-guided cannulation tasks', 'Simulate procedural complications'],
     scope: 'The published work describes simulation and training hardware used for procedural practice.',
     related: ['10.1016/j.ejccm.2018.12.017', '10.5339/qmj.2019.qccc.61'],
   },
@@ -337,6 +340,7 @@ const engineering: ResearchProject[] = [
     period: 'July 2023–July 2024', context: 'Qatar University and Iberdrola Innovation Middle East',
     approach: 'The cascaded NILOM framework first estimates appliance use from aggregate multichannel measurements and uses inferred device events for occupancy detection. A second study combines appliance-event, statistical and time-of-day features with ensemble classifiers. Both evaluate methods on the ECO dataset.',
     contribution: 'I led the study design, data curation, modelling, validation and original drafting for the cascaded and feature-fusion studies as part of the Iberdrola collaboration.',
+    workflow: ['Prepare multichannel smart-meter records', 'Infer appliance events', 'Estimate and validate occupancy'],
     scope: 'The results reflect the household, meter and occupancy-label characteristics of the evaluated data. A related study evaluates a separate occupancy model with environmental sensors.',
     related: ['10.1016/j.buildenv.2025.112635', '10.1007/s00521-025-11348-6'],
   },
@@ -399,6 +403,7 @@ const engineering: ResearchProject[] = [
     title: 'Survey analysis of COVID-19 vaccine attitudes in Qatar',
     summary: 'Analysing survey responses to identify factors associated with willingness and hesitancy.',
     doi: '10.1080/10911359.2021.1973642',
+    context: 'Qatar University MSc course project',
     approach: 'The study used quantitative analysis and machine learning on survey responses from residents in Qatar to examine attitudes to COVID-19 vaccination.',
     contribution: 'I contributed to the quantitative and machine-learning analysis, interpretation, and manuscript preparation.',
     scope: 'The study identifies associations within the survey sample and its collection period.',
@@ -414,7 +419,7 @@ const engineering: ResearchProject[] = [
   },
 ];
 
-export const researchGroups = [
+export const researchStudyAreas = [
   { id: 'biomechanics', title: topics.biomechanics, description: 'Smart insoles, gait analysis, and estimation of forces and moments from pressure and motion.', projects: biomechanics },
   { id: 'imaging', title: topics.imaging, description: 'Anatomical segmentation and quantitative assessment from CT, MRI, ultrasound, radiographs, and thermal images.', projects: imaging },
   { id: 'signals', title: topics.signals, description: topicDescriptions.signals, projects: signals },
@@ -422,21 +427,21 @@ export const researchGroups = [
   { id: 'devices', title: topics.devices, description: 'Implants, clinical training simulators, ventilation, and computational haemodynamics.', projects: devices },
   { id: 'genomics', title: 'Genomics & reproducibility', description: 'Gene-expression analysis and reproducible cancer genomics workflows.', projects: genomics },
   { id: 'engineering', title: topics.engineering, description: topicDescriptions.engineering, projects: engineering },
-];
+] as const;
 
-export const researchProjects = researchGroups.flatMap(group => group.projects);
+export const researchStudies = researchStudyAreas.flatMap(group => group.projects);
 
-export const researchProjectsByDoi = new Map<string, ResearchProject[]>();
-for (const project of researchProjects) {
-  if (!project.doi) continue;
-  const doi = project.doi.toLowerCase();
-  const matches = researchProjectsByDoi.get(doi) ?? [];
-  matches.push(project);
-  researchProjectsByDoi.set(doi, matches);
+export const researchStudiesByDoi = new Map<string, ResearchProject[]>();
+for (const study of researchStudies) {
+  if (!study.doi) continue;
+  const doi = study.doi.toLowerCase();
+  const matches = researchStudiesByDoi.get(doi) ?? [];
+  matches.push(study);
+  researchStudiesByDoi.set(doi, matches);
 }
 
-export function researchProjectFor(slug: string) {
-  const project = researchProjects.find(item => item.slug === slug);
-  if (!project) throw new Error(`Unknown research project: ${slug}`);
-  return project;
+export function researchStudyFor(slug: string) {
+  const study = researchStudies.find(item => item.slug === slug);
+  if (!study) throw new Error(`Unknown research study: ${slug}`);
+  return study;
 }

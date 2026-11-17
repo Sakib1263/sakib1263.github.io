@@ -90,8 +90,10 @@ const homePapers = selectedPapers.filter(({ publication }) => homePaperDois.has(
       </div>
       <div class="home-contact-links">
         <SiteLink class="home-email" href={`mailto:${profile.email}?subject=Research%20inquiry`}>{profile.email}</SiteLink>
-        <nav aria-label="Research and code profiles">
+        <nav aria-label="Professional and research profiles">
           <SiteLink href={profile.scholar}>Google Scholar <span aria-hidden="true">↗</span></SiteLink>
+          <SiteLink href={profile.linkedin}>LinkedIn <span aria-hidden="true">↗</span></SiteLink>
+          <SiteLink href={profile.researchGate}>ResearchGate <span aria-hidden="true">↗</span></SiteLink>
           <SiteLink href={profile.orcid}>ORCID <span aria-hidden="true">↗</span></SiteLink>
           <SiteLink href={profile.github}>GitHub <span aria-hidden="true">↗</span></SiteLink>
         </nav>

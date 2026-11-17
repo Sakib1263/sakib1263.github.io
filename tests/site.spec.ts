@@ -3,9 +3,10 @@ import { expect, test } from '@playwright/test';
 import { readFileSync } from 'node:fs';
 
 const flagship = '/research/wearable-foot-kinetics/';
+const gaitProject = '/research/projects/smart-insole-3d-gait-kinetics/';
 const paperId = 'paper-10-1109-jbhi-2025-3605296';
 
-for (const path of ['/', '/research/', '/research/summary/', flagship, '/research/cross-device-raman/', '/research/prenatal-hydronephrosis/', '/publications/', '/cv/', '/software/']) {
+for (const path of ['/', '/research/', '/research/summary/', gaitProject, flagship, '/research/cross-device-raman/', '/research/prenatal-hydronephrosis/', '/publications/', '/cv/', '/software/']) {
   test(`checks accessibility at ${path}`, async ({ page }) => {
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready.then(() => true));
@@ -41,7 +42,7 @@ test('research areas lead to project details, supporting publications, and ongoi
   await page.goto('/research/');
   const researchAreas = page.getByRole('navigation', { name: 'Research areas', exact: true });
   await expect(researchAreas.getByRole('link')).toHaveCount(7);
-  await expect(page.locator('.research-entry')).toHaveCount(42);
+  await expect(page.locator('[data-research-project-row]')).toHaveCount(18);
   await researchAreas.getByRole('link', { name: 'Biomedical devices & simulation' }).click();
   await expect(page).toHaveURL('/research/#devices');
   await page.getByRole('link', { name: 'Hip implant mechanics, sensing, and loosening detection', exact: true }).click();
@@ -51,11 +52,23 @@ test('research areas lead to project details, supporting publications, and ongoi
   await expect(page.getByRole('link', { name: 'Read the paper', exact: true })).toHaveAttribute('target', '_blank');
   await page.getByRole('link', { name: 'All research' }).click();
   await expect(page).toHaveURL('/research/#hip-implant-mechanics-and-imaging');
-  await page.getByRole('link', { name: 'Multimodal wearable estimation of 3D gait kinetics', exact: true }).click();
+  await page.getByRole('link', { name: 'AI-powered smart insoles for 3D gait kinetics', exact: true }).click();
+  await expect(page).toHaveURL(gaitProject);
+  const stages = page.getByRole('region', { name: 'Research stages and outputs' });
+  await expect(stages.getByRole('heading', { level: 3 })).toHaveText([
+    'Foot motion as a predictor of forces and moments',
+    'Reconstructing 3D kinetics from smart-insole loading',
+    'Combining plantar loading with inertial motion',
+  ]);
+  await expect(stages.getByRole('link', { name: /^Publication for/ })).toHaveCount(2);
+  await expect(page.getByRole('region', { name: 'Scope and validation' })).toContainText('validation of the integrated prototype are planned');
+  await page.getByRole('link', { name: 'Details for Combining plantar loading with inertial motion' }).click();
   await expect(page).toHaveURL('/research/multimodal-wearable-kinetics/');
   await expect(page.getByText('Wearable biomechanics · Ongoing research')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Reported results' })).toHaveCount(0);
   await expect(page.getByRole('link', { name: 'Estimating 3D foot kinetics from wearable signals' })).toHaveAttribute('href', flagship);
+  await page.getByRole('link', { name: 'Project overview' }).click();
+  await expect(page).toHaveURL(`${gaitProject}#multimodal-wearable-kinetics`);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
   expect(context.pages()).toEqual([page]);
 });
@@ -88,22 +101,24 @@ test('research search matches methods, updates areas, and restores the catalogue
   const form = page.getByRole('form', { name: 'Filter research projects' });
   const search = form.getByRole('searchbox', { name: 'Search projects' });
   const areas = page.getByRole('navigation', { name: 'Research areas', exact: true });
-  await expect(form.getByRole('status')).toHaveText('42 projects');
+  await expect(form.getByRole('status')).toHaveText('18 entries');
   await search.fill('Instrumented treadmill');
-  await expect(page.locator('#wearable-foot-kinetics')).toBeVisible();
+  await expect(page.locator('#smart-insole-3d-gait-kinetics')).toBeVisible();
+  await search.fill('five shoe-mounted markers');
+  await expect(page.locator('#smart-insole-3d-gait-kinetics')).toBeVisible();
   await search.fill('Döppler');
   await expect(page.locator('#qscare-doppler-flow')).toBeVisible();
-  await expect(page.locator('#cross-device-raman')).toBeHidden();
-  await expect(form.getByRole('status')).toHaveText(/^[1-9]\d* of 42 projects$/);
+  await expect(page.locator('#microbial-raman-biosensing')).toBeHidden();
+  await expect(form.getByRole('status')).toHaveText('1 of 18 entries');
   await expect(areas.getByRole('link', { name: /Raman/ })).toHaveCount(0);
   await search.fill('no such research project xyz');
-  await expect(form.getByRole('status')).toHaveText('0 of 42 projects');
+  await expect(form.getByRole('status')).toHaveText('0 of 18 entries');
   await expect(page.getByText('Try a different project name, method, or modality.')).toBeVisible();
   await form.getByRole('button', { name: 'Clear search' }).click();
-  await expect(form.getByRole('status')).toHaveText('42 projects');
+  await expect(form.getByRole('status')).toHaveText('18 entries');
   await expect(search).toBeFocused();
-  await page.locator('#cross-device-raman').getByRole('heading').getByRole('link').click();
-  await expect(page).toHaveURL('/research/cross-device-raman/');
+  await page.locator('#microbial-raman-biosensing').getByRole('heading').getByRole('link').click();
+  await expect(page).toHaveURL('/research/projects/microbial-raman-biosensing/');
 });
 
 test('the research profile displays its saved Google Scholar metrics and yearly chart', async ({ page }) => {
@@ -131,9 +146,11 @@ test('the research catalogue retains the case studies and their distinct share c
   await expect(page.getByRole('link', { name: 'Research summary', exact: true })).toHaveCount(0);
   await expect(page.getByText(/I’m now testing gait models/)).toHaveCount(0);
   const slugs = ['wearable-foot-kinetics', 'kidney-stone-segmentation', 'cross-device-raman'];
-  for (const slug of slugs) {
-    await expect(page.locator(`#${slug} h3 a`)).toHaveAttribute('href', `/research/${slug}/`);
-  }
+  await page.goto('/research/#wearable-foot-kinetics');
+  await expect(page.locator('#smart-insole-3d-gait-kinetics')).toBeInViewport();
+  await expect(page.locator('#plantar-sensing-for-diabetic-foot')).toHaveCount(1);
+  await expect(page.getByRole('region', { name: 'Additional studies and software' })
+    .getByRole('link', { name: 'NABNet', exact: false })).toHaveAttribute('href', '/research/nabnet/');
   const images = new Set<string>();
   for (const slug of slugs) {
     await page.goto(`/research/${slug}/`);
@@ -158,6 +175,19 @@ test('the research catalogue retains the case studies and their distinct share c
   expect((await request.get(fullSizeUrl!)).headers()['content-type']).toMatch(/^image\//);
 });
 
+test('homepage contact links open the supplied profiles', async ({ page }) => {
+  await page.goto('/#contact');
+  const profiles = page.getByRole('navigation', { name: 'Professional and research profiles' });
+  for (const [name, href] of [
+    ['LinkedIn', 'https://www.linkedin.com/in/sakib1263/'],
+    ['ResearchGate', 'https://www.researchgate.net/profile/Sakib-Mahmud-7/research'],
+  ]) {
+    const link = profiles.getByRole('link', { name, exact: true });
+    await expect(link).toHaveAttribute('href', href);
+    await expect(link).toHaveAttribute('target', '_blank');
+  }
+});
+
 test('project and paper links round-trip and the citation copies', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto(flagship);
@@ -172,7 +202,7 @@ test('project and paper links round-trip and the citation copies', async ({ page
   await page.getByRole('combobox', { name: 'Topic', exact: true }).selectOption('imaging');
   await expect(paper).toBeHidden();
   await page.getByRole('button', { name: 'Clear filters' }).click();
-  await paper.getByRole('link', { name: 'Research project', exact: true }).click();
+  await paper.getByRole('link', { name: 'Research details', exact: true }).click();
   await expect(page).toHaveURL(flagship);
 });
 

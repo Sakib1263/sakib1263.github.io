@@ -46,7 +46,7 @@ if (form && search && clear && count && catalog && areas && empty) {
     areas.hidden = matches === 0;
     empty.hidden = matches !== 0;
     clear.hidden = !search.value;
-    count.textContent = matches === total ? `${total} projects` : `${matches} of ${total} projects`;
+    count.textContent = matches === total ? `${total} entries` : `${matches} of ${total} entries`;
   };
 
   search.addEventListener('input', applySearch);

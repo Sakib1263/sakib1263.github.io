@@ -8,26 +8,28 @@ import { datasetsByStudy } from '../../data/datasets';
 import { kinetics } from '../../data/kinetics';
 import { ramanSource } from '../../data/raman';
 import { openFullText, publicationFor, publicationId } from '../../data/papers';
-import { researchProjectFor, researchProjects } from '../../data/research-catalog';
+import { researchStudyFor, researchStudies } from '../../data/research-catalog';
+import { collectionByStudy, collectionPath } from '../../data/research-projects';
 import type { ResearchProject } from '../../data/research';
 import { doiUrl, sitePath } from '../../lib/site';
 import '../../styles/catalog.css';
 import '../../styles/research.css';
 
 export function getStaticPaths() {
-  return researchProjects.map(project => ({ params: { slug: project.slug }, props: { project } }));
+  return researchStudies.map(project => ({ params: { slug: project.slug }, props: { project } }));
 }
 
 interface Props { project: ResearchProject }
 
 const { project } = Astro.props;
+const collection = collectionByStudy.get(project.slug);
 const { visual, resultVisual } = project;
 const resultView = resultVisual && await getImage({ src: resultVisual.image, format: 'webp', width: 960 });
 const paper = project.doi ? publicationFor(project.doi) : undefined;
 const dataset = project.doi ? datasetsByStudy.get(project.doi) : undefined;
 const fullText = project.doi ? openFullText[project.doi] : undefined;
 const relatedPapers = (project.related ?? []).map(publicationFor);
-const relatedProjects = (project.relatedProjects ?? []).map(researchProjectFor);
+const relatedProjects = (project.relatedProjects ?? []).map(researchStudyFor);
 const imageWidth = visual ? Math.min(visual.image.width, 960) : 0;
 const workflowAvailable = project.slug === kinetics.slug;
 const isRamanCase = project.slug === ramanSource.slug;
@@ -40,7 +42,7 @@ const sections = [
   ...(project.ongoing ? [{ id: 'ongoing', label: 'Ongoing work' }] : []),
   ...(workflowAvailable ? [{ id: 'reproduce', label: 'Run the workflow' }] : []),
   ...(relatedPapers.length ? [{ id: 'related-title', label: 'Related publications' }] : []),
-  ...(relatedProjects.length ? [{ id: 'related-projects', label: 'Related projects' }] : []),
+  ...(relatedProjects.length ? [{ id: 'related-projects', label: 'Related research' }] : []),
 ];
 ---
 
@@ -48,6 +50,7 @@ const sections = [
   <article class="shell">
     <header class="page-intro catalog-intro research-project-intro">
       <SiteLink class="text-link return-link" href={sitePath(`research/#${project.slug}`)}><span aria-hidden="true">←</span> All research</SiteLink>
+      {collection && <SiteLink class="text-link return-link project-overview-link" href={sitePath(`${collectionPath(collection.slug)}#${project.slug}`)}>Project overview <span aria-hidden="true">→</span></SiteLink>}
       <p class="overline">{project.area}{project.status && ` · ${project.status}`}</p>
       <h1>{project.title}</h1>
       <p class="page-lead">{project.question ?? project.summary}</p>
@@ -159,7 +162,7 @@ const sections = [
           </ul>
         </section>}
         {relatedProjects.length > 0 && <section class="related-papers" aria-labelledby="related-projects">
-          <header class="catalog-section-heading"><h2 id="related-projects">Related projects</h2></header>
+          <header class="catalog-section-heading"><h2 id="related-projects">Related research</h2></header>
           <ul>
             {relatedProjects.map(related => <li><SiteLink href={sitePath(`research/${related.slug}/`)}>{related.title}</SiteLink></li>)}
           </ul>

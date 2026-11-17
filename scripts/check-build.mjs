@@ -77,7 +77,7 @@ for (const [key, page] of pages) {
   const target = new URL(citation.href, homeUrl);
   if (target.pathname !== publicationsPage?.url?.pathname
     || publicationsPage.researchLinks.get(page.url?.pathname) !== target.hash.slice(1)) {
-    errors.push(`${key}: missing matching Research project link at ${citation.href}`);
+    errors.push(`${key}: missing matching research detail link at ${citation.href}`);
   }
 }
 let internalCount = 0;

@@ -2,12 +2,12 @@
 import SiteLink from '../../components/SiteLink.astro';
 import ResearchSnapshot from '../../components/ResearchSnapshot.astro';
 import Base from '../../layouts/Base.astro';
-import { datasetsByStudy } from '../../data/datasets';
-import { publicationFor, publicationId } from '../../data/papers';
-import { researchGroups, researchProjects } from '../../data/research-catalog';
+import { additionalStudies, projectAreas } from '../../data/research-projects';
 import { sitePath } from '../../lib/site';
 import '../../styles/catalog.css';
 import '../../styles/research.css';
+
+const projectCount = projectAreas.reduce((total, area) => total + area.entries.length, 0);
 ---
 
 <Base title="Research" description="Sakib Mahmud’s research projects in wearable biomechanics, medical imaging, physiological signals, Raman spectroscopy, biomedical devices, genomics, and applied machine learning.">
@@ -15,12 +15,13 @@ import '../../styles/research.css';
     <section class="page-intro catalog-intro">
       <h1>Research</h1>
       <p class="page-lead">I develop methods to recover biomedical measurements from images and sensor signals. My work examines how well those methods transfer across people, instruments, and datasets.</p>
-      <p class="research-intro-detail">{researchProjects.length} projects across {researchGroups.length} research areas</p>
     </section>
 
     <ResearchSnapshot />
 
     <div id="project-catalog">
+      <h2 class="research-catalog-title">Selected projects and research lines</h2>
+      <p class="research-intro-detail">Explore the projects, my role, and the studies, datasets, and software that came out of them.</p>
       <form class="research-search" aria-label="Filter research projects" data-research-search hidden>
         <div class="research-search-controls">
           <label>Search projects
@@ -28,16 +29,16 @@ import '../../styles/research.css';
           </label>
           <button class="button button-secondary" type="reset" hidden>Clear search</button>
         </div>
-        <p class="research-search-count" role="status" data-research-count>{researchProjects.length} projects</p>
+        <p class="research-search-count" role="status" data-research-count>{projectCount} entries</p>
       </form>
     </div>
     <div class="catalog-layout content-end" data-research-catalog>
       <nav class="catalog-index research-index" aria-label="Research areas" data-research-areas>
         <h2>Research areas</h2>
         <ul>
-          {researchGroups.map(({ id, title, projects }) => (
+          {projectAreas.map(({ id, title, entries }) => (
             <li data-research-area={id}>
-              <SiteLink href={`#${id}`}><span>{title}</span><span class="catalog-count" aria-hidden="true" data-area-count>{projects.length}</span></SiteLink>
+              <SiteLink href={`#${id}`}><span>{title}</span><span class="catalog-count" aria-hidden="true" data-area-count>{entries.length}</span></SiteLink>
             </li>
           ))}
         </ul>
@@ -45,40 +46,40 @@ import '../../styles/research.css';
 
       <div class="research-catalog">
         <p class="empty-state" data-research-empty hidden>Try a different project name, method, or modality.</p>
-        {researchGroups.map(({ id, title, description, projects }) => (
+        {projectAreas.map(({ id, title, description, entries }) => (
           <section class="research-group" aria-labelledby={id} data-research-group={id}>
             <header class="catalog-section-heading">
               <h2 id={id}>{title}</h2>
               <p>{description}</p>
             </header>
-            {projects.map(project => {
-              const paper = project.doi && publicationFor(project.doi);
-              const dataset = project.doi && datasetsByStudy.get(project.doi);
-              const period = project.period || (paper && `${paper.year}${paper.onlineYear ? ` · Online ${paper.onlineYear}` : ''}`);
-              return (
-                <article class="catalog-entry research-entry" id={project.slug} data-research-project-row
-                  data-methods={[project.question, project.approach, project.scope].filter(Boolean).join(' ')}>
-                  <div class="catalog-meta">
-                    {period && <span class="research-period">{period}</span>}
-                    {project.status && <span class="research-status">{project.status}</span>}
-                    {!project.status && paper && <span>{paper.type}</span>}
-                  </div>
-                  <div>
-                    <h3><SiteLink href={sitePath(`research/${project.slug}/`)}>{project.title}</SiteLink></h3>
-                    <p class="research-summary">{project.summary}</p>
-                    {(paper || project.code || dataset) && <div class="catalog-actions">
-                      {paper && <SiteLink aria-label={`Publication for ${project.title}`} href={sitePath(`publications/#${publicationId(paper.doi)}`)}>Publication</SiteLink>}
-                      {project.code && <SiteLink aria-label={`Code for ${project.title}`} href={project.code}>Code <span aria-hidden="true">↗</span></SiteLink>}
-                      {dataset && <SiteLink aria-label={`Dataset for ${project.title}`} href={sitePath(`software/#${dataset.id}`)}>Dataset</SiteLink>}
-                    </div>}
-                  </div>
-                </article>
-              );
-            })}
+            {entries.map(entry => (
+              <article class="catalog-entry research-entry" id={entry.slug} data-research-project-row data-methods={entry.searchText}>
+                <div class="catalog-meta">
+                  {entry.aliases.map(slug => <span id={slug} class="research-anchor" aria-hidden="true"></span>)}
+                  {entry.period && <span class="research-period">{entry.period}</span>}
+                </div>
+                <div>
+                  <h3><SiteLink href={sitePath(entry.path)}>{entry.title}</SiteLink></h3>
+                  {entry.context && <p class="research-entry-context">{entry.context}</p>}
+                  <p class="research-summary">{entry.summary}</p>
+                </div>
+              </article>
+            ))}
           </section>
         ))}
       </div>
     </div>
+    <section class="research-archive content-end" aria-labelledby="additional-title">
+      <header class="catalog-section-heading">
+        <h2 id="additional-title">Additional studies and software</h2>
+        <p>Explore individual studies, reviews, and research tools. For citations, browse the <SiteLink href={sitePath('publications/')}>full publication list</SiteLink>.</p>
+      </header>
+      <ul>
+        {additionalStudies.map(study => (
+          <li id={study.slug}><SiteLink href={sitePath(`research/${study.slug}/`)}>{study.title}</SiteLink></li>
+        ))}
+      </ul>
+    </section>
   </div>
 </Base>
 
