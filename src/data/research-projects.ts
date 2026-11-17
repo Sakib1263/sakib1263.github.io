@@ -1,4 +1,9 @@
 import { researchStudyAreas, researchStudyFor, researchStudies } from './research-catalog';
+import type { ResearchFigure, ResearchPhase, ResearchProject } from './research';
+import {
+  smartInsoleApproach, smartInsoleApproachFigures, smartInsoleNextSteps, smartInsoleProgress,
+  smartInsoleVisual, smartInsoleWorkflow,
+} from './smart-insole-project';
 
 interface Stage {
   title: string;
@@ -8,9 +13,11 @@ interface Stage {
   doi?: string;
 }
 
-interface Collection {
+export interface Collection {
   slug: string;
   title: string;
+  /** Research area shown on the homepage card. */
+  area: string;
   period: string;
   context: string;
   summary: string;
@@ -19,15 +26,24 @@ interface Collection {
   scope?: string;
   related?: string[];
   resources?: { label: string; href: string }[];
+  /** Display figure for the project page, homepage card and share image. */
+  visual?: ResearchProject['visual'];
+  /** Optional full project narrative, rendered before the list of studies. */
+  approach?: string;
+  workflow?: string[];
+  approachFigures?: ResearchFigure[];
+  progress?: ResearchPhase[];
+  ongoing?: string;
 }
 
 // Group studies by documented project history. Funding on a stage does not extend to other stages.
 const gait: Collection = {
   slug: 'smart-insole-3d-gait-kinetics',
+  area: 'Wearable biomechanics',
   title: 'AI-powered smart insoles for 3D gait kinetics',
   period: '2023–present',
   context: 'Published feasibility studies and a Qatar University Collaborative Grant begun in March 2026',
-  summary: 'Estimating ground reaction forces, moments, and centre of pressure from foot motion, distributed insole loading, and their combination.',
+  summary: 'Reconstructing 3D forces, moments, and centre of pressure from smart-insole loading and wearable motion sensors.',
   contribution: 'I contributed to the motion-based study and led the preprocessing, model development, evaluation, and writing for the insole study. In the current project I develop synchronisation and sensor-fusion methods and evaluate how estimates transfer across participants, datasets, and sensor configurations.',
   scope: 'The published studies and current benchmarks use existing gait recordings. The project has also begun bench development of the sensing element. New synchronised treadmill recordings and validation of the integrated prototype are planned.',
   stages: [
@@ -51,10 +67,17 @@ const gait: Collection = {
     },
   ],
   related: ['plantar-sensing-for-diabetic-foot', 'diabetic-neuropathy-gait-emg'],
+  visual: smartInsoleVisual,
+  approach: smartInsoleApproach,
+  workflow: smartInsoleWorkflow,
+  approachFigures: smartInsoleApproachFigures,
+  progress: smartInsoleProgress,
+  ongoing: smartInsoleNextSteps,
 };
 
 const insoles: Collection = {
   slug: 'plantar-sensing-for-diabetic-foot',
+  area: 'Wearable biomechanics',
   title: 'Smart insoles for diabetic-foot monitoring',
   period: '2020–2024',
   context: 'Undergraduate senior design, QNRF UREP, and a Qatar University Concept Development Grant',
@@ -86,6 +109,8 @@ const insoles: Collection = {
 
 const kidney: Collection = {
   slug: 'kidney-disease-imaging',
+  visual: researchStudyFor('prenatal-hydronephrosis').visual,
+  area: 'Medical imaging',
   title: 'Deep learning for kidney disease imaging',
   period: '2021–2023 MSc',
   context: 'Qatar University MSc research and follow-on publications',
@@ -117,6 +142,8 @@ const kidney: Collection = {
 
 const raman: Collection = {
   slug: 'microbial-raman-biosensing',
+  visual: researchStudyFor('cross-device-raman').visual,
+  area: 'Spectroscopic sensing',
   title: 'Machine learning for microbial Raman biosensing',
   period: '2025–present',
   context: 'Research line across instrument transfer, diagnostic modelling, and validation',
@@ -152,6 +179,8 @@ const raman: Collection = {
 };
 
 export const collections = [gait, insoles, kidney, raman];
+/** Projects shown on the homepage. Each card links to the same project page as the research catalogue. */
+export const featuredCollections = [gait, kidney, raman];
 export const collectionPath = (slug: string) => `research/projects/${slug}/`;
 
 const collectionBySlug = new Map(collections.map(collection => [collection.slug, collection]));

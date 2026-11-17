@@ -20,10 +20,7 @@ for (const path of ['/', '/research/', '/research/summary/', gaitProject, flagsh
 test('mobile navigation stays visible and the flagship fits at 320 pixels', async ({ page, request }) => {
   await page.setViewportSize({ width: 320, height: 780 });
   await page.goto(flagship);
-  await expect(page.getByRole('img', { name: /^Overview diagram/ })).toBeVisible();
-  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText([
-    'Insole loading to 3D kinetics', 'Two public datasets', 'Kinematics only', 'Pressure, motion or both', 'Reliability-aware fusion', 'Transfer across devices',
-  ]);
+  await expect(page.getByRole('img', { name: /^Two panels of gait-cycle curves/ })).toBeVisible();
   await page.getByRole('heading', { name: 'Work with the study data' }).scrollIntoViewIfNeeded();
   expect(await page.locator('.site-header').evaluate(header => header.getBoundingClientRect().top)).toBe(0);
   const viewport = await page.evaluate(() => ({ width: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }));
@@ -56,6 +53,11 @@ test('research areas lead to project details, supporting publications, and ongoi
   await expect(page).toHaveURL('/research/#hip-implant-mechanics-and-imaging');
   await page.getByRole('link', { name: 'AI-powered smart insoles for 3D gait kinetics', exact: true }).click();
   await expect(page).toHaveURL(gaitProject);
+  await expect(page.getByRole('img', { name: /^Project pathway diagram/ })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText([
+    'Insole loading to 3D kinetics', 'Two public datasets', 'Kinematics only', 'Pressure, motion or both',
+    'Reliability-aware fusion', 'Transfer across devices', 'Smart-insole hardware', 'Application and integration',
+  ]);
   const stages = page.getByRole('region', { name: 'Research stages and outputs' });
   await expect(stages.getByRole('heading', { level: 3 })).toHaveText([
     'Foot motion as a predictor of forces and moments',
@@ -68,7 +70,7 @@ test('research areas lead to project details, supporting publications, and ongoi
   await expect(page).toHaveURL('/research/multimodal-wearable-kinetics/');
   await expect(page.getByText('Wearable biomechanics · Ongoing research')).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Reported results' })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Estimating 3D foot kinetics from wearable signals' })).toHaveAttribute('href', flagship);
+  await expect(page.getByRole('link', { name: 'Reconstructing 3D kinetics from smart-insole loading' })).toHaveAttribute('href', flagship);
   await page.getByRole('link', { name: 'Project overview' }).click();
   await expect(page).toHaveURL(`${gaitProject}#multimodal-wearable-kinetics`);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
@@ -284,6 +286,15 @@ test('the homepage portrait and contact are easy to find on narrow screens', asy
   expect(portraitBounds.y + portraitBounds.height).toBeLessThan(introBounds.y);
   await expect.poll(() => portrait.evaluate(image => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   await expect(page.getByRole('region', { name: 'Featured research' }).getByRole('article')).toHaveCount(3);
+  // Homepage cards are the research catalogue's projects: same titles and the same project pages.
+  const featured = page.getByRole('region', { name: 'Featured research' });
+  for (const [title, href] of [
+    ['AI-powered smart insoles for 3D gait kinetics', gaitProject],
+    ['Deep learning for kidney disease imaging', '/research/projects/kidney-disease-imaging/'],
+    ['Machine learning for microbial Raman biosensing', '/research/projects/microbial-raman-biosensing/'],
+  ]) {
+    await expect(featured.getByRole('link', { name: title, exact: true })).toHaveAttribute('href', href);
+  }
   await expect(page.getByRole('region', { name: 'Ongoing research' }).getByRole('article')).toHaveCount(2);
 
   await page.getByRole('link', { name: 'Contact', exact: true }).click();

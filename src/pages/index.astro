@@ -6,7 +6,7 @@ import ProjectCard from '../components/ProjectCard.astro';
 import CurrentResearch from '../components/CurrentResearch.astro';
 import portrait from '../assets/sakib-mahmud.jpg';
 import { publicationId, selectedPapers } from '../data/papers';
-import { featuredProjects } from '../data/research';
+import { featuredCollections } from '../data/research-projects';
 import { cvPdfPath, profile, sitePath } from '../lib/site';
 import '../styles/home.css';
 
@@ -59,7 +59,7 @@ const homePapers = selectedPapers.filter(({ publication }) => homePaperDois.has(
       </div>
     </div>
     <div class="project-list">
-      {featuredProjects.map(project => <ProjectCard project={project} />)}
+      {featuredCollections.map(project => <ProjectCard project={project} />)}
     </div>
   </section>
 

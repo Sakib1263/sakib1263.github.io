@@ -1,13 +1,12 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
 import { Image } from 'astro:assets';
-import type { Project } from '../data/research';
-import { publicationFor } from '../data/papers';
+import { collectionPath, type Collection } from '../data/research-projects';
 import { sitePath } from '../lib/site';
 
-const { project } = Astro.props as { project: Project };
+// A homepage card for a research project. It uses the same title, summary, figure and page as the research catalogue.
+const { project } = Astro.props as { project: Collection };
 const { visual } = project;
-const paper = publicationFor(project.doi);
 const card = visual?.card ?? visual;
 const imageWidth = card ? Math.min(card.image.width, 720) : 0;
 ---
@@ -18,16 +17,9 @@ const imageWidth = card ? Math.min(card.image.width, 720) : 0;
       <Image src={card.image} alt={card.alt} width={imageWidth} widths={[360, 540].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 720px) calc(100vw - 2rem), (max-width: 1120px) 30vw, 330px" format="webp" />
     </div>
   )}
-  {!visual && project.illustratedExample && (
-    <div class="project-art art-prenatal-hydronephrosis" aria-hidden="true">
-      <div class="ahn-example-views ahn-example-masks"><span></span><span></span><span></span></div>
-      <span class="ahn-card-arrow">→</span>
-      <span class="ahn-example-grade">II</span>
-    </div>
-  )}
   <div class="project-card-body">
-    <p class="overline">{project.area} · {paper.year}</p>
-    <h3><SiteLink href={sitePath(`research/${project.slug}/`)}>{project.title}</SiteLink></h3>
+    <p class="overline">{project.area} · {project.period}</p>
+    <h3><SiteLink href={sitePath(collectionPath(project.slug))}>{project.title}</SiteLink></h3>
     <p>{project.summary}</p>
   </div>
 </article>

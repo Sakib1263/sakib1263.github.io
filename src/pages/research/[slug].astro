@@ -5,6 +5,7 @@ import Base from '../../layouts/Base.astro';
 import KineticsReproduction from '../../components/KineticsReproduction.astro';
 import HydronephrosisExample from '../../components/HydronephrosisExample.astro';
 import ResearchFigure from '../../components/ResearchFigure.astro';
+import ResearchPhase from '../../components/ResearchPhase.astro';
 import { datasetsByStudy } from '../../data/datasets';
 import { kinetics } from '../../data/kinetics';
 import { ramanSource } from '../../data/raman';
@@ -105,19 +106,7 @@ const sections = [
           {project.illustratedExample && <HydronephrosisExample />}
         </section>
 
-        {progress.map(phase => (
-          <section class="research-phase" aria-labelledby={phase.id}>
-            <header class="catalog-section-heading">
-              <h2 id={phase.id}>{phase.title}</h2>
-              <p class="research-phase-status">{phase.status}</p>
-            </header>
-            {phase.paragraphs.map(paragraph => <p class="research-section-copy">{paragraph}</p>)}
-            {phase.measures?.length && <dl class="study-measures">
-              {phase.measures.map(({ value, label }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
-            </dl>}
-            {phase.figures?.map(figure => <ResearchFigure figure={figure} />)}
-          </section>
-        ))}
+        {progress.map(phase => <ResearchPhase phase={phase} />)}
 
         {hasResults && <section aria-labelledby="results">
           <header class="catalog-section-heading"><h2 id="results">Reported results</h2></header>

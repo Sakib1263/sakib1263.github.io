@@ -43,7 +43,7 @@ export const positions: Appointment[] = [
       'Write manuscripts, figures, progress reports, and reviewer responses with clinical, engineering, and external collaborators.',
     ],
     links: [
-      { label: 'Wearable kinetics project', href: sitePath('research/wearable-foot-kinetics/') },
+      { label: 'Wearable kinetics project', href: sitePath('research/projects/smart-insole-3d-gait-kinetics/') },
       { label: 'Cross-device Raman project', href: sitePath('research/cross-device-raman/') },
       paperLink('Reinforcement learning review', '10.1016/j.rser.2025.116481'),
     ],

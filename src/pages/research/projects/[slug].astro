@@ -1,6 +1,8 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import SiteLink from '../../../components/SiteLink.astro';
+import ResearchFigure from '../../../components/ResearchFigure.astro';
+import ResearchPhase from '../../../components/ResearchPhase.astro';
 import { datasetsByStudy } from '../../../data/datasets';
 import { publicationFor, publicationId } from '../../../data/papers';
 import { researchStudyFor } from '../../../data/research-catalog';
@@ -20,12 +22,25 @@ const related = (project.related ?? []).map(slug => {
   if (!entry) throw new Error(`Unknown related project: ${slug}`);
   return entry;
 });
+const progress = project.progress ?? [];
+// Projects with a full narrative get an "On this page" index, like the study pages.
+const hasNarrative = Boolean(project.approach || progress.length);
+const sections = [
+  ...(project.approach ? [{ id: 'approach', label: 'Approach' }] : []),
+  ...progress.map(({ id, navLabel }) => ({ id, label: navLabel })),
+  { id: 'project-stages', label: 'Papers and studies' },
+  { id: 'project-role', label: 'My contribution' },
+  ...(project.scope ? [{ id: 'project-scope', label: 'Scope and validation' }] : []),
+  ...(project.ongoing ? [{ id: 'project-next', label: 'Next steps' }] : []),
+  ...(related.length ? [{ id: 'related-work', label: 'Related projects' }] : []),
+];
 ---
 
-<Base title={project.title} description={project.summary}>
+<Base title={project.title} description={project.summary} shareImage={project.visual?.image}>
   <article class="shell content-end">
     <header class="page-intro catalog-intro research-project-intro">
       <SiteLink class="text-link return-link" href={sitePath(`research/#${project.slug}`)}><span aria-hidden="true">←</span> All research</SiteLink>
+      <p class="overline">{project.area} · {project.period}</p>
       <h1 class="research-overview-title">{project.title}</h1>
       <p class="page-lead">{project.summary}</p>
       <p class="research-intro-detail">{project.context}</p>
@@ -34,48 +49,75 @@ const related = (project.related ?? []).map(slug => {
       </div>}
     </header>
 
-    <section class="research-project-role" aria-labelledby="project-role">
-      <h2 id="project-role">My contribution</h2>
-      <p>{project.contribution}</p>
-    </section>
+    <div class:list={{ 'catalog-layout': hasNarrative }}>
+      {hasNarrative && <nav class="catalog-index research-index" aria-label="Project sections">
+        <h2>On this page</h2>
+        <ul>{sections.map(({ id, label }) => <li><SiteLink href={`#${id}`}><span>{label}</span></SiteLink></li>)}</ul>
+      </nav>}
 
-    <section aria-labelledby="project-stages">
-      <header class="catalog-section-heading"><h2 id="project-stages">Research stages and outputs</h2></header>
-      <ol class="research-stages" role="list">
-        {project.stages.map(stage => {
-          const study = stage.study ? researchStudyFor(stage.study) : undefined;
-          const doi = stage.doi ?? study?.doi;
-          const publication = doi ? publicationFor(doi) : undefined;
-          const dataset = doi ? datasetsByStudy.get(doi) : undefined;
-          return (
-            <li class="catalog-entry research-entry" id={stage.study}>
-              <div class="catalog-meta"><span class="research-period">{stage.period}</span></div>
-              <div>
-                <h3>{stage.title}</h3>
-                <p class="research-summary">{stage.description}</p>
-                <div class="catalog-actions">
-                  {study && <SiteLink href={sitePath(`research/${study.slug}/`)} aria-label={`Details for ${stage.title}`}>Details</SiteLink>}
-                  {publication && <SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)} aria-label={`Publication for ${stage.title}`}>Publication</SiteLink>}
-                  {study?.code && <SiteLink href={study.code} aria-label={`Code for ${stage.title}`}>Code <span aria-hidden="true">↗</span></SiteLink>}
-                  {dataset && <SiteLink href={sitePath(`software/#${dataset.id}`)} aria-label={`Dataset for ${stage.title}`}>Dataset</SiteLink>}
-                </div>
-              </div>
-            </li>
-          );
-        })}
-      </ol>
-    </section>
+      <div class="research-detail">
+        {project.visual && <ResearchFigure figure={project.visual} class={`display-figure art-${project.slug}`} eager />}
 
-    {project.scope && <section class="research-project-role" aria-labelledby="project-scope">
-      <h2 id="project-scope">Scope and validation</h2>
-      <p>{project.scope}</p>
-    </section>}
+        {project.approach && <section aria-labelledby="approach">
+          <header class="catalog-section-heading"><h2 id="approach">Approach</h2></header>
+          <p class="research-section-copy">{project.approach}</p>
+          {project.workflow && <ol class="study-workflow" aria-label="Project workflow">
+            {project.workflow.map(step => <li>{step}</li>)}
+          </ol>}
+          {project.approachFigures?.map(figure => <ResearchFigure figure={figure} />)}
+        </section>}
 
-    {related.length > 0 && <section class="research-project-role" aria-labelledby="related-work">
-      <h2 id="related-work">Related projects</h2>
-      <div class="catalog-actions">
-        {related.map(item => <SiteLink href={sitePath(item.path)}>{item.title}</SiteLink>)}
+        {progress.map(phase => <ResearchPhase phase={phase} />)}
+
+        <section aria-labelledby="project-stages">
+          <header class="catalog-section-heading"><h2 id="project-stages">Research stages and outputs</h2></header>
+          <ol class="research-stages" role="list">
+            {project.stages.map(stage => {
+              const study = stage.study ? researchStudyFor(stage.study) : undefined;
+              const doi = stage.doi ?? study?.doi;
+              const publication = doi ? publicationFor(doi) : undefined;
+              const dataset = doi ? datasetsByStudy.get(doi) : undefined;
+              return (
+                <li class="catalog-entry research-entry" id={stage.study}>
+                  <div class="catalog-meta"><span class="research-period">{stage.period}</span></div>
+                  <div>
+                    <h3>{stage.title}</h3>
+                    <p class="research-summary">{stage.description}</p>
+                    <div class="catalog-actions">
+                      {study && <SiteLink href={sitePath(`research/${study.slug}/`)} aria-label={`Details for ${stage.title}`}>Details</SiteLink>}
+                      {publication && <SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)} aria-label={`Publication for ${stage.title}`}>Publication</SiteLink>}
+                      {study?.code && <SiteLink href={study.code} aria-label={`Code for ${stage.title}`}>Code <span aria-hidden="true">↗</span></SiteLink>}
+                      {dataset && <SiteLink href={sitePath(`software/#${dataset.id}`)} aria-label={`Dataset for ${stage.title}`}>Dataset</SiteLink>}
+                    </div>
+                  </div>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+
+        <section class="research-project-role" aria-labelledby="project-role">
+          <h2 id="project-role">My contribution</h2>
+          <p>{project.contribution}</p>
+        </section>
+
+        {project.scope && <section class="research-project-role" aria-labelledby="project-scope">
+          <h2 id="project-scope">Scope and validation</h2>
+          <p>{project.scope}</p>
+        </section>}
+
+        {project.ongoing && <section class="research-project-role" aria-labelledby="project-next">
+          <h2 id="project-next">Next steps</h2>
+          <p>{project.ongoing}</p>
+        </section>}
+
+        {related.length > 0 && <section class="research-project-role" aria-labelledby="related-work">
+          <h2 id="related-work">Related projects</h2>
+          <div class="catalog-actions">
+            {related.map(item => <SiteLink href={sitePath(item.path)}>{item.title}</SiteLink>)}
+          </div>
+        </section>}
       </div>
-    </section>}
+    </div>
   </article>
 </Base>
