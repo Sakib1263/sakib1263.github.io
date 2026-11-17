@@ -20,9 +20,11 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
   if (!file.isFile() || !file.name.endsWith('.html')) continue;
   const path = join(file.parentPath, file.name);
   const key = relative(root, path).replaceAll('\\', '/');
-  const page = { url: null, ids: new Set(), links: [], anchors: [], papers: [], researchLinks: new Map() };
+  const page = { url: null, ids: new Set(), links: [], anchors: [], papers: [], researchLinks: new Map(), figures: 0, figureCredits: 0 };
   visit(parse(readFileSync(path, 'utf8')), (tag, attributes, paperId) => {
     if (tag === 'link' && attributes.rel === 'canonical') page.url = new URL(attributes.href);
+    if (tag === 'figure' && 'data-figure' in attributes) page.figures++;
+    if (tag === 'a' && 'data-figure-credit' in attributes && attributes.href) page.figureCredits++;
     if ('id' in attributes) {
       if (page.ids.has(attributes.id)) errors.push(`${key}: duplicate ID ${attributes.id}`);
       page.ids.add(attributes.id);
@@ -43,8 +45,10 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
       page.links.push(...attributes.srcset.split(',').map(option => option.trim().split(/\s+/, 1)[0]));
     }
   });
+  if (page.figureCredits < page.figures) errors.push(`${key}: ${page.figures - page.figureCredits} figure(s) without a source credit`);
   pages.set(key, page);
 }
+const figureCount = [...pages.values()].reduce((sum, page) => sum + page.figures, 0);
 
 const homeUrl = pages.get('index.html')?.url;
 if (!homeUrl) throw new Error('Missing built homepage or canonical URL. Run pnpm build first.');
@@ -161,5 +165,5 @@ if (errors.length) {
   console.error(errors.join('\n'));
   process.exitCode = 1;
 } else {
-  console.log(`Checked ${pages.size} pages, ${listedUrls.size} sitemap URLs, ${internalCount} internal references, ${expectedDois.size} publication records, ${projectCitationCount} project citation backlinks and the PDF download.`);
+  console.log(`Checked ${pages.size} pages, ${listedUrls.size} sitemap URLs, ${internalCount} internal references, ${figureCount} credited figures, ${expectedDois.size} publication records, ${projectCitationCount} project citation backlinks and the PDF download.`);
 }

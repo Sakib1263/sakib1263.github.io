@@ -6,7 +6,7 @@ const flagship = '/research/wearable-foot-kinetics/';
 const gaitProject = '/research/projects/smart-insole-3d-gait-kinetics/';
 const paperId = 'paper-10-1109-jbhi-2025-3605296';
 
-for (const path of ['/', '/research/', '/research/summary/', gaitProject, flagship, '/research/cross-device-raman/', '/research/prenatal-hydronephrosis/', '/publications/', '/cv/', '/software/']) {
+for (const path of ['/', '/research/', '/research/summary/', gaitProject, flagship, '/research/cross-device-raman/', '/research/prenatal-hydronephrosis/', '/research/nabnet/', '/publications/', '/cv/', '/software/']) {
   test(`checks accessibility at ${path}`, async ({ page }) => {
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready.then(() => true));

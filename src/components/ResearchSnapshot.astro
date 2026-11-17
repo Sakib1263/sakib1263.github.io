@@ -13,6 +13,9 @@ const metrics = [
   { key: 'i10Index', label: 'i10-index' },
 ] as const;
 const maximum = Math.max(1, ...snapshot.yearly.map(entry => entry.citations));
+// Scholar counts the current year to date, so its bar is drawn differently and named in the note.
+const partialYear = snapshot.checkedOn.endsWith('-12-31') ? undefined : Number(snapshot.checkedOn.slice(0, 4));
+const hasPartialYear = snapshot.yearly.some(({ year }) => year === partialYear);
 ---
 
 <section class="research-snapshot" aria-labelledby="research-profile">
@@ -44,7 +47,7 @@ const maximum = Math.max(1, ...snapshot.yearly.map(entry => entry.citations));
       <figcaption>Yearly citations</figcaption>
       <ol class="citation-bars" role="list" style={`--citation-years:${snapshot.yearly.length}`}>
         {snapshot.yearly.map(({ year, citations }) => (
-          <li>
+          <li data-partial-year={year === partialYear ? '' : undefined}>
             <span class="citation-year">{year}</span>
             <span class="citation-column">
               <span class="citation-count">{number.format(citations)}<span class="citation-unit"> citations</span></span>
@@ -53,7 +56,7 @@ const maximum = Math.max(1, ...snapshot.yearly.map(entry => entry.citations));
           </li>
         ))}
       </ol>
-      <p class="citation-history-note">Counts through the date shown.</p>
+      <p class="citation-history-note">Counts through the date shown.{hasPartialYear && ` The striped ${partialYear} bar covers part of the year.`}</p>
     </figure>
   </div>
 

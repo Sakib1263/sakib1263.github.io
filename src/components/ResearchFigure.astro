@@ -1,0 +1,36 @@
+---
+import SiteLink from './SiteLink.astro';
+import { Image } from 'astro:assets';
+import type { ResearchFigure } from '../data/research';
+
+type Chart = { title: string; horizontalAxis: string; verticalAxis: string };
+type Props = {
+  figure: Omit<ResearchFigure, 'credit'> & { credit?: ResearchFigure['credit']; chart?: Chart };
+  class?: string;
+  /** Load immediately, for the display figure near the top of the page. */
+  eager?: boolean;
+};
+
+const { figure, class: className, eager = false } = Astro.props;
+const { chart } = figure;
+const width = Math.min(figure.image.width, 960);
+const widths = [320, 480, 640, 768, 960].filter(candidate => candidate < width).concat(width);
+---
+
+<figure class:list={['detail-figure', className]} data-figure>
+  <div class:list={{ 'waveform-plot': chart }}>
+    {chart && <div class="chart-heading"><h3>{chart.title}</h3><p>{chart.verticalAxis}</p></div>}
+    <Image src={figure.image} alt={figure.alt} width={width} widths={widths} sizes="(max-width: 850px) calc(100vw - 4rem), 700px" format="webp" loading={eager ? 'eager' : 'lazy'} />
+    {chart && <p>{chart.horizontalAxis}</p>}
+  </div>
+  <figcaption>
+    {figure.caption}
+    <span class="figure-links">
+      <SiteLink href={figure.image.src}>View full-size figure</SiteLink>
+      {figure.credit && <SiteLink href={figure.credit.href} data-figure-credit>{figure.credit.label}</SiteLink>}
+      {figure.licence && (figure.licence.href
+        ? <SiteLink href={figure.licence.href}>{figure.licence.label}</SiteLink>
+        : <span>{figure.licence.label}</span>)}
+    </span>
+  </figcaption>
+</figure>

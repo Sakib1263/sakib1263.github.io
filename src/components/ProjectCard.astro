@@ -8,16 +8,17 @@ import { sitePath } from '../lib/site';
 const { project } = Astro.props as { project: Project };
 const { visual } = project;
 const paper = publicationFor(project.doi);
-const imageWidth = visual ? Math.min(visual.image.width, 640) : 0;
+const card = visual?.card ?? visual;
+const imageWidth = card ? Math.min(card.image.width, 720) : 0;
 ---
 
 <article class="project-card">
-  {visual && (
-    <div class:list={['project-art', `art-${project.slug}`]}>
-      <Image src={visual.image} alt={visual.alt} width={imageWidth} widths={[128, 256, 400].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 480px) 76px, (max-width: 720px) 136px, (max-width: 1120px) 30vw, 330px" format="webp" />
+  {visual && card && (
+    <div class:list={['project-art', `art-${project.slug}`, { 'project-art-crop': visual.card }]}>
+      <Image src={card.image} alt={card.alt} width={imageWidth} widths={[360, 540].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 720px) calc(100vw - 2rem), (max-width: 1120px) 30vw, 330px" format="webp" />
     </div>
   )}
-  {project.illustratedExample && (
+  {!visual && project.illustratedExample && (
     <div class="project-art art-prenatal-hydronephrosis" aria-hidden="true">
       <div class="ahn-example-views ahn-example-masks"><span></span><span></span><span></span></div>
       <span class="ahn-card-arrow">→</span>

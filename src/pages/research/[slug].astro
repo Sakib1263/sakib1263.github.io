@@ -1,9 +1,10 @@
 ---
 import SiteLink from '../../components/SiteLink.astro';
-import { Image, getImage } from 'astro:assets';
+import { getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import KineticsReproduction from '../../components/KineticsReproduction.astro';
 import HydronephrosisExample from '../../components/HydronephrosisExample.astro';
+import ResearchFigure from '../../components/ResearchFigure.astro';
 import { datasetsByStudy } from '../../data/datasets';
 import { kinetics } from '../../data/kinetics';
 import { ramanSource } from '../../data/raman';
@@ -30,10 +31,11 @@ const dataset = project.doi ? datasetsByStudy.get(project.doi) : undefined;
 const fullText = project.doi ? openFullText[project.doi] : undefined;
 const relatedPapers = (project.related ?? []).map(publicationFor);
 const relatedProjects = (project.relatedProjects ?? []).map(researchStudyFor);
-const imageWidth = visual ? Math.min(visual.image.width, 960) : 0;
 const workflowAvailable = project.slug === kinetics.slug;
 const isRamanCase = project.slug === ramanSource.slug;
-const hasResults = Boolean(project.result || project.measures?.length);
+const approachFigures = (project.figures ?? []).filter(figure => figure.section === 'approach');
+const resultFigures = (project.figures ?? []).filter(figure => figure.section === 'results');
+const hasResults = Boolean(project.result || project.measures?.length || resultFigures.length);
 const sections = [
   { id: 'approach', label: 'Approach' },
   ...(hasResults ? [{ id: 'results', label: 'Reported results' }] : []),
@@ -89,28 +91,15 @@ const sections = [
       </nav>
 
       <div class="research-detail">
+        {visual && <ResearchFigure figure={visual} class={`display-figure art-${project.slug}`} eager />}
+
         <section aria-labelledby="approach">
           <header class="catalog-section-heading"><h2 id="approach">Approach</h2></header>
           <p class="research-section-copy">{project.approach}</p>
           {project.workflow && <ol class="study-workflow" aria-label="Study workflow">
             {project.workflow.map(step => <li>{step}</li>)}
           </ol>}
-          {visual && (
-            <figure class:list={['detail-figure', `art-${project.slug}`]}>
-              <div class:list={{ 'waveform-plot': visual.chart }}>
-                {visual.chart && <div class="chart-heading"><h3>{visual.chart.title}</h3><p>{visual.chart.verticalAxis}</p></div>}
-                <Image src={visual.image} alt={visual.alt} width={imageWidth} widths={[320, 480, 640, 768, 960].filter(width => width < imageWidth).concat(imageWidth)} sizes="(max-width: 850px) calc(100vw - 4rem), 700px" format="webp" />
-                {visual.chart && <p>{visual.chart.horizontalAxis}</p>}
-              </div>
-              <figcaption>
-                {visual.caption}
-                <span class="figure-links">
-                  <SiteLink href={visual.image.src}>View full-size figure</SiteLink>
-                  {visual.credit && <SiteLink href={visual.credit.href}>{visual.credit.label}</SiteLink>}
-                </span>
-              </figcaption>
-            </figure>
-          )}
+          {approachFigures.map(figure => <ResearchFigure figure={figure} />)}
           {project.illustratedExample && <HydronephrosisExample />}
         </section>
 
@@ -120,7 +109,8 @@ const sections = [
           {project.measures?.length && <dl class="study-measures">
             {project.measures.map(({ value, label }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
           </dl>}
-          {resultVisual && resultView && <figure class="detail-figure">
+          {resultFigures.map(figure => <ResearchFigure figure={figure} />)}
+          {resultVisual && resultView && <figure class="detail-figure" data-figure>
             <div class="waveform-plot result-figure">
               <img class:list={{ 'result-overview': resultVisual.mobileColumns }} src={resultView.src} {...resultView.attributes} alt={resultVisual.alt} loading="lazy" decoding="async" />
               {resultVisual.mobileColumns && <div class="result-panels" role="group" aria-label={resultVisual.alt}>
@@ -133,7 +123,7 @@ const sections = [
               {resultVisual.caption}
               <span class="figure-links">
                 <SiteLink href={resultVisual.image.src}>View full-size figure</SiteLink>
-                <SiteLink href={resultVisual.source.href}>{resultVisual.source.label}</SiteLink>
+                <SiteLink href={resultVisual.source.href} data-figure-credit>{resultVisual.source.label}</SiteLink>
               </span>
             </figcaption>
           </figure>}

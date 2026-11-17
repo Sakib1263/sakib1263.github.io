@@ -1,12 +1,16 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
-import { sitePath } from '../lib/site';
+import { navigation, sitePath } from '../lib/site';
 ---
 
 <Base title="Page not found" noIndex>
   <section class="shell page-intro content-end">
     <h1>Page not found</h1>
-    <SiteLink class="text-link" href={sitePath()}><span aria-hidden="true">←</span> Return home</SiteLink>
+    <p class="page-lead">The page may have moved. Try one of these sections instead.</p>
+    <nav class="actions" aria-label="Site sections">
+      <SiteLink class="button button-primary" href={sitePath()}><span aria-hidden="true">←</span> Return home</SiteLink>
+      {navigation.map(({ label, path }) => <SiteLink class="text-link" href={sitePath(path)}>{label}</SiteLink>)}
+    </nav>
   </section>
 </Base>

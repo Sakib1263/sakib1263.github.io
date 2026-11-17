@@ -58,6 +58,8 @@
 .research-detail .study-workflow { margin: .9rem 0 0; }
 .research-detail .study-workflow li { font-size: .87rem; }
 .research-detail .detail-figure, .research-detail .ahn-example { margin-top: 1rem; }
+.research-detail .display-figure { margin: 0 0 var(--catalog-section-gap); }
+.research-detail .display-figure img { max-height: 440px; }
 .research-detail .detail-figure img { width: 100%; }
 .figure-links { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-top: .38rem; }
 .result-panels { display: none; }
@@ -71,7 +73,7 @@
   .research-index a { min-width: 0; }
   .research-index a span:first-child { overflow-wrap: anywhere; }
   .result-figure .result-overview { display: none; }
-  .result-panels { display: grid; gap: .5rem; }
+  .result-panels { display: grid; gap: .5rem; width: 100%; }
   .result-panels > div { display: flex; overflow: hidden; }
   .result-panels > div:last-child { justify-content: flex-end; }
   .research-detail .result-panels img { width: 203%; max-width: none; flex: none; }

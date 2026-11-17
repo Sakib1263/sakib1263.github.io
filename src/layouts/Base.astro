@@ -21,7 +21,11 @@ const structuredData = {
     url: canonical.href,
     jobTitle: profile.role,
     image: shareUrl,
+    email: `mailto:${profile.email}`,
     affiliation: { '@type': 'CollegeOrUniversity', name: profile.affiliation },
+    worksFor: { '@type': 'CollegeOrUniversity', name: profile.affiliation, department: { '@type': 'Organization', name: profile.department } },
+    alumniOf: { '@type': 'CollegeOrUniversity', name: profile.affiliation },
+    knowsAbout: ['Biomedical machine learning', 'Wearable biomechanics', 'Medical image segmentation', 'Physiological signal processing', 'Raman spectroscopy'],
     sameAs: [profile.orcid, profile.scholar, profile.github, profile.linkedin, profile.researchGate],
   },
 };
@@ -47,6 +51,7 @@ const structuredData = {
     </script>
     <style is:inline set:html={themeCss}></style>
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={profile.name} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     {!noIndex && <meta property="og:url" content={canonical.href} />}
@@ -89,6 +94,7 @@ const structuredData = {
     <main id="main" tabindex="-1">
       <slot />
     </main>
+    <span id="new-tab-note" hidden>Opens in a new tab</span>
     <footer class="site-footer">
       <div class="shell footer-content">
         <div>

@@ -9,4 +9,4 @@ const external = (destination.protocol === 'https:' || destination.protocol === 
   && destination.origin !== siteUrl.origin;
 ---
 
-<a {...Astro.props} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}><slot /></a>
+<a {...Astro.props} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined} aria-describedby={[Astro.props['aria-describedby'], external && 'new-tab-note'].filter(Boolean).join(' ') || undefined}><slot /></a>

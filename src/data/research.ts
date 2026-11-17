@@ -6,11 +6,32 @@ import ramanComparison from '../assets/raman-before-after.jpg';
 import insoleShare from '../assets/share/wearable-foot-kinetics.jpg';
 import kidneyShare from '../assets/share/kidney-stone-segmentation.jpg';
 import ramanShare from '../assets/share/cross-device-raman.jpg';
+import ramanCard from '../assets/research/cross-device-raman/card-enwave-rid.jpg';
+import ramanBenchmarks from '../assets/research/cross-device-raman/fig6-r2-benchmarks.png';
+import kidneyFramework from '../assets/research/kidney-stone-segmentation/fig1-framework.png';
+import nabnetWaveforms from '../assets/research/nabnet/fig7a-waveforms.png';
+import nabnetPipeline from '../assets/research/nabnet/fig1-pipeline.png';
+import nabnetAgreement from '../assets/research/nabnet/fig5-map-agreement.png';
+import ahnGrades from '../assets/research/prenatal-hydronephrosis/fig3-sfu-grades.jpg';
+import ahnSegmentation from '../assets/research/prenatal-hydronephrosis/fig6-segmentation.jpg';
+import { ccBy, elsevier, sourceArticle } from './figure-credits';
 import { kinetics } from './kinetics';
 import { ramanSource } from './raman';
 import { thesisUrl } from './papers';
 
 type ResearchLink = { label: string; href: string };
+
+/** Reuse terms shown beside a figure, such as CC BY 4.0 or a publisher copyright line. */
+export type FigureLicence = { label: string; href?: string };
+
+/** A figure from a paper or repository. The caption names the figure, its authors and any changes made. */
+export type ResearchFigure = {
+  image: ImageMetadata;
+  alt: string;
+  caption: string;
+  credit: ResearchLink;
+  licence?: FigureLicence;
+};
 
 export type ResearchProject = {
   slug: string;
@@ -36,13 +57,19 @@ export type ResearchProject = {
   relatedProjects?: string[];
   resources?: ResearchLink[];
   resultVisual?: { image: ImageMetadata; alt: string; caption: string; source: ResearchLink; mobileColumns?: [string, string] };
+  /** The display figure: shown first on the project page, on homepage cards and as the share image. */
   visual?: {
     image: ImageMetadata;
     alt: string;
     caption: string;
     credit?: ResearchLink;
+    licence?: FigureLicence;
+    /** A crop for the wide homepage card when the full figure is too detailed at that size. */
+    card?: { image: ImageMetadata; alt: string };
     chart?: { title: string; horizontalAxis: string; verticalAxis: string };
   };
+  /** Further figures, placed in the Approach or Reported results section. */
+  figures?: (ResearchFigure & { section: 'approach' | 'results' })[];
 };
 
 export type Project = ResearchProject & { doi: string; code: string };
@@ -92,7 +119,7 @@ export const projects: Project[] = [
     doi: '10.1016/j.bspc.2026.109894',
     code: 'https://github.com/Sakib1263/Kidney-Stone-Segmentation',
     approach: 'Two classifiers first identify kidney-containing slices and then stone-containing slices. The kidney stone segmentation network, KSSNet, processes the selected images and reuses features learned from kidney tissue segmentation.',
-    result: 'Table 7 shows the effect of adding the two-stage slice selection to the same KSSNet segmentation model.',
+    result: 'Slice selection improved the same KSSNet model. Its stone Dice score rose from 90.13% without scope reduction to 93.10% with kidney-slice selection only and 97.44% with both stages. The slice classifier reached an overall F1 score of 94.45%.',
     measures: [
       { value: '97.44%', label: 'Dice with full scope reduction' },
       { value: '90.13%', label: 'Dice without scope reduction' },
@@ -110,11 +137,21 @@ export const projects: Project[] = [
     related: ['10.3390/cancers15123189', '10.1016/j.eswa.2024.124594'],
     relatedProjects: ['renal-tumour-modelling', 'prenatal-hydronephrosis'],
     visual: {
-      image: renal,
-      alt: 'Axial abdominal CT slice with a class activation overlay.',
-      caption: 'A class-activation map from the study repository. The overlay highlights regions that influenced the slice classifier.',
-      credit: { label: 'Image source', href: 'https://github.com/Sakib1263/Kidney-Stone-Segmentation/blob/main/Instance-Classification/cam_output.png' },
+      image: kidneyFramework,
+      alt: 'Pipeline diagram. Abdominal CT volumes are preprocessed, a classifier keeps the slices that contain kidney, a second classifier keeps the slices that contain stones, and a segmentation model outlines the kidney and stones on the remaining slices.',
+      caption: 'Figure 1 from Mahmud et al. (2026). Preprocessed CT slices pass through two successive classifiers, which keep kidney slices and then stone slices, before KSSNet segments the remaining slices. Green arrows mark features transferred between the stages.',
+      credit: sourceArticle('10.1016/j.bspc.2026.109894'),
+      licence: elsevier(2026),
     },
+    figures: [
+      {
+        section: 'approach',
+        image: renal,
+        alt: 'Axial abdominal CT slice with a class activation overlay.',
+        caption: 'A class-activation map from the study repository. The overlay highlights regions that influenced the slice classifier.',
+        credit: { label: 'Image source', href: 'https://github.com/Sakib1263/Kidney-Stone-Segmentation/blob/main/Instance-Classification/cam_output.png' },
+      },
+    ],
   },
   {
     slug: ramanSource.slug,
@@ -126,7 +163,7 @@ export const projects: Project[] = [
     code: ramanSource.repository,
     context: 'Qatar University · Qatar National Research Fund-supported bacterial diagnostics research',
     approach: 'SERS-D2DNet transforms spectra from four portable devices toward a Renishaw reference. The study then uses SuperRaman to classify the original and transformed spectra across 20 analyte classes, using 50 spectra per class to train the classifiers.',
-    result: 'Classification accuracy increased after transformation for all four portable devices in Table 5. The largest gains were for Enwave and Rapid ID.',
+    result: 'Classification accuracy increased after transformation for all four portable devices, with the largest gains for Enwave and Rapid ID. The transformed spectra also matched the reference more closely than the outputs of five benchmark sequence-to-sequence models, with R² between 98.80% and 99.57%.',
     measures: [
       { value: '97.58% → 99.98%', label: 'Enwave accuracy' },
       { value: '96.54% → 98.87%', label: 'Rapid ID accuracy' },
@@ -152,8 +189,23 @@ export const projects: Project[] = [
       image: sers,
       alt: 'Graphical abstract showing spectra from portable and reference Raman instruments, device transformation, and bacterial classification.',
       caption: 'Graphical abstract by Mahmud et al., Spectrochimica Acta Part A (2026). Reproduced under CC BY 4.0.',
-      credit: { label: 'CC BY 4.0', href: 'https://creativecommons.org/licenses/by/4.0/' },
+      credit: sourceArticle('10.1016/j.saa.2025.126931'),
+      licence: ccBy,
+      card: {
+        image: ramanCard,
+        alt: 'Mean Raman spectra from the Enwave and Rapid ID instruments before and after transformation, overlaid on the laboratory reference. The transformed spectra follow the reference peaks closely.',
+      },
     },
+    figures: [
+      {
+        section: 'results',
+        image: ramanBenchmarks,
+        alt: 'Bar chart of R² between transformed and reference spectra for four portable devices. For every device, SERS-D2DNet has the highest bar, between 98.80% and 99.57%, above FPN, U-Net, U-Net++, UNet3+ and MultiResUNet. The untransformed spectra score between 63.97% and 87.99%.',
+        caption: 'Figure 6 from Mahmud et al. (2026). R² between transformed and reference spectra for SERS-D2DNet and five benchmark sequence-to-sequence models. The black bars compare the untransformed portable spectra with the reference.',
+        credit: sourceArticle('10.1016/j.saa.2025.126931'),
+        licence: ccBy,
+      },
+    ],
   },
   {
     slug: 'nabnet',
@@ -164,7 +216,7 @@ export const projects: Project[] = [
     doi: '10.1016/j.bspc.2022.104247',
     code: 'https://github.com/Sakib1263/NABNet',
     approach: 'The nested attention-guided BiConvLSTM reconstructs an arterial blood pressure waveform from photoplethysmography and electrocardiography. A component estimation stage supplies pressure values used to recover the waveform scale.',
-    result: 'Table 5 reports the following mean absolute errors for the combined waveform and pressure estimation pipeline on the UCI waveform benchmark.',
+    result: 'On the UCI waveform benchmark, the combined waveform and pressure pipeline estimated systolic, diastolic and mean arterial pressure with the following mean absolute errors.',
     measures: [
       { value: '2.63 mmHg', label: 'Systolic pressure error' },
       { value: '1.09 mmHg', label: 'Diastolic pressure error' },
@@ -173,6 +225,31 @@ export const projects: Project[] = [
     contribution: 'I led data preparation, implementation, experiments, analysis, visualization, and manuscript preparation.',
     scope: 'These errors come from retrospective evaluation on intensive-care waveform records. The partition kept records from the same patient together.',
     related: ['10.1007/s00521-025-11327-x', '10.3390/bioengineering9110692', '10.3390/s22030919', '10.3390/bioengineering9100558'],
+    visual: {
+      image: nabnetWaveforms,
+      alt: 'Three stacked signals over about 1,000 samples: a normalised PPG, a normalised ECG, and arterial blood pressure between about 75 and 115 mmHg. The estimated pressure waveform closely follows the measured one.',
+      caption: 'Figure 7a from Mahmud et al. (2023), cropped to one example. NABNet estimated the arterial pressure waveform (red) from the PPG and ECG inputs above it. Blue shows the measured arterial pressure.',
+      credit: sourceArticle('10.1016/j.bspc.2022.104247'),
+      licence: elsevier(2022),
+    },
+    figures: [
+      {
+        section: 'approach',
+        image: nabnetPipeline,
+        alt: 'Flowchart. One to four input channels, drawn from PPG, its derivatives and ECG, train a 1D segmentation network that predicts a normalised arterial pressure waveform. Systolic and diastolic values from a separate prediction pipeline rescale the waveform before evaluation.',
+        caption: 'Figure 1 from Mahmud et al. (2023). A segmentation network estimates the normalised pressure waveform from one to four input channels. Systolic and diastolic estimates from a separate pipeline restore its scale.',
+        credit: sourceArticle('10.1016/j.bspc.2022.104247'),
+        licence: elsevier(2022),
+      },
+      {
+        section: 'results',
+        image: nabnetAgreement,
+        alt: 'Left: scatter plot of estimated against measured mean arterial pressure from about 60 to 140 mmHg, clustered along the identity line. Right: Bland–Altman plot with most differences in a narrow band around zero.',
+        caption: 'Figure 5 from Mahmud et al. (2023). (a) Regression and (b) Bland–Altman plots for the mean arterial pressure estimates.',
+        credit: sourceArticle('10.1016/j.bspc.2022.104247'),
+        licence: elsevier(2022),
+      },
+    ],
   },
   {
     slug: 'prenatal-hydronephrosis',
@@ -185,7 +262,7 @@ export const projects: Project[] = [
     period: '2022–2023',
     context: 'Hamad Medical Corporation, Sidra Medicine and Qatar University',
     approach: 'The study collected ultrasound images from 164 subjects. After curation, 2,062 images from 163 subjects were annotated for the kidney region. The workflow locates the region, outlines it with KUSNet, and predicts one of five severity grades with PHCNet. Weighted voting combines grades across ultrasound views at the subject level.',
-    result: 'The paper reports a 92.1% Dice score for kidney segmentation. For five-grade classification with segmented views, Table 3 reports 93.9% subject-level accuracy and an 89.0% F1 score. The two tasks were evaluated separately.',
+    result: 'KUSNet segmented the kidney with a 92.1% Dice score. With segmented views, five-grade classification reached 93.9% subject-level accuracy and an 89.0% F1 score. The two tasks were evaluated separately.',
     measures: [
       { value: '92.1%', label: 'Kidney segmentation Dice' },
       { value: '93.9%', label: 'Subject-level grading accuracy' },
@@ -196,6 +273,23 @@ export const projects: Project[] = [
     illustratedExample: true,
     resources: [{ label: 'Related MSc thesis', href: thesisUrl }],
     related: ['10.1016/j.bspc.2026.109894', '10.3390/cancers15123189'],
+    visual: {
+      image: ahnGrades,
+      alt: 'Five fetal kidney ultrasound images, one for each severity grade from SFU 0 to SFU IV, each shown above its annotated kidney region. The dark, fluid-filled area inside the kidney is larger at higher grades.',
+      caption: 'Figure 3 from Mahmud et al. (2024). Ultrasound views from five antenatal subjects, one for each Society for Fetal Urology grade, shown above the annotated kidney regions used for grading.',
+      credit: sourceArticle('10.1016/j.eswa.2024.124594'),
+      licence: elsevier(2024),
+    },
+    figures: [
+      {
+        section: 'results',
+        image: ahnSegmentation,
+        alt: 'Grid of twelve kidney ultrasound views with the ground-truth kidney mask and the masks predicted by UNet++, UNet3+ and KUSNet beneath each view.',
+        caption: 'Figure 6 from Mahmud et al. (2024). Kidney masks predicted by UNet++, UNet3+ and KUSNet, compared with the ground truth for twelve ultrasound views (columns a–l).',
+        credit: sourceArticle('10.1016/j.eswa.2024.124594'),
+        licence: elsevier(2024),
+      },
+    ],
   },
 ];
 
