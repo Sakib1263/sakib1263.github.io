@@ -60,6 +60,19 @@
 .research-detail .detail-figure, .research-detail .ahn-example { margin-top: 1rem; }
 .research-detail .display-figure { margin: 0 0 var(--catalog-section-gap); }
 .catalog-section-heading .research-phase-status { color: var(--accent-strong); font-weight: 640; }
+.research-table { margin-top: 1rem; overflow-x: auto; border: 1px solid var(--border); border-radius: 7px; background: var(--surface); }
+.research-table table { width: 100%; min-width: 36rem; border-collapse: collapse; font-size: .88rem; line-height: 1.45; }
+.research-table caption { padding: .6rem .8rem; text-align: left; color: var(--text-muted); font-size: .84rem; caption-side: bottom; border-top: 1px solid var(--border); }
+.research-table th, .research-table td { padding: .55rem .7rem; text-align: left; vertical-align: top; border-bottom: 1px solid var(--border); }
+.research-table thead th { color: var(--link); background: var(--surface-subtle); font-weight: 680; }
+.research-table tbody th { width: 9.5rem; color: var(--text); font-weight: 650; background: var(--surface-subtle); }
+.research-table tbody tr:last-child > * { border-bottom: 0; }
+/* Keep the row labels in view while a wide comparison scrolls sideways. */
+.research-table tbody th { position: sticky; left: 0; z-index: 1; box-shadow: 1px 0 0 var(--border); }
+@media (max-width: 620px) {
+  .research-table table { min-width: 30rem; font-size: .82rem; }
+  .research-table tbody th { width: 6.2rem; }
+}
 .research-detail .display-figure img { max-height: 440px; }
 .research-detail .detail-figure img { width: 100%; max-height: 560px; }
 .figure-links { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-top: .38rem; }

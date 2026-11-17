@@ -15,5 +15,14 @@ const { phase } = Astro.props as { phase: ResearchPhase };
   {phase.measures?.length && <dl class="study-measures">
     {phase.measures.map(({ value, label }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
   </dl>}
+  {phase.table && <div class="research-table" role="region" aria-label={phase.table.caption} tabindex="0">
+    <table>
+      <caption>{phase.table.caption}</caption>
+      <thead><tr><td></td>{phase.table.columns.map(column => <th scope="col">{column}</th>)}</tr></thead>
+      <tbody>
+        {phase.table.rows.map(({ label, cells }) => <tr><th scope="row">{label}</th>{cells.map(cell => <td>{cell}</td>)}</tr>)}
+      </tbody>
+    </table>
+  </div>}
   {phase.figures?.map(figure => <ResearchFigure figure={figure} />)}
 </section>

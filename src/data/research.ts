@@ -46,6 +46,8 @@ export type ResearchPhase = {
   status: string;
   paragraphs: string[];
   measures?: { value: string; label: string }[];
+  /** A side-by-side comparison, such as alternative sensing approaches. */
+  table?: { caption: string; columns: string[]; rows: { label: string; cells: string[] }[] };
   figures?: ResearchFigure[];
 };
 
