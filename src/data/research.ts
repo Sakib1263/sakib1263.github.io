@@ -1,5 +1,13 @@
 import type { ImageMetadata } from 'astro';
-import waveform from '../assets/insole-treadmill-waveform.png';
+import kineticsFramework from '../assets/research/wearable-foot-kinetics/project-framework.png';
+import kineticsExplainer from '../assets/research/wearable-foot-kinetics/kinematics-and-kinetics.png';
+import ke2keGaitCycle from '../assets/research/wearable-foot-kinetics/ke2ke-fig5-gait-cycle.png';
+import ke2keSensorLayout from '../assets/research/wearable-foot-kinetics/ke2ke-fig4-sensor-layout.png';
+import km2knReconstruction from '../assets/research/wearable-foot-kinetics/km2kn-reconstruction.png';
+import dasetComparison from '../assets/research/wearable-foot-kinetics/daset-unimodal-multimodal.png';
+import kinenextReconstruction from '../assets/research/wearable-foot-kinetics/kinenext-reconstruction.png';
+import anatomical8Regions from '../assets/research/wearable-foot-kinetics/anatomical8-regions.png';
+import transferResults from '../assets/research/wearable-foot-kinetics/transfer-twente-to-lee.png';
 import renal from '../assets/renal-ct.png';
 import sers from '../assets/sers-graphical-abstract.jpg';
 import ramanComparison from '../assets/raman-before-after.jpg';
@@ -14,7 +22,7 @@ import nabnetPipeline from '../assets/research/nabnet/fig1-pipeline.png';
 import nabnetAgreement from '../assets/research/nabnet/fig5-map-agreement.png';
 import ahnGrades from '../assets/research/prenatal-hydronephrosis/fig3-sfu-grades.jpg';
 import ahnSegmentation from '../assets/research/prenatal-hydronephrosis/fig6-segmentation.jpg';
-import { ccBy, elsevier, sourceArticle } from './figure-credits';
+import { ccBy, elsevier, ieee, sourceArticle } from './figure-credits';
 import { kinetics } from './kinetics';
 import { ramanSource } from './raman';
 import { thesisUrl } from './papers';
@@ -24,13 +32,29 @@ type ResearchLink = { label: string; href: string };
 /** Reuse terms shown beside a figure, such as CC BY 4.0 or a publisher copyright line. */
 export type FigureLicence = { label: string; href?: string };
 
-/** A figure from a paper or repository. The caption names the figure, its authors and any changes made. */
+/** Where a figure comes from. Unpublished project material has a label but no link. */
+export type FigureCredit = { label: string; href?: string };
+
+/** A figure from a paper, repository or project material. The caption names the figure, its authors and any changes made. */
 export type ResearchFigure = {
   image: ImageMetadata;
   alt: string;
   caption: string;
-  credit: ResearchLink;
+  credit: FigureCredit;
   licence?: FigureLicence;
+};
+
+/** One stage of a running project, shown as its own section in project order. */
+export type ResearchPhase = {
+  id: string;
+  /** Short label for the "On this page" list. */
+  navLabel: string;
+  title: string;
+  /** Publication or development status, such as "Published · …" or "Manuscript under revision". */
+  status: string;
+  paragraphs: string[];
+  measures?: { value: string; label: string }[];
+  figures?: ResearchFigure[];
 };
 
 export type ResearchProject = {
@@ -62,14 +86,15 @@ export type ResearchProject = {
     image: ImageMetadata;
     alt: string;
     caption: string;
-    credit?: ResearchLink;
+    credit?: FigureCredit;
     licence?: FigureLicence;
     /** A crop for the wide homepage card when the full figure is too detailed at that size. */
     card?: { image: ImageMetadata; alt: string };
-    chart?: { title: string; horizontalAxis: string; verticalAxis: string };
   };
   /** Further figures, placed in the Approach or Reported results section. */
   figures?: (ResearchFigure & { section: 'approach' | 'results' })[];
+  /** Stages of a running project, rendered after the approach in this order. */
+  progress?: ResearchPhase[];
 };
 
 export type Project = ResearchProject & { doi: string; code: string };
@@ -79,36 +104,175 @@ export const projects: Project[] = [
     slug: kinetics.slug,
     area: 'Wearable biomechanics',
     title: 'Estimating 3D foot kinetics from wearable signals',
-    summary: 'Estimating forces, moments, and centre of pressure from the vertical loads measured by smart insoles.',
-    question: 'How much of the force and moment profile measured by an instrumented treadmill can be recovered from insole signals?',
+    summary: 'Reconstructing 3D forces, moments, and centre of pressure from smart-insole loading and wearable motion sensors.',
+    question: 'How much of the 3D force, moment, and centre-of-pressure profile measured by an instrumented treadmill can smart insoles and wearable motion sensors recover?',
     doi: '10.1109/jbhi.2025.3605296',
     code: kinetics.repository,
-    approach: 'Ke2KeNet uses time series from 16 insole pressure sensors per foot. The study trained separate models for three force components, three moment components, and two centre-of-pressure coordinates, then compared the estimates with treadmill recordings across walking and running speeds.',
-    result: 'For the average gait cycles in Table I, the reported Pearson correlation exceeded 0.95 for all target signals except the right-foot vertical moment.',
-    measures: [
-      { value: '9', label: 'Healthy participants in cross-validation' },
-      { value: '5', label: 'Subject-independent folds' },
-      { value: '8', label: 'Estimated signals per foot' },
-    ],
-    contribution: 'I led preprocessing, model development, subject- and speed-wise evaluation, analysis, and manuscript preparation.',
+    status: 'Ongoing research',
+    context: 'Qatar University Collaborative Grant with Aspetar, building on the published Ke2Ke study',
+    period: '2023–present',
+    approach: 'Instrumented treadmills measure the full set of foot–ground kinetics but are fixed and expensive, while smart insoles are portable but mainly record vertical loading. The project trains one-dimensional sequence-reconstruction models that estimate, for each foot, three ground reaction forces, three moments, and the anterior–posterior and mediolateral centre of pressure, which gives 16 waveforms for both feet. The inputs are insole pressure, wearable motion, or both. Every model is evaluated against instrumented-treadmill references with the test participants held out of training. The sections below follow the project in order, from the published insole study to the current fusion and transfer experiments.',
+    contribution: 'I lead the project’s modelling work, from the published Ke2Ke study to the current fusion and transfer experiments. This covers preprocessing and harmonising the public datasets, developing Ke2KeNet, Km2KnNet and KineNeXt++, designing the participant-held-out evaluations, and preparing the manuscripts. The wider team is developing the sensing hardware and application.',
     evidence: {
       label: 'Wearable foot kinetics',
-      role: 'I led model development and evaluation against an instrumented treadmill.',
+      role: 'I lead the modelling work, from the published insole study to multimodal fusion and cross-device transfer.',
       finding: 'In nine healthy participants, average-cycle correlations exceeded 0.95 for all targets except the right-foot vertical moment.',
       shareImage: insoleShare,
     },
-    scope: 'The results come from nine healthy participants under controlled treadmill conditions. The plot illustrates one participant’s walking trials and shows where the estimated moment departs from the reference.',
-    ongoing: 'I’m investigating how to combine plantar sensing with inertial measurements from the foot and shank, and how well models transfer across datasets.',
-    workflow: ['Smart-insole pressure signals', 'Estimated forces and moments', 'Comparison with treadmill measurements'],
+    scope: 'Results so far come from public recordings of healthy adults on instrumented treadmills, with test participants held out. The studies report different metrics: Km2Kn and Ke2Ke correlate gait-cycle waveforms, while the conference study scores four-second windows. Numbers are therefore comparable within a study rather than across studies. The integrated wearable prototype has not yet been validated.',
+    ongoing: 'Controlled comparisons will test KineNeXt++ and a transformer-based variant, KineFusionFormer, against the U-Net baseline, including how well each copes when sensor streams or channels drop out. The team has drafted two wearable layouts that pair an instrumented insole with a foot and a shank IMU on each leg, and has fabricated a first pressure-sensing element. Its calibration, repeatability and readout electronics come next, followed by an application for synchronised recording, reconstruction and display. After the required ethics approvals, the integrated system will be validated against an instrumented treadmill in at least 30 healthy adults with Aspetar.',
+    workflow: ['Insole pressure and wearable motion', 'Reconstruct 16 kinetic waveforms', 'Compare with instrumented-treadmill references'],
     related: ['10.1007/s00521-023-09081-z', '10.3390/s22197599'],
     relatedProjects: ['multimodal-wearable-kinetics', 'kinematics-to-3d-kinetics'],
     visual: {
-      image: waveform,
-      alt: 'The estimated moment is above the treadmill mean for most of the right-foot walking cycle, with the largest separation around the middle of the cycle.',
-      caption: 'Participant 10, right foot, walking at 0.9–5.4 km/h. The black line is the treadmill mean and the red line is the Ke2KeNet estimate. Shading shows one standard deviation on either side of each mean. This example comes from the archived analysis for Figure 5b and shows a visible mid-cycle discrepancy.',
-      chart: { title: 'Mediolateral ground reaction moment', horizontalAxis: 'Gait cycle (%)', verticalAxis: 'Normalized amplitude (unitless)' },
-      credit: { label: 'Archived analysis notebook', href: 'https://github.com/Sakib1263/Unimodal-3D-Kinetics-Estimation-from-Insole-or-IMU/blob/2ffdb67e685e50068f79dfad37a7e26693e6a5ea/Combined_Insole_to_GRFM.ipynb' },
+      image: kineticsFramework,
+      alt: 'Overview diagram. Kinematics-only input from 25 Xsens-derived channels, plantar-only input from 16 insole channels per foot, and multimodal input combining both feed a common 1D reconstruction model. The model outputs bilateral 3D ground reaction forces, 3D moments and two centre-of-pressure coordinates per foot. A footer lists nine healthy adults, six walking and three running speeds, 256 Hz signals, four-second windows and held-out subjects.',
+      caption: 'Project overview from Mahmud and Bensaali’s talk at the 4th CENG Research Forum (October 2026). Wearable motion, insole loading or both are reconstructed into bilateral 3D forces, moments and centre-of-pressure trajectories.',
+      credit: { label: 'CENG Research Forum, October 2026' },
     },
+    figures: [
+      {
+        section: 'approach',
+        image: kineticsExplainer,
+        alt: 'Two-part explainer. Left, kinematics: a walking sequence with hip, knee and ankle angles over stance and swing, and an example knee flexion curve over the gait cycle. Right, plantar kinetics: a foot with vertical, anterior–posterior and medial–lateral force axes, the three moments, and a centre-of-pressure path from heel to forefoot, with an example vertical force curve over the gait cycle.',
+        caption: 'What the models estimate. Kinematics describe how the body moves. Plantar kinetics are the forces and moments at the foot–ground interface and the path of the centre of pressure. From the CENG Research Forum talk (October 2026).',
+        credit: { label: 'CENG Research Forum, October 2026' },
+      },
+    ],
+    progress: [
+      {
+        id: 'ke2ke',
+        navLabel: 'Insole loading to 3D kinetics',
+        title: 'Foundation: smart-insole loading to 3D kinetics',
+        status: 'Published · IEEE Journal of Biomedical and Health Informatics, 2026',
+        paragraphs: [
+          'Ke2KeNet maps the 16 vertical-loading channels of each Moticon insole to eight treadmill-referenced waveforms per foot. Separate one-dimensional models were trained for each output and evaluated with five subject-independent folds on nine healthy participants walking and running on an instrumented treadmill.',
+          'For the average gait cycles, Pearson correlation exceeded 0.95 for every output except the right-foot vertical moment, and the estimated vertical force was closer to the treadmill than the summed insole channels. A sensor-relevance analysis then reduced the layout from 16 to eight pressure locations per foot with broadly comparable accuracy, which now guides the prototype layout.',
+        ],
+        measures: [
+          { value: '> 0.95', label: 'Average-cycle correlation, all outputs but one' },
+          { value: '16 → 8', label: 'Pressure sensors per foot after layout analysis' },
+          { value: '9', label: 'Healthy participants, five subject-independent folds' },
+        ],
+        figures: [
+          {
+            image: ke2keGaitCycle,
+            alt: 'Two panels of gait-cycle curves, left foot above right. In (a), vertical force, the Ke2KeNet estimate follows the treadmill reference more closely than the summed insole signal through loading, midstance and unloading. In (b), mediolateral moment, the estimate captures the main peaks but departs from the reference during swing. Gait events such as heel strike, foot flat and toe off are labelled.',
+            caption: 'Figure 5 from Mahmud et al. (2026). Phase-aligned treadmill reference, summed insole loading and Ke2KeNet estimates for one participant walking at 0.9–5.4 km/h: (a) vertical force and (b) mediolateral moment. Shading shows one standard deviation.',
+            credit: sourceArticle('10.1109/jbhi.2025.3605296'),
+            licence: ieee(2025),
+          },
+          {
+            image: ke2keSensorLayout,
+            alt: 'Insole maps showing which of the 16 Moticon sensor regions are relevant to each kinetic output, a consolidated layout with eight retained sensors per foot highlighted in green, and two variance-inflation matrices before and after channel reduction.',
+            caption: 'Figure 4 from Mahmud et al. (2026). The 16-sensor Moticon layout, the sensing regions relevant to each kinetic output, the consolidated eight-sensor layout, and variance-inflation matrices before and after channel reduction.',
+            credit: sourceArticle('10.1109/jbhi.2025.3605296'),
+            licence: ieee(2025),
+          },
+        ],
+      },
+      {
+        id: 'datasets',
+        navLabel: 'Two public datasets',
+        title: 'Harmonising two public gait datasets',
+        status: 'Completed · 2026',
+        paragraphs: [
+          'The funded phase began by bringing two public gait datasets into one format. The University of Twente recordings are used for model development with participants held out. They cover nine adults with 16-cell Moticon insoles, eight Xsens IMUs and a Motek split-belt treadmill. The independent Lee and Lee dataset tests transfer to different equipment and protocols, with 12 adults, 99-cell Pedar insoles, 17 Xsens IMUs and an AMTI treadmill.',
+          'Both datasets were filtered, resampled to 256 Hz and cut into four-second windows. The source participant, trial and signal validity are recorded for every window.',
+        ],
+      },
+      {
+        id: 'km2kn',
+        navLabel: 'Kinematics only',
+        title: 'Kinematics only: which body motion carries the kinetics?',
+        status: 'Manuscript under revision',
+        paragraphs: [
+          'Km2Kn asked how much of the foot kinetics wearable motion capture can recover on its own, and which body region matters most. Of the pelvis, lumbar, hip, knee and ankle trajectories, the six bilateral ankle angles gave the best balance of accuracy and compactness. Using all 25 trajectories did not help consistently.',
+          'With those six channels, Km2KnNet reached a mean correlation of 98.21% across the eight outputs on held-out participants. That was the highest of the six architectures compared. Removing its full-scale feature fusion caused the largest drop in the ablation study.',
+        ],
+        measures: [
+          { value: '98.21%', label: 'Mean gait-cycle correlation across eight outputs' },
+          { value: '6 of 25', label: 'Motion channels needed: bilateral ankle angles' },
+        ],
+        figures: [
+          {
+            image: km2knReconstruction,
+            alt: 'Eight pairs of gait-cycle curves, one pair per kinetic output with the left foot above the right. The predicted means closely follow the treadmill means for the forces and centre of pressure, with larger gaps for some moments. Gait events are annotated.',
+            caption: 'From the Km2Kn manuscript (Mahmud et al., under revision). Gait-cycle reconstructions of the eight outputs from bilateral ankle angles. Black is the treadmill mean and red the Km2KnNet mean, with one standard deviation shaded. The vertical-force panel also shows the insole-derived force in green.',
+            credit: { label: 'Km2Kn manuscript, under revision' },
+          },
+        ],
+      },
+      {
+        id: 'multimodal-benchmark',
+        navLabel: 'Pressure, motion or both',
+        title: 'Does combining pressure and motion help?',
+        status: 'Conference paper under review',
+        paragraphs: [
+          'The first study of the funded phase compared kinematics-only, plantar-only and combined inputs with everything else fixed: the same presence-aware 1D U-Net, windows, outputs, training budget and held-out participants. The test set had 1,595 windows from nine participants.',
+          'Combined input gave the highest correlation and the lowest normalised error for every output type. Across all 16 outputs, normalised RMSE fell to 13.55% for walking and 13.00% for running, which is 7.1% and 2.6% lower than the better single modality. Plantar loading carried vertical force and centre of pressure, while kinematics carried several shear-force and moment components. The vertical moment remained the hardest output.',
+        ],
+        measures: [
+          { value: '13.55%', label: 'Walking NRMSE with combined input (7.1% lower)' },
+          { value: '13.00%', label: 'Running NRMSE with combined input (2.6% lower)' },
+          { value: '0.971', label: 'Vertical force correlation with combined input' },
+        ],
+        figures: [
+          {
+            image: dasetComparison,
+            alt: 'Paired bar charts of RMSE and Pearson correlation for eight kinetic outputs with kinematics-only, plantar-only and multimodal input. Multimodal bars have the highest correlation for every output and the lowest RMSE for seven of eight, the exception being the mediolateral moment.',
+            caption: 'Summary of the conference study from the CENG Research Forum talk (October 2026). RMSE (left) and Pearson correlation (right) for each output with kinematics-only, plantar-only and combined input. Bars show participant-balanced means and standard deviations.',
+            credit: { label: 'CENG Research Forum, October 2026' },
+          },
+        ],
+      },
+      {
+        id: 'kinenext',
+        navLabel: 'Reliability-aware fusion',
+        title: 'KineNeXt++: reliability-aware fusion',
+        status: 'In development · manuscript in preparation',
+        paragraphs: [
+          'KineNeXt++ gives kinematics and plantar loading separate temporal encoders and fuses them at several scales through a learned, presence-aware gate. The model can weigh each stream and keep working when one is missing. A nested decoder reconstructs all 16 bilateral outputs at once. For comparison, the pipeline also implements early fusion of the input channels and late averaging of single-modality predictions.',
+          'In internal experiments on the Twente data with participants held out, the fused model’s average walking gait cycles correlated with the measured averages at 0.992 to 1.000 for all 16 outputs. These correlations compare average curves rather than individual windows. Controlled comparisons against the U-Net baseline are under way.',
+        ],
+        figures: [
+          {
+            image: kinenextReconstruction,
+            alt: 'Sixteen panels of walking gait cycles: forces, moments and centre of pressure for each foot. The predicted mean curves, dashed orange, almost overlap the measured mean curves, solid blue, in every panel. Annotated mean-curve correlations range from 0.992 to 1.000.',
+            caption: 'Preliminary KineNeXt++ reconstructions from the project’s October 2026 progress report. Walking gait cycles for all 16 outputs, pooled from participant-held-out folds of nine participants. Shading shows between-participant standard deviation, and r is the correlation between the two mean curves.',
+            credit: { label: 'Unpublished project result, October 2026' },
+          },
+        ],
+      },
+      {
+        id: 'transfer',
+        navLabel: 'Transfer across devices',
+        title: 'Transferring to different insoles and sensors',
+        status: 'Preliminary results · November 2026',
+        paragraphs: [
+          'Comparing datasets recorded with different equipment needs a shared input. The project defined two portable inputs. IMU4 is six ankle angles estimated from one foot IMU and one shank IMU per leg. Anatomical8 is eight regional pressures per foot that map both the 16-cell Moticon and the 99-cell Pedar insoles onto the same anatomical regions.',
+          'Models trained on Twente were tested on ten held-out Lee and Lee participants. Forces transferred without retraining when regional pressures were included, with a correlation of 0.940 for Anatomical8. Moments did not transfer, staying below 0.2, because the two datasets define moments about different origins. Fine-tuning on one or two participants from the new dataset recovered most of the gap: correlation across all 12 compared outputs rose to 0.953–0.962 with regional pressure input and to 0.898 with IMU4 alone. Adapting only the output layers came within 0.011 of fine-tuning the whole model.',
+        ],
+        measures: [
+          { value: '0.940', label: 'Force correlation without retraining (Anatomical8)' },
+          { value: '0.962', label: 'Correlation after fine-tuning on two participants' },
+        ],
+        figures: [
+          {
+            image: anatomical8Regions,
+            alt: 'Two insole maps. The 16-cell Moticon insole and the 99-cell Pedar insole are coloured by the same eight regions: heel, lateral and medial midfoot, fifth, second-to-fourth and first metatarsal regions, lesser toes, and hallux.',
+            caption: 'Anatomical8 mapping of the 16 Moticon cells (A) and 99 Pedar cells (B) onto eight shared regions, from the project’s October 2026 progress report. Colours mark regions, not pressure.',
+            credit: { label: 'Unpublished project result, October 2026' },
+          },
+          {
+            image: transferResults,
+            alt: 'Three line charts of correlation on held-out Lee and Lee participants for IMU4, Anatomical8 and combined inputs, without retraining and after fine-tuning on one or two participants. For all 12 outputs and for moments, correlation rises steeply after fine-tuning. Forces stay high throughout for inputs that include regional pressure.',
+            caption: 'Correlation on ten held-out Lee and Lee participants for models trained on Twente, without retraining (zero-shot) and after fine-tuning on one or two participants. The panels show all 12 compared outputs, forces and moments. From the project presentation of 11 November 2026.',
+            credit: { label: 'Unpublished project result, November 2026' },
+          },
+        ],
+      },
+    ],
   },
   {
     slug: 'kidney-stone-segmentation',

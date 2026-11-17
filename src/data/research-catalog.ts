@@ -47,7 +47,7 @@ const biomechanics: ResearchProject[] = [
     title: 'Multimodal wearable estimation of 3D gait kinetics',
     summary: 'Combining wearable motion and plantar pressure to estimate forces, moments, and centre of pressure across people and sensor layouts.',
     period: 'March 2026–present', status: 'Ongoing research', context: 'Qatar University Collaborative Grant',
-    approach: 'Synchronise insole pressures with inertial measurements from the foot and shank. Map the inputs into comparable representations, then compare insole-only, motion-only and combined models against force-platform or instrumented-treadmill references. The evaluation examines held-out participants and the effect of changes in recording hardware and protocol.',
+    approach: 'Synchronise insole pressures with inertial measurements from the foot and shank. Map the inputs into comparable representations, then compare insole-only, motion-only and combined models against force-platform or instrumented-treadmill references. The evaluation examines held-out participants and the effect of changes in recording hardware and protocol. The main project page sets out each stage in order, with figures and results: the kinematics-only and multimodal benchmarks, KineNeXt++ fusion, and transfer between datasets.',
     contribution: 'I develop the preprocessing and alignment workflows, study how to combine the two modalities, and design model comparisons across participants and datasets.',
     scope: 'This work is in development. Participant-held-out evaluation and transfer between independently collected datasets address different questions about generalisation.',
     relatedProjects: ['wearable-foot-kinetics', 'kinematics-to-3d-kinetics'],

@@ -24,7 +24,7 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
   visit(parse(readFileSync(path, 'utf8')), (tag, attributes, paperId) => {
     if (tag === 'link' && attributes.rel === 'canonical') page.url = new URL(attributes.href);
     if (tag === 'figure' && 'data-figure' in attributes) page.figures++;
-    if (tag === 'a' && 'data-figure-credit' in attributes && attributes.href) page.figureCredits++;
+    if ('data-figure-credit' in attributes && (tag !== 'a' || attributes.href)) page.figureCredits++;
     if ('id' in attributes) {
       if (page.ids.has(attributes.id)) errors.push(`${key}: duplicate ID ${attributes.id}`);
       page.ids.add(attributes.id);

@@ -46,7 +46,7 @@ const gait: Collection = {
     {
       title: 'Combining plantar loading with inertial motion',
       period: 'March 2026–present',
-      description: 'The funded phase first compared loading-only, motion-only, and fused inputs using a common 1D U-Net and held-out participants. Subsequent work investigates compact motion inputs, reliability-aware fusion, and transfer across datasets and wearable configurations. The target is eight outputs per foot.',
+      description: 'The funded phase harmonised two public gait datasets, then compared loading-only, motion-only and fused inputs using a common 1D U-Net and held-out participants. Fusion lowered normalised error by 7.1% for walking and 2.6% for running. Current work develops reliability-aware fusion (KineNeXt++) and tests transfer to different insoles and sensors through compact portable inputs. The target is eight outputs per foot.',
       study: 'multimodal-wearable-kinetics',
     },
   ],

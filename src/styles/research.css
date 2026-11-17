@@ -59,8 +59,9 @@
 .research-detail .study-workflow li { font-size: .87rem; }
 .research-detail .detail-figure, .research-detail .ahn-example { margin-top: 1rem; }
 .research-detail .display-figure { margin: 0 0 var(--catalog-section-gap); }
+.catalog-section-heading .research-phase-status { color: var(--accent-strong); font-weight: 640; }
 .research-detail .display-figure img { max-height: 440px; }
-.research-detail .detail-figure img { width: 100%; }
+.research-detail .detail-figure img { width: 100%; max-height: 560px; }
 .figure-links { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-top: .38rem; }
 .result-panels { display: none; }
 .research-detail .study-measures { margin-bottom: 0; }

@@ -20,8 +20,10 @@ for (const path of ['/', '/research/', '/research/summary/', gaitProject, flagsh
 test('mobile navigation stays visible and the flagship fits at 320 pixels', async ({ page, request }) => {
   await page.setViewportSize({ width: 320, height: 780 });
   await page.goto(flagship);
-  await page.getByRole('heading', { name: 'Mediolateral ground reaction moment' }).scrollIntoViewIfNeeded();
-  await expect(page.getByText('Normalized amplitude (unitless)')).toBeVisible();
+  await expect(page.getByRole('img', { name: /^Overview diagram/ })).toBeVisible();
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText([
+    'Insole loading to 3D kinetics', 'Two public datasets', 'Kinematics only', 'Pressure, motion or both', 'Reliability-aware fusion', 'Transfer across devices',
+  ]);
   await page.getByRole('heading', { name: 'Work with the study data' }).scrollIntoViewIfNeeded();
   expect(await page.locator('.site-header').evaluate(header => header.getBoundingClientRect().top)).toBe(0);
   const viewport = await page.evaluate(() => ({ width: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }));

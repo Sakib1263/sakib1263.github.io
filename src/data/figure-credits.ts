@@ -14,6 +14,12 @@ export const elsevier = (year: number, entity: 'Ltd' | 'B.V.' = 'Ltd'): FigureLi
   href: 'https://www.elsevier.com/about/policies-and-standards/copyright',
 });
 
+/** IEEE lets authors post their own article on a personal website with the IEEE copyright notice. */
+export const ieee = (year: number): FigureLicence => ({
+  label: `© ${year} IEEE · author reuse`,
+  href: 'https://journals.ieeeauthorcenter.ieee.org/become-an-ieee-journal-author/publishing-ethics/guidelines-and-policies/post-publication-policies/',
+});
+
 /** Springer Nature lets authors reuse their own material when the journal is credited with first publication. */
 export const springer = (year: number): FigureLicence => ({
   label: `© ${year} Springer Nature · author reuse`,

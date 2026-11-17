@@ -113,9 +113,6 @@ h3 { font-size: 1.1rem; line-height: 1.35; font-weight: 680; }
 .detail-figure figcaption { padding: .72rem .94rem; background: var(--surface); border-top: 1px solid var(--border); color: var(--text-muted); font-size: .86rem; line-height: 1.45; }
 .detail-figure > .waveform-plot { padding: 1rem; background: var(--surface); gap: .35rem; }
 .waveform-plot img { width: 100%; }
-.chart-heading { width: 100%; }
-.chart-heading h3 { font: 700 1rem/1.35 var(--sans); letter-spacing: 0; }
-.waveform-plot p { color: var(--text-muted); font-size: .8rem; }
 .reproduction { margin-top: 2.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
 .reproduction p { max-width: 74ch; margin-block: .4rem .7rem; color: var(--text-muted); line-height: 1.6; }
 .run-steps { margin-block: 1.15rem 1.35rem; padding-left: 1.6rem; }
