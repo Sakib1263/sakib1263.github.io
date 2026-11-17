@@ -4,6 +4,9 @@ import {
   smartInsoleApproach, smartInsoleApproachFigures, smartInsoleNextSteps, smartInsoleProgress,
   smartInsoleVisual, smartInsoleWorkflow,
 } from './smart-insole-project';
+import {
+  kidneyApproach, kidneyApproachFigures, kidneyNextSteps, kidneyProgress, kidneyVisual, kidneyWorkflow,
+} from './kidney-project';
 
 interface Stage {
   title: string;
@@ -109,13 +112,13 @@ const insoles: Collection = {
 
 const kidney: Collection = {
   slug: 'kidney-disease-imaging',
-  visual: researchStudyFor('prenatal-hydronephrosis').visual,
+  visual: kidneyVisual,
   area: 'Medical imaging',
   title: 'Deep learning for kidney disease imaging',
-  period: '2021–2023 MSc',
-  context: 'Qatar University MSc research and follow-on publications',
-  summary: 'Investigating renal tumour classification and kidney stone segmentation on CT, and prenatal hydronephrosis grading on ultrasound.',
-  contribution: 'My MSc work spanned study design, data preparation, modelling, and evaluation. I led the kidney stone segmentation method and experiments. During my HMC appointment I also helped curate the ultrasound benchmark and developed detection and grading workflows.',
+  period: '2021–2026',
+  context: 'Qatar University MSc research and the HMC–QU–Sidra collaboration, published in three first-author Q1 journal papers',
+  summary: 'Classifying renal tumours and segmenting kidney stones on CT, and grading prenatal hydronephrosis on ultrasound.',
+  contribution: 'All three are first-author papers. The renal tumour study came from my MSc thesis, and I covered its conceptualisation, methodology, software, validation, analysis, data curation, visualisation and writing. The kidney stone study grew from the same thesis research: I designed the successive scope-reduction and feature-transfer pipeline and led model development, experiments, validation, analysis and writing. The hydronephrosis study came from the HMC–QU–Sidra collaboration. As its research assistant I coordinated ethics approval and data acquisition, curated the ultrasound benchmark, developed the detection, segmentation and grading pipeline with KUSNet and PHCNet, and drafted the manuscript.',
   scope: 'The three studies address different clinical questions and use different cohorts and endpoints. The hydronephrosis study was supported by a separate HMC internal grant and also contributed to my MSc thesis.',
   stages: [
     {
@@ -126,8 +129,8 @@ const kidney: Collection = {
     },
     {
       title: 'Prenatal hydronephrosis detection and severity grading',
-      period: '2024 issue · Online 2023',
-      description: 'Hamad Medical Corporation, Qatar University, and Sidra Medicine contributed to the clinical collaboration. The study used the HMC-QU-AHN ultrasound benchmark and evaluated detection, segmentation of kidney and fluid regions, and severity grading.',
+      period: '2024',
+      description: 'Hamad Medical Corporation, Qatar University, and Sidra Medicine contributed to the clinical collaboration. The study used the QU–HMC–AHN ultrasound benchmark and evaluated kidney-region detection, kidney segmentation, and severity grading.',
       study: 'prenatal-hydronephrosis',
     },
     {
@@ -138,6 +141,12 @@ const kidney: Collection = {
     },
   ],
   resources: [{ label: 'Read the MSc thesis', href: 'https://qspace.qu.edu.qa/handle/10576/45080' }],
+  approach: kidneyApproach,
+  workflow: kidneyWorkflow,
+  approachFigures: kidneyApproachFigures,
+  progress: kidneyProgress,
+  ongoing: kidneyNextSteps,
+  related: ['multiphase-liver-ct'],
 };
 
 const raman: Collection = {
