@@ -1,12 +1,10 @@
+import { normalizeSearch } from './search';
+
 const form = document.querySelector<HTMLFormElement>('[data-publication-filters]');
 const count = document.querySelector<HTMLElement>('[data-publication-count]');
 const empty = document.querySelector<HTMLElement>('[data-publication-empty]');
 const chronological = document.querySelector<HTMLElement>('[data-publication-chronological]');
 if (form && count && empty && chronological) initializeFilters(form, count, empty, chronological);
-
-function normalizeSearch(text: string) {
-  return text.normalize('NFKD').replace(/\p{M}/gu, '').toLowerCase().replace(/[^\p{L}\p{N}]+/gu, ' ').trim();
-}
 
 function findDoi(query: string, dois: Set<string>) {
   let decoded = query;
@@ -28,6 +26,9 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
   const fields = [...form.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[name]')];
   const search = form.querySelector<HTMLInputElement>('[name="query"]');
   const advanced = form.querySelector<HTMLDetailsElement>('[data-publication-advanced]');
+  const fullBibtex = document.querySelector<HTMLAnchorElement>('[data-bibtex-full]');
+  const filteredBibtex = document.querySelector<HTMLButtonElement>('[data-bibtex-filtered]');
+  const bibtexError = document.querySelector<HTMLElement>('[data-bibtex-error]');
   const narrow = matchMedia('(max-width: 620px)');
   const topicLinks = [...document.querySelectorAll<HTMLAnchorElement>('[data-topic-link]')];
   const groups = [...document.querySelectorAll<HTMLElement>('[data-publication-group]')].map(section => ({
@@ -52,6 +53,7 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
       || (right.dataset.date ?? '').localeCompare(left.dataset.date ?? ''));
   let searchHistoryEntry = false;
   let newest = false;
+  let bibliography: Map<string, string> | undefined;
 
   function arrangePapers(showNewest: boolean) {
     if (showNewest === newest) return;
@@ -94,6 +96,11 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
       matches += visible;
     }
     count.textContent = matches === total ? `${total} publications` : `${matches} of ${total} publications`;
+    if (filteredBibtex) {
+      const filtered = Boolean(words.length || topic || year || type || selectedOnly || firstAuthorOnly);
+      filteredBibtex.hidden = !filtered || matches === 0;
+    }
+    if (bibtexError) bibtexError.hidden = true;
     chronological.hidden = !newest || matches === 0;
     empty.hidden = matches > 0;
     for (const link of topicLinks) {
@@ -150,6 +157,45 @@ function initializeFilters(form: HTMLFormElement, count: HTMLElement, empty: HTM
   function filtersChanged(mode: 'push' | 'replace') {
     applyFilters();
     return writeUrl(mode, true);
+  }
+
+  if (fullBibtex && filteredBibtex && bibtexError) {
+    filteredBibtex.addEventListener('click', async () => {
+      const keys = [...document.querySelectorAll<HTMLElement>('[data-publication]:not([hidden])')]
+        .map(row => row.dataset.bibtexKey ?? '');
+      if (!keys.length) return;
+      filteredBibtex.disabled = true;
+      bibtexError.hidden = true;
+      try {
+        if (!bibliography) {
+          const response = await fetch(fullBibtex.href);
+          if (!response.ok) throw new Error('Could not load bibliography');
+          const entries = new Map<string, string>();
+          for (const entry of (await response.text()).trim().split(/\r?\n\r?\n(?=@)/)) {
+            const match = /^@\w+\{([^,]+),/.exec(entry);
+            if (!match) throw new Error('Invalid bibliography entry');
+            entries.set(match[1], entry);
+          }
+          if (entries.size !== total) throw new Error('Incomplete bibliography');
+          bibliography = entries;
+        }
+        const entries = keys.map(key => bibliography?.get(key));
+        if (entries.some(entry => !entry)) throw new Error('Missing publication entry');
+        const url = URL.createObjectURL(new Blob([entries.join('\n\n') + '\n'], { type: 'text/plain;charset=utf-8' }));
+        const download = document.createElement('a');
+        download.href = url;
+        download.download = 'publications-filtered.bib';
+        document.body.append(download);
+        download.click();
+        download.remove();
+        window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+      } catch {
+        bibtexError.textContent = 'The filtered download failed. Try again or download all publications.';
+        bibtexError.hidden = false;
+      } finally {
+        filteredBibtex.disabled = false;
+      }
+    });
   }
 
   form.hidden = false;

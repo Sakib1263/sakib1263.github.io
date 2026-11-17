@@ -39,6 +39,7 @@
 }
 
 .catalog-layout.content-end { padding-bottom: clamp(1.65rem, 3.5vw, 2.6rem); }
+.empty-state { border-top: 1px solid var(--border); color: var(--text-muted); padding-top: 1rem; }
 
 .catalog-index {
   position: sticky;

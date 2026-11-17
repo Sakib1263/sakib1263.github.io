@@ -60,6 +60,52 @@ test('research areas lead to project details, supporting publications, and ongoi
   expect(context.pages()).toEqual([page]);
 });
 
+test('wider text spacing keeps navigation and section targets visible at 320 pixels', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.goto('/');
+  await page.addStyleTag({ content: `
+    * { line-height: 1.5 !important; letter-spacing: .12em !important; word-spacing: .16em !important; }
+    p { margin-bottom: 2em !important; }
+  ` });
+  const navigation = page.getByRole('navigation', { name: 'Main navigation' });
+  const cv = navigation.getByRole('link', { name: 'CV', exact: true });
+  await expect(cv).toBeInViewport({ ratio: 1 });
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  await expect.poll(() => page.evaluate(() => {
+    const header = document.querySelector('.site-header')!;
+    return parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) - header.getBoundingClientRect().height;
+  })).toBeGreaterThanOrEqual(9);
+  await page.getByRole('link', { name: 'Explore research' }).click();
+  await expect(page).toHaveURL('/#current-research');
+  const header = await page.locator('.site-header').boundingBox();
+  const target = await page.locator('#current-research').boundingBox();
+  expect(target!.y).toBeGreaterThan(header!.y + header!.height);
+});
+
+test('research search matches methods, updates areas, and restores the catalogue', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.goto('/research/#project-catalog');
+  const form = page.getByRole('form', { name: 'Filter research projects' });
+  const search = form.getByRole('searchbox', { name: 'Search projects' });
+  const areas = page.getByRole('navigation', { name: 'Research areas', exact: true });
+  await expect(form.getByRole('status')).toHaveText('42 projects');
+  await search.fill('Instrumented treadmill');
+  await expect(page.locator('#wearable-foot-kinetics')).toBeVisible();
+  await search.fill('Döppler');
+  await expect(page.locator('#qscare-doppler-flow')).toBeVisible();
+  await expect(page.locator('#cross-device-raman')).toBeHidden();
+  await expect(form.getByRole('status')).toHaveText(/^[1-9]\d* of 42 projects$/);
+  await expect(areas.getByRole('link', { name: /Raman/ })).toHaveCount(0);
+  await search.fill('no such research project xyz');
+  await expect(form.getByRole('status')).toHaveText('0 of 42 projects');
+  await expect(page.getByText('Try a different project name, method, or modality.')).toBeVisible();
+  await form.getByRole('button', { name: 'Clear search' }).click();
+  await expect(form.getByRole('status')).toHaveText('42 projects');
+  await expect(search).toBeFocused();
+  await page.locator('#cross-device-raman').getByRole('heading').getByRole('link').click();
+  await expect(page).toHaveURL('/research/cross-device-raman/');
+});
+
 test('the research profile displays its saved Google Scholar metrics and yearly chart', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 780 });
   const saved = JSON.parse(readFileSync(new URL('../src/data/google-scholar.json', import.meta.url), 'utf8'));
@@ -98,6 +144,9 @@ test('featured research opens evidence and a distinct share card', async ({ page
     images.add(url.pathname);
   }
   expect(images.size).toBe(3);
+  const disclosure = page.getByRole('region', { name: 'Code and reproduction', exact: true });
+  await expect(disclosure).toContainText('61.5 million parameters');
+  await expect(disclosure.getByRole('link', { name: 'Synthetic demo notebook' })).toHaveAttribute('href', /52285ba\w+\/notebooks\/00_control_center\.ipynb$/);
   const panels = page.getByRole('group', { name: /compare the original and transformed mean spectra/ });
   await expect(panels).toBeVisible();
   await expect(panels.getByRole('img')).toHaveCount(2);
@@ -262,7 +311,7 @@ test('the CV highlights education and provides a navigable experience timeline o
 test('the publications page downloads the complete BibTeX file', async ({ page }) => {
   await page.goto('/publications/');
   const downloaded = page.waitForEvent('download');
-  await page.getByRole('link', { name: 'Download BibTeX' }).click();
+  await page.getByRole('link', { name: 'Download all publications (BibTeX)' }).click();
   const file = await downloaded;
   expect(file.suggestedFilename()).toBe('publications.bib');
   const downloadStream = await file.createReadStream();
@@ -273,6 +322,28 @@ test('the publications page downloads the complete BibTeX file', async ({ page }
   expect(bibliography).toContain('isbn = {978-981-97-3302-6}');
   expect(bibliography).toContain('editor = {Yang, Xin-She and Sherratt, Simon and Dey, Nilanjan and Joshi, Amit}');
   expect(bibliography).toContain('eid = {130241}');
+});
+
+test('filtered BibTeX contains the exact visible result set', async ({ page }) => {
+  await page.goto('/publications/?topic=imaging&author=first&sort=newest#bibliography');
+  const filtered = page.getByRole('button', { name: 'Download filtered results (BibTeX)' });
+  await expect(filtered).toBeEnabled();
+  await expect(page.getByRole('heading', { name: 'Newest by issue date' })).toBeVisible();
+  const rows = await page.locator('[data-publication]:visible').evaluateAll(matches =>
+    matches.map(match => (match as HTMLElement).dataset.doi),
+  );
+  expect(rows.length).toBeGreaterThan(0);
+  expect(rows.length).toBeLessThan(61);
+  const event = page.waitForEvent('download');
+  await filtered.click();
+  const download = await event;
+  expect(download.suggestedFilename()).toBe('publications-filtered.bib');
+  const contents = readFileSync((await download.path())!, 'utf8');
+  expect([...contents.matchAll(/^  doi = \{([^}]+)\},$/gm)].map(match => match[1])).toEqual(rows);
+  await page.getByRole('searchbox', { name: 'Search' }).fill('xyzy-no-paper-here');
+  await expect(filtered).toBeHidden();
+  await page.getByRole('button', { name: 'Clear filters' }).click();
+  await expect(filtered).toBeHidden();
 });
 
 test('publication themes and selected filters remain shareable', async ({ page }) => {

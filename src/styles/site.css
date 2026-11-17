@@ -129,8 +129,9 @@ h3 { font-size: 1.1rem; line-height: 1.35; font-weight: 680; }
 }
 
 @media (max-width: 360px) {
-  .masthead nav { gap: 0; flex-wrap: nowrap; }
-  .masthead nav a { padding-inline: .13rem; font-size: .76rem; white-space: nowrap; }
+  :root { --header-offset: 9.5rem; }
+  .masthead nav { gap: .08rem .2rem; }
+  .masthead nav a { padding-inline: .13rem; font-size: .76rem; }
 }
 
 @media print {

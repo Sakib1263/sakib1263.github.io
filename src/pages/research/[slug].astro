@@ -6,6 +6,7 @@ import KineticsReproduction from '../../components/KineticsReproduction.astro';
 import HydronephrosisExample from '../../components/HydronephrosisExample.astro';
 import { datasetsByStudy } from '../../data/datasets';
 import { kinetics } from '../../data/kinetics';
+import { ramanSource } from '../../data/raman';
 import { openFullText, publicationFor, publicationId } from '../../data/papers';
 import { researchProjectFor, researchProjects } from '../../data/research-catalog';
 import type { ResearchProject } from '../../data/research';
@@ -29,6 +30,7 @@ const relatedPapers = (project.related ?? []).map(publicationFor);
 const relatedProjects = (project.relatedProjects ?? []).map(researchProjectFor);
 const imageWidth = visual ? Math.min(visual.image.width, 960) : 0;
 const workflowAvailable = project.slug === kinetics.slug;
+const isRamanCase = project.slug === ramanSource.slug;
 const hasResults = Boolean(project.result || project.measures?.length);
 const sections = [
   { id: 'approach', label: 'Approach' },
@@ -58,7 +60,7 @@ const sections = [
       {(paper || project.code || project.resources?.length) && <div class="actions">
         {paper && <SiteLink class="button button-primary" href={doiUrl(paper.doi)}>Read the paper <span aria-hidden="true">↗</span></SiteLink>}
         {fullText && <SiteLink class="text-link" href={fullText}>Open full text <span aria-hidden="true">↗</span></SiteLink>}
-        {project.code && <SiteLink class="button button-secondary" href={project.code}>Source code <span aria-hidden="true">↗</span></SiteLink>}
+        {project.code && <SiteLink class="button button-secondary" href={isRamanCase ? ramanSource.source : project.code}>{isRamanCase ? 'Recovered source code' : 'Source code'} <span aria-hidden="true">↗</span></SiteLink>}
         {project.resources?.map(({ label, href }) => <SiteLink class="text-link" href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
         {dataset && <>
           <SiteLink class="text-link" href={sitePath(`software/#${dataset.id}`)}>Dataset details</SiteLink>
@@ -67,6 +69,14 @@ const sections = [
         {workflowAvailable && <SiteLink class="text-link" href="#reproduce">Run the workflow</SiteLink>}
         {paper && <SiteLink class="text-link" data-project-citation href={sitePath(`publications/#${publicationId(paper.doi)}`)}>Citation</SiteLink>}
       </div>}
+      {isRamanCase && <section class="research-code-note" aria-labelledby="raman-code-title">
+        <h2 id="raman-code-title">Code and reproduction</h2>
+        <p>The recovered translator has 61.5 million parameters. The paper reports 6.15 million. The synthetic CPU demo exercises four small translators and a classifier. Reproducing the reported results requires matching the published architecture and evaluation protocol. Paper-trained weights are unavailable.</p>
+        <div class="catalog-actions">
+          <SiteLink href={ramanSource.notebook}>Synthetic demo notebook <span aria-hidden="true">↗</span></SiteLink>
+          <SiteLink href={ramanSource.alignment}>Paper and code comparison <span aria-hidden="true">↗</span></SiteLink>
+        </div>
+      </section>}
     </header>
 
     <div class="catalog-layout content-end">

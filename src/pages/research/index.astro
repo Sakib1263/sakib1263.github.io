@@ -28,21 +28,33 @@ import '../../styles/research.css';
 
     <p class="research-direction">I’m now testing <SiteLink href={sitePath('research/multimodal-wearable-kinetics/')}>gait models that combine pressure and motion</SiteLink> and studying <SiteLink href={sitePath('research/multiphase-liver-ct/')}>how CT contrast phases affect liver and tumour segmentation</SiteLink>. Both projects ask how well a model transfers when the people, data, or acquisition conditions change.</p>
 
-    <div class="catalog-layout content-end" id="project-catalog">
-      <nav class="catalog-index research-index" aria-label="Research areas">
+    <div id="project-catalog">
+      <form class="research-search" aria-label="Filter research projects" data-research-search hidden>
+        <div class="research-search-controls">
+          <label>Search projects
+            <input type="search" name="query" placeholder="Project, method, or modality" autocomplete="off" />
+          </label>
+          <button class="button button-secondary" type="reset" hidden>Clear search</button>
+        </div>
+        <p class="research-search-count" role="status" data-research-count>{researchProjects.length} projects</p>
+      </form>
+    </div>
+    <div class="catalog-layout content-end" data-research-catalog>
+      <nav class="catalog-index research-index" aria-label="Research areas" data-research-areas>
         <h2>Research areas</h2>
         <ul>
           {researchGroups.map(({ id, title, projects }) => (
-            <li>
-              <SiteLink href={`#${id}`}><span>{title}</span><span class="catalog-count" aria-hidden="true">{projects.length}</span></SiteLink>
+            <li data-research-area={id}>
+              <SiteLink href={`#${id}`}><span>{title}</span><span class="catalog-count" aria-hidden="true" data-area-count>{projects.length}</span></SiteLink>
             </li>
           ))}
         </ul>
       </nav>
 
       <div class="research-catalog">
+        <p class="empty-state" data-research-empty hidden>Try a different project name, method, or modality.</p>
         {researchGroups.map(({ id, title, description, projects }) => (
-          <section class="research-group" aria-labelledby={id}>
+          <section class="research-group" aria-labelledby={id} data-research-group={id}>
             <header class="catalog-section-heading">
               <h2 id={id}>{title}</h2>
               <p>{description}</p>
@@ -52,7 +64,8 @@ import '../../styles/research.css';
               const dataset = project.doi && datasetsByStudy.get(project.doi);
               const period = project.period || (paper && `${paper.year}${paper.onlineYear ? ` · Online ${paper.onlineYear}` : ''}`);
               return (
-                <article class="catalog-entry research-entry" id={project.slug}>
+                <article class="catalog-entry research-entry" id={project.slug} data-research-project-row
+                  data-methods={[project.question, project.approach, project.scope].filter(Boolean).join(' ')}>
                   <div class="catalog-meta">
                     {period && <span class="research-period">{period}</span>}
                     {project.status && <span class="research-status">{project.status}</span>}
@@ -76,3 +89,7 @@ import '../../styles/research.css';
     </div>
   </div>
 </Base>
+
+<script>
+  import '../../scripts/research-search';
+</script>

@@ -48,6 +48,10 @@ export function publicationId(doi: string) {
   return `paper-${doi.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`;
 }
 
+export function bibtexKey(doi: string) {
+  return doi.replace(/[^\w]+/g, '-');
+}
+
 type Publication = (typeof publications)[number];
 
 export function citationText(publication: Publication) {

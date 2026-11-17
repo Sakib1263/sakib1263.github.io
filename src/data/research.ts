@@ -7,6 +7,7 @@ import insoleShare from '../assets/share/wearable-foot-kinetics.jpg';
 import kidneyShare from '../assets/share/kidney-stone-segmentation.jpg';
 import ramanShare from '../assets/share/cross-device-raman.jpg';
 import { kinetics } from './kinetics';
+import { ramanSource } from './raman';
 import { thesisUrl } from './papers';
 
 type ResearchLink = { label: string; href: string };
@@ -116,13 +117,13 @@ export const projects: Project[] = [
     },
   },
   {
-    slug: 'cross-device-raman',
+    slug: ramanSource.slug,
     area: 'Spectroscopic sensing',
     title: 'Cross-device Raman spectroscopy',
     summary: 'Aligning spectra from portable Raman instruments to a laboratory reference for bacterial analyte classification.',
     question: 'Can spectra recorded on different instruments support more consistent recognition of the same analyte classes?',
     doi: '10.1016/j.saa.2025.126931',
-    code: 'https://github.com/Sakib1263/SERS-D2DNet-SuperRaman',
+    code: ramanSource.repository,
     context: 'Qatar University · Qatar National Research Fund-supported bacterial diagnostics research',
     approach: 'SERS-D2DNet transforms spectra from four portable devices toward a Renishaw reference. The study then uses SuperRaman to classify the original and transformed spectra across 20 analyte classes, using 50 spectra per class to train the classifiers.',
     result: 'Classification accuracy increased after transformation for all four portable devices in Table 5. The largest gains were for Enwave and Rapid ID.',

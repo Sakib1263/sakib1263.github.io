@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { publications } from '../data/papers';
+import { bibtexKey, publications } from '../data/papers';
 import { doiUrl } from '../lib/site';
 
 const types = {
@@ -46,7 +46,7 @@ type BibliographicDetails = {
 export const GET: APIRoute = () => {
   const entries = publications.map(publication => {
     const type = types[publication.type as keyof typeof types];
-    const key = publication.doi.replace(/[^\w]+/g, '-');
+    const key = bibtexKey(publication.doi);
     const details: BibliographicDetails = publication.bibliography;
     const month = months[Number(details.date?.slice(5, 7)) - 1];
     const bookTitle = [publication.venue, details.bookSubtitle].filter(Boolean).join(': ');

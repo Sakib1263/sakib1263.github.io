@@ -126,7 +126,6 @@
 }
 
 .result-count { color: var(--text); font-weight: 650; }
-.empty-state { border-top: 1px solid var(--border); color: var(--text-muted); padding-top: 1rem; }
 .publication-group:not([hidden]) ~ .publication-group:not([hidden]) { margin-top: var(--catalog-section-gap); }
 
 .publication-year { color: var(--text); font-size: .96rem; font-weight: 700; }
