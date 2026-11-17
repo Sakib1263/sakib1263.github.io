@@ -1,6 +1,7 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
 import { kinetics } from '../data/kinetics';
+import { sitePath } from '../lib/site';
 ---
 
 <section class="reproduction" id="reproduce" aria-labelledby="reproduce-title">
@@ -21,8 +22,9 @@ import { kinetics } from '../data/kinetics';
       <p>The command prints <code>Saved run: …/runs/demo_Fy_LL_UNet_…</code>. Open that directory and check that <code>status.json</code> reports <code>"status": "complete"</code>. The run also writes <code>summary.json</code> and fold-level predictions. Those results describe synthetic inputs.</p>
     </li>
   </ol>
+  <p><strong>Verified on CPU.</strong> A fresh checkout of {kinetics.version} completed the synthetic fold and produced finite reference and prediction arrays. The <SiteLink href={sitePath(kinetics.verificationPath)}>demo verification record</SiteLink> lists the tested versions, completion status, and expected array shape.</p>
   <h3>Work with the study data</h3>
-  <p>Huawei Wang’s <SiteLink href={kinetics.dataUrl}>processed treadmill and insole recordings</SiteLink> are publicly downloadable. Use the <SiteLink href={kinetics.dataGuide}>data preparation guide</SiteLink> to create the expected input files. Then inspect the target, scale, and participant splits before training.</p>
+  <p>Huawei Wang’s <SiteLink href={kinetics.dataUrl}>processed treadmill and insole recordings</SiteLink> are publicly downloadable. Use the <SiteLink href={kinetics.dataGuide}>data preparation guide</SiteLink> to create the expected input files. To reproduce the article evaluation, match the preprocessing, target scaling and participant folds described in the study.</p>
   <pre><code>{kinetics.inspect}</code></pre>
-  <p>The release contains the maintained workflow. The article’s training-ready exports and pretrained checkpoints are separate from the release.</p>
+  <p>The article’s training-ready exports and pretrained checkpoints are separate from the release. The verification record covers synthetic inputs only.</p>
 </section>

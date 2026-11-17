@@ -24,6 +24,8 @@
 .research-detail .study-workflow li { font-size: .87rem; }
 .research-detail .detail-figure, .research-detail .ahn-example { margin-top: 1rem; }
 .research-detail .detail-figure img { width: 100%; }
+.figure-links { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-top: .38rem; }
+.result-panels { display: none; }
 .research-detail .study-measures { margin-bottom: 0; }
 .research-detail .related-papers li { padding-inline: .25rem; }
 .research-detail .related-papers small { display: block; margin-top: .2rem; color: var(--text-muted); }
@@ -33,4 +35,9 @@
   .research-entry { grid-template-columns: minmax(0, 1fr); }
   .research-index a { min-width: 0; }
   .research-index a span:first-child { overflow-wrap: anywhere; }
+  .result-figure .result-overview { display: none; }
+  .result-panels { display: grid; gap: .5rem; }
+  .result-panels > div { display: flex; overflow: hidden; }
+  .result-panels > div:last-child { justify-content: flex-end; }
+  .research-detail .result-panels img { width: 203%; max-width: none; flex: none; }
 }

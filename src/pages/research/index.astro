@@ -17,6 +17,7 @@ import '../../styles/research.css';
       <h1>Research</h1>
       <p class="page-lead">I develop methods to recover biomedical measurements from images and sensor signals. My work examines how well those methods transfer across people, instruments, and datasets.</p>
       <p class="research-intro-detail">{researchProjects.length} projects across {researchGroups.length} research areas</p>
+      <div class="actions"><SiteLink class="button button-secondary" href={sitePath('research/summary/')}>Research summary</SiteLink></div>
       <nav class="quick-study-links" aria-label="Featured research shortcuts">
         {caseStudyProjects.map(({ slug, evidence, title }) => <SiteLink href={sitePath(`research/${slug}/`)}>{evidence?.label ?? title}</SiteLink>)}
         <SiteLink href="#project-catalog">Jump to projects <span aria-hidden="true">↓</span></SiteLink>

@@ -5,7 +5,7 @@ import { readFileSync } from 'node:fs';
 const flagship = '/research/wearable-foot-kinetics/';
 const paperId = 'paper-10-1109-jbhi-2025-3605296';
 
-for (const path of ['/', '/research/', flagship, '/research/prenatal-hydronephrosis/', '/publications/', '/cv/', '/software/']) {
+for (const path of ['/', '/research/', '/research/summary/', flagship, '/research/cross-device-raman/', '/research/prenatal-hydronephrosis/', '/publications/', '/cv/', '/software/']) {
   test(`checks accessibility at ${path}`, async ({ page }) => {
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready.then(() => true));
@@ -16,7 +16,7 @@ for (const path of ['/', '/research/', flagship, '/research/prenatal-hydronephro
   });
 }
 
-test('mobile navigation stays visible and the flagship fits at 320 pixels', async ({ page }) => {
+test('mobile navigation stays visible and the flagship fits at 320 pixels', async ({ page, request }) => {
   await page.setViewportSize({ width: 320, height: 780 });
   await page.goto(flagship);
   await page.getByRole('heading', { name: 'Mediolateral ground reaction moment' }).scrollIntoViewIfNeeded();
@@ -25,6 +25,15 @@ test('mobile navigation stays visible and the flagship fits at 320 pixels', asyn
   expect(await page.locator('.site-header').evaluate(header => header.getBoundingClientRect().top)).toBe(0);
   const viewport = await page.evaluate(() => ({ width: document.documentElement.clientWidth, content: document.documentElement.scrollWidth }));
   expect(viewport.content).toBeLessThanOrEqual(viewport.width);
+  const record = await page.getByRole('link', { name: 'demo verification record' }).getAttribute('href');
+  const response = await request.get(record!);
+  expect(response.ok()).toBe(true);
+  expect(await response.json()).toMatchObject({
+    release: 'v0.1.0',
+    status_json: { status: 'complete', folds_completed: [1] },
+    summary_checks: { synthetic_only: true },
+    predictions: { shape_each: [8, 64, 1], all_values_finite: true },
+  });
 });
 
 test('research areas lead to project details, supporting publications, and ongoing work', async ({ page, context }) => {
@@ -89,7 +98,12 @@ test('featured research opens evidence and a distinct share card', async ({ page
     images.add(url.pathname);
   }
   expect(images.size).toBe(3);
-  await expect(page.getByRole('img', { name: /compare the original and transformed mean spectra/ })).toBeVisible();
+  const panels = page.getByRole('group', { name: /compare the original and transformed mean spectra/ });
+  await expect(panels).toBeVisible();
+  await expect(panels.getByRole('img')).toHaveCount(2);
+  const fullSize = page.getByRole('link', { name: 'View full-size figure' }).last();
+  const fullSizeUrl = await fullSize.getAttribute('href');
+  expect((await request.get(fullSizeUrl!)).headers()['content-type']).toMatch(/^image\//);
 });
 
 test('project and paper links round-trip and the citation copies', async ({ page, context }) => {
@@ -106,8 +120,19 @@ test('project and paper links round-trip and the citation copies', async ({ page
   await page.getByRole('combobox', { name: 'Topic', exact: true }).selectOption('imaging');
   await expect(paper).toBeHidden();
   await page.getByRole('button', { name: 'Clear filters' }).click();
-  await paper.getByRole('link', { name: 'Project summary' }).click();
+  await paper.getByRole('link', { name: 'Research project', exact: true }).click();
   await expect(page).toHaveURL(flagship);
+});
+
+test('the research summary links to the case studies and ongoing work', async ({ page }) => {
+  await page.setViewportSize({ width: 320, height: 780 });
+  await page.goto('/research/');
+  await page.getByRole('link', { name: 'Research summary', exact: true }).click();
+  await expect(page).toHaveURL('/research/summary/');
+  await expect(page.getByRole('heading', { name: 'Research summary', exact: true })).toBeVisible();
+  await expect(page.getByRole('region', { name: 'Selected research contributions' }).getByRole('article')).toHaveCount(3);
+  await expect(page.getByRole('region', { name: 'Current research questions' }).getByRole('article')).toHaveCount(2);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
 });
 
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
@@ -130,6 +155,9 @@ test('dataset records link to their release and companion paper', async ({ page,
   await expect(listing.getByRole('article')).toHaveCount(3);
   await expect(listing.getByText('Processed treadmill and insole recordings')).toHaveCount(0);
   await expect(listing.getByText('Access by request')).toBeVisible();
+  for (const license of ['CC BY 4.0', 'CC BY-SA 4.0', 'CC0 1.0']) {
+    await expect(listing.getByRole('link', { name: license, exact: true })).toBeVisible();
+  }
 
   const covid = page.locator('#covid-qu-ex');
   const archive = covid.getByRole('link', { name: 'Kaggle record for COVID-QU-Ex Dataset' });

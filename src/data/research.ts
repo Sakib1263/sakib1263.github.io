@@ -34,7 +34,7 @@ export type ResearchProject = {
   related?: string[];
   relatedProjects?: string[];
   resources?: ResearchLink[];
-  resultVisual?: { image: ImageMetadata; alt: string; caption: string; source: ResearchLink };
+  resultVisual?: { image: ImageMetadata; alt: string; caption: string; source: ResearchLink; mobileColumns?: [string, string] };
   visual?: {
     image: ImageMetadata;
     alt: string;
@@ -143,7 +143,8 @@ export const projects: Project[] = [
     resultVisual: {
       image: ramanComparison,
       alt: 'Four panels compare the original and transformed mean spectra with the Renishaw reference. Shaded bands show one standard deviation.',
-      caption: 'Figure 4a from Mahmud et al. (2026), cropped to the four device-level comparisons. Green shows the original spectra, red the transformed spectra, and black the Renishaw reference. Shading shows one standard deviation. CC BY 4.0.',
+      mobileColumns: ['Enwave and Rapid ID', 'Tec5 and First Defender'],
+      caption: 'Figure 4a from Mahmud et al. (2026), cropped to the four device-level comparisons. After transformation, the mean spectra follow the Renishaw reference more closely in these comparisons. Green shows the original spectra, red the transformed spectra, and black the reference. Shading shows one standard deviation. Raman shift in cm⁻¹. CC BY 4.0.',
       source: { label: 'Published figure and license', href: 'https://manara.qnl.qa/articles/journal_contribution/Deep_learning-based_cross-device_standardization_of_surface-enhanced_Raman_spectroscopy_for_enhanced_bacterial_recognition/30664580' },
     },
     visual: {

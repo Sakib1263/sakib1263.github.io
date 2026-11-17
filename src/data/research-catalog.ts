@@ -426,6 +426,15 @@ export const researchGroups = [
 
 export const researchProjects = researchGroups.flatMap(group => group.projects);
 
+export const researchProjectsByDoi = new Map<string, ResearchProject[]>();
+for (const project of researchProjects) {
+  if (!project.doi) continue;
+  const doi = project.doi.toLowerCase();
+  const matches = researchProjectsByDoi.get(doi) ?? [];
+  matches.push(project);
+  researchProjectsByDoi.set(doi, matches);
+}
+
 export function researchProjectFor(slug: string) {
   const project = researchProjects.find(item => item.slug === slug);
   if (!project) throw new Error(`Unknown research project: ${slug}`);

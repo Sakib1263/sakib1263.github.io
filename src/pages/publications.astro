@@ -6,7 +6,8 @@ import {
   citationText, displayAuthor, openFullText, paperResources,
   publicationId, publications, publicationDetails, selectedPapers, topicDescriptions, topics,
 } from '../data/papers';
-import { caseStudyProjects, projects } from '../data/research';
+import { caseStudyProjects } from '../data/research';
+import { researchProjectsByDoi } from '../data/research-catalog';
 import journalData from '../data/journal-metrics.json';
 import { doiUrl, profile, researchProfiles, sitePath } from '../lib/site';
 import '../styles/catalog.css';
@@ -21,7 +22,6 @@ const clusters = topicList.map(topic => ({
   description: topicDescriptions[topic],
   papers: publications.filter(paper => paper.topic === topic),
 }));
-const projectsByDoi = new Map(projects.map(project => [project.doi, project]));
 const selectedDois = new Set(selectedPapers.map(({ publication }) => publication.doi));
 const journalMetrics: Readonly<Record<string, {
   quartile?: string;
@@ -131,7 +131,8 @@ const journalMetrics: Readonly<Record<string, {
               </header>
               {cluster.papers.map(publication => {
                 const id = publicationId(publication.doi);
-                const project = projectsByDoi.get(publication.doi);
+                const projects = researchProjectsByDoi.get(publication.doi.toLowerCase()) ?? [];
+                const codeLinks = [...new Set(projects.flatMap(project => project.code ? [project.code] : []))];
                 const dataset = datasetsByStudy.get(publication.doi);
                 const { summary, contribution } = publicationDetails(publication.doi);
                 const metrics = journalMetrics[publication.bibliography.issn ?? ''];
@@ -171,7 +172,12 @@ const journalMetrics: Readonly<Record<string, {
                         </span>
                       </p>
                       <div class="catalog-actions">
-                        {project && <><SiteLink href={sitePath(`research/${project.slug}/`)}>Project summary</SiteLink><SiteLink href={project.code}>Code <span aria-hidden="true">↗</span></SiteLink></>}
+                        {projects.map(project => (
+                          <SiteLink data-research-project={id} href={sitePath(`research/${project.slug}/`)}>
+                            {projects.length === 1 ? 'Research project' : project.title}
+                          </SiteLink>
+                        ))}
+                        {codeLinks.map(href => <SiteLink href={href}>Code <span aria-hidden="true">↗</span></SiteLink>)}
                         {openFullText[publication.doi] && <SiteLink href={openFullText[publication.doi]}>Open full text <span aria-hidden="true">↗</span></SiteLink>}
                         {paperResources[publication.doi]?.map(({ label, href }) => <SiteLink href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
                         {dataset && <>

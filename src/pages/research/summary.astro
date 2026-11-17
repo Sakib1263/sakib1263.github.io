@@ -1,0 +1,80 @@
+---
+import SiteLink from '../../components/SiteLink.astro';
+import Base from '../../layouts/Base.astro';
+import { caseStudyProjects, currentResearch } from '../../data/research';
+import { doiUrl, profile, sitePath } from '../../lib/site';
+import '../../styles/catalog.css';
+
+const evidence = caseStudyProjects.flatMap(project =>
+  project.evidence ? [{ project, evidence: project.evidence }] : [],
+);
+---
+
+<Base title="Research summary" description="Sakib Mahmud’s research direction, selected contributions, and current questions in biomedical machine learning.">
+  <article class="shell research-brief content-end">
+    <header class="page-intro catalog-intro">
+      <SiteLink class="text-link return-link" href={sitePath('research/')}>← All research</SiteLink>
+      <h1>Research summary</h1>
+      <p class="brief-profile"><strong>{profile.name}</strong> · {profile.role}, {profile.affiliation}</p>
+      <p class="page-lead">I develop machine learning methods for measuring movement, anatomy, and biochemical signals. My research asks how far those measurements can be trusted when the people, instruments, or acquisition protocols change.</p>
+      <SiteLink class="text-link" href={`mailto:${profile.email}`}>{profile.email}</SiteLink>
+      <p class="brief-print-url">{new URL(sitePath('research/summary/'), Astro.site).href}</p>
+    </header>
+
+    <section aria-labelledby="brief-contributions">
+      <header class="catalog-section-heading"><h2 id="brief-contributions">Selected research contributions</h2></header>
+      {evidence.map(({ project, evidence }) => (
+        <article class="brief-entry">
+          <h3><SiteLink href={sitePath(`research/${project.slug}/`)}>{evidence.label}</SiteLink></h3>
+          <p>{evidence.role} {evidence.finding}</p>
+          <SiteLink class="text-link" href={doiUrl(project.doi)} aria-label={`Paper for ${evidence.label}`}>Paper</SiteLink>
+        </article>
+      ))}
+    </section>
+
+    <section aria-labelledby="brief-current">
+      <header class="catalog-section-heading"><h2 id="brief-current">Current research questions</h2></header>
+      {currentResearch.map(item => (
+        <article class="brief-entry">
+          <h3><SiteLink href={sitePath(`research/${item.project}/`)}>{item.title}</SiteLink></h3>
+          <p>{item.description}</p>
+        </article>
+      ))}
+    </section>
+  </article>
+</Base>
+
+<style>
+  .research-brief { max-width: 51rem; }
+  .research-brief .page-lead { margin-bottom: .55rem; }
+  .brief-profile { margin-top: .38rem; color: var(--text-muted); }
+  .brief-print-url { display: none; }
+  .brief-entry { padding: .63rem .2rem; border-bottom: 1px solid var(--border); }
+  .brief-entry h3 { font-size: 1rem; }
+  .brief-entry p { margin-top: .22rem; font-size: .92rem; line-height: 1.55; }
+  .brief-entry .text-link { display: inline-block; margin-top: .2rem; font-size: .85rem; }
+  .research-brief section + section { margin-top: var(--catalog-section-gap); }
+
+  @media print {
+    @page { margin: 15mm; }
+    .research-brief {
+      color-scheme: light;
+      --text: CanvasText;
+      --text-muted: CanvasText;
+      --surface-subtle: Canvas;
+      --accent-strong: CanvasText;
+      --link: LinkText;
+      padding: 0;
+      max-width: none;
+      color: CanvasText;
+      background: Canvas;
+    }
+    .research-brief .return-link { display: none; }
+    .research-brief .page-intro { padding: 0 0 .65rem; }
+    .research-brief h1 { font-size: 26pt; }
+    .research-brief p { font-size: 10pt; line-height: 1.4; }
+    .research-brief .brief-print-url { display: block; margin-top: .18rem; }
+    .research-brief .catalog-section-heading { padding: .36rem .5rem; }
+    .research-brief .brief-entry { padding-block: .38rem; break-inside: avoid; }
+  }
+</style>

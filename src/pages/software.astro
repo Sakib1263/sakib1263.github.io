@@ -18,8 +18,8 @@ const softwareNotes: Partial<Record<string, { label: string; detail: string; ver
     version: { label: 'Release v0.5.1', href: 'https://github.com/Sakib1263/SuperONN-Layers/releases/tag/v0.5.1' },
   },
   'wearable-foot-kinetics': {
-    label: 'Versioned code and CPU demo',
-    detail: 'Python 3.12 runs a small synthetic insole workflow. The study workflow needs prepared insole or motion recordings, and the article checkpoints are separate from the release.',
+    label: 'Versioned code and verified CPU demo',
+    detail: 'The synthetic insole workflow completed on CPU with Python 3.12. The study workflow needs prepared insole or motion recordings, and the article checkpoints are separate from the release.',
     version: { label: `Release ${kinetics.version}`, href: kinetics.release },
     guide: { label: 'Run the workflow', href: sitePath(`research/${kinetics.slug}/#reproduce`) },
   },
@@ -115,6 +115,11 @@ const sections = [
                     {dataset.facts.map(fact => <li>{fact}</li>)}
                   </ul>
                   <p class="software-summary">{dataset.summary}</p>
+                  <dl class="dataset-usage">
+                    <div><dt>License</dt><dd><SiteLink href={dataset.license.href}>{dataset.license.label}</SiteLink></dd></div>
+                    <div><dt>Files</dt><dd>{dataset.files}</dd></div>
+                    <div><dt>Evaluation</dt><dd>{dataset.evaluation.text} <SiteLink href={dataset.evaluation.href}>{dataset.evaluation.label}</SiteLink></dd></div>
+                  </dl>
                   <p class="dataset-contribution"><strong>My contribution</strong> {dataset.contribution}</p>
                   {dataset.credit && <p class="dataset-credit">{dataset.credit}</p>}
                   <div class="catalog-actions">
@@ -144,6 +149,7 @@ const sections = [
                   <div class="catalog-actions">
                     {notes && <SiteLink href={notes.version.href}>{notes.version.label} <span aria-hidden="true">↗</span></SiteLink>}
                     {notes?.guide && <SiteLink href={notes.guide.href}>{notes.guide.label}</SiteLink>}
+                    {item.slug === kinetics.slug && <SiteLink href={sitePath(kinetics.verificationPath)}>Demo verification</SiteLink>}
                     <SiteLink href={item.code} aria-label={`GitHub repository for ${item.title}`}>GitHub repository <span aria-hidden="true">↗</span></SiteLink>
                     {'project' in item && <SiteLink href={item.project}>Project summary</SiteLink>}
                     {'paper' in item && <SiteLink href={item.paper} aria-label={`Related paper for ${item.title}`}>Related paper</SiteLink>}

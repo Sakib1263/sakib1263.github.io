@@ -7,17 +7,21 @@ const publications = JSON.parse(readFileSync('src/data/publications.json', 'utf8
 const pages = new Map();
 const errors = [];
 
-function visit(node, callback) {
-  if (node.tagName) callback(node.tagName, Object.fromEntries(node.attrs.map(({ name, value }) => [name, value])));
-  for (const child of node.childNodes ?? []) visit(child, callback);
+function visit(node, callback, paperId) {
+  if (node.tagName) {
+    const attributes = Object.fromEntries(node.attrs.map(({ name, value }) => [name, value]));
+    if ('data-publication' in attributes) paperId = attributes.id;
+    callback(node.tagName, attributes, paperId);
+  }
+  for (const child of node.childNodes ?? []) visit(child, callback, paperId);
 }
 
 for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) {
   if (!file.isFile() || !file.name.endsWith('.html')) continue;
   const path = join(file.parentPath, file.name);
   const key = relative(root, path).replaceAll('\\', '/');
-  const page = { url: null, ids: new Set(), links: [], anchors: [], papers: [] };
-  visit(parse(readFileSync(path, 'utf8')), (tag, attributes) => {
+  const page = { url: null, ids: new Set(), links: [], anchors: [], papers: [], researchLinks: new Map() };
+  visit(parse(readFileSync(path, 'utf8')), (tag, attributes, paperId) => {
     if (tag === 'link' && attributes.rel === 'canonical') page.url = new URL(attributes.href);
     if ('id' in attributes) {
       if (page.ids.has(attributes.id)) errors.push(`${key}: duplicate ID ${attributes.id}`);
@@ -26,6 +30,12 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
     if ('data-publication' in attributes) page.papers.push(attributes.id);
     if (tag === 'img' && !('alt' in attributes)) errors.push(`${key}: image without alt text`);
     if (tag === 'a' && attributes.href) page.anchors.push(attributes);
+    if (tag === 'a' && 'data-research-project' in attributes) {
+      if (!paperId || paperId !== attributes['data-research-project']) {
+        errors.push(`${key}: research link is outside the matching publication row: ${attributes.href}`);
+      }
+      page.researchLinks.set(attributes.href, paperId);
+    }
     for (const attribute of ['href', 'src']) {
       if (attributes[attribute]) page.links.push(attributes[attribute]);
     }
@@ -39,6 +49,18 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
 const homeUrl = pages.get('index.html')?.url;
 if (!homeUrl) throw new Error('Missing built homepage or canonical URL. Run pnpm build first.');
 const basePath = homeUrl.pathname;
+const publicationsPage = pages.get('publications/index.html');
+let projectCitationCount = 0;
+for (const [key, page] of pages) {
+  const citation = page.anchors.find(anchor => 'data-project-citation' in anchor);
+  if (!citation) continue;
+  projectCitationCount++;
+  const target = new URL(citation.href, homeUrl);
+  if (target.pathname !== publicationsPage?.url?.pathname
+    || publicationsPage.researchLinks.get(page.url?.pathname) !== target.hash.slice(1)) {
+    errors.push(`${key}: missing matching Research project link at ${citation.href}`);
+  }
+}
 let internalCount = 0;
 for (const [key, page] of pages) {
   const pageUrl = page.url ?? new URL(key, homeUrl);
@@ -120,5 +142,5 @@ if (errors.length) {
   console.error(errors.join('\n'));
   process.exitCode = 1;
 } else {
-  console.log(`Checked ${pages.size} pages, ${internalCount} internal references, ${expectedDois.size} publication records and the PDF download.`);
+  console.log(`Checked ${pages.size} pages, ${internalCount} internal references, ${expectedDois.size} publication records, ${projectCitationCount} project citation backlinks and the PDF download.`);
 }

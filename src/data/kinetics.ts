@@ -6,6 +6,7 @@ export const kinetics = {
   repository,
   version,
   release: `${repository}/releases/tag/${version}`,
+  verificationPath: `kinetics-${version}-demo-verification.json`,
   dataGuide: `${repository}/blob/${version}/docs/DATA_CONTRACT.md`,
   dataUrl: 'https://doi.org/10.5281/zenodo.7422031',
   clone: `git clone --branch ${version} --single-branch ${repository}.git\ncd Unimodal-3D-Kinetics-Estimation-from-Insole-or-IMU`,

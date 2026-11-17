@@ -1,6 +1,6 @@
 ---
 import SiteLink from '../../components/SiteLink.astro';
-import { Image } from 'astro:assets';
+import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import KineticsReproduction from '../../components/KineticsReproduction.astro';
 import HydronephrosisExample from '../../components/HydronephrosisExample.astro';
@@ -21,6 +21,7 @@ interface Props { project: ResearchProject }
 
 const { project } = Astro.props;
 const { visual, resultVisual } = project;
+const resultView = resultVisual && await getImage({ src: resultVisual.image, format: 'webp', width: 960 });
 const paper = project.doi ? publicationFor(project.doi) : undefined;
 const dataset = project.doi ? datasetsByStudy.get(project.doi) : undefined;
 const fullText = project.doi ? openFullText[project.doi] : undefined;
@@ -64,7 +65,7 @@ const sections = [
           <SiteLink class="text-link" href={doiUrl(dataset.doi)}>{dataset.platform} record <span aria-hidden="true">↗</span></SiteLink>
         </>}
         {workflowAvailable && <SiteLink class="text-link" href="#reproduce">Run the workflow</SiteLink>}
-        {paper && <SiteLink class="text-link" href={sitePath(`publications/#${publicationId(paper.doi)}`)}>Citation</SiteLink>}
+        {paper && <SiteLink class="text-link" data-project-citation href={sitePath(`publications/#${publicationId(paper.doi)}`)}>Citation</SiteLink>}
       </div>}
     </header>
 
@@ -90,7 +91,10 @@ const sections = [
               </div>
               <figcaption>
                 {visual.caption}
-                {visual.credit && <> <SiteLink href={visual.credit.href}>{visual.credit.label}</SiteLink></>}
+                <span class="figure-links">
+                  <SiteLink href={visual.image.src}>View full-size figure</SiteLink>
+                  {visual.credit && <SiteLink href={visual.credit.href}>{visual.credit.label}</SiteLink>}
+                </span>
               </figcaption>
             </figure>
           )}
@@ -103,11 +107,22 @@ const sections = [
           {project.measures?.length && <dl class="study-measures">
             {project.measures.map(({ value, label }) => <div><dt>{label}</dt><dd>{value}</dd></div>)}
           </dl>}
-          {resultVisual && <figure class="detail-figure">
-            <div class="waveform-plot">
-              <Image src={resultVisual.image} alt={resultVisual.alt} width={1400} widths={[360, 640, 840, 1400]} sizes="(max-width: 850px) calc(100vw - 4rem), 700px" format="webp" />
+          {resultVisual && resultView && <figure class="detail-figure">
+            <div class="waveform-plot result-figure">
+              <img class:list={{ 'result-overview': resultVisual.mobileColumns }} src={resultView.src} {...resultView.attributes} alt={resultVisual.alt} loading="lazy" decoding="async" />
+              {resultVisual.mobileColumns && <div class="result-panels" role="group" aria-label={resultVisual.alt}>
+                {resultVisual.mobileColumns.map(label => (
+                  <div role="img" aria-label={label}><img src={resultView.src} {...resultView.attributes} alt="" loading="lazy" decoding="async" /></div>
+                ))}
+              </div>}
             </div>
-            <figcaption>{resultVisual.caption} <SiteLink href={resultVisual.source.href}>{resultVisual.source.label}</SiteLink></figcaption>
+            <figcaption>
+              {resultVisual.caption}
+              <span class="figure-links">
+                <SiteLink href={resultVisual.image.src}>View full-size figure</SiteLink>
+                <SiteLink href={resultVisual.source.href}>{resultVisual.source.label}</SiteLink>
+              </span>
+            </figcaption>
           </figure>}
         </section>}
 
