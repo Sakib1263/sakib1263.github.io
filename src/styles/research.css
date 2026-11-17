@@ -1,5 +1,4 @@
 .research-intro-detail { margin-top: .28rem; color: var(--text-muted); font-size: .87rem; line-height: 1.5; }
-.research-direction { max-width: 76ch; margin-bottom: 1rem; color: var(--text-muted); font-size: .92rem; line-height: 1.55; }
 .research-search { margin: .8rem 0 .6rem; }
 .research-search-controls { display: flex; align-items: end; flex-wrap: wrap; gap: .45rem .65rem; }
 .research-search label { display: grid; gap: .22rem; flex: 1 1 17rem; max-width: 35rem; min-width: 0; font-size: .9rem; font-weight: 650; }

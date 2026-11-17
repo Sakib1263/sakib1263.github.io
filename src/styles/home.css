@@ -18,6 +18,9 @@
   font-weight: 650;
   line-height: 1.5;
 }
+.home-department, .home-credentials { color: var(--text-muted); font-size: .88rem; line-height: 1.5; }
+.home-department { margin-top: .12rem; }
+.home-credentials { margin-top: .55rem; }
 .home-focus {
   margin-top: clamp(.9rem, 2.2vw, 1.5rem);
   color: var(--text);

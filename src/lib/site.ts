@@ -10,8 +10,8 @@ export const profile = {
   github: 'https://github.com/Sakib1263',
   scholar: `https://scholar.google.com/citations?user=${scholarId}`,
   orcid: 'https://orcid.org/0000-0002-4599-2192',
-  focus: 'Machine learning for biomedical measurement',
-  bio: 'I develop methods to extract measurements from medical images, wearable sensors, and Raman spectra. I study how reliably these methods transfer across participants, datasets, and instruments.',
+  focus: 'Biomedical AI and translational bioengineering',
+  bio: 'My research uses machine learning to segment kidney stones in CT, estimate gait forces from smart insoles, and align spectra across Raman instruments. A common question is how well these methods generalise when participants, datasets, or devices change.',
 };
 
 export const cvPdfPath = 'sakib-mahmud-cv.pdf';

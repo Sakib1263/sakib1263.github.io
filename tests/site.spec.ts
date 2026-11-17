@@ -124,15 +124,18 @@ test('the research profile displays its saved Google Scholar metrics and yearly 
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
 });
 
-test('featured research opens evidence and a distinct share card', async ({ page, request }) => {
+test('the research catalogue retains the case studies and their distinct share cards', async ({ page, request }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/research/');
-  const shortcuts = page.getByRole('navigation', { name: 'Featured research shortcuts' });
-  await expect(shortcuts.getByRole('link')).toHaveCount(4);
-  await shortcuts.getByRole('link', { name: 'Jump to projects' }).click();
-  await expect(page).toHaveURL('/research/#project-catalog');
+  await expect(page.getByRole('navigation', { name: 'Featured research shortcuts' })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'Research summary', exact: true })).toHaveCount(0);
+  await expect(page.getByText(/I’m now testing gait models/)).toHaveCount(0);
+  const slugs = ['wearable-foot-kinetics', 'kidney-stone-segmentation', 'cross-device-raman'];
+  for (const slug of slugs) {
+    await expect(page.locator(`#${slug} h3 a`)).toHaveAttribute('href', `/research/${slug}/`);
+  }
   const images = new Set<string>();
-  for (const slug of ['wearable-foot-kinetics', 'kidney-stone-segmentation', 'cross-device-raman']) {
+  for (const slug of slugs) {
     await page.goto(`/research/${slug}/`);
     await expect(page.getByText('What I led', { exact: true })).toBeInViewport();
     await expect(page.getByText('What the study found', { exact: true })).toBeInViewport();
@@ -175,8 +178,6 @@ test('project and paper links round-trip and the citation copies', async ({ page
 
 test('the research summary links to the case studies and ongoing work', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 780 });
-  await page.goto('/research/');
-  await expect(page.getByRole('link', { name: 'Research summary', exact: true })).toHaveAttribute('href', '/research/summary/');
   await page.goto('/');
   await page.getByRole('link', { name: 'Research summary', exact: true }).click();
   await expect(page).toHaveURL('/research/summary/');
@@ -239,6 +240,8 @@ test('CV download works from the homepage', async ({ page, request }) => {
 test('the homepage portrait and contact are easy to find on narrow screens', async ({ page, context }) => {
   await page.setViewportSize({ width: 320, height: 780 });
   await page.goto('/');
+  await expect(page.getByText('Department of Electrical Engineering · Doha, Qatar', { exact: true })).toBeVisible();
+  await expect(page.getByRole('link', { name: 'MSc and BSc (Hons.) in Electrical Engineering' })).toHaveAttribute('href', '/cv/#education-title');
   const portrait = page.getByRole('img', { name: 'Portrait of Sakib Mahmud' });
   await expect(portrait).toBeVisible();
   await expect(portrait).toHaveAttribute('srcset', /\b768w\b/);
@@ -346,7 +349,7 @@ test('filtered BibTeX contains the exact visible result set', async ({ page }) =
   await expect(filtered).toBeHidden();
 });
 
-test('publication themes and selected filters remain shareable', async ({ page }) => {
+test('publication topics and selected filters remain shareable', async ({ page }) => {
   await page.goto('/publications/');
   await expect(page.getByRole('navigation', { name: 'Publication research areas' }).getByRole('link')).toHaveCount(6);
   await expect(page.locator('[data-publication]:visible')).toHaveCount(61);
