@@ -21,31 +21,32 @@ const homePapers = selectedPapers.filter(({ publication }) => homePaperDois.has(
 <Base>
   <section class="home-hero" aria-labelledby="intro-title">
     <div class="shell home-hero-layout">
-      <div class="home-intro">
+      <div class="home-identity">
         <h1 id="intro-title">{profile.name}</h1>
         <p class="home-role">{profile.role} · {profile.affiliation}</p>
         <p class="home-department">{profile.department} · {profile.location}</p>
-        <p class="home-focus">{profile.focus}</p>
-        <p class="home-bio">{profile.bio}</p>
-        <p class="home-credentials"><SiteLink href={sitePath('cv/#education-title')}>MSc and BSc (Hons.) in Electrical Engineering</SiteLink> · {profile.affiliation}</p>
-        <div class="actions home-hero-actions">
-          <SiteLink class="button button-primary" href="#current-research">Explore research <span aria-hidden="true">↓</span></SiteLink>
-          <SiteLink class="button button-secondary" href={sitePath(cvPdfPath)} download>Download CV <span aria-hidden="true">↓</span></SiteLink>
-          <SiteLink class="text-link home-contact-jump" href="#contact">Contact <span aria-hidden="true">↓</span></SiteLink>
-        </div>
       </div>
       <figure class="home-portrait">
         <Image
           src={portrait}
           alt="Portrait of Sakib Mahmud"
-          widths={[320, 480, 640, portrait.width]}
-          sizes="(max-width: 320px) calc(100vw - 2rem), (max-width: 620px) 288px, (max-width: 815px) 256px, (max-width: 1024px) calc(34vw - 16px), 304px"
+          widths={[192, 320, 480, 640, portrait.width]}
+          sizes="(max-width: 620px) clamp(86px, 24vw, 141px), clamp(160px, 23vw, 224px)"
           width={portrait.width}
           format="webp"
           loading="eager"
           fetchpriority="high"
         />
       </figure>
+      <div class="home-intro">
+        <p class="home-bio">{profile.bio}</p>
+        <p class="home-credentials"><SiteLink href={sitePath('cv/#education-title')}>MSc and BSc (Hons.) in Electrical Engineering</SiteLink></p>
+        <div class="actions home-hero-actions">
+          <SiteLink class="button button-primary" href="#current-research">Explore research <span aria-hidden="true">↓</span></SiteLink>
+          <SiteLink class="button button-secondary" href={sitePath(cvPdfPath)} download>Download CV <span aria-hidden="true">↓</span></SiteLink>
+          <SiteLink class="text-link home-contact-jump" href="#contact">Contact <span aria-hidden="true">↓</span></SiteLink>
+        </div>
+      </div>
     </div>
   </section>
 

@@ -12,8 +12,7 @@ export const profile = {
   researchGate: 'https://www.researchgate.net/profile/Sakib-Mahmud-7/research',
   scholar: `https://scholar.google.com/citations?user=${scholarId}`,
   orcid: 'https://orcid.org/0000-0002-4599-2192',
-  focus: 'Biomedical AI and translational bioengineering',
-  bio: 'My research uses machine learning to segment kidney stones in CT, estimate gait forces from smart insoles, and align spectra across Raman instruments. A common question is how well these methods generalise when participants, datasets, or devices change.',
+  bio: 'I use machine learning to study human movement and disease through medical images, wearable sensors, and spectroscopy. I work with engineers and clinicians to make these measurements more reliable across people and devices.',
 };
 
 export const cvPdfPath = 'sakib-mahmud-cv.pdf';

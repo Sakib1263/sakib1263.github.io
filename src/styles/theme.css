@@ -9,3 +9,15 @@
   --surface-tint: color-mix(in srgb, var(--accent) 10%, var(--surface));
   --accent-strong: color-mix(in srgb, var(--accent) 45%, var(--text));
 }
+
+@media screen and (prefers-reduced-motion: no-preference) {
+  ::view-transition { pointer-events: none; }
+  ::view-transition-group(root),
+  ::view-transition-old(root),
+  ::view-transition-new(root) { animation-duration: 160ms; }
+
+  :root[data-color-mode-animate],
+  :root[data-color-mode-animate] :is(.site-header, .site-footer, .home-hero, .home-contact, .catalog-index, .catalog-section-heading, .publication-filters, .project-card, .button) {
+    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  }
+}

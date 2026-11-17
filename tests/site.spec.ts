@@ -275,7 +275,11 @@ test('the homepage portrait and contact are easy to find on narrow screens', asy
   const portrait = page.getByRole('img', { name: 'Portrait of Sakib Mahmud' });
   await expect(portrait).toBeVisible();
   await expect(portrait).toHaveAttribute('srcset', /\b768w\b/);
-  await expect.poll(async () => (await portrait.boundingBox())?.width ?? 0).toBeGreaterThan(250);
+  const portraitBounds = (await portrait.boundingBox())!;
+  const introBounds = (await page.locator('.home-bio').boundingBox())!;
+  expect(portraitBounds.width).toBeGreaterThan(80);
+  expect(portraitBounds.width).toBeLessThan(125);
+  expect(portraitBounds.y + portraitBounds.height).toBeLessThan(introBounds.y);
   await expect.poll(() => portrait.evaluate(image => (image as HTMLImageElement).naturalWidth)).toBeGreaterThan(0);
   await expect(page.getByRole('region', { name: 'Featured research' }).getByRole('article')).toHaveCount(3);
   await expect(page.getByRole('region', { name: 'Ongoing research' }).getByRole('article')).toHaveCount(2);
