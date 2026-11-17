@@ -59,7 +59,8 @@ const structuredData = {
     <meta name="twitter:card" content={largeShareImage ? 'summary_large_image' : 'summary'} />
     {Astro.url.pathname === sitePath() && <script is:inline type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
     {noIndex ? <meta name="robots" content="noindex,follow" /> : <link rel="canonical" href={canonical.href} />}
-    <link rel="icon" type="image/png" href={sitePath('favicon.png')} />
+    <link rel="icon" type="image/png" sizes="32x32" href={sitePath('favicon.png?v=2')} />
+    <link rel="icon" type="image/svg+xml" sizes="any" href={sitePath('favicon.svg')} />
     <title>{pageTitle}</title>
   </head>
   <body>
