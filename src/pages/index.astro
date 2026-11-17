@@ -50,7 +50,10 @@ const homePapers = selectedPapers.filter(({ publication }) => homePaperDois.has(
   <section class="shell home-section" id="current-research" aria-labelledby="selected-title">
     <div class="section-heading">
       <h2 id="selected-title">Featured research</h2>
-      <SiteLink class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">→</span></SiteLink>
+      <div class="featured-research-links">
+        <SiteLink class="text-link" href={sitePath('research/summary/')}>Research summary <span aria-hidden="true">→</span></SiteLink>
+        <SiteLink class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">→</span></SiteLink>
+      </div>
     </div>
     <div class="project-list">
       {featuredProjects.map(project => <ProjectCard project={project} />)}

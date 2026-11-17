@@ -127,6 +127,8 @@ test('project and paper links round-trip and the citation copies', async ({ page
 test('the research summary links to the case studies and ongoing work', async ({ page }) => {
   await page.setViewportSize({ width: 320, height: 780 });
   await page.goto('/research/');
+  await expect(page.getByRole('link', { name: 'Research summary', exact: true })).toHaveAttribute('href', '/research/summary/');
+  await page.goto('/');
   await page.getByRole('link', { name: 'Research summary', exact: true }).click();
   await expect(page).toHaveURL('/research/summary/');
   await expect(page.getByRole('heading', { name: 'Research summary', exact: true })).toBeVisible();

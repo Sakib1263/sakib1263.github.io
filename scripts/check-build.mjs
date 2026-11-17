@@ -49,6 +49,25 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
 const homeUrl = pages.get('index.html')?.url;
 if (!homeUrl) throw new Error('Missing built homepage or canonical URL. Run pnpm build first.');
 const basePath = homeUrl.pathname;
+const sitemap = readFileSync(join(root, 'sitemap.xml'), 'utf8');
+const sitemapUrls = [...sitemap.matchAll(/<url>\s*<loc>([^<]+)<\/loc>\s*<\/url>/g)].map(([, url]) => url.trim());
+const listedUrls = new Set(sitemapUrls);
+const canonicalUrls = new Set([...pages.values()].flatMap(page => page.url ? [page.url.href] : []));
+if (!sitemap.includes('<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">') || !sitemap.trimEnd().endsWith('</urlset>')) {
+  errors.push('Sitemap is missing its URL set or namespace.');
+}
+if (listedUrls.size !== sitemapUrls.length) errors.push('Sitemap contains duplicate URLs.');
+for (const url of canonicalUrls) {
+  if (!listedUrls.has(url)) errors.push(`Sitemap is missing canonical URL: ${url}`);
+}
+for (const url of listedUrls) {
+  if (!canonicalUrls.has(url)) errors.push(`Sitemap points to a URL without a matching canonical page: ${url}`);
+}
+const sitemapUrl = new URL('sitemap.xml', homeUrl).href;
+const robots = readFileSync(join(root, 'robots.txt'), 'utf8');
+if (!robots.split(/\r?\n/).includes(`Sitemap: ${sitemapUrl}`)) {
+  errors.push(`robots.txt does not advertise the canonical sitemap: ${sitemapUrl}`);
+}
 const publicationsPage = pages.get('publications/index.html');
 let projectCitationCount = 0;
 for (const [key, page] of pages) {
@@ -142,5 +161,5 @@ if (errors.length) {
   console.error(errors.join('\n'));
   process.exitCode = 1;
 } else {
-  console.log(`Checked ${pages.size} pages, ${internalCount} internal references, ${expectedDois.size} publication records, ${projectCitationCount} project citation backlinks and the PDF download.`);
+  console.log(`Checked ${pages.size} pages, ${listedUrls.size} sitemap URLs, ${internalCount} internal references, ${expectedDois.size} publication records, ${projectCitationCount} project citation backlinks and the PDF download.`);
 }
