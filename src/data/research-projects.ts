@@ -7,6 +7,9 @@ import {
 import {
   kidneyApproach, kidneyApproachFigures, kidneyNextSteps, kidneyProgress, kidneyVisual, kidneyWorkflow,
 } from './kidney-project';
+import {
+  diabeticFootApproach, diabeticFootNextSteps, diabeticFootProgress, diabeticFootVisual, diabeticFootWorkflow,
+} from './diabetic-foot-project';
 
 interface Stage {
   title: string;
@@ -83,15 +86,15 @@ const insoles: Collection = {
   area: 'Wearable biomechanics',
   title: 'Smart insoles for diabetic-foot monitoring',
   period: '2020–2024',
-  context: 'Undergraduate senior design, QNRF UREP, and a Qatar University Concept Development Grant',
-  summary: 'Building and evaluating electronic and fibre-optic insoles that measure plantar pressure and temperature during standing and walking.',
-  contribution: 'I integrated sensors and worked on acquisition, experiments, and analysis for the electronic prototype. I led development and evaluation of the fibre-optic insole and contributed to testing graphene temperature sensors.',
+  context: 'Undergraduate senior design project, QNRF UREP and a Qatar University Concept Development Grant, with three Q1 journal papers',
+  summary: 'Building insoles that measure plantar pressure and temperature with three sensing technologies: electronic sensors, fibre Bragg gratings, and laser-induced graphene.',
+  contribution: 'As second author of the electronic insole study, I integrated the sensors and worked on the methodology, data acquisition, experiments, analysis and manuscript review. I led the fibre Bragg grating insole as first author, covering system development, data acquisition and analysis, validation against the electronic and commercial systems, and manuscript preparation; this was the main publication from my senior design project. For the laser-induced graphene study I contributed to the experimental and technical assessment, interpretation of the findings and manuscript review.',
   scope: 'The prototypes were evaluated in controlled measurement studies. Detecting ulcer onset would require longitudinal clinical validation.',
   stages: [
     {
       title: 'Electronic pressure and temperature sensing',
       period: 'January–May 2020 · QNRF UREP',
-      description: 'Developed a wireless insole with electronic pressure and temperature sensors. The publication evaluated plantar measurements and machine-learning classification of diabetes groups.',
+      description: 'Developed a wireless insole with 16 force-sensitive resistors and eight thermistors per foot, built from off-the-shelf parts for about US$170, with real-time pressure and temperature maps.',
       doi: '10.3390/s22197599',
     },
     {
@@ -108,6 +111,11 @@ const insoles: Collection = {
     },
   ],
   related: ['smart-insole-3d-gait-kinetics', 'diabetic-foot-thermal-imaging'],
+  visual: diabeticFootVisual,
+  approach: diabeticFootApproach,
+  workflow: diabeticFootWorkflow,
+  progress: diabeticFootProgress,
+  ongoing: diabeticFootNextSteps,
 };
 
 const kidney: Collection = {
