@@ -333,6 +333,16 @@ test('ECMO simulator papers link to their shared research project', async ({ pag
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'System design', 'First prototype', 'Improved prototype']);
 });
 
+test('genomics projects use their updated section and dates', async ({ page }) => {
+  await page.goto('/research/');
+  await expect(page.locator('#genomics')).toHaveText('Computational genomics & reproducible analysis');
+  await expect(page.locator('#cancer-genomics-reproduction')).toContainText('2026');
+  await expect(page.locator('#cancer-genomics-reproduction').getByRole('link', { name: 'Independent reproduction of cancer genomics studies', exact: true })).toBeVisible();
+  await expect(page.locator('#mendelian-rnaseq-outliers').getByRole('link', { name: 'Variational autoencoders for RNA-seq outlier detection in Mendelian disease', exact: true })).toBeVisible();
+  await page.goto('/research/cancer-genomics-reproduction/');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'SYLVER', 'TRACERx Renal']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();

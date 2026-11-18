@@ -536,27 +536,82 @@ const devices: ResearchProject[] = [
 
 const genomics: ResearchProject[] = [
   {
-    slug: 'mendelian-rnaseq-outliers', area: 'Genomics & reproducibility',
-    title: 'RNA-seq outlier detection in Mendelian disease',
-    summary: 'Evaluating variational autoencoders to prioritise genes with unusual expression patterns.',
+    slug: 'mendelian-rnaseq-outliers', area: 'Computational genomics & reproducible analysis',
+    title: 'Variational autoencoders for RNA-seq outlier detection in Mendelian disease',
+    summary: 'Using RNA sequencing and variational autoencoders to find genes with unusual expression that may help explain rare Mendelian disorders.',
+    question: 'Can unusual gene-expression patterns help prioritise candidate genes in Mendelian disease?',
     period: 'May–July 2023', status: 'Research internship', context: 'Qatar Computing Research Institute, Hamad Bin Khalifa University',
-    approach: 'Preprocess RNA sequencing measurements, learn a representation of expression profiles with a variational autoencoder, and examine genes that contribute to unusual patterns. Candidate prioritisation uses the model and expression evidence together.',
-    contribution: 'I worked on preprocessing, anomaly analysis, interpretation of candidate genes, and reproducible documentation.',
-    scope: 'The work explored a prioritisation method for follow-up. The analysis was part of a research internship.',
+    approach: 'DNA sequencing does not explain every suspected Mendelian disorder. RNA sequencing adds functional evidence by showing when a gene is expressed far from its expected level. This internship project prepared RNA-seq data, used variational autoencoders to learn expected expression patterns, and examined outlier genes as candidates for follow-up.',
+    workflow: ['Prepare RNA-seq data', 'Model expected expression', 'Prioritise outlier genes'],
+    contribution: 'I worked on RNA-seq preprocessing, variational autoencoder evaluation, anomaly analysis, gene prioritisation, interpretation of candidate genes and reproducible documentation.',
+    scope: 'This was exploratory internship research and has not been published. Candidate genes would need independent biological and clinical validation before supporting a diagnosis.',
+    relatedProjects: ['cancer-genomics-reproduction'],
   },
   {
-    slug: 'cancer-genomics-reproduction', area: 'Genomics & reproducibility',
-    title: 'Reproducing selected cancer genomics analyses',
-    summary: 'Tracing published analyses from source tables and author workflows in synthetic lethality and renal tumour evolution.',
-    status: 'Independent reproduction',
-    approach: 'The SYLVER notebook reconstructs selected plots using the original study’s source tables and re-fits selected clinical analyses. The TRACERx Renal work reruns selected author workflows for RNA expression, immune-state comparisons and tumour evolution with the supplied processed objects.',
-    contribution: 'I organised the source evidence, implemented notebook workflows, checked agreement with published figures and tables, and documented discrepancies and exploratory sensitivity analyses.',
-    scope: 'The linked papers are the original studies by their respective authors. The reproduction covers selected analyses and distinguishes replots, refits and workflows that use supplied processed data.',
+    slug: 'cancer-genomics-reproduction', area: 'Computational genomics & reproducible analysis',
+    title: 'Independent reproduction of cancer genomics studies',
+    summary: 'Rebuilding key analyses from recent synthetic lethality and renal cancer evolution studies using their source data and author workflows.',
+    question: 'How far can key findings from recent cancer genomics studies be traced and reproduced from the available data and code?',
+    period: '2026', status: 'Independent reproduction of published studies',
+    approach: 'Reproducing a genomics study requires more than redrawing its figures. This work follows each analysis from its source data and code to the published result, separating direct replots, statistical refits and reruns of author workflows. It also records where processed inputs, software or historical data limit exact reproduction.',
+    workflow: ['Trace data and author code', 'Rerun and refit analyses', 'Audit outputs and differences'],
+    progress: [
+      {
+        id: 'sylver-reproduction',
+        navLabel: 'SYLVER',
+        title: 'Synthetic lethality and tumour expression',
+        status: 'Original study: Haider et al., Nature Genetics · 2025',
+        paragraphs: [
+          'SYLVER examines whether expression changes in tumours reflect synthetic lethal relationships linked to tumour-suppressor loss. I built an executable Python workflow covering the main quantitative panels from Figures 2 to 4, with source-data links and interpretation for each panel.',
+          'The reproduction used the published source data, refitted patient-level clinical models and reran the supplied RB1 and BRCA analyses on processed workspaces. Differences and modelling choices were recorded in a separate register.',
+        ],
+        measures: [
+          { value: '74', label: 'RB1 intersection genes recovered' },
+          { value: '18', label: 'BRCA1/2 intersection genes recovered' },
+          { value: '73', label: 'HRD signature genes recovered' },
+        ],
+        table: {
+          caption: 'Scope of the independent SYLVER reproduction.',
+          columns: ['Work completed'],
+          rows: [
+            { label: 'Published source data', cells: ['Reproduced main quantitative figure panels'] },
+            { label: 'Clinical analyses', cells: ['Refitted patient-level models'] },
+            { label: 'Processed workspaces', cells: ['Reran supplied RB1 DepMap and TCGA BRCA analyses'] },
+            { label: 'Quality control', cells: ['Tracked sources, validation checks and analysis differences'] },
+          ],
+        },
+      },
+      {
+        id: 'tracerx-renal-reproduction',
+        navLabel: 'TRACERx Renal',
+        title: 'Non-genetic evolution in clear cell renal cancer',
+        status: 'Original study: Fernández-Sanromán et al., Cancer Discovery · 2025',
+        paragraphs: [
+          'TRACERx Renal studies non-genetic evolution from primary to metastatic clear cell renal cell carcinoma. I organised an R workflow around the order of Figures 1 to 6, using retained numerical inputs and author code to rebuild data-backed views.',
+          'Each view was linked to its inputs and export records, with panels that could not yet be recreated clearly marked. Author-code replays were kept separate from article-aligned sensitivity analyses.',
+        ],
+        measures: [
+          { value: '34', label: 'Data-backed views rebuilt' },
+          { value: '6', label: 'Main figures followed' },
+        ],
+        table: {
+          caption: 'Scope of the independent TRACERx Renal reproduction.',
+          columns: ['Work completed'],
+          rows: [
+            { label: 'Figure workflow', cells: ['Rebuilt available panels in the published figure order'] },
+            { label: 'Author workflows', cells: ['Reran selected RNA expression, immune-state and tumour-evolution analyses'] },
+            { label: 'Traceability', cells: ['Recorded plotted data, source hashes and figure settings'] },
+          ],
+        },
+      },
+    ],
+    contribution: 'I organised the source evidence, built the Python and R workflows, reran and refitted selected analyses, checked outputs against published figures and tables, and documented differences and sensitivity analyses.',
+    scope: 'This is independent reproduction work and not an original or published study. The linked papers belong to their respective authors. Results cover selected analyses and depend on the supplied data and code, so they do not replace the original studies or provide new clinical validation.',
     resources: [
       { label: 'Original SYLVER study', href: 'https://www.nature.com/articles/s41588-025-02108-2' },
       { label: 'Original TRACERx Renal study', href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11873726/' },
     ],
-    relatedProjects: ['renal-tumour-modelling'],
+    relatedProjects: ['renal-tumour-modelling', 'mendelian-rnaseq-outliers'],
   },
 ];
 
@@ -666,7 +721,7 @@ export const researchStudyAreas = [
   { id: 'signals', title: topics.signals, description: topicDescriptions.signals, projects: signals },
   { id: 'spectroscopy', title: topics.spectroscopy, description: topicDescriptions.spectroscopy, projects: spectroscopy },
   { id: 'devices', title: topics.devices, description: 'Implants, clinical training simulators, ventilation, and computational haemodynamics.', projects: devices },
-  { id: 'genomics', title: 'Genomics & reproducibility', description: 'Gene-expression analysis and reproducible cancer genomics workflows.', projects: genomics },
+  { id: 'genomics', title: 'Computational genomics & reproducible analysis', description: 'RNA-seq analysis, candidate gene discovery and independent reproduction of cancer genomics studies.', projects: genomics },
   { id: 'engineering', title: topics.engineering, description: topicDescriptions.engineering, projects: engineering },
 ] as const;
 
