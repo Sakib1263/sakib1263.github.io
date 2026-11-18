@@ -40,6 +40,14 @@ import eegCycleBlocks from '../assets/research/eeg-artefact-restoration/fig4-bui
 import eegCycleExamples from '../assets/research/eeg-artefact-restoration/fig5-restored-examples.png';
 import eegSpectra from '../assets/research/eeg-artefact-restoration/fig6-psd.png';
 import eegTopography from '../assets/research/eeg-artefact-restoration/fig7-topographic-maps.png';
+import dopplerOverview from '../assets/research/qscare-doppler-flow/fig2-overview.png';
+import dopplerQuality from '../assets/research/qscare-doppler-flow/fig3-signal-quality.png';
+import dopplerCycleGan from '../assets/research/qscare-doppler-flow/fig5-cyclegan.png';
+import dopplerRestored from '../assets/research/qscare-doppler-flow/fig7-restored-waveforms.png';
+import dopplerTwoStream from '../assets/research/qscare-doppler-flow/fig9-dopplernet2-plus.png';
+import dopplerPerformance from '../assets/research/qscare-doppler-flow/fig12-performance.png';
+import dopplerAttentionNetwork from '../assets/research/qscare-doppler-flow/diagnostics-fig6-attention-network.png';
+import dopplerAttentionPerformance from '../assets/research/qscare-doppler-flow/diagnostics-fig9-performance.png';
 import { ccBy, elsevier, sourceArticle } from './figure-credits';
 import type { ResearchPhase, ResearchProject } from './research';
 
@@ -56,6 +64,8 @@ const fetalLinkNetDoi = '10.1016/j.engappai.2023.106414';
 const fetalCyclePreprint = '10.48550/arXiv.2310.03759';
 const eegMlmrsDoi = '10.1007/s00521-022-08111-6';
 const eegCycleDoi = '10.1016/j.engappai.2023.107514';
+const dopplerTwoStreamDoi = '10.1016/j.bspc.2023.104882';
+const dopplerAttentionDoi = '10.3390/diagnostics13122000';
 
 export const contactlessVisual: NonNullable<ResearchProject['visual']> = {
   image: radarFramework,
@@ -961,6 +971,149 @@ export const eegRestorationProgress: ResearchPhase[] = [
         caption: 'Figure 7 from Mahmud et al. (2024). Topographic maps of reference, motion-corrupted and restored EEG across frequency bands.',
         credit: sourceArticle(eegCycleDoi),
         licence: elsevier(2023),
+      },
+    ],
+  },
+];
+
+export const dopplerFlowVisual: NonNullable<ResearchProject['visual']> = {
+  image: dopplerOverview,
+  alt: 'Method overview. Transcranial Doppler ultrasound produces a spectrogram, a flow-velocity algorithm extracts the maximal velocity waveform, the waveforms are cleaned and restored with a CycleGAN, and a two-stream DopplerNet2+ classifier labels each recording as healthy or intensive care.',
+  caption: 'Figure 2 from Kanti Podder et al. (2023). From Doppler spectrograms to maximal flow-velocity waveforms, CycleGAN restoration and two-stream classification.',
+  credit: sourceArticle(dopplerTwoStreamDoi),
+  licence: elsevier(2023),
+};
+
+export const dopplerFlowProgress: ResearchPhase[] = [
+  {
+    id: 'cyclegan-restoration',
+    navLabel: 'CycleGAN restoration',
+    title: 'Restoring low-quality flow-velocity waveforms',
+    status: 'Biomedical Signal Processing and Control · 2023',
+    paragraphs: [
+      'The study used a public dataset recorded over the middle cerebral artery with a portable ultrasound system and a 1.75 MHz transducer. It contains 16 recordings from 6 healthy volunteers and 29 recordings from 12 patients in neurocritical care with hydrocephalus, traumatic brain injury, or intraparenchymal or subarachnoid haemorrhage. The maximum flow-velocity waveform was extracted from each Doppler spectrogram and split into 1,024-sample segments.',
+      'Trained annotators labelled each segment by signal quality. A 1D-CycleGAN with ResNet generators and PatchGAN discriminators then learned to map low-quality segments to high-quality waveforms. It reduced baseline drift and distortion in low-quality signals, while high-quality signals changed very little.',
+    ],
+    measures: [
+      { value: '18', label: 'Participants' },
+      { value: '3,243', label: 'Segments kept after cleaning' },
+      { value: '1,760', label: 'Low-quality training segments after 75% overlap' },
+    ],
+    table: {
+      caption: 'Signal-quality labels from Figure 4 of Kanti Podder et al. (2023).',
+      columns: ['Segments', 'Use'],
+      rows: [
+        { label: 'High quality', cells: ['2,803', 'Kept'] },
+        { label: 'Low quality', cells: ['440', 'Kept and restored'] },
+        { label: 'Mediocre', cells: ['2,061', 'Removed'] },
+        { label: 'Corrupted', cells: ['164', 'Removed'] },
+      ],
+    },
+    figures: [
+      {
+        image: dopplerQuality,
+        alt: 'Four flow-velocity waveform plots. The high-quality signal has regular pulses, the low-quality signal is distorted but recognisable, the mediocre signal contains abrupt drops, and the corrupted signal has no clear pulse pattern.',
+        caption: 'Figure 3 from Kanti Podder et al. (2023). Examples of high-quality, low-quality, mediocre and corrupted signals.',
+        credit: sourceArticle(dopplerTwoStreamDoi),
+        licence: elsevier(2023),
+      },
+      {
+        image: dopplerCycleGan,
+        alt: 'CycleGAN diagram. One generator converts bad-quality waveforms to good quality and a second converts good-quality waveforms to bad quality. Two discriminators, cycle-consistency losses and identity losses link the two directions.',
+        caption: 'Figure 5 from Kanti Podder et al. (2023). The 1D-CycleGAN used to restore middle cerebral artery waveforms.',
+        credit: sourceArticle(dopplerTwoStreamDoi),
+        licence: elsevier(2023),
+      },
+      {
+        image: dopplerRestored,
+        alt: 'Four plots of middle cerebral artery waveforms, two from healthy and two from intensive-care recordings. Each overlays the original waveform in blue and the CycleGAN-processed waveform in orange.',
+        caption: 'Figure 7 from Kanti Podder et al. (2023). Original and CycleGAN-processed waveforms for the healthy (a, b) and intensive-care (c, d) classes.',
+        credit: sourceArticle(dopplerTwoStreamDoi),
+        licence: elsevier(2023),
+      },
+    ],
+  },
+  {
+    id: 'dopplernet2-plus',
+    navLabel: 'DopplerNet2+',
+    title: 'Two-stream classification with DopplerNet2+',
+    status: 'Biomedical Signal Processing and Control · 2023',
+    paragraphs: [
+      'DopplerNet is a one-dimensional Self-ONN classifier built from inverted residual blocks and pool-wise dense connections. DopplerNet2+ extends it with two parallel streams, one for the original waveform and one for the CycleGAN-processed waveform, and combines their features before classification.',
+      'Models were tested with five-fold cross-validation separated by recording session. The two-stream model gave the best result, correctly identifying 98.86% of healthy segments and 99.96% of intensive-care segments.',
+    ],
+    measures: [
+      { value: '99.45%', label: 'Accuracy' },
+      { value: '99.37%', label: 'Specificity' },
+      { value: '1.00', label: 'Area under the ROC curve' },
+    ],
+    table: {
+      caption: 'Best result for each input and model design, from Table 4 of Kanti Podder et al. (2023).',
+      columns: ['Parameters', 'Accuracy', 'F1 score', 'Specificity'],
+      rows: [
+        { label: 'Original waveform', cells: ['199,666', '97.71%', '97.71%', '97.61%'] },
+        { label: 'CycleGAN-processed waveform', cells: ['587,378', '95.55%', '95.54%', '95.36%'] },
+        { label: 'Both as two input channels', cells: ['587,666', '96.64%', '96.64%', '96.43%'] },
+        { label: 'DopplerNet2+ with two streams', cells: ['1,174,754', '99.45%', '99.45%', '99.37%'] },
+      ],
+    },
+    figures: [
+      {
+        image: dopplerTwoStream,
+        alt: 'DopplerNet2+ architecture. The original waveform and the CycleGAN-processed waveform pass through separate streams of Self-ONN blocks. Features from both streams are concatenated and sent to a classifier that outputs healthy or ICU.',
+        caption: 'Figure 9 from Kanti Podder et al. (2023). The two-stream DopplerNet2+ architecture.',
+        credit: sourceArticle(dopplerTwoStreamDoi),
+        licence: elsevier(2023),
+      },
+      {
+        image: dopplerPerformance,
+        alt: 'Confusion matrix with 2,432 healthy and 2,814 intensive-care segments classified correctly, 28 healthy segments misclassified and 1 intensive-care segment misclassified, beside a ROC curve reaching an area of 1.00.',
+        caption: 'Figure 12 from Kanti Podder et al. (2023). Confusion matrix (a) and ROC curves (b) for DopplerNet2+.',
+        credit: sourceArticle(dopplerTwoStreamDoi),
+        licence: elsevier(2023),
+      },
+    ],
+  },
+  {
+    id: 'self-resattentionet',
+    navLabel: 'Self-ResAttentioNet18',
+    title: 'Attention-based classification of clear waveforms',
+    status: 'Diagnostics · 2023',
+    paragraphs: [
+      'The second study classified clear waveform segments directly, without generative restoration. Segments were annotated as clear or corrupted, leaving 1,501 healthy and 1,742 intensive-care segments of 1,024 samples at 217 Hz.',
+      'Self-ResNet18 replaces the convolutional layers of ResNet18 with Self-ONN layers, and Self-ResAttentioNet18 adds four multi-head attention layers. Each design was tested at three Self-ONN orders using five-fold validation separated by recording session. Self-ResAttentioNet18 at order 1 performed best, correctly identifying 96.63% of healthy segments and 95.51% of intensive-care segments.',
+    ],
+    measures: [
+      { value: '96.05%', label: 'Accuracy' },
+      { value: '96.09%', label: 'Specificity' },
+      { value: '0.99', label: 'Area under the ROC curve' },
+    ],
+    table: {
+      caption: 'Model comparison from Table 4 of Nisha et al. (2023). Q1, Q3 and Q5 are the Self-ONN orders.',
+      columns: ['Accuracy', 'Precision', 'F1 score', 'Specificity'],
+      rows: [
+        { label: 'Self-ResNet18 Q1', cells: ['93.46%', '93.48%', '93.46%', '93.39%'] },
+        { label: 'Self-ResNet18 Q3', cells: ['94.91%', '94.92%', '94.91%', '94.88%'] },
+        { label: 'Self-ResNet18 Q5', cells: ['93.31%', '93.32%', '93.30%', '93.26%'] },
+        { label: 'Self-ResAttentioNet18 Q1', cells: ['96.05%', '96.06%', '96.06%', '96.09%'] },
+        { label: 'Self-ResAttentioNet18 Q3', cells: ['95.31%', '95.34%', '95.31%', '95.37%'] },
+        { label: 'Self-ResAttentioNet18 Q5', cells: ['92.97%', '93.01%', '92.97%', '93.03%'] },
+      ],
+    },
+    figures: [
+      {
+        image: dopplerAttentionNetwork,
+        alt: 'Self-ResAttentioNet18 architecture. A one-dimensional input passes through Self-ONN residual blocks with four multi-head attention layers, followed by flattening, a fully connected layer and a log-softmax output.',
+        caption: 'Figure 6 from Nisha et al. (2023). The Self-ResAttentioNet18 architecture.',
+        credit: sourceArticle(dopplerAttentionDoi),
+        licence: ccBy,
+      },
+      {
+        image: dopplerAttentionPerformance,
+        alt: 'Confusion matrix with 1,519 healthy and 1,596 intensive-care segments classified correctly, 53 healthy and 75 intensive-care segments misclassified, beside ROC curves with an area of 0.99.',
+        caption: 'Figure 9 from Nisha et al. (2023). Confusion matrix (a) and ROC curves (b) for Self-ResAttentioNet18 at order 1.',
+        credit: sourceArticle(dopplerAttentionDoi),
+        licence: ccBy,
       },
     ],
   },

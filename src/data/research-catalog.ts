@@ -3,8 +3,6 @@ import { projects, type ResearchProject } from './research';
 import { ccBy, elsevier, sourceArticle } from './figure-credits';
 import insoleFbg from '../assets/research/smart-insoles-diabetic-foot/fig4-fbg-insole.jpg';
 import insoleTemperature from '../assets/research/smart-insoles-diabetic-foot/fig9-temperature-maps.png';
-import dopplerOverview from '../assets/research/qscare-doppler-flow/fig2-overview.png';
-import dopplerRestored from '../assets/research/qscare-doppler-flow/fig7-restored-waveforms.png';
 import renalFramework from '../assets/research/renal-tumour-modelling/fig1-framework.png';
 import renalFeatures from '../assets/research/renal-tumour-modelling/fig9-surgical-features.png';
 import liverMasks from '../assets/research/liver-mri-segmentation/fig10-cascade-masks.jpg';
@@ -22,7 +20,7 @@ import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-tr
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
-import { contactlessProgress, contactlessVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
+import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
 function existing(slug: string) {
   const project = projects.find(item => item.slug === slug);
@@ -334,37 +332,19 @@ const signals: ResearchProject[] = [
   },
   {
     slug: 'qscare-doppler-flow', area: 'Physiological signal processing',
-    title: 'QSCare: cerebral blood-flow analysis with transcranial Doppler',
-    summary: 'Recovering cerebral flow-velocity waveforms from Doppler audio and evaluating models to identify abnormal patterns.',
-    period: 'June 2022–June 2023', context: 'Qatar University High Impact Grant',
+    title: 'Deep learning for cerebral blood-flow analysis using transcranial Doppler',
+    summary: 'Deep learning methods that restore transcranial Doppler flow-velocity waveforms and distinguish healthy volunteers from patients in neurocritical care.',
+    question: 'Can middle cerebral artery flow-velocity waveforms distinguish healthy volunteers from patients in neurocritical care?',
+    context: 'QSCare · Qatar University High Impact Grant QUHI-CENG-22/23-548',
     doi: '10.1016/j.bspc.2023.104882',
-    approach: 'Extract velocity waveforms from audio from the internal carotid and middle cerebral arteries. Use one-dimensional generative restoration for degraded recordings and compare classifiers for healthy and intensive-care data. The companion publications study abnormal middle cerebral artery flow using enhanced waveforms and attention-based classifiers.',
-    contribution: 'I worked on waveform extraction and restoration, classifier development, data curation and analysis, MATLAB implementation, and writing.',
-    workflow: ['Extract ICA and MCA flow waveforms', 'Restore degraded recordings', 'Evaluate abnormal-flow classifiers'],
-    result: 'In five-fold cross-validation, the two-stream DopplerNet2+ model separated healthy and intensive-care middle cerebral artery waveforms with 99.45% accuracy and an area under the ROC curve of 1.00.',
-    measures: [
-      { value: '99.45%', label: 'Healthy versus intensive-care accuracy' },
-      { value: '1.00', label: 'Area under the ROC curve' },
-    ],
-    scope: 'The published comparisons use the available retrospective Doppler recordings and study labels.',
+    approach: 'The brain depends on a constant blood supply, and transcranial Doppler can monitor flow velocity in its major arteries without radiation or surgery. Signal quality depends heavily on the operator, so recordings often contain noise and motion artefacts. This project extracted maximum flow-velocity waveforms from the middle cerebral artery, restored low-quality segments with a 1D-CycleGAN, and developed Self-ONN classifiers for healthy and intensive-care recordings.',
+    workflow: ['Extract flow-velocity waveforms', 'Clean and restore segments', 'Classify healthy and ICU signals'],
+    progress: dopplerFlowProgress,
+    contribution: 'Across the two studies, I worked on waveform extraction and CycleGAN restoration, classifier development, data curation and preprocessing, MATLAB software, analysis, visualisation, and manuscript writing.',
+    scope: 'Both studies used one public dataset from 6 healthy volunteers and 12 patients, with testing separated by recording session. The patient class combined several neurocritical conditions, and signal-quality labels were assigned manually. Larger and more diverse cohorts, condition-specific labels and automated quality assessment are needed before clinical use.',
     related: ['10.3390/diagnostics13122000'],
-    visual: {
-      image: dopplerOverview,
-      alt: 'Method overview. Transcranial Doppler ultrasound produces a spectrogram, a flow-velocity algorithm extracts the maximal velocity waveform, the waveforms are cleaned and restored with a CycleGAN, and a two-stream DopplerNet2+ classifier labels each recording as healthy or intensive care.',
-      caption: 'Figure 2 from Kanti Podder et al. (2023). From Doppler spectrograms to maximal flow-velocity waveforms, CycleGAN restoration and two-stream classification.',
-      credit: sourceArticle('10.1016/j.bspc.2023.104882'),
-      licence: elsevier(2023),
-    },
-    figures: [
-      {
-        section: 'approach',
-        image: dopplerRestored,
-        alt: 'Four plots of middle cerebral artery waveforms, two from healthy and two from intensive-care recordings. Each overlays the original waveform in blue and the CycleGAN-processed waveform in orange.',
-        caption: 'Figure 7 from Kanti Podder et al. (2023). Original and CycleGAN-processed waveforms for the healthy (a, b) and intensive-care (c, d) classes.',
-        credit: sourceArticle('10.1016/j.bspc.2023.104882'),
-        licence: elsevier(2023),
-      },
-    ],
+    relatedProjects: ['wearable-cardiac-waveforms', 'eeg-artefact-restoration'],
+    visual: dopplerFlowVisual,
   },
   {
     slug: 'ecg-restoration-during-mri', area: 'Physiological signal processing',

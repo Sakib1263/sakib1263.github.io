@@ -275,6 +275,17 @@ test('both EEG restoration papers link to their shared research project', async 
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'MLMRS-Net', 'AGO-CycleGAN', 'Spectral recovery']);
 });
 
+test('both transcranial Doppler papers link to their shared research project', async ({ page }) => {
+  await page.goto('/publications/');
+  for (const doi of ['10.1016/j.bspc.2023.104882', '10.3390/diagnostics13122000']) {
+    await expect(page.locator(`[data-doi="${doi}"]`).getByRole('link', { name: 'Research details', exact: true }))
+      .toHaveAttribute('href', '/research/qscare-doppler-flow/');
+  }
+  await page.goto('/research/qscare-doppler-flow/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Deep learning for cerebral blood-flow analysis using transcranial Doppler');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'CycleGAN restoration', 'DopplerNet2+', 'Self-ResAttentioNet18']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();
