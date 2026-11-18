@@ -322,6 +322,17 @@ test('hip implant papers link to their shared research project', async ({ page }
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Loosening detection', 'Biomaterials review', 'Implant sensing', 'Spiral trunnion', 'Design review', 'Stem materials']);
 });
 
+test('ECMO simulator papers link to their shared research project', async ({ page }) => {
+  await page.goto('/publications/');
+  for (const doi of ['10.1016/j.ejccm.2018.12.017', '10.1109/scored.2019.8896240', '10.5339/qmj.2019.qccc.61']) {
+    await expect(page.locator(`[data-doi="${doi}"]`).getByRole('link', { name: 'Research details', exact: true }))
+      .toHaveAttribute('href', '/research/ecmo-cannulation-simulator/');
+  }
+  await page.goto('/research/ecmo-cannulation-simulator/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Low-cost ECMO cannulation simulator for clinical training');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'System design', 'First prototype', 'Improved prototype']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();

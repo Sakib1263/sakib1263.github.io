@@ -12,12 +12,12 @@ import sepsisWorkflow from '../assets/research/sers-sepsis-recognition/fig1-work
 import sepsisEmbeddings from '../assets/research/sers-sepsis-recognition/fig5-embeddings.png';
 import gearboxConfusion from '../assets/research/gearbox-fault-detection/fig7-confusion-matrix.png';
 import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig6-occupancy.png';
-import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-trainer.jpg';
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { aorticWssProgress, aorticWssVisual } from './aortic-wss-milestones';
 import { exoventqProgress, exoventqVisual } from './exoventq-milestones';
 import { hipImplantProgress, hipImplantVisual } from './hip-implant-milestones';
+import { ecmoProgress, ecmoVisual } from './ecmo-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -487,22 +487,19 @@ const devices: ResearchProject[] = [
   },
   {
     slug: 'ecmo-cannulation-simulator', area: 'Biomedical devices & simulation',
-    title: 'ECMO cannulation and circulation simulator',
-    summary: 'Building a physical circulation model and sensor-equipped trainer for practising ultrasound-guided cannulation.',
+    title: 'Low-cost ECMO cannulation simulator for clinical training',
+    summary: 'A mannequin-based training system with simulated circulation, ultrasound-compatible access pads and sensors for cannulation errors.',
+    question: 'Can a lower-cost simulator recreate the anatomy, circulation and errors that matter during ECMO cannulation training?',
     doi: '10.1109/scored.2019.8896240', period: 'August 2018–October 2019',
-    context: 'Qatar University · Undergraduate Research Experience Program',
-    approach: 'The prototype circulates fluid through a model of the human vasculature and uses ultrasound-compatible pads for cannulation practice. Sensors and control logic reproduce events such as low flow or problems with guidewire and cannula placement.',
-    contribution: 'I helped design, build and test the prototype, wrote Arduino pump-control code, and contributed to technical documentation and publications. Training sessions at Hamad General Hospital and Al-Wakra Hospital provided clinical context for the work.',
-    workflow: ['Model pulsatile circulation', 'Build ultrasound-guided cannulation tasks', 'Simulate procedural complications'],
-    scope: 'The published work describes simulation and training hardware used for procedural practice.',
+    context: 'Qatar National Research Fund UREP22-003-2-001 · Qatar University and Hamad Medical Corporation',
+    approach: 'ECMO cannulation is a high-risk procedure, and many training simulators are expensive or represent only part of the circulation. Working with ECMO clinicians, the project developed a mannequin-based trainer with arterial and venous flow, ultrasound-compatible access pads and sensors that respond to procedural errors.',
+    workflow: ['Define clinical training needs', 'Build pads and circulation loops', 'Add sensors and test errors'],
+    progress: ecmoProgress,
+    contribution: 'I helped design, build and test the simulator and wrote the Arduino control code for the pump motor used to reproduce pulsatile flow. I also contributed to technical documentation and manuscript preparation, and attended hands-on ECMO training at Hamad General Hospital and Al-Wakra Hospital. The SCOReD presentation received the Best Paper Presentation Award for its presenting author, and the UREP project placed third in the 12th Annual UREP Competition in 2020.',
+    scope: 'These papers describe simulator design and prototype testing. They do not report a formal study of trainee learning or clinical outcomes. Further testing by ECMO clinicians and improvements to tubing, sensing and printed materials were still needed.',
     related: ['10.1016/j.ejccm.2018.12.017', '10.5339/qmj.2019.qccc.61'],
-    visual: {
-      image: ecmoTrainer,
-      alt: 'Left: block diagram in which force-sensing resistors and flow sensors feed a microcontroller that drives DC motors and laminar and pulsatile flow pumps. Right: photograph of the improved mannequin trainer with tubing and cannulation pads.',
-      caption: 'Figure 1g–h from Mahmoud et al. (2019), Qatar Medical Journal, cropped to the embedded system diagram (g) and the improved prototype simulator (h).',
-      credit: sourceArticle('10.5339/qmj.2019.qccc.61'),
-      licence: ccBy,
-    },
+    relatedProjects: ['exoventq-ventilation'],
+    visual: ecmoVisual,
   },
   {
     slug: 'exoventq-ventilation', area: 'Biomedical devices & simulation',
