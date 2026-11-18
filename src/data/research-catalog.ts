@@ -13,7 +13,6 @@ import eegSpectra from '../assets/research/eeg-artefact-restoration/fig6-psd.png
 import eegFramework from '../assets/research/eeg-artefact-restoration/fig3-ago-cyclegan.png';
 import fetalPeaks from '../assets/research/fetal-ecg-extraction/fig6-r-peaks.png';
 import fetalPipeline from '../assets/research/fetal-ecg-extraction/fig1-pipeline.png';
-import radarEcg from '../assets/research/contactless-cardiovascular-waveforms/fig5-radar-ecg-rest.png';
 import renalFramework from '../assets/research/renal-tumour-modelling/fig1-framework.png';
 import renalFeatures from '../assets/research/renal-tumour-modelling/fig9-surgical-features.png';
 import liverMasks from '../assets/research/liver-mri-segmentation/fig10-cascade-masks.jpg';
@@ -32,6 +31,7 @@ import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig
 import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-trainer.jpg';
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
+import { contactlessProgress, contactlessVisual } from './signal-milestones';
 
 function existing(slug: string) {
   const project = projects.find(item => item.slug === slug);
@@ -326,22 +326,20 @@ const signals: ResearchProject[] = [
   existing('nabnet'),
   {
     slug: 'contactless-cardiovascular-waveforms', area: 'Physiological signal processing',
-    title: 'Cardiovascular waveforms from radar and facial video',
-    summary: 'Estimating blood pressure, ECG, and optical pulse waveforms using contactless recordings.',
+    title: 'Contactless cardiovascular waveforms from facial video and radar',
+    summary: 'Using deep learning to reconstruct pulse, ECG and arterial pressure waveforms from facial video and 24 GHz radar, with no sensor touching the body.',
+    question: 'Can deep learning recover pulse, ECG and arterial pressure waveforms from a camera or radar, with no sensor touching the body?',
+    context: 'Qatar University High Impact Grant QUHI-CENG-23/24-216 · Prince Sattam Bin Abdulaziz University project PSAU/2024/R/1445',
+    period: '2023–2025',
     doi: '10.1007/s00521-025-11327-x',
-    approach: 'One study estimated beat-to-beat arterial pressure from radar in-phase and quadrature channels. Another used a multiresolution network to reconstruct ECG from radar during rest, Valsalva and apnoea. A separate video study used a compact encoder–decoder to recover photoplethysmography from facial recordings and assessed waveform and derived heart-rate agreement.',
-    result: 'In the radar ECG study, MultiResLinkNet had the highest spectral correlation with the reference ECG among the compared networks, from 74.66% during apnoea to 82.44% at rest. In the video study, the recovered pulse waveform had a Pearson correlation of 0.862 with the reference, and the derived heart rate had a mean absolute error of 1.51 beats per minute.',
-    contribution: 'I proposed applying one-dimensional reconstruction to the radar blood-pressure task and contributed to model development, evaluation and interpretation. I also implemented the video pulse estimation pipeline and contributed to the radar ECG methodology.',
-    scope: 'Radar and video were evaluated in separate studies, with different reference signals and recording conditions.',
+    approach: 'Continuous cardiovascular monitoring usually depends on finger sensors, adhesive electrodes, cuffs or arterial lines. These can irritate the skin, restrict movement or suit only clinical settings. This work trains one-dimensional encoder–decoder networks to turn a contactless recording into a reference waveform captured at the same time, then tests them on people held out from training. It began with the optical pulse from facial video and moved to radar, first for ECG and then for arterial pressure.',
+    workflow: ['Record facial video or radar', 'Reconstruct the waveform with a 1D network', 'Compare with reference sensors'],
+    progress: contactlessProgress,
+    contribution: 'For the facial video study, I prepared the deep learning pipeline, contributed to data preprocessing and to video and signal analysis, and supported evaluation, validation and manuscript preparation. For radar ECG, I contributed to the methodology, model development, quantitative evaluation and original draft. For radar arterial pressure, I first proposed exploring one-dimensional reconstruction from raw radar signals, then contributed to the methodology, model implementation, evaluation, interpretation and manuscript review.',
+    scope: 'Both radar studies used one public dataset of 30 healthy adults recorded in a controlled clinical setup. Their outputs are normalised waveforms, so they do not provide calibrated blood pressure or a diagnostic ECG. The video model was trained on 26 people and lost accuracy on an independent dataset. Larger and more varied cohorts, including patients, are needed before clinical use.',
     related: ['10.1016/j.compbiomed.2024.108555', '10.1016/j.bspc.2023.105687'],
     relatedProjects: ['nabnet', 'wearable-cardiac-waveforms'],
-    visual: {
-      image: radarEcg,
-      alt: 'Five stacked traces at rest: the radar signal, followed by the reference ECG in green and the ECG predicted by FPN, U-Net, LinkNet and MultiResLinkNet in red. The predicted R-peaks line up with the reference beats.',
-      caption: 'Figure 5 from Chowdhury et al. (2024), from the radar ECG study. ECG synthesised from radar at rest by FPN (b), U-Net (c), LinkNet (d) and the proposed MultiResLinkNet (e), compared with the reference ECG.',
-      credit: sourceArticle('10.1016/j.compbiomed.2024.108555'),
-      licence: elsevier(2024),
-    },
+    visual: contactlessVisual,
   },
   {
     slug: 'wearable-cardiac-waveforms', area: 'Physiological signal processing',
