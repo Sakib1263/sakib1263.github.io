@@ -1,10 +1,8 @@
 import { topicDescriptions, topics } from './papers';
 import { projects, type ResearchProject } from './research';
-import { ccBy, elsevier, sourceArticle, springer } from './figure-credits';
+import { ccBy, elsevier, sourceArticle } from './figure-credits';
 import insoleFbg from '../assets/research/smart-insoles-diabetic-foot/fig4-fbg-insole.jpg';
 import insoleTemperature from '../assets/research/smart-insoles-diabetic-foot/fig9-temperature-maps.png';
-import gaitPatterns from '../assets/research/gait-pattern-modelling/fig3-vgrf-patterns.png';
-import gaitCurves from '../assets/research/gait-pattern-modelling/fig6-roc-pr.png';
 import dopplerOverview from '../assets/research/qscare-doppler-flow/fig2-overview.png';
 import dopplerRestored from '../assets/research/qscare-doppler-flow/fig7-restored-waveforms.png';
 import mhdFramework from '../assets/research/ecg-restoration-during-mri/fig2-framework.png';
@@ -29,6 +27,7 @@ import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig
 import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-trainer.jpg';
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
+import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
 function existing(slug: string) {
@@ -110,35 +109,20 @@ const biomechanics: ResearchProject[] = [
   },
   {
     slug: 'gait-pattern-modelling', area: 'Wearable biomechanics',
-    title: 'Gait patterns in movement disorders and Tai Chi training',
-    summary: 'Using ground reaction force waveforms and gait-cycle features to study movement disorders and training-related differences in walking.',
+    title: 'Machine learning for gait analysis: Tai Chi training and neurodegenerative disease detection',
+    summary: 'Using foot-sensor recordings and machine learning to separate Tai Chi masters from trainees, then to detect ALS, Huntington’s disease and Parkinson’s disease from walking patterns.',
+    question: 'What can walking patterns from foot sensors reveal about long-term training and neurodegenerative disease?',
+    context: 'Qatar National Research Fund NPRP12S-0227-190164 · Qatar University IRCC-2021-001',
     doi: '10.1007/s10489-023-04557-w',
-    approach: 'NDDNet combined waveform and gait-cycle features in a 64-participant dataset with healthy, Parkinson’s disease, Huntington’s disease and ALS groups. A separate analysis used scaled gait measurements and participant-wise validation in a 57-person longitudinal Tai Chi study.',
-    result: 'NDDNet detected the three neurodegenerative diseases with 96.75% average accuracy in the 64-participant dataset. In the Tai Chi study, subject-wise five-fold cross-validation separated Tai Chi masters from controls during single-task walking with 88.17% accuracy and a 93.10% ROC AUC.',
-    measures: [
-      { value: '96.75%', label: 'Average accuracy across three diseases (NDDNet)' },
-      { value: '88.17%', label: 'Tai Chi masters versus controls, single-task walking' },
-    ],
-    contribution: 'I contributed to gait-data analysis, evaluation of deep and classical models, interpretation, and manuscript review.',
-    scope: 'The studies used distinct datasets, labels, and questions. Model performance is specific to each cohort and evaluation protocol.',
+    code: 'https://github.com/atick-faisal/NDDNet',
+    approach: 'Walking depends on coordination between the nervous system, muscles and joints, so small changes in stride timing and foot loading can carry useful information. This project analysed public foot-sensor recordings in two studies, always testing on people held out from training. The first used interpretable gait features and classical machine learning to study Tai Chi experience. The second combined force signals and gait features in a deep network to detect neurodegenerative disease.',
+    workflow: ['Record walking with foot sensors', 'Extract gait signals and features', 'Test on unseen participants'],
+    progress: gaitAnalysisProgress,
+    contribution: 'In the Tai Chi study, I contributed to gait-data analysis, classical machine learning evaluation, interpretation of the findings and manuscript review. For NDDNet, I contributed to gait-data analysis, deep learning evaluation, interpretation of the findings and manuscript review and revision.',
+    scope: 'Both studies are retrospective analyses of public datasets without an external test cohort. The Tai Chi study shows gait differences between experienced and newly trained people, but it does not prove that training caused every difference, and footswitches record timing rather than force. The NDDNet groups contain 13 to 20 people and differ in age and sex balance, so larger clinical cohorts are needed before diagnostic use.',
     related: ['10.1016/j.compbiomed.2021.105184'],
-    visual: {
-      image: gaitPatterns,
-      alt: 'Four line plots of normalised force over a gait cycle for healthy controls and people with ALS, Huntington’s disease and Parkinson’s disease: the vertical ground reaction force, its first and second derivatives, and its integral. Shaded bands show the spread within each group.',
-      caption: 'Figure 3 from Faisal et al. (2023). Vertical ground reaction force patterns (a), their first (b) and second (c) derivatives, and their integral (d) for each group.',
-      credit: sourceArticle('10.1007/s10489-023-04557-w'),
-      licence: springer(2023),
-    },
-    figures: [
-      {
-        section: 'results',
-        image: gaitCurves,
-        alt: 'Receiver operating characteristic and precision–recall curves for four comparisons with healthy controls. Areas under the ROC curve are 1.00 for ALS, 0.96 for Huntington’s disease, 0.97 for Parkinson’s disease and 0.96 for all three diseases combined.',
-        caption: 'Figure 6 from Faisal et al. (2023). ROC (a) and precision–recall (b) curves for NDDNet against healthy controls.',
-        credit: sourceArticle('10.1007/s10489-023-04557-w'),
-        licence: springer(2023),
-      },
-    ],
+    relatedProjects: ['diabetic-neuropathy-gait-emg'],
+    visual: gaitAnalysisVisual,
   },
 ];
 
@@ -795,12 +779,17 @@ export const researchStudyAreas = [
 export const researchStudies = researchStudyAreas.flatMap(group => group.projects);
 
 export const researchStudiesByDoi = new Map<string, ResearchProject[]>();
+const addStudyPaper = (doi: string, study: ResearchProject) => {
+  const key = doi.toLowerCase();
+  const matches = researchStudiesByDoi.get(key) ?? [];
+  if (!matches.includes(study)) matches.push(study);
+  researchStudiesByDoi.set(key, matches);
+};
+// A paper links to its main project. Papers without one link to the projects that list them as related work.
+for (const study of researchStudies) if (study.doi) addStudyPaper(study.doi, study);
+const mainProjectPapers = new Set(researchStudiesByDoi.keys());
 for (const study of researchStudies) {
-  if (!study.doi) continue;
-  const doi = study.doi.toLowerCase();
-  const matches = researchStudiesByDoi.get(doi) ?? [];
-  matches.push(study);
-  researchStudiesByDoi.set(doi, matches);
+  study.related?.filter(doi => !mainProjectPapers.has(doi.toLowerCase())).forEach(doi => addStudyPaper(doi, study));
 }
 
 export function researchStudyFor(slug: string) {

@@ -221,6 +221,16 @@ test('the homepage links to all research and all papers', async ({ page, request
   expect(await (await request.get('/sitemap.xml')).text()).not.toContain('research/summary');
 });
 
+test('both gait papers link to their shared research project', async ({ page }) => {
+  await page.goto('/publications/');
+  for (const doi of ['10.1016/j.compbiomed.2021.105184', '10.1007/s10489-023-04557-w']) {
+    await expect(page.locator(`[data-doi="${doi}"]`).getByRole('link', { name: 'Research details', exact: true }))
+      .toHaveAttribute('href', '/research/gait-pattern-modelling/');
+  }
+  await page.goto('/research/gait-pattern-modelling/');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Tai Chi gait', 'NDDNet']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();

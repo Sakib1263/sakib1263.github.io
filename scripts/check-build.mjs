@@ -36,7 +36,7 @@ for (const file of readdirSync(root, { recursive: true, withFileTypes: true })) 
       if (!paperId || paperId !== attributes['data-research-project']) {
         errors.push(`${key}: research link is outside the matching publication row: ${attributes.href}`);
       }
-      page.researchLinks.set(attributes.href, paperId);
+      page.researchLinks.set(attributes.href, (page.researchLinks.get(attributes.href) ?? new Set()).add(paperId));
     }
     for (const attribute of ['href', 'src']) {
       if (attributes[attribute]) page.links.push(attributes[attribute]);
@@ -80,7 +80,7 @@ for (const [key, page] of pages) {
   projectCitationCount++;
   const target = new URL(citation.href, homeUrl);
   if (target.pathname !== publicationsPage?.url?.pathname
-    || publicationsPage.researchLinks.get(page.url?.pathname) !== target.hash.slice(1)) {
+    || !publicationsPage.researchLinks.get(page.url?.pathname)?.has(target.hash.slice(1))) {
     errors.push(`${key}: missing matching research detail link at ${citation.href}`);
   }
 }

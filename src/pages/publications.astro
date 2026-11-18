@@ -134,7 +134,7 @@ const journalMetrics: Readonly<Record<string, {
               {cluster.papers.map(publication => {
                 const id = publicationId(publication.doi);
                 const projects = researchStudiesByDoi.get(publication.doi.toLowerCase()) ?? [];
-                const codeLinks = [...new Set(projects.flatMap(project => project.code ? [project.code] : []))];
+                const codeLinks = [...new Set(projects.flatMap(project => project.code && project.doi?.toLowerCase() === publication.doi.toLowerCase() ? [project.code] : []))];
                 const dataset = datasetsByStudy.get(publication.doi);
                 const { summary, contribution } = publicationDetails(publication.doi);
                 const metrics = journalMetrics[publication.bibliography.issn ?? ''];
