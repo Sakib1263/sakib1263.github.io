@@ -1,7 +1,6 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
-import { currentResearch } from '../data/research';
-import { collectionByStudy, collectionPath } from '../data/research-projects';
+import { currentResearch } from '../data/research-projects';
 import { sitePath } from '../lib/site';
 ---
 
@@ -10,16 +9,12 @@ import { sitePath } from '../lib/site';
     <h2 id="current-title">Ongoing research</h2>
   </div>
   <div class="resource-list">
-    {currentResearch.map(({ area, title, description, project }) => {
-      const collection = collectionByStudy.get(project);
-      const href = collection ? `${collectionPath(collection.slug)}#${project}` : `research/${project}/`;
-      return (
-        <article>
-          <p class="overline">{area}</p>
-          <h3><SiteLink href={sitePath(href)}>{title}</SiteLink></h3>
-          <p>{description}</p>
-        </article>
-      );
-    })}
+    {currentResearch.map(({ area, title, summary, href }) => (
+      <article>
+        <p class="overline">{area}</p>
+        <h3><SiteLink href={sitePath(href)}>{title}</SiteLink></h3>
+        <p>{summary}</p>
+      </article>
+    ))}
   </div>
 </section>

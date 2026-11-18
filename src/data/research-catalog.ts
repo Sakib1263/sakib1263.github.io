@@ -227,12 +227,35 @@ const imaging: ResearchProject[] = [
   },
   {
     slug: 'multiphase-liver-ct', area: 'Medical imaging',
-    title: 'Liver and tumour segmentation across contrast-enhanced CT phases',
-    summary: 'Adapting segmentation foundation models to liver and tumour imaging across phases and cohorts.',
+    title: 'LiPIVOT: liver and tumour segmentation across contrast-enhanced CT phases',
+    summary: 'Adapting a medical segmentation foundation model to outline the liver and liver tumours on CT across contrast phases and independent cohorts.',
+    question: 'Can fine-tuning a segmentation foundation model on liver CT outperform the model used as it is, and stay reliable on hospitals, scanners and contrast phases it was not trained on?',
     status: 'Ongoing research', context: 'Qatar University',
-    approach: 'Use automatic anatomical prompts to focus a segmentation model on the liver and adapt it with a limited number of trainable parameters. Study how information from complementary contrast phases contributes to tumour segmentation. Use cohort-aware evaluation to measure generalisation across acquisition settings.',
-    contribution: 'I work on model adaptation, prompting, multiphase integration and the evaluation pipeline for liver and tumour segmentation.',
-    scope: 'This page describes the research direction. The related liver MRI project is a separate published study with a different modality and endpoint.',
+    approach: 'Liver tumours are assessed on CT scans taken at several times after a contrast injection, and each phase shows the liver and lesions differently. LiPIVOT starts from MedSAM2, a foundation model that segments 3D scans by propagating a mask from one prompted slice to its neighbours. The portal-venous phase is the anchor: the model is first adapted for the liver on that phase, then extended to tumours and to the other phases, and the phase-specific results are finally brought into a common space and combined.',
+    workflow: ['Detect the liver and prompt the model', 'Segment through each CT volume', 'Combine the contrast phases'],
+    progress: [
+      {
+        id: 'liversam',
+        navLabel: 'LiverSAM',
+        title: 'LiverSAM: adapting MedSAM2 to portal-venous CT',
+        status: 'Stage 1 · experiments in progress',
+        paragraphs: [
+          'The first stage fine-tunes MedSAM2 for the liver on about 600 portal-venous CT scans from eight public datasets. Each dataset is held out in turn, so every test measures performance on a cohort the model has not seen. Untouched MedSAM2 is compared with four fine-tuning settings that unfreeze progressively more of the network, from the mask decoder alone to the image encoder.',
+          'The untouched model is already a strong baseline, so the protocol is designed to make the comparison fair. Training follows the same slice-by-slice propagation used at test time and includes slices beyond the liver, so the model learns where the organ ends. Evaluation reports surface-distance measures and mask leakage outside the liver as well as overlap. A YOLO liver detector provides the starting box prompt for scans without reference masks.',
+        ],
+      },
+      {
+        id: 'tumours-phases',
+        navLabel: 'Tumours and phases',
+        title: 'Extending to tumours and other contrast phases',
+        status: 'Stages 2 and 3 · data prepared',
+        paragraphs: [
+          'Next, a tumour model and phase-specific experts will be adapted using further public multiphase liver CT collections. Their segmentations will be mapped into the portal-venous space of each patient and fused into a consensus. An optional final stage will classify tumours from the combined phases.',
+        ],
+      },
+    ],
+    contribution: 'I lead the LiPIVOT pipeline: curating and quality-checking the eight-dataset CT collection, the LiverSAM training and leave-one-dataset-out evaluation protocol, automatic prompting, and the metrics used to compare fine-tuned and untouched models.',
+    scope: 'This is ongoing work, so this page gives an overview only. Results will be added as the studies are published. Scores that use a box prompt drawn from the reference mask are reported separately from fully automatic results. The published liver MRI project is a separate study.',
     relatedProjects: ['liver-mri-segmentation', 'kidney-stone-segmentation'],
   },
   {

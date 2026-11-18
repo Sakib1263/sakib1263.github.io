@@ -1,5 +1,5 @@
 import { researchStudyAreas, researchStudyFor, researchStudies } from './research-catalog';
-import type { ResearchFigure, ResearchPhase, ResearchProject } from './research';
+import { currentResearchSlugs, type ResearchFigure, type ResearchPhase, type ResearchProject } from './research';
 import {
   smartInsoleApproach, smartInsoleApproachFigures, smartInsoleNextSteps, smartInsoleProgress,
   smartInsoleVisual, smartInsoleWorkflow,
@@ -210,6 +210,20 @@ for (const collection of collections) {
     collectionByStudy.set(study.slug, collection);
   }
 }
+
+/** Ongoing projects with the catalogue's own title, summary and page, so the homepage and research pages always match. */
+export const currentResearch = currentResearchSlugs.map(slug => {
+  const study = researchStudyFor(slug);
+  const collection = collectionByStudy.get(slug);
+  return {
+    slug,
+    area: study.area,
+    title: study.title,
+    summary: study.summary,
+    question: study.question ?? study.summary,
+    href: collection ? `${collectionPath(collection.slug)}#${slug}` : `research/${slug}/`,
+  };
+});
 
 const selections = {
   biomechanics: [gait.slug, insoles.slug, 'diabetic-neuropathy-gait-emg'],

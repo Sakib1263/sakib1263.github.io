@@ -1,7 +1,8 @@
 ---
 import SiteLink from '../../components/SiteLink.astro';
 import Base from '../../layouts/Base.astro';
-import { caseStudyProjects, currentResearch } from '../../data/research';
+import { caseStudyProjects } from '../../data/research';
+import { currentResearch } from '../../data/research-projects';
 import { doiUrl, profile, sitePath } from '../../lib/site';
 import '../../styles/catalog.css';
 
@@ -36,8 +37,8 @@ const evidence = caseStudyProjects.flatMap(project =>
       <header class="catalog-section-heading"><h2 id="brief-current">Current research questions</h2></header>
       {currentResearch.map(item => (
         <article class="brief-entry">
-          <h3><SiteLink href={sitePath(`research/${item.project}/`)}>{item.title}</SiteLink></h3>
-          <p>{item.description}</p>
+          <h3><SiteLink href={sitePath(item.href)}>{item.title}</SiteLink></h3>
+          <p>{item.question}</p>
         </article>
       ))}
     </section>

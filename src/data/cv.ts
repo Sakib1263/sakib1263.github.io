@@ -37,6 +37,7 @@ export const positions: Appointment[] = [
     highlights: [
       'Design studies and develop models from data collection through evaluation. Current work includes estimating three-dimensional foot forces and moments from smart-insole and motion data.',
       'Developed the SmartWoundCare imaging pipeline for diabetic-foot assessment. It segments the foot in paired colour and thermal images, aligns the two, and compares ways of combining them for neuropathy identification and ulcer severity grading.',
+      'Lead LiPIVOT, which adapts the MedSAM2 segmentation foundation model to liver and tumour CT across contrast phases, with leave-one-dataset-out evaluation over eight public cohorts.',
       'Contributed to smart-plug research and privacy-preserving energy analytics using federated learning. Led a review of deep reinforcement learning for energy systems.',
       'Prepare analysis-ready imaging, waveform, and wearable datasets through preprocessing, annotation, and quality checks.',
       'Develop research proposals and work plans. Prepare study protocols, ethics submissions, data-management documents, and technical materials for invention disclosures.',
@@ -45,6 +46,7 @@ export const positions: Appointment[] = [
     links: [
       { label: 'Wearable kinetics project', href: sitePath('research/projects/smart-insole-3d-gait-kinetics/') },
       { label: 'SmartWoundCare project', href: sitePath('research/diabetic-foot-thermal-imaging/') },
+      { label: 'LiPIVOT project', href: sitePath('research/multiphase-liver-ct/') },
       { label: 'Cross-device Raman project', href: sitePath('research/cross-device-raman/') },
       paperLink('Reinforcement learning review', '10.1016/j.rser.2025.116481'),
     ],

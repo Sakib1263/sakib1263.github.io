@@ -217,7 +217,7 @@ test('the research summary links to the case studies and ongoing work', async ({
   await expect(page).toHaveURL('/research/summary/');
   await expect(page.getByRole('heading', { name: 'Research summary', exact: true })).toBeVisible();
   await expect(page.getByRole('region', { name: 'Selected research contributions' }).getByRole('article')).toHaveCount(3);
-  await expect(page.getByRole('region', { name: 'Current research questions' }).getByRole('article')).toHaveCount(2);
+  await expect(page.getByRole('region', { name: 'Current research questions' }).getByRole('article')).toHaveCount(3);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
 });
 
@@ -295,7 +295,14 @@ test('the homepage portrait and contact are easy to find on narrow screens', asy
   ]) {
     await expect(featured.getByRole('link', { name: title, exact: true })).toHaveAttribute('href', href);
   }
-  await expect(page.getByRole('region', { name: 'Ongoing research' }).getByRole('article')).toHaveCount(2);
+  const ongoing = page.getByRole('region', { name: 'Ongoing research' });
+  await expect(ongoing.getByRole('article')).toHaveCount(3);
+  for (const [title, href] of [
+    ['SmartWoundCare: AI-assisted diabetic foot assessment from colour and thermal images', '/research/diabetic-foot-thermal-imaging/'],
+    ['LiPIVOT: liver and tumour segmentation across contrast-enhanced CT phases', '/research/multiphase-liver-ct/'],
+  ]) {
+    await expect(ongoing.getByRole('link', { name: title, exact: true })).toHaveAttribute('href', href);
+  }
 
   await page.getByRole('link', { name: 'Contact', exact: true }).click();
   await expect(page).toHaveURL('/#contact');
