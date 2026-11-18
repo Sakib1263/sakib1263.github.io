@@ -185,12 +185,44 @@ const imaging: ResearchProject[] = [
   },
   {
     slug: 'diabetic-foot-thermal-imaging', area: 'Medical imaging',
-    title: 'SmartWoundCare: diabetic foot assessment with thermal and RGB images',
-    summary: 'Aligning smartphone colour photographs with radiometric thermal images and studying which fusion strategies best support ulcer severity assessment.',
-    period: 'July 2025–February 2026', context: 'Qatar University High Impact Grant',
-    approach: 'Prepare paired photographs and calibrated temperature maps, detect and segment the foot, and align the two views before model training. The work compares fusion at the image, feature and decision levels for multiclass severity assessment.',
-    contribution: 'I developed the registration and multimodal analysis workflow, applied SAM-family models to foot segmentation, and evaluated alternative fusion strategies.',
-    scope: 'The project uses clinical images. This overview describes the workflow and evaluation aims using the available project documentation.',
+    title: 'SmartWoundCare: AI-assisted diabetic foot assessment from colour and thermal images',
+    summary: 'Combining smartphone photographs with radiometric thermal images of the feet to identify diabetic neuropathy and grade foot ulcer severity.',
+    question: 'Can paired colour and thermal images of the feet, taken with a smartphone and a handheld thermal camera, support screening for diabetic neuropathy and grading of foot ulcers?',
+    period: 'July 2025–present', status: 'Ongoing research',
+    context: 'Qatar University High Impact Grant QUHI-CENG-25/26-721',
+    approach: 'A colour photograph shows the skin, calluses and wounds, while a thermal image shows how temperature is distributed across the sole, which changes with nerve damage, inflammation and poor circulation. The project pairs the two images for each foot, isolates the foot in both, and tests how best to combine them for two clinical questions: whether a person has diabetic peripheral neuropathy, and how severe a foot ulcer is.',
+    workflow: ['Pair colour and thermal images', 'Segment and align each foot', 'Fuse the two and classify'],
+    progress: [
+      {
+        id: 'image-pipeline',
+        navLabel: 'Image pipeline',
+        title: 'Preparing paired colour and thermal foot images',
+        status: 'Data curation and preprocessing',
+        paragraphs: [
+          'Each examination pairs a smartphone photograph with a radiometric image from a handheld FLIR camera. The pipeline checks and de-identifies the clinical collection, extracts a calibrated temperature map in degrees Celsius from every thermal image, and detects the left and right foot in both images. Several Segment Anything (SAM) family models then outline each foot, their masks are combined into a consensus, and the results are reviewed and corrected by hand.',
+        ],
+      },
+      {
+        id: 'neuropathy',
+        navLabel: 'Neuropathy identification',
+        title: 'Identifying diabetic peripheral neuropathy',
+        status: 'Manuscript under review',
+        paragraphs: [
+          'The first study fuses the segmented colour and thermal images of the sole into a single image and classifies people with clinically confirmed diabetic peripheral neuropathy and controls with a vision transformer model. Evaluation keeps all images from a participant in the same fold. In ablation experiments, the fused images outperformed colour or thermal images alone. Details will follow publication.',
+        ],
+      },
+      {
+        id: 'ulcer-severity',
+        navLabel: 'Ulcer severity grading',
+        title: 'Aligning the two views and grading ulcer severity',
+        status: 'Experiments in progress',
+        paragraphs: [
+          'The thermal camera and the phone see the foot from different positions, so the second study first registers each thermal foot to the same foot in the photograph. It compares box-based, learned and outline-based alignment, including a matcher trained without manual annotation, and measures alignment accuracy against hand-placed anatomical landmarks and mask overlap. The aligned inputs combine absolute temperature, the temperature difference between the two feet and colour. They are used to compare early, feature-level and decision-level fusion for multiclass ulcer severity grading, using severity labels assigned by clinicians.',
+        ],
+      },
+    ],
+    contribution: 'I developed the multimodal image pipeline: temperature extraction, foot detection, SAM-based segmentation with consensus masks, and cross-modal registration with its landmark-based evaluation. I also prepare the fused model inputs and run the fusion and classification experiments.',
+    scope: 'This is ongoing work, so this page gives an overview only. Results will be added as the studies are published. The models use de-identified clinical images and are research tools, not validated for diagnosis.',
     relatedProjects: ['smart-insoles-diabetic-foot', 'multiphase-liver-ct'],
   },
   {
