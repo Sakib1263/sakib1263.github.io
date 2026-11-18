@@ -286,6 +286,13 @@ test('both transcranial Doppler papers link to their shared research project', a
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'CycleGAN restoration', 'DopplerNet2+', 'Self-ResAttentioNet18']);
 });
 
+test('the microbial SERS project presents each study in order', async ({ page }) => {
+  await page.goto('/research/projects/microbial-raman-biosensing/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Generalisable deep learning for microbial SERS');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Cross-device standardisation', 'Sepsis recognition', 'Validation review', 'PRISM-SERS']);
+  await expect(page.getByRole('heading', { name: 'PRISM-SERS: mapping spectra for unseen analytes' })).toBeVisible();
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();
@@ -356,7 +363,7 @@ test('the homepage portrait and contact are easy to find on narrow screens', asy
   for (const [title, href] of [
     ['AI-powered smart insoles for 3D gait kinetics', gaitProject],
     ['Deep learning for kidney disease imaging', '/research/projects/kidney-disease-imaging/'],
-    ['Machine learning for microbial Raman biosensing', '/research/projects/microbial-raman-biosensing/'],
+    ['Generalisable deep learning for microbial SERS', '/research/projects/microbial-raman-biosensing/'],
   ]) {
     await expect(featured.getByRole('link', { name: title, exact: true })).toHaveAttribute('href', href);
   }

@@ -459,12 +459,12 @@ const spectroscopy: ResearchProject[] = [
   },
   {
     slug: 'generalizable-microbial-sers', area: 'Spectroscopic sensing',
-    title: 'Spectral transfer and few-shot microbial recognition',
-    summary: 'Studying how spectral mapping and time-series representations transfer to new instruments, classes, and sample conditions.',
-    status: 'Ongoing research',
-    approach: 'One workstream studies alignment of portable-device spectra to a reference instrument when target analytes are held out. A second benchmarks time-series foundation-model representations for few-shot classification with separated support and query samples.',
+    title: 'PRISM-SERS and few-shot microbial recognition',
+    summary: 'Developing spectral mapping for analytes unseen during training and studying few-shot recognition across instruments and sample conditions.',
+    status: 'Ongoing research · Manuscript in preparation',
+    approach: 'PRISM-SERS studies how portable-device spectra can be mapped to a laboratory reference when target analytes are held out of training, using unpaired data and no class labels at inference. A second workstream benchmarks time-series foundation-model representations for few-shot classification with separated support and query samples.',
     contribution: 'I develop the spectral preprocessing, transfer and classification workflows and design comparisons that account for sample identity and differences between acquisition domains.',
-    scope: 'The two workstreams address different questions. Alignment tests recovery of comparable spectra, while few-shot experiments assess how well representations support classification with limited examples.',
+    scope: 'This work is ongoing, and no results have been published yet. The two workstreams address different questions: spectral mapping tests recovery of comparable spectra, while few-shot experiments assess classification from limited examples.',
     relatedProjects: ['cross-device-raman', 'microbial-sers-validation'],
   },
 ];

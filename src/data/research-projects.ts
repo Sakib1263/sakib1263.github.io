@@ -11,6 +11,7 @@ import {
 import {
   diabeticFootApproach, diabeticFootNextSteps, diabeticFootProgress, diabeticFootVisual, diabeticFootWorkflow,
 } from './diabetic-foot-project';
+import { ramanApproach, ramanNextSteps, ramanProgress, ramanWorkflow } from './raman-project';
 
 interface Stage {
   title: string;
@@ -162,38 +163,43 @@ const raman: Collection = {
   slug: 'microbial-raman-biosensing',
   visual: researchStudyFor('cross-device-raman').visual,
   area: 'Spectroscopic sensing',
-  title: 'Machine learning for microbial Raman biosensing',
+  title: 'Generalisable deep learning for microbial SERS',
   period: '2025–present',
-  context: 'Research line across instrument transfer, diagnostic modelling, and validation',
-  summary: 'Studying how surface-enhanced Raman spectroscopy (SERS) models recognise microbes across instruments, samples, and acquisition conditions.',
-  contribution: 'I led the modelling and evaluation for the cross-device work, built the computational pipeline for the sepsis study, and led the evidence audit of microbial SERS validation practices.',
-  scope: 'The sepsis study uses blood samples prepared under its own protocol. Instrument transfer and few-shot recognition address different questions, and each requires an appropriate held-out evaluation.',
+  context: 'Two research papers, one evidence review and ongoing work on spectral transfer',
+  summary: 'Standardising surface-enhanced Raman spectra across instruments, recognising sepsis pathogens from blood, and examining how well microbial SERS models are validated.',
+  contribution: 'I led the cross-device study, including model development, experiments, generalisation analysis, visualisation and manuscript preparation. For the sepsis study, I developed the deep learning pipeline from raw spectra through preprocessing, data splitting, training, evaluation and interpretation. I also led the design, corpus audit and synthesis of the 129-study review, and I am developing PRISM-SERS.',
+  scope: 'The cross-device study and PRISM-SERS use prepared analytes rather than clinical specimens. The sepsis study drew its primary samples from one hospital and tested a 70-sample external cohort, so prospective multi-site validation is still needed. The review percentages describe the 129 studies in its corpus, and PRISM-SERS has no published results yet.',
   stages: [
     {
       title: 'Standardising spectra across instruments',
       period: '2026 issue · Online 2025',
-      description: 'Mapped spectra from portable devices to a reference instrument and tested how that affected bacterial classification. The public dataset covers five instruments.',
+      description: 'Mapped spectra from four portable devices to a laboratory reference and tested how that affected classification across 20 analyte classes.',
       study: 'cross-device-raman',
     },
     {
       title: 'Sepsis and pathogen recognition from blood spectra',
       period: '2026 issue · Online 2025',
-      description: 'Developed a separate workflow using analyte-enriched blood spectra and super-operational neural networks for sepsis recognition and pathogen typing. The pathogen typing analysis included an external cohort.',
+      description: 'Developed SuperRamanNet for sepsis recognition and pathogen identification from analyte-enriched blood, with an independent external cohort.',
       study: 'sers-sepsis-recognition',
     },
     {
       title: 'Evaluating validation practices in the literature',
-      period: '2026',
-      description: 'Reviewed 129 studies for sample-level independence, external evaluation, and reporting across the workflow from sample preparation to modelling.',
+      period: 'Online 2026',
+      description: 'Reviewed 129 studies for biological independence, external evaluation and reporting across the workflow from sample preparation to modelling.',
       study: 'microbial-sers-validation',
     },
     {
-      title: 'Transfer to unseen analytes and few-shot recognition',
+      title: 'PRISM-SERS and transfer to unseen analytes',
       period: 'Ongoing',
-      description: 'Investigating held-out analytes in instrument alignment and testing whether time-series representations support recognition with few labelled examples.',
+      description: 'Developing class-independent spectral mapping for analytes held out of training. A manuscript is in preparation, and a related workstream studies few-shot recognition.',
       study: 'generalizable-microbial-sers',
     },
   ],
+  resources: [{ label: 'Multi-Instrument SERS Dataset', href: 'https://doi.org/10.5281/zenodo.23372983' }],
+  approach: ramanApproach,
+  workflow: ramanWorkflow,
+  progress: ramanProgress,
+  ongoing: ramanNextSteps,
 };
 
 export const collections = [gait, insoles, kidney, raman];
