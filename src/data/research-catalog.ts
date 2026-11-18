@@ -28,7 +28,7 @@ import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-tr
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
-import { contactlessProgress, contactlessVisual, ttrProgress, ttrVisual } from './signal-milestones';
+import { contactlessProgress, contactlessVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
 function existing(slug: string) {
   const project = projects.find(item => item.slug === slug);
@@ -481,12 +481,18 @@ const signals: ResearchProject[] = [
   },
   {
     slug: 'multimodal-glucose-estimation', area: 'Physiological signal processing',
-    title: 'QU-GM: multimodal glucose estimation',
-    summary: 'Combining photoplethysmography, blood pressure and demographic variables to study non-invasive glucose estimation.',
+    title: 'QU-GM: IoT-based glucose monitoring from wrist PPG, blood pressure and demographic data',
+    summary: 'A wearable and cloud-connected system that uses machine learning to estimate blood glucose and classify glucose severity without a finger-prick input.',
+    question: 'Can wrist PPG, blood pressure and demographic information support real-time glucose estimation without a blood sample?',
+    context: 'Qatar National Research Fund NPRP13S-0205-200270 · Qatar Diabetic Society',
     doi: '10.1109/access.2024.3404971',
-    approach: 'The study evaluated a machine-learning pipeline on recordings from 139 participants. It treated glucose estimation and diabetes severity classification as separate tasks and used the Clarke Error Grid as one means of assessing estimation error.',
-    contribution: 'I contributed to physiological signal analysis, model evaluation, interpretation and manuscript review.',
-    scope: 'The evaluation is a research study of glucose estimation. The model was assessed on the study data and protocol.',
+    approach: 'Finger-prick meters require repeated blood samples, and continuous glucose monitors use a sensor placed under the skin. QU-GM explores a less invasive route by combining a custom PPG wristband with blood pressure, demographic information and machine learning. The complete system links the wearable, an Android application and cloud-hosted models for glucose estimation and severity classification.',
+    workflow: ['Record wrist PPG and user data', 'Estimate glucose and severity', 'Return results to the application'],
+    progress: quGmProgress,
+    contribution: 'I contributed to the machine learning and physiological signal analysis for the glucose monitoring framework, including technical evaluation and manuscript review.',
+    scope: 'The models were developed on 139 participants recorded at rest, so larger and more diverse cohorts are needed. Blood pressure is currently measured separately and entered in the application. Severity classification used stratified cross-validation across samples, and longer-term testing during daily use is still required before clinical use.',
+    relatedProjects: ['wearable-cardiac-waveforms', 'nabnet'],
+    visual: quGmVisual,
   },
 ];
 

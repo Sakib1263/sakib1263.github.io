@@ -242,6 +242,12 @@ test('the blood pressure papers link to their shared research project', async ({
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Pressure prediction', 'PPG to waveform', 'Hybrid reconstruction']);
 });
 
+test('the glucose monitoring project shows its system and results stages', async ({ page }) => {
+  await page.goto('/research/multimodal-glucose-estimation/');
+  await expect(page.getByRole('heading', { level: 1 })).toContainText('QU-GM');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Wearable system', 'Clinical data', 'Glucose estimation', 'Severity classification']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();

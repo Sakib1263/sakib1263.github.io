@@ -4,7 +4,7 @@ import details from './publication-details.json';
 export const topics = {
   biomechanics: 'Wearables & biomechanics',
   imaging: 'Medical imaging',
-  signals: 'Physiological signals & monitoring',
+  signals: 'Biosignal AI & health monitoring',
   spectroscopy: 'Raman spectroscopy & biosensing',
   devices: 'Biomedical devices & simulation',
   engineering: 'Energy & applied machine learning',
@@ -13,7 +13,7 @@ export const topics = {
 export const topicDescriptions: Record<keyof typeof topics, string> = {
   biomechanics: 'Smart insoles, gait modelling, and estimation of forces and motion.',
   imaging: 'Renal CT and ultrasound, organ segmentation, and chest imaging.',
-  signals: 'Cardiovascular and neural waveforms, physiological sensing, and monitoring.',
+  signals: 'Machine learning for cardiovascular, neural, and metabolic signals from clinical, wearable, and contactless sensors.',
   spectroscopy: 'Microbial sensing, cross-instrument alignment, and validation of Raman models.',
   devices: 'Implants, simulation, ventilation, and computational haemodynamics.',
   engineering: 'Smart buildings, energy systems, and machine learning for other applied problems.',

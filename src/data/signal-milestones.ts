@@ -10,6 +10,13 @@ import ttrEntropy from '../assets/research/wearable-cardiac-waveforms/fig5-entro
 import ttrPulseRate from '../assets/research/wearable-cardiac-waveforms/fig6ef-pulse-rate.png';
 import ttrMultipass from '../assets/research/wearable-cardiac-waveforms/fig7-multipass-restoration.png';
 import ttrExamples from '../assets/research/wearable-cardiac-waveforms/fig8-restoration-examples.png';
+import quGmArchitecture from '../assets/research/multimodal-glucose-estimation/fig1-architecture.png';
+import quGmDevice from '../assets/research/multimodal-glucose-estimation/fig2-device.png';
+import quGmPipeline from '../assets/research/multimodal-glucose-estimation/fig3-ml-pipeline.png';
+import quGmApp from '../assets/research/multimodal-glucose-estimation/fig7-mobile-app.png';
+import quGmRegression from '../assets/research/multimodal-glucose-estimation/fig9-regression.png';
+import quGmClarke from '../assets/research/multimodal-glucose-estimation/fig11-clarke-grid.png';
+import quGmFeatures from '../assets/research/multimodal-glucose-estimation/fig12-severity-features.png';
 import { ccBy, elsevier, sourceArticle } from './figure-credits';
 import type { ResearchPhase, ResearchProject } from './research';
 
@@ -19,6 +26,7 @@ const rppgDoi = '10.1016/j.bspc.2023.105687';
 const radarEcgDoi = '10.1016/j.compbiomed.2024.108555';
 const radarPressureDoi = '10.1007/s00521-025-11327-x';
 const ttrDoi = '10.1016/j.eswa.2024.123167';
+const quGmDoi = '10.1109/access.2024.3404971';
 
 export const contactlessVisual: NonNullable<ResearchProject['visual']> = {
   image: radarFramework,
@@ -302,6 +310,153 @@ export const ttrProgress: ResearchPhase[] = [
     status: 'Biomedical Signal Processing and Control · 2025',
     paragraphs: [
       'A related study applied 1D-CycleGAN restoration to wrist PPG before classifying atrial fibrillation. Restoration raised classification accuracy by 2.94 and 5.08 percentage points in two test splits, and the Self-AFNet classifier reached 96.41% and 97.09%. This study used restoration without the finger PPG translation stage.',
+    ],
+  },
+];
+
+export const quGmVisual: NonNullable<ResearchProject['visual']> = {
+  image: quGmArchitecture,
+  alt: 'Two-part diagram. The conventional method uses a lancet prick, a blood sample and a glucometer. The proposed method sends wrist PPG from a sensor and TinyPICO board over Bluetooth to an Android application, which exchanges data with machine learning models on Amazon Web Services.',
+  caption: 'Figure 1 from Shuzan et al. (2024). (a) Conventional finger-prick measurement and (b) the proposed QU-GM system.',
+  credit: sourceArticle(quGmDoi),
+  licence: ccBy,
+};
+
+export const quGmProgress: ResearchPhase[] = [
+  {
+    id: 'wearable-system',
+    navLabel: 'Wearable system',
+    title: 'Building the wristband and connected system',
+    status: 'Hardware, mobile application and cloud',
+    paragraphs: [
+      'The wristband measures about 30 × 42 mm and combines a 609 nm pulse sensor, a TinyPICO ESP32 microcontroller and a 250 mAh battery that can last up to 24 hours. It samples PPG at 125 Hz and streams the signal to an Android application over Bluetooth.',
+      'The application combines PPG with blood pressure and demographic details, then sends the data to models hosted on Amazon Web Services. Estimated glucose and severity return to the phone every 10 seconds, and the design includes alerts for abnormal values.',
+    ],
+    measures: [
+      { value: '30 × 42 mm', label: 'Wristband size' },
+      { value: '125 Hz', label: 'PPG sampling rate' },
+      { value: '10 s', label: 'Result update interval' },
+    ],
+    figures: [
+      {
+        image: quGmDevice,
+        alt: 'Circuit diagrams of the device in work and charging modes, an exploded model of the wristband enclosure, and photographs of the finished device worn on the wrist.',
+        caption: 'Figure 2 from Shuzan et al. (2024). The prototype in (a) work and (b) charging modes, (c) its enclosure model and (d) the device worn on the wrist.',
+        credit: sourceArticle(quGmDoi),
+        licence: ccBy,
+      },
+      {
+        image: quGmApp,
+        alt: 'Three Android application screens: selecting the paired PPG sensor, entering demographic information while PPG is displayed, and viewing the glucose estimate with blood pressure fields.',
+        caption: 'Figure 7 from Shuzan et al. (2024). The Android application for connecting the device, entering user details and viewing the glucose estimate.',
+        credit: sourceArticle(quGmDoi),
+        licence: ccBy,
+      },
+    ],
+  },
+  {
+    id: 'clinical-data',
+    navLabel: 'Clinical data',
+    title: 'Collecting clinical data and engineering features',
+    status: 'Qatar Diabetic Society · 139 participants',
+    paragraphs: [
+      'Three minutes of resting wrist PPG were recorded from each of 139 participants, with finger-prick glucose from an Accu-Chek meter and blood pressure and heart rate from an Omron monitor. The study had ethical approval from Hamad Medical Corporation, and all participants gave written informed consent.',
+      'Signals were filtered, cleaned with variational mode decomposition and divided into 4.096-second segments. The pipeline extracted 139 time-domain, statistical, Mel-frequency cepstral, demographic and clinical features. Removing highly correlated features left 78 for model selection.',
+    ],
+    table: {
+      caption: 'Participant summary from Table 1 of Shuzan et al. (2024). Ranges are shown with the median in brackets.',
+      columns: ['Value'],
+      rows: [
+        { label: 'Participants', cells: ['139'] },
+        { label: 'With diabetes', cells: ['49.65%'] },
+        { label: 'Female', cells: ['41.84%'] },
+        { label: 'Age', cells: ['13–87 years (43)'] },
+        { label: 'Body mass index', cells: ['16.61–45.99 kg/m² (26.67)'] },
+        { label: 'Blood glucose', cells: ['66–600 mg/dL (118)'] },
+      ],
+    },
+    figures: [
+      {
+        image: quGmPipeline,
+        alt: 'Flow diagram. Raw data passes through preprocessing and feature ranking into training, validation and test sets to select the best model. New data from the device follows the same feature steps to produce glucose and severity predictions.',
+        caption: 'Figure 3 from Shuzan et al. (2024). Model development and validation for glucose prediction and severity classification.',
+        credit: sourceArticle(quGmDoi),
+        licence: ccBy,
+      },
+    ],
+  },
+  {
+    id: 'glucose-estimation',
+    navLabel: 'Glucose estimation',
+    title: 'Estimating blood glucose on unseen participants',
+    status: 'Regression with separate test participants',
+    paragraphs: [
+      'Participants were divided into separate training, validation and test groups in a 60:20:20 ratio. Three feature selection methods were compared with Gaussian process regression, decision trees and bagged ensemble trees. Bagged ensemble trees with 44 features selected by minimum redundancy maximum relevance gave the best result.',
+      'Demographic and clinical variables ranked among the most important features, alongside PPG-derived measures. On the Clarke Error Grid, 61.88% of predictions fell in zone A and 38.12% in zone B, with none in zones C, D or E.',
+    ],
+    measures: [
+      { value: '0.90', label: 'Correlation with measured glucose' },
+      { value: '22.90 mg/dL', label: 'Mean absolute error' },
+      { value: '100%', label: 'Predictions in Clarke zones A and B' },
+    ],
+    table: {
+      caption: 'Selected regression results from Table 3 of Shuzan et al. (2024).',
+      columns: ['Features', 'Correlation', 'Mean absolute error', 'RMSE'],
+      rows: [
+        { label: 'Bagged trees with MRMR', cells: ['44', '0.90', '22.90 mg/dL', '30.74 mg/dL'] },
+        { label: 'Bagged trees with ReliefF', cells: ['52', '0.88', '24.34 mg/dL', '32.15 mg/dL'] },
+        { label: 'Bagged trees with CFS', cells: ['53', '0.87', '23.70 mg/dL', '32.56 mg/dL'] },
+        { label: 'Gaussian process with ReliefF', cells: ['48', '0.81', '30.11 mg/dL', '40.77 mg/dL'] },
+        { label: 'Decision tree with MRMR', cells: ['56', '0.76', '35.73 mg/dL', '49.44 mg/dL'] },
+      ],
+    },
+    figures: [
+      {
+        image: quGmRegression,
+        alt: 'Scatter plot of estimated against measured glucose from about 90 to 350 mg/dL, with the fitted trend line close to the ideal diagonal.',
+        caption: 'Figure 9 from Shuzan et al. (2024). Estimated against measured blood glucose.',
+        credit: sourceArticle(quGmDoi),
+        licence: ccBy,
+      },
+      {
+        image: quGmClarke,
+        alt: 'Clarke Error Grid plotting predicted against reference glucose. All points lie within zones A and B.',
+        caption: 'Figure 11 from Shuzan et al. (2024). Clarke Error Grid analysis of the glucose estimates.',
+        credit: sourceArticle(quGmDoi),
+        licence: ccBy,
+      },
+    ],
+  },
+  {
+    id: 'severity-classification',
+    navLabel: 'Severity classification',
+    title: 'Classifying glucose severity',
+    status: 'Three-class classification',
+    paragraphs: [
+      'A second model placed each sample into normal, warning or dangerous groups using measured glucose ranges. K-nearest neighbours, support vector machines and decision trees were compared with stratified five-fold cross-validation on 12,399 samples. K-nearest neighbours with 17 selected features performed best, using time-domain, statistical, Mel-frequency and demographic information.',
+    ],
+    measures: [
+      { value: '98.12%', label: 'Accuracy' },
+      { value: '98.12%', label: 'F1 score' },
+      { value: '0.998', label: 'ROC AUC' },
+    ],
+    table: {
+      caption: 'Severity groups from Table 2 of Shuzan et al. (2024).',
+      columns: ['Blood glucose range'],
+      rows: [
+        { label: 'Normal', cells: ['66–109.8 mg/dL'] },
+        { label: 'Warning', cells: ['109.8–140.4 mg/dL'] },
+        { label: 'Dangerous', cells: ['140.4 mg/dL and above'] },
+      ],
+    },
+    figures: [
+      {
+        image: quGmFeatures,
+        alt: 'Horizontal bar chart of the 17 features selected for severity classification. Weight, diabetes status and signal standard deviation have the highest relative importance.',
+        caption: 'Figure 12 from Shuzan et al. (2024). Features selected for severity classification, ranked by importance.',
+        credit: sourceArticle(quGmDoi),
+        licence: ccBy,
+      },
     ],
   },
 ];
