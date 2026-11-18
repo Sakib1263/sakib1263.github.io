@@ -44,7 +44,7 @@ test('research areas lead to project details, supporting publications, and ongoi
   await expect(page.locator('[data-research-project-row]')).toHaveCount(29);
   await researchAreas.getByRole('link', { name: 'Biomedical devices & simulation' }).click();
   await expect(page).toHaveURL('/research/#devices');
-  await page.getByRole('link', { name: 'Hip implant mechanics, sensing, and loosening detection', exact: true }).click();
+  await page.getByRole('link', { name: 'Computational and AI methods for total hip implants', exact: true }).click();
   await expect(page).toHaveURL('/research/hip-implant-mechanics-and-imaging/');
   await expect(page.getByRole('heading', { name: 'My contribution', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: 'Dataset details', exact: true })).toHaveAttribute('href', '/software/#hip-implant-xray');
@@ -309,6 +309,17 @@ test('the ExoventQ paper links to its project stages', async ({ page }) => {
   await page.goto('/research/exoventq-ventilation/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('ExoventQ: a low-cost portable negative-pressure ventilator');
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Pressure vessel', 'Pumping and control', 'System testing']);
+});
+
+test('hip implant papers link to their shared research project', async ({ page }) => {
+  await page.goto('/publications/');
+  for (const doi of ['10.1109/access.2022.3173424', '10.3390/polym14204308', '10.3390/bios13010079', '10.3390/ma16041466', '10.1039/d3tb01469j', '10.1016/j.mtcomm.2024.110932']) {
+    await expect(page.locator(`[data-doi="${doi}"]`).getByRole('link', { name: 'Research details', exact: true }))
+      .toHaveAttribute('href', '/research/hip-implant-mechanics-and-imaging/');
+  }
+  await page.goto('/research/hip-implant-mechanics-and-imaging/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Computational and AI methods for total hip implants');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Loosening detection', 'Biomaterials review', 'Implant sensing', 'Spiral trunnion', 'Design review', 'Stem materials']);
 });
 
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {

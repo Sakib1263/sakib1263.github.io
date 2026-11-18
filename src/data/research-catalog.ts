@@ -10,8 +10,6 @@ import covidPipeline from '../assets/research/covid-chest-imaging/fig3-pipeline.
 import curvaturePipeline from '../assets/research/image-based-curvature-measurement/fig1-pipeline.jpg';
 import sepsisWorkflow from '../assets/research/sers-sepsis-recognition/fig1-workflow.png';
 import sepsisEmbeddings from '../assets/research/sers-sepsis-recognition/fig5-embeddings.png';
-import hipDetection from '../assets/research/hip-implant-mechanics-and-imaging/fig8-implant-detection.jpg';
-import hipTrunnion from '../assets/research/hip-implant-mechanics-and-imaging/fig2-trunnion-geometry.png';
 import gearboxConfusion from '../assets/research/gearbox-fault-detection/fig7-confusion-matrix.png';
 import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig6-occupancy.png';
 import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-trainer.jpg';
@@ -19,6 +17,7 @@ import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, d
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { aorticWssProgress, aorticWssVisual } from './aortic-wss-milestones';
 import { exoventqProgress, exoventqVisual } from './exoventq-milestones';
+import { hipImplantProgress, hipImplantVisual } from './hip-implant-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -472,37 +471,19 @@ const spectroscopy: ResearchProject[] = [
 const devices: ResearchProject[] = [
   {
     slug: 'hip-implant-mechanics-and-imaging', area: 'Biomedical devices & simulation',
-    title: 'Hip implant mechanics, sensing, and loosening detection',
-    summary: 'Studying implant design and loosening through finite element modelling, bench work, and radiograph analysis.',
+    title: 'Computational and AI methods for total hip implants',
+    summary: 'Finite element modelling, implant sensing, biomaterial and design reviews, and deep learning for detecting aseptic loosening in total hip replacement.',
+    question: 'How can computational modelling and AI improve implant design, monitoring and detection of failure after total hip replacement?',
     doi: '10.1109/access.2022.3173424', period: '2021–2024',
-    context: 'Qatar University · Qatar National Research Fund project with clinical collaboration',
-    approach: 'Build three-dimensional implant, femur and pelvis models in Fusion 360 and evaluate implant and loading scenarios with ANSYS. The publications examine stem materials, a spiral head–stem interface, and the simulated response of a surface acoustic wave sensor. The HipXNet workstream localises implants in radiographs before classifying aseptic loosening.',
-    result: 'HipXNet’s stacked classifier detected aseptic loosening with 96.11% accuracy, and the team released annotated radiograph subsets for localisation and loosening classification. In the trunnion simulations, the spiral design had a predicted wear rate about 10% lower than the smooth design, at 0.039 compared with 0.048 mm³ per million loading cycles. The stem-material studies reported differences in stress transfer, stress shielding and micromovement.',
-    measures: [
-      { value: '96.11%', label: 'Loosening detection accuracy (HipXNet)' },
-      { value: '≈ 10%', label: 'Lower predicted wear with the spiral trunnion' },
-    ],
-    visual: {
-      image: hipDetection,
-      alt: 'Six hip radiographs with implants. Red boxes mark the annotated implant regions and orange boxes mark the regions predicted by YOLOv5m, which overlap closely.',
-      caption: 'Figure 8 from Rahman et al. (2022). Implant regions predicted by the best localisation model, YOLOv5m, on test radiographs, shown against the annotated regions.',
-      credit: sourceArticle('10.1109/access.2022.3173424'),
-      licence: ccBy,
-    },
-    figures: [
-      {
-        section: 'approach',
-        image: hipTrunnion,
-        alt: 'Engineering drawing of a hip implant stem with its head–neck dimensions, next to a 3D model. Insets compare the smooth and spiral surfaces of the head–stem taper junction.',
-        caption: 'Figure 2a–b from Soliman et al. (2023), Materials. 2D and 3D views of the implant, with insets comparing the smooth and spiral head–stem taper junctions.',
-        credit: sourceArticle('10.3390/ma16041466'),
-        licence: ccBy,
-      },
-    ],
-    contribution: 'I designed the spiral geometry and reconstructed a commercial implant stem in CAD. I contributed to finite element modelling, the bench-test setup with Hamad Medical Corporation, and development and evaluation of HipXNet.',
-    workflow: ['Model the implant and surrounding bone', 'Evaluate materials, loading and sensing', 'Study loosening in radiographs'],
-    scope: 'Finite element models compare specified materials, geometries and loads. The separate radiograph study uses retrospective labels. Each workstream has its own validation conditions.',
-    related: ['10.1016/j.mtcomm.2024.110932', '10.3390/ma16041466', '10.3390/bios13010079', '10.1039/d3tb01469j', '10.3390/polym14204308'],
+    context: 'Qatar National Research Fund NPRP11S-0102-180178 · Qatar University, Universiti Kebangsaan Malaysia and clinical collaborators',
+    approach: 'Hip implants can fail through loosening, wear, stress shielding and poor load transfer. This project addressed those problems from several directions: detecting loosening on X-rays, reviewing materials and implant designs, simulating an implantable sensor, designing a spiral head–stem junction, and comparing stem materials in the implanted femur.',
+    workflow: ['Detect loosening on X-rays', 'Review materials and designs', 'Model sensing, wear and load transfer'],
+    progress: hipImplantProgress,
+    contribution: 'For HipXNet, I contributed to the deep learning pipeline, evaluation, data analysis, interpretation and manuscript preparation. In the finite element work, I designed the spiral head–stem model in Fusion 360, reconstructed a commercial implant stem in CAD, and contributed to methodology, software and formal analysis, including the stem-material study. I contributed to the sensor feasibility analysis, the bench-test setup with Hamad Medical Corporation, and the two reviews, including figure preparation for the biomaterials review.',
+    scope: 'The finite element and sensor results come from simulations under specified geometries, materials and loads. HipXNet used a small retrospective image collection and five-fold validation. The reviews summarise published evidence, and clinical testing would be needed before any proposed design or method is used in patient care.',
+    related: ['10.3390/polym14204308', '10.3390/bios13010079', '10.3390/ma16041466', '10.1039/d3tb01469j', '10.1016/j.mtcomm.2024.110932'],
+    relatedProjects: ['aortic-wall-shear-stress'],
+    visual: hipImplantVisual,
   },
   {
     slug: 'ecmo-cannulation-simulator', area: 'Biomedical devices & simulation',
