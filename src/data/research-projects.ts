@@ -1,3 +1,4 @@
+import { publicationFor } from './papers';
 import { researchStudyAreas, researchStudyFor, researchStudies } from './research-catalog';
 import { currentResearchSlugs, type ResearchFigure, type ResearchPhase, type ResearchProject } from './research';
 import {
@@ -228,12 +229,26 @@ export const currentResearch = currentResearchSlugs.map(slug => {
 const selections = {
   biomechanics: [gait.slug, insoles.slug, 'diabetic-neuropathy-gait-emg'],
   imaging: ['diabetic-foot-thermal-imaging', 'multiphase-liver-ct', kidney.slug],
-  signals: ['qscare-doppler-flow', 'covidcare-remote-monitoring'],
+  // Newest first, by the years of each study's papers or its project dates.
+  signals: [
+    'contactless-cardiovascular-waveforms', 'wearable-cardiac-waveforms', 'multimodal-glucose-estimation',
+    'ecg-restoration-during-mri', 'fetal-ecg-extraction', 'eeg-artefact-restoration',
+    'qscare-doppler-flow', 'covidcare-remote-monitoring',
+  ],
   spectroscopy: [raman.slug],
   devices: ['hip-implant-mechanics-and-imaging', 'exoventq-ventilation', 'ecmo-cannulation-simulator'],
   genomics: ['cancer-genomics-reproduction', 'mendelian-rnaseq-outliers'],
   engineering: ['e-tawfeer-energy-management', 'smart-meter-load-and-occupancy', 'ev-charging-demand', 'climate-geopolitical-risk'],
 };
+
+/** A study without project dates is dated by the publication years of its papers, e.g. "2023–2024". */
+function studyPeriod(study: ReturnType<typeof researchStudyFor>) {
+  if (study.period) return study.period;
+  const years = [study.doi, ...(study.related ?? [])].flatMap(doi => doi ? [publicationFor(doi).year] : []);
+  if (!years.length) return undefined;
+  const first = Math.min(...years), last = Math.max(...years);
+  return first === last ? `${first}` : `${first}–${last}`;
+}
 
 function studySearchText(study: ReturnType<typeof researchStudyFor>) {
   return [study.title, study.summary, study.question, study.approach, study.scope, study.doi, ...(study.related ?? [])];
@@ -259,7 +274,7 @@ export const projectAreas = researchStudyAreas.map(({ id, title, description }) 
     }
     const study = researchStudyFor(slug);
     return {
-      slug, title: study.title, summary: study.summary, period: study.period,
+      slug, title: study.title, summary: study.summary, period: studyPeriod(study),
       context: study.context ?? study.status, path: `research/${slug}/`,
       aliases: [], searchText: studySearchText(study).join(' '),
     };

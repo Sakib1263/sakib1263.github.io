@@ -837,15 +837,6 @@ const engineering: ResearchProject[] = [
     contribution: 'I contributed to the quantitative and machine-learning analysis, interpretation, and manuscript preparation.',
     scope: 'The study identifies associations within the survey sample and its collection period.',
   },
-  {
-    slug: 'super-operational-neural-layers', area: 'Applied machine learning',
-    title: 'Super-operational neural network layers',
-    summary: 'Developing reusable polynomial layers for one-dimensional signals and two-dimensional images.',
-    status: 'Research software', code: 'https://github.com/Sakib1263/SuperONN-Layers',
-    approach: 'The library implements polynomial super-operational layers for PyTorch and TensorFlow/Keras. It supports forward and transposed 1D and 2D operations, with fixed or trainable offsets.',
-    contribution: 'I maintain the public implementations and document the layer interfaces and examples for use in research models.',
-    relatedProjects: ['wearable-cardiac-waveforms', 'eeg-artefact-restoration', 'sers-sepsis-recognition'],
-  },
 ];
 
 export const researchStudyAreas = [
