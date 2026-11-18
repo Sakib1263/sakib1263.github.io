@@ -6,7 +6,7 @@ const flagship = '/research/wearable-foot-kinetics/';
 const gaitProject = '/research/projects/smart-insole-3d-gait-kinetics/';
 const paperId = 'paper-10-1109-jbhi-2025-3605296';
 
-for (const path of ['/', '/research/', '/research/summary/', gaitProject, flagship, '/research/cross-device-raman/', '/research/prenatal-hydronephrosis/', '/research/nabnet/', '/publications/', '/cv/', '/software/']) {
+for (const path of ['/', '/research/', gaitProject, flagship, '/research/cross-device-raman/', '/research/prenatal-hydronephrosis/', '/research/nabnet/', '/publications/', '/cv/', '/software/']) {
   test(`checks accessibility at ${path}`, async ({ page }) => {
     await page.goto(path);
     await page.evaluate(() => document.fonts.ready.then(() => true));
@@ -147,7 +147,6 @@ test('the research catalogue retains the case studies and their distinct share c
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto('/research/');
   await expect(page.getByRole('navigation', { name: 'Featured research shortcuts' })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Research summary', exact: true })).toHaveCount(0);
   await expect(page.getByText(/I’m now testing gait models/)).toHaveCount(0);
   const slugs = ['wearable-foot-kinetics', 'kidney-stone-segmentation', 'cross-device-raman'];
   await page.goto('/research/#wearable-foot-kinetics');
@@ -210,15 +209,16 @@ test('project and paper links round-trip and the citation copies', async ({ page
   await expect(page).toHaveURL(flagship);
 });
 
-test('the research summary links to the case studies and ongoing work', async ({ page }) => {
+test('the homepage links to all research and all papers', async ({ page, request }) => {
   await page.setViewportSize({ width: 320, height: 780 });
   await page.goto('/');
-  await page.getByRole('link', { name: 'Research summary', exact: true }).click();
-  await expect(page).toHaveURL('/research/summary/');
-  await expect(page.getByRole('heading', { name: 'Research summary', exact: true })).toBeVisible();
-  await expect(page.getByRole('region', { name: 'Selected research contributions' }).getByRole('article')).toHaveCount(3);
-  await expect(page.getByRole('region', { name: 'Current research questions' }).getByRole('article')).toHaveCount(3);
+  await expect(page.getByRole('link', { name: 'Research summary', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'More selected papers', exact: true })).toHaveCount(0);
+  await expect(page.getByRole('link', { name: 'All research', exact: true })).toHaveAttribute('href', '/research/');
+  await page.getByRole('link', { name: 'All papers', exact: true }).click();
+  await expect(page).toHaveURL('/publications/');
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
+  expect(await (await request.get('/sitemap.xml')).text()).not.toContain('research/summary');
 });
 
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {

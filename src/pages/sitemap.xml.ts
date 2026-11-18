@@ -5,7 +5,7 @@ import { navigation, sitePath } from '../lib/site';
 
 export const GET: APIRoute = ({ site }) => {
   const pages = [
-    '', ...navigation.map(page => page.path), 'research/summary/',
+    '', ...navigation.map(page => page.path),
     ...collections.map(project => collectionPath(project.slug)),
     ...researchStudies.map(project => `research/${project.slug}/`),
   ];

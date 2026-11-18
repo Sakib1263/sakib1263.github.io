@@ -221,7 +221,6 @@ export const currentResearch = currentResearchSlugs.map(slug => {
     area: study.area,
     title: study.title,
     summary: study.summary,
-    question: study.question ?? study.summary,
     href: collection ? `${collectionPath(collection.slug)}#${slug}` : `research/${slug}/`,
   };
 });

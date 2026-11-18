@@ -53,10 +53,7 @@ const homePapers = selectedPapers.filter(({ publication }) => homePaperDois.has(
   <section class="shell home-section" id="current-research" aria-labelledby="selected-title">
     <div class="section-heading">
       <h2 id="selected-title">Featured research</h2>
-      <div class="featured-research-links">
-        <SiteLink class="text-link" href={sitePath('research/summary/')}>Research summary <span aria-hidden="true">→</span></SiteLink>
-        <SiteLink class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">→</span></SiteLink>
-      </div>
+      <SiteLink class="text-link" href={sitePath('research/')}>All research <span aria-hidden="true">→</span></SiteLink>
     </div>
     <div class="project-list">
       {featuredCollections.map(project => <ProjectCard project={project} />)}
@@ -68,7 +65,7 @@ const homePapers = selectedPapers.filter(({ publication }) => homePaperDois.has(
     <section class="selected-papers" aria-labelledby="papers-title">
       <div class="section-heading">
         <h2 id="papers-title">Selected publications</h2>
-        <SiteLink class="text-link" href={sitePath('publications/?view=selected#bibliography')}>More selected papers <span aria-hidden="true">→</span></SiteLink>
+        <SiteLink class="text-link" href={sitePath('publications/')}>All papers <span aria-hidden="true">→</span></SiteLink>
       </div>
       <div class="resource-list">
         {homePapers.map(({ publication, context }) => (

@@ -315,5 +315,5 @@ function projectFor(slug: string) {
 
 export const caseStudyProjects = ['wearable-foot-kinetics', 'kidney-stone-segmentation', 'cross-device-raman'].map(projectFor);
 
-/** Ongoing projects shown on the homepage and the research summary, by research-catalogue slug. Titles and descriptions come from the catalogue. */
+/** Ongoing projects shown on the homepage, by research-catalogue slug. Titles and descriptions come from the catalogue. */
 export const currentResearchSlugs = ['multimodal-wearable-kinetics', 'diabetic-foot-thermal-imaging', 'multiphase-liver-ct'];

@@ -52,7 +52,6 @@
   margin-bottom: .7rem;
 }
 .section-heading .text-link { min-height: 24px; font-size: .86rem; }
-.featured-research-links { display: flex; flex-wrap: wrap; gap: .25rem 1rem; }
 
 .project-list {
   display: grid;
