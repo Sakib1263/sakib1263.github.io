@@ -254,6 +254,16 @@ test('the MRI ECG project presents detection and restoration stages', async ({ p
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'R-peak detection', 'Phase 1: QRS guidance', 'Phase 2: MHDGAN', 'Phase 3: MHD2ECGNet', 'Cardiac evaluation']);
 });
 
+test('both fetal ECG papers link to their shared research project', async ({ page }) => {
+  await page.goto('/publications/');
+  for (const doi of ['10.1016/j.engappai.2023.106414', '10.1016/j.eswa.2023.121196']) {
+    await expect(page.locator(`[data-doi="${doi}"]`).getByRole('link', { name: 'Research details', exact: true }))
+      .toHaveAttribute('href', '/research/fetal-ecg-extraction/');
+  }
+  await page.goto('/research/fetal-ecg-extraction/');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'LinkNet++ extraction', '1D-CycleGAN', 'Heart-rate evaluation']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();

@@ -25,6 +25,13 @@ import mriGanExamples from '../assets/research/ecg-restoration-during-mri/fig7-m
 import mriGeneralExamples from '../assets/research/ecg-restoration-during-mri/fig10-mhd2ecgnet-examples.png';
 import mriHeartRate from '../assets/research/ecg-restoration-during-mri/fig12-heart-rate.png';
 import mriPeakNetwork from '../assets/research/ecg-restoration-during-mri/sa-mhdnet-fig5-network.png';
+import fetalPipeline from '../assets/research/fetal-ecg-extraction/fig1-pipeline.png';
+import fetalLinkNet from '../assets/research/fetal-ecg-extraction/fig4-linknet.png';
+import fetalPeaks from '../assets/research/fetal-ecg-extraction/fig6-r-peaks.png';
+import fetalHeartRate from '../assets/research/fetal-ecg-extraction/fig7a-heart-rate.png';
+import fetalGenerator from '../assets/research/fetal-ecg-extraction/cyclegan-fig8b-generator.png';
+import fetalCycleExample from '../assets/research/fetal-ecg-extraction/cyclegan-fig9c-example.png';
+import fetalCyclePeaks from '../assets/research/fetal-ecg-extraction/cyclegan-fig10a-r-peaks.png';
 import { ccBy, elsevier, sourceArticle } from './figure-credits';
 import type { ResearchPhase, ResearchProject } from './research';
 
@@ -37,6 +44,8 @@ const ttrDoi = '10.1016/j.eswa.2024.123167';
 const quGmDoi = '10.1109/access.2024.3404971';
 const mriRestorationDoi = '10.1016/j.engappai.2024.108483';
 const mriPeakDoi = '10.3390/bioengineering10050542';
+const fetalLinkNetDoi = '10.1016/j.engappai.2023.106414';
+const fetalCyclePreprint = '10.48550/arXiv.2310.03759';
 
 export const contactlessVisual: NonNullable<ResearchProject['visual']> = {
   image: radarFramework,
@@ -661,6 +670,142 @@ export const mriEcgProgress: ResearchPhase[] = [
         caption: 'Figure 12 from Mahmud et al. (2024). Heart rate and variability trends, with heart-rate correlation for Phases 2 and 3.',
         credit: sourceArticle(mriRestorationDoi),
         licence: elsevier(2024),
+      },
+    ],
+  },
+];
+
+export const fetalEcgVisual: NonNullable<ResearchProject['visual']> = {
+  image: fetalPipeline,
+  alt: 'Block diagram. Four abdominal maternal ECG channels and a reference fetal ECG are preprocessed and used to train a model. Test recordings pass through the same preprocessing and the trained model to predict fetal ECG.',
+  caption: 'Figure 1 from Rahman et al. (2023). Training and prediction pipeline for extracting fetal ECG from abdominal maternal recordings.',
+  credit: sourceArticle(fetalLinkNetDoi),
+  licence: elsevier(2023),
+};
+
+export const fetalEcgProgress: ResearchPhase[] = [
+  {
+    id: 'linknet-extraction',
+    navLabel: 'LinkNet++ extraction',
+    title: 'Extracting fetal ECG with deeply supervised LinkNet++',
+    status: 'Engineering Applications of Artificial Intelligence · 2023',
+    paragraphs: [
+      'The study used two public datasets of four-channel abdominal ECG. Dataset 1 contains recordings from five women at 38 to 41 weeks of pregnancy, and Dataset 2a contains recordings from 12 women during labour, both with fetal scalp ECG as the reference. Dataset 2b adds recordings from 10 women with expert-marked fetal heartbeats.',
+      'LinkNet++ combines LinkNet’s residual encoder and feature addition with dense skip pathways and deep supervision. It was compared with U-Net, UNet variants and LinkNet using leave-one-subject-out validation. LinkNet++ gave the highest waveform correlation, improving on LinkNet by 3.56 points on Dataset 1 and 2.58 points on Dataset 2a.',
+      'Fetal QRS complexes detected from the extracted signal reached F1 scores above 99% on all three datasets. Heart rate from the extracted signal also correlated with the reference at more than 0.9.',
+    ],
+    measures: [
+      { value: '87.60%', label: 'Best waveform correlation (Dataset 2a)' },
+      { value: '99.6%', label: 'Best fetal QRS F1 score (Dataset 1)' },
+      { value: '27', label: 'Women across the three datasets' },
+    ],
+    table: {
+      caption: 'LinkNet++ results from Tables 1 and 2 of Rahman et al. (2023). Dataset 2b has no continuous reference fetal ECG.',
+      columns: ['Waveform correlation', 'Mean absolute error', 'QRS precision', 'QRS sensitivity', 'QRS F1'],
+      rows: [
+        { label: 'Dataset 1', cells: ['85.58%', '0.068', '99.7%', '99.5%', '99.6%'] },
+        { label: 'Dataset 2a', cells: ['87.60%', '0.061', '99.5%', '99.3%', '99.4%'] },
+        { label: 'Dataset 2b', cells: ['Not available', 'Not available', '99.4%', '99.6%', '99.5%'] },
+      ],
+    },
+    figures: [
+      {
+        image: fetalLinkNet,
+        alt: 'LinkNet++ architecture with encoder and decoder levels joined by dense convolution blocks and deep supervision outputs, beside enlarged encoder and decoder blocks.',
+        caption: 'Figure 4 from Rahman et al. (2023). The LinkNet++ architecture.',
+        credit: sourceArticle(fetalLinkNetDoi),
+        licence: elsevier(2023),
+      },
+      {
+        image: fetalPeaks,
+        alt: 'Four pairs of plots, each with a ground-truth fetal ECG above the LinkNet++ prediction. Marked R-peaks in each prediction line up with the ground-truth peaks.',
+        caption: 'Figure 6 from Rahman et al. (2023). Reference and LinkNet++ fetal ECG with detected R-peaks for Dataset 1 (a, c) and Dataset 2a (b, d).',
+        credit: sourceArticle(fetalLinkNetDoi),
+        licence: elsevier(2023),
+      },
+      {
+        image: fetalHeartRate,
+        alt: 'Bland–Altman plot and regression plot comparing heart rate from reference and extracted fetal ECG for Dataset 1. Most differences lie near zero and the points follow the regression line.',
+        caption: 'Figure 7a from Rahman et al. (2023), cropped to Dataset 1. Agreement between heart rate from extracted and reference fetal ECG.',
+        credit: sourceArticle(fetalLinkNetDoi),
+        licence: elsevier(2023),
+      },
+    ],
+  },
+  {
+    id: 'cyclegan-morphology',
+    navLabel: '1D-CycleGAN',
+    title: 'Preserving fetal ECG morphology with 1D-CycleGAN',
+    status: 'Expert Systems with Applications · 2024',
+    paragraphs: [
+      'The second study focused on the full waveform, including features such as P waves, ST segments and T waves. A 1D-CycleGAN learned to map four-channel maternal ECG to fetal ECG using the two PhysioNet datasets with scalp reference signals. Preprocessing included zero-lag filtering to avoid shifting the waveform.',
+      'A weighted loss added spectral, temporal and power terms to the adversarial loss, increasing waveform correlation by almost 10%. Among U-Net, ResNet and Self-FPN generators, a 13-block ResNet generator with a standard PatchGAN discriminator gave the best result. The full network has 0.762 million parameters.',
+    ],
+    measures: [
+      { value: '88.4%', label: 'Average waveform correlation' },
+      { value: '89.4%', label: 'Average spectral correlation' },
+      { value: '13', label: 'ResNet blocks in the best generator' },
+    ],
+    table: {
+      caption: 'Five-fold results for the best model, from Table 2 of Basak et al. (2024) in its arXiv version. The final row gives the mean across folds.',
+      columns: ['Waveform correlation', 'Spectral correlation', 'RMSE', 'Mean absolute error'],
+      rows: [
+        { label: 'Fold 1', cells: ['0.89', '0.90', '0.106', '0.069'] },
+        { label: 'Fold 2', cells: ['0.88', '0.88', '0.109', '0.073'] },
+        { label: 'Fold 3', cells: ['0.89', '0.90', '0.103', '0.068'] },
+        { label: 'Fold 4', cells: ['0.89', '0.90', '0.102', '0.069'] },
+        { label: 'Fold 5', cells: ['0.87', '0.89', '0.115', '0.077'] },
+        { label: 'Mean', cells: ['0.884', '0.894', '0.107', '0.071'] },
+      ],
+    },
+    figures: [
+      {
+        image: fetalGenerator,
+        alt: 'Generator diagram with a four-channel input, one-dimensional convolution layers, residual blocks, transposed convolution layers and a single output.',
+        caption: 'Figure 8b from the arXiv version of Basak et al. (2024). The 1D-CycleGAN generator.',
+        credit: sourceArticle(fetalCyclePreprint),
+        licence: ccBy,
+      },
+      {
+        image: fetalCycleExample,
+        alt: 'Two plots of fetal ECG over about 2,000 samples. The estimated signal closely follows the ground-truth beats and smaller waveform features.',
+        caption: 'Figure 9c from the arXiv version of Basak et al. (2024). Reference fetal ECG (top) and the extracted signal (bottom).',
+        credit: sourceArticle(fetalCyclePreprint),
+        licence: ccBy,
+      },
+    ],
+  },
+  {
+    id: 'fetal-heart-metrics',
+    navLabel: 'Heart-rate evaluation',
+    title: 'Measuring fetal heartbeats from the extracted signal',
+    status: 'Expert Systems with Applications · 2024',
+    paragraphs: [
+      'Fetal QRS complexes were detected from the 1D-CycleGAN output with a tolerance of 31.25 ms. Mean heart rate and beat interval closely matched the reference, showing that the extracted signal preserved fetal timing. Short-term variation in heart rate was harder to reproduce.',
+    ],
+    measures: [
+      { value: '96.4%', label: 'Fetal QRS F1 score' },
+      { value: '97.6%', label: 'Fetal QRS precision' },
+      { value: '0.25%', label: 'Mean heart-rate error' },
+    ],
+    table: {
+      caption: 'Average heart-rate measures across five folds, from Table 5 of Basak et al. (2024) in its arXiv version.',
+      columns: ['Reference', 'Extracted', 'Error'],
+      rows: [
+        { label: 'Mean R-R interval', cells: ['473.19 ms', '474.46 ms', '0.27%'] },
+        { label: 'Mean heart rate', cells: ['128.52 bpm', '128.85 bpm', '0.25%'] },
+        { label: 'Heart-rate standard deviation', cells: ['14.14 bpm', '18.24 bpm', '29%'] },
+        { label: 'SDNN/RMSSD', cells: ['0.70', '0.70', '0.57%'] },
+        { label: 'pNN50', cells: ['40.45%', '41.39%', '2.32%'] },
+      ],
+    },
+    figures: [
+      {
+        image: fetalCyclePeaks,
+        alt: 'Reference and extracted fetal ECG plots with vertical markers showing R-peak locations aligned across both signals.',
+        caption: 'Figure 10a from the arXiv version of Basak et al. (2024). R-peaks detected from reference and extracted fetal ECG.',
+        credit: sourceArticle(fetalCyclePreprint),
+        licence: ccBy,
       },
     ],
   },

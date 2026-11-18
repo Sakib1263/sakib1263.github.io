@@ -7,8 +7,6 @@ import dopplerOverview from '../assets/research/qscare-doppler-flow/fig2-overvie
 import dopplerRestored from '../assets/research/qscare-doppler-flow/fig7-restored-waveforms.png';
 import eegSpectra from '../assets/research/eeg-artefact-restoration/fig6-psd.png';
 import eegFramework from '../assets/research/eeg-artefact-restoration/fig3-ago-cyclegan.png';
-import fetalPeaks from '../assets/research/fetal-ecg-extraction/fig6-r-peaks.png';
-import fetalPipeline from '../assets/research/fetal-ecg-extraction/fig1-pipeline.png';
 import renalFramework from '../assets/research/renal-tumour-modelling/fig1-framework.png';
 import renalFeatures from '../assets/research/renal-tumour-modelling/fig9-surgical-features.png';
 import liverMasks from '../assets/research/liver-mri-segmentation/fig10-cascade-masks.jpg';
@@ -26,7 +24,7 @@ import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-tr
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
-import { contactlessProgress, contactlessVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
+import { contactlessProgress, contactlessVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
 function existing(slug: string) {
   const project = projects.find(item => item.slug === slug);
@@ -421,34 +419,19 @@ const signals: ResearchProject[] = [
   },
   {
     slug: 'fetal-ecg-extraction', area: 'Physiological signal processing',
-    title: 'Fetal ECG extraction from maternal recordings',
-    summary: 'Recovering fetal cardiac morphology and timing from abdominal recordings that mix maternal and fetal signals.',
-    doi: '10.1016/j.engappai.2023.106414',
-    approach: 'The team evaluated a deeply supervised LinkNet++ and a separate one-dimensional CycleGAN. Both studies used public datasets to assess waveform fidelity and fetal timing. The LinkNet++ study used leave-one-subject-out evaluation.',
-    result: 'LinkNet++ reproduced the reference fetal ECG with Pearson correlations of 85.58% and 87.60% on two public datasets and detected fetal QRS complexes with F1 scores above 99% on both.',
-    measures: [
-      { value: '85.58% · 87.60%', label: 'Correlation with reference fetal ECG on two datasets' },
-      { value: '> 99%', label: 'Fetal QRS detection F1' },
-    ],
-    contribution: 'I contributed to model methodology, experiments, quantitative evaluation, interpretation and manuscript preparation.',
-    related: ['10.1016/j.eswa.2023.121196'],
-    visual: {
-      image: fetalPeaks,
-      alt: 'Four pairs of plots, each with a ground-truth fetal ECG above the LinkNet++ prediction. Marked R-peaks in each prediction line up with the ground-truth peaks.',
-      caption: 'Figure 6 from Rahman et al. (2023). Ground-truth and LinkNet++ fetal ECG with detected R-peaks for Dataset 1 (a, c) and Dataset 2a (b, d).',
-      credit: sourceArticle('10.1016/j.engappai.2023.106414'),
-      licence: elsevier(2023),
-    },
-    figures: [
-      {
-        section: 'approach',
-        image: fetalPipeline,
-        alt: 'Block diagram. Four-channel abdominal ECG from training subjects is baseline-corrected, filtered, segmented and normalised to train a model against ground-truth fetal ECG. Test recordings pass through the same preprocessing to the trained model, which predicts the fetal ECG.',
-        caption: 'Figure 1 from Rahman et al. (2023). Preprocessing, training and prediction for extracting fetal ECG from abdominal recordings.',
-        credit: sourceArticle('10.1016/j.engappai.2023.106414'),
-        licence: elsevier(2023),
-      },
-    ],
+    title: 'Deep learning for non-invasive fetal ECG extraction',
+    summary: 'Deep learning methods that recover fetal ECG waveforms and heartbeat timing from abdominal recordings containing maternal ECG and noise.',
+    question: 'Can fetal ECG morphology and heartbeat timing be recovered from electrodes placed on the mother’s abdomen?',
+    context: 'Qatar National Research Fund NPRP 10-0123-170222 · Qatar University QUHI-CENG-22/23-548',
+    doi: '10.1016/j.eswa.2023.121196',
+    approach: 'Fetal scalp electrodes provide a clear ECG, but they are invasive and can only be used around delivery. Abdominal electrodes are non-invasive, although the weak fetal signal overlaps with the stronger maternal ECG and noise. This project first used a deeply supervised segmentation network to extract fetal ECG, then used a 1D-CycleGAN to better preserve waveform morphology and estimate fetal heart measures.',
+    workflow: ['Record abdominal maternal ECG', 'Reconstruct fetal ECG', 'Evaluate waveforms and heartbeats'],
+    progress: fetalEcgProgress,
+    contribution: 'For LinkNet++, I contributed substantially to the methodology, model development, experiments, analysis and validation, and manuscript writing and revision. For the 1D-CycleGAN study, I contributed to the deep learning methodology, model assessment, result analysis and interpretation, and manuscript review.',
+    scope: 'Both studies used small public datasets from late pregnancy and labour, with limited variation in recording conditions. Scalp ECG and expert annotations provided the references. Validation across more participants, earlier gestation, different devices and fetal heart conditions is needed before clinical use.',
+    related: ['10.1016/j.engappai.2023.106414'],
+    relatedProjects: ['ecg-restoration-during-mri', 'wearable-cardiac-waveforms'],
+    visual: fetalEcgVisual,
   },
   {
     slug: 'covidcare-remote-monitoring', area: 'Physiological signal processing',
