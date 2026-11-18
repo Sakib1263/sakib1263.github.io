@@ -18,8 +18,6 @@ import renalFeatures from '../assets/research/renal-tumour-modelling/fig9-surgic
 import liverMasks from '../assets/research/liver-mri-segmentation/fig10-cascade-masks.jpg';
 import covidPipeline from '../assets/research/covid-chest-imaging/fig3-pipeline.jpg';
 import curvaturePipeline from '../assets/research/image-based-curvature-measurement/fig1-pipeline.jpg';
-import ppgExamples from '../assets/research/wearable-cardiac-waveforms/fig8-restoration-examples.png';
-import ppgFramework from '../assets/research/wearable-cardiac-waveforms/fig1-ttr-gan.png';
 import sepsisWorkflow from '../assets/research/sers-sepsis-recognition/fig1-workflow.png';
 import sepsisEmbeddings from '../assets/research/sers-sepsis-recognition/fig5-embeddings.png';
 import hipDetection from '../assets/research/hip-implant-mechanics-and-imaging/fig8-implant-detection.jpg';
@@ -31,7 +29,7 @@ import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig
 import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-trainer.jpg';
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
-import { contactlessProgress, contactlessVisual } from './signal-milestones';
+import { contactlessProgress, contactlessVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
 function existing(slug: string) {
   const project = projects.find(item => item.slug === slug);
@@ -343,36 +341,19 @@ const signals: ResearchProject[] = [
   },
   {
     slug: 'wearable-cardiac-waveforms', area: 'Physiological signal processing',
-    title: 'Wearable pulse restoration and cardiac rhythm analysis',
-    summary: 'Recovering pulse morphology from wrist PPG and studying how waveform restoration affects heart rate, variability, and rhythm detection.',
+    title: 'TTR-GAN: wrist PPG restoration and wrist-to-finger translation with 1D-CycleGANs',
+    summary: 'A two-stage 1D-CycleGAN pipeline that restores noisy wrist PPG, translates it to finger PPG and improves agreement with ECG-derived heart rate and variability.',
+    question: 'Can noisy wrist PPG from a wearable be restored and then translated into finger PPG that follows the heart more closely?',
+    context: 'Qatar National Research Fund NPRP12S-0227-190164 · Prince Sattam Bin Abdulaziz University project PSAU/2023/R/1444',
     doi: '10.1016/j.eswa.2024.123167',
-    approach: 'A two-stage one-dimensional CycleGAN based on super-operational layers restores noisy wrist PPG and maps it toward finger PPG. A follow-on study evaluated atrial fibrillation detection on restored signals. A separate M2ECG study reconstructed ECG from wearable cardiac vibration and rotation measurements.',
-    result: 'The multichannel translator improved wrist-to-finger translation by 35.88% on the study’s PRTX metric. Compared with raw wrist PPG, correlation with ECG-derived heart rate improved by about 10.4% and correlation with heart-rate variability by about 14.7%.',
-    measures: [
-      { value: '35.88%', label: 'Improvement in wrist-to-finger translation (PRTX)' },
-      { value: '+10.4%', label: 'Heart-rate correlation with ECG' },
-      { value: '+14.7%', label: 'Heart-rate variability correlation with ECG' },
-    ],
-    contribution: 'I led the wrist-to-finger restoration workflow and experiments, adapted CycleGAN for the atrial fibrillation study, and contributed to the methodology and evaluation for M2ECG.',
-    scope: 'Restoration quality, derived heart rate and variability, and rhythm classification were evaluated as distinct endpoints on the study recordings.',
+    approach: 'Wrist-worn sensors make long-term pulse monitoring practical, but movement, changing skin contact and noise distort their signals, and wrist PPG carries less detail than clinical finger PPG. Translation Through Restoration GAN (TTR-GAN) handles these as two separate problems. The first 1D-CycleGAN stage removes artefacts from the wrist signal. The second converts the restored signal into finger PPG. Heart rate and variability from ECG then provide an independent check.',
+    workflow: ['Restore wrist PPG', 'Translate to finger PPG', 'Validate against ECG'],
+    progress: ttrProgress,
+    contribution: 'I led the development and evaluation of TTR-GAN, including the Super-ONN-based 1D-CycleGAN methodology, the experiments, the quantitative and qualitative analysis and the manuscript. For the atrial fibrillation study, I developed the 1D-CycleGAN implementation used for wrist PPG restoration and contributed to conceptualisation, formal analysis and writing. I also contributed to the methodology and evaluation of M2ECG, a related wearable signal study.',
+    scope: 'TTR-GAN was developed on one dataset of 22 healthy young adults and was not tested on an independent cohort. Restoration was judged by entropy because no clean reference exists for a corrupted wrist segment. Rare arrhythmic segments from one participant were harder to reproduce, and on-device performance was not reported. Patient data and testing on wearable hardware are the next requirements.',
     related: ['10.1016/j.bspc.2024.107233', '10.1109/access.2024.3353463'],
-    visual: {
-      image: ppgExamples,
-      alt: 'Three example rows. Each shows a noisy wrist PPG segment, the restored wrist PPG, and the translated finger PPG, next to the reference finger PPG and ECG recorded at the same time.',
-      caption: 'Figure 8 from Mahmud et al. (2024), cropped to examples a–c. TTR-GAN restores the wrist signal and then translates it to a finger PPG, shown beside the reference finger PPG and ECG.',
-      credit: sourceArticle('10.1016/j.eswa.2024.123167'),
-      licence: ccBy,
-    },
-    figures: [
-      {
-        section: 'approach',
-        image: ppgFramework,
-        alt: 'Two-part framework diagram. In the first part, separate CycleGANs restore the wrist PPG and its first and second derivatives. In the second part, a multichannel CycleGAN translates the restored wrist signals to finger PPG for heart-rate and variability analysis.',
-        caption: 'Figure 1 from Mahmud et al. (2024). Blind restoration of wrist PPG and its derivatives (a), followed by supervised wrist-to-finger translation (b).',
-        credit: sourceArticle('10.1016/j.eswa.2024.123167'),
-        licence: ccBy,
-      },
-    ],
+    relatedProjects: ['contactless-cardiovascular-waveforms'],
+    visual: ttrVisual,
   },
   {
     slug: 'qscare-doppler-flow', area: 'Physiological signal processing',
