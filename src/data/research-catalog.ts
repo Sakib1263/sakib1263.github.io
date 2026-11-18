@@ -267,7 +267,6 @@ const imaging: ResearchProject[] = [
     contribution: 'This was one of my earliest research-assistant projects. I contributed substantially to data curation while we assembled the large X-ray benchmark, and to the evaluation and interpretation of the X-ray localisation and severity models. For the CT study I worked on validation, investigation and data curation, and for the pneumonia study on model evaluation and analysis. I also contributed to preparing or reviewing all three manuscripts.',
     scope: 'These are retrospective studies of public image collections, each with its own annotation protocol and task. X-ray severity was shown as the measured extent of infection, and the CT critical group held only two patients. Clinical use would require prospective validation.',
     related: ['10.3390/diagnostics11050893', '10.5121/csit.2022.122001'],
-    relatedProjects: ['covidcare-remote-monitoring'],
     visual: {
       image: covidPipeline,
       alt: 'Pipeline diagram. A chest radiograph goes to two encoder–decoder networks that produce a lung mask and an infection mask. Superimposing the masks localises the infection, reports 37.6% lung involvement in the example, and gives a COVID-19 positive or negative result.',
@@ -414,17 +413,6 @@ const signals: ResearchProject[] = [
     related: ['10.1016/j.engappai.2023.106414'],
     relatedProjects: ['ecg-restoration-during-mri', 'wearable-cardiac-waveforms'],
     visual: fetalEcgVisual,
-  },
-  {
-    slug: 'covidcare-remote-monitoring', area: 'Physiological signal processing',
-    title: 'COVIDCARE and remote monitoring from wearable and acoustic signals',
-    summary: 'Prototyping wearable vital-sign acquisition and studying how smartwatch and respiratory sounds support retrospective COVID-19 research.',
-    period: '2020–2023', context: 'Qatar University Emergency Response Concept Development Grant and related studies',
-    approach: 'COVIDCARE developed wearable optical pulse and ECG acquisition for remote vital-sign monitoring. In separate published studies, PCovNet and PCovNet+ modelled resting heart-rate anomalies in smartwatch records around symptom onset, and QUCoughScope compared cough and breath audio and integrated the classifier into an application prototype.',
-    contribution: 'I developed wearable acquisition hardware and physiological estimation methods. I also contributed to wearable-data analysis and to technical evaluation of the acoustic pipeline.',
-    scope: 'The wearable and audio studies used distinct retrospective cohorts and protocols. Their results describe performance under the evaluated conditions.',
-    related: ['10.1016/j.compbiomed.2022.105682', '10.1016/j.engappai.2023.106130', '10.3390/diagnostics12040920'],
-    relatedProjects: ['covid-chest-imaging', 'nabnet'],
   },
   {
     slug: 'multimodal-glucose-estimation', area: 'Physiological signal processing',

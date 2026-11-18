@@ -235,7 +235,7 @@ const selections = {
   signals: [
     'wearable-cardiac-waveforms', 'contactless-cardiovascular-waveforms', 'multimodal-glucose-estimation',
     'ecg-restoration-during-mri', 'fetal-ecg-extraction', 'eeg-artefact-restoration',
-    'qscare-doppler-flow', 'nabnet', 'covidcare-remote-monitoring',
+    'qscare-doppler-flow', 'nabnet',
   ],
   spectroscopy: [raman.slug],
   devices: ['aortic-wall-shear-stress', 'exoventq-ventilation', 'hip-implant-mechanics-and-imaging', 'ecmo-cannulation-simulator'],
