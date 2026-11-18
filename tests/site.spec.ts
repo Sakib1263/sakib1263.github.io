@@ -264,6 +264,17 @@ test('both fetal ECG papers link to their shared research project', async ({ pag
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'LinkNet++ extraction', '1D-CycleGAN', 'Heart-rate evaluation']);
 });
 
+test('both EEG restoration papers link to their shared research project', async ({ page }) => {
+  await page.goto('/publications/');
+  for (const doi of ['10.1007/s00521-022-08111-6', '10.1016/j.engappai.2023.107514']) {
+    await expect(page.locator(`[data-doi="${doi}"]`).getByRole('link', { name: 'Research details', exact: true }))
+      .toHaveAttribute('href', '/research/eeg-artefact-restoration/');
+  }
+  await page.goto('/research/eeg-artefact-restoration/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Deep learning restoration of motion-corrupted EEG');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'MLMRS-Net', 'AGO-CycleGAN', 'Spectral recovery']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();

@@ -5,8 +5,6 @@ import insoleFbg from '../assets/research/smart-insoles-diabetic-foot/fig4-fbg-i
 import insoleTemperature from '../assets/research/smart-insoles-diabetic-foot/fig9-temperature-maps.png';
 import dopplerOverview from '../assets/research/qscare-doppler-flow/fig2-overview.png';
 import dopplerRestored from '../assets/research/qscare-doppler-flow/fig7-restored-waveforms.png';
-import eegSpectra from '../assets/research/eeg-artefact-restoration/fig6-psd.png';
-import eegFramework from '../assets/research/eeg-artefact-restoration/fig3-ago-cyclegan.png';
 import renalFramework from '../assets/research/renal-tumour-modelling/fig1-framework.png';
 import renalFeatures from '../assets/research/renal-tumour-modelling/fig9-surgical-features.png';
 import liverMasks from '../assets/research/liver-mri-segmentation/fig10-cascade-masks.jpg';
@@ -24,7 +22,7 @@ import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-tr
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
-import { contactlessProgress, contactlessVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
+import { contactlessProgress, contactlessVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
 function existing(slug: string) {
   const project = projects.find(item => item.slug === slug);
@@ -387,35 +385,19 @@ const signals: ResearchProject[] = [
   },
   {
     slug: 'eeg-artefact-restoration', area: 'Physiological signal processing',
-    title: 'EEG restoration under motion and physiological artefacts',
-    summary: 'Removing motion, eye and muscle artefacts while evaluating preservation of the EEG signal in time and frequency.',
+    title: 'Deep learning restoration of motion-corrupted EEG',
+    summary: 'Deep learning methods that remove motion artefacts from single-channel EEG while preserving the signal in time and frequency.',
+    question: 'Can clean EEG be recovered from a single channel corrupted by electrode motion?',
+    context: 'Qatar National Research Fund NPRP12S-0227-190164 · Qatar University IRCC-2021-001',
     doi: '10.1016/j.engappai.2023.107514',
-    approach: 'Compare one-dimensional reconstruction strategies for motion-corrupted EEG, including a multiresolution pooled network and an attention-guided operational CycleGAN. Related experiments evaluated eye and muscle artefact removal with a multiscale residual U-Net and compared signal recovery with simpler convolutional baselines.',
-    contribution: 'I led the MLMRS-Net and AGO-CycleGAN studies, including preprocessing, implementation, evaluation and writing, and contributed to the parallel eye and muscle artefact studies.',
-    result: 'On the motion artefact benchmark, AGO-CycleGAN improved signal-to-noise ratio by 26.50 dB, temporal correlation by 87.2% and spectral correlation by 93.5%. In the eye and muscle artefact study, MultiResUNet3+ reduced EOG artefacts by 94.82% in time and 92.84% in frequency.',
-    measures: [
-      { value: '26.50 dB', label: 'Signal-to-noise improvement (AGO-CycleGAN)' },
-      { value: '93.5%', label: 'Spectral correlation improvement' },
-    ],
-    scope: 'Each benchmark uses its own noise sources, signal construction and evaluation protocol. The papers report waveform and spectral recovery for those conditions.',
+    approach: 'Head and electrode movement can add artefacts far stronger than the EEG itself, which limits recording outside controlled settings. This project first developed MLMRS-Net, a multi-resolution network for reconstructing clean EEG. It then developed AGO-CycleGAN, an attention-guided operational CycleGAN that restores corrupted EEG and recovers its frequency content.',
+    workflow: ['Record motion-corrupted EEG', 'Restore the EEG waveform', 'Evaluate time and frequency recovery'],
+    progress: eegRestorationProgress,
+    contribution: 'I led the MLMRS-Net and AGO-CycleGAN studies, including model development, implementation, experiments, quantitative and qualitative analysis, and manuscript preparation. I also contributed to related studies on eye and muscle artefact removal.',
+    scope: 'Both studies used the same public dataset of 23 single-channel prefrontal recordings, with motion created by tapping one electrode and a nearby electrode providing the reference. Validation during natural movement, on multi-channel EEG and without a clean reference is still needed.',
     related: ['10.1007/s00521-022-08111-6', '10.3390/bioengineering10050579', '10.5121/csit.2022.122006'],
-    visual: {
-      image: eegSpectra,
-      alt: 'Power spectral density plot from 0 to 40 Hz. The motion-corrupted EEG lies far above the ground truth across all frequencies, while the restored EEG almost overlaps the ground truth.',
-      caption: 'Figure 6 from Mahmud et al. (2024). Power spectral density of the ground-truth, motion-corrupted and restored EEG.',
-      credit: sourceArticle('10.1016/j.engappai.2023.107514'),
-      licence: elsevier(2023),
-    },
-    figures: [
-      {
-        section: 'approach',
-        image: eegFramework,
-        alt: 'CycleGAN framework diagram. A generator restores motion-corrupted EEG from one channel and a second generator maps clean EEG back. Discriminators, cycle-consistency losses and identity losses link the two directions.',
-        caption: 'Figure 3 from Mahmud et al. (2024). The AGO-CycleGAN framework for restoring motion-corrupted EEG.',
-        credit: sourceArticle('10.1016/j.engappai.2023.107514'),
-        licence: elsevier(2023),
-      },
-    ],
+    relatedProjects: ['ecg-restoration-during-mri', 'wearable-cardiac-waveforms'],
+    visual: eegRestorationVisual,
   },
   {
     slug: 'fetal-ecg-extraction', area: 'Physiological signal processing',

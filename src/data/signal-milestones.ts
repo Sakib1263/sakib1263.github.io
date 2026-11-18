@@ -32,6 +32,14 @@ import fetalHeartRate from '../assets/research/fetal-ecg-extraction/fig7a-heart-
 import fetalGenerator from '../assets/research/fetal-ecg-extraction/cyclegan-fig8b-generator.png';
 import fetalCycleExample from '../assets/research/fetal-ecg-extraction/cyclegan-fig9c-example.png';
 import fetalCyclePeaks from '../assets/research/fetal-ecg-extraction/cyclegan-fig10a-r-peaks.png';
+import eegMlmrsFramework from '../assets/research/eeg-artefact-restoration/mlmrs-fig1-framework.png';
+import eegMlmrsNetwork from '../assets/research/eeg-artefact-restoration/mlmrs-fig2-network.png';
+import eegMlmrsExamples from '../assets/research/eeg-artefact-restoration/mlmrs-fig7-examples.png';
+import eegCycleFramework from '../assets/research/eeg-artefact-restoration/fig3-ago-cyclegan.png';
+import eegCycleBlocks from '../assets/research/eeg-artefact-restoration/fig4-building-blocks.png';
+import eegCycleExamples from '../assets/research/eeg-artefact-restoration/fig5-restored-examples.png';
+import eegSpectra from '../assets/research/eeg-artefact-restoration/fig6-psd.png';
+import eegTopography from '../assets/research/eeg-artefact-restoration/fig7-topographic-maps.png';
 import { ccBy, elsevier, sourceArticle } from './figure-credits';
 import type { ResearchPhase, ResearchProject } from './research';
 
@@ -46,6 +54,8 @@ const mriRestorationDoi = '10.1016/j.engappai.2024.108483';
 const mriPeakDoi = '10.3390/bioengineering10050542';
 const fetalLinkNetDoi = '10.1016/j.engappai.2023.106414';
 const fetalCyclePreprint = '10.48550/arXiv.2310.03759';
+const eegMlmrsDoi = '10.1007/s00521-022-08111-6';
+const eegCycleDoi = '10.1016/j.engappai.2023.107514';
 
 export const contactlessVisual: NonNullable<ResearchProject['visual']> = {
   image: radarFramework,
@@ -806,6 +816,151 @@ export const fetalEcgProgress: ResearchPhase[] = [
         caption: 'Figure 10a from the arXiv version of Basak et al. (2024). R-peaks detected from reference and extracted fetal ECG.',
         credit: sourceArticle(fetalCyclePreprint),
         licence: ccBy,
+      },
+    ],
+  },
+];
+
+export const eegRestorationVisual: NonNullable<ResearchProject['visual']> = {
+  image: eegMlmrsFramework,
+  alt: 'Block diagram. Motion-corrupted and reference EEG are preprocessed and divided into training, validation and test sets. Deep learning models are trained and tuned, and the best model predicts clean EEG for performance evaluation.',
+  caption: 'Figure 1 from Mahmud et al. (2023). Framework for correcting motion artefacts in EEG with deep learning.',
+  credit: sourceArticle(eegMlmrsDoi),
+  licence: ccBy,
+};
+
+export const eegRestorationProgress: ResearchPhase[] = [
+  {
+    id: 'mlmrs-net',
+    navLabel: 'MLMRS-Net',
+    title: 'Removing motion artefacts with MLMRS-Net',
+    status: 'Neural Computing and Applications · 2023',
+    paragraphs: [
+      'The study used a public PhysioNet dataset of 23 single-channel prefrontal EEG recordings. In each 9-minute recording, two electrodes sat 30 mm apart. One stayed undisturbed as the reference, and the other was tapped for 10 to 25 seconds about every two minutes. Signals were resampled to 256 Hz, baseline-corrected, notch-filtered at 50 Hz and split into 1,024-sample segments.',
+      'MLMRS-Net is a five-level, one-dimensional U-shaped network with multi-resolution pooling blocks in its encoder and decoder, and deep supervision at each decoder level. It was compared with 10 other 1D networks, testing each recording in turn on a model trained with the other 22. MLMRS-Net gave the highest artefact reduction and the lowest reconstruction error, while signal-to-noise gains were close across all networks.',
+      'EEG alone reached 89.32% artefact reduction. Adding three-axis accelerometer signals raised this to 90.52%, so strong restoration remained possible without extra motion sensors.',
+    ],
+    measures: [
+      { value: '90.52%', label: 'Motion artefact reduction' },
+      { value: '26.64 dB', label: 'Signal-to-noise improvement' },
+      { value: '0.056', label: 'Mean absolute error' },
+    ],
+    table: {
+      caption: 'Selected networks from Table 1 of Mahmud et al. (2023), each using EEG and three-axis accelerometer inputs. Results are averaged across 23 test folds.',
+      columns: ['Signal-to-noise improvement', 'Artefact reduction', 'Mean absolute error'],
+      rows: [
+        { label: 'FPN', cells: ['26.489 dB', '86.197%', '0.069'] },
+        { label: 'U-Net', cells: ['26.568 dB', '88.817%', '0.064'] },
+        { label: 'U-Net++', cells: ['26.703 dB', '89.956%', '0.059'] },
+        { label: 'Attention U-Net++', cells: ['26.632 dB', '90.191%', '0.058'] },
+        { label: 'MLMRS-Net', cells: ['26.641 dB', '90.516%', '0.056'] },
+      ],
+    },
+    figures: [
+      {
+        image: eegMlmrsNetwork,
+        alt: 'U-shaped network diagram. A four-channel input of corrupted EEG and three accelerometer axes passes through five encoder levels and matching decoder levels, with a deep supervision output at each decoder level.',
+        caption: 'Figure 2 from Mahmud et al. (2023). The MLMRS-Net architecture.',
+        credit: sourceArticle(eegMlmrsDoi),
+        licence: ccBy,
+      },
+      {
+        image: eegMlmrsExamples,
+        alt: 'Six groups of EEG plots, each showing the reference, input and MLMRS-Net output. In four groups the corrupted input is heavily distorted and the output follows the reference. In two clean groups all three signals match closely.',
+        caption: 'Figure 7 from Mahmud et al. (2023). Reference, input and restored EEG for motion-corrupted segments (a–d) and clean segments (e, f).',
+        credit: sourceArticle(eegMlmrsDoi),
+        licence: ccBy,
+      },
+    ],
+  },
+  {
+    id: 'ago-cyclegan',
+    navLabel: 'AGO-CycleGAN',
+    title: 'Restoring EEG with an attention-guided operational CycleGAN',
+    status: 'Engineering Applications of Artificial Intelligence · 2024',
+    paragraphs: [
+      'The second study used the same recordings and restored EEG directly from the corrupted channel. Baseline correction was applied to the reference channel, so the model learned to remove baseline drift together with motion artefacts.',
+      'AGO-CycleGAN uses attention-guided Feature Pyramid Network generators and PatchGAN discriminators built with Self-ONN layers. Among six CycleGAN variants, this design gave the best temporal correlation, spectral correlation and signal-to-noise improvement. Only the restoration generator is needed after training, with 2.245 million parameters.',
+      'Motion-corrupted segments moved close to the reference after restoration, while clean segments stayed almost unchanged.',
+    ],
+    measures: [
+      { value: '26.50 dB', label: 'Signal-to-noise improvement' },
+      { value: '87.2%', label: 'Temporal correlation improvement' },
+      { value: '0.071', label: 'Mean absolute error' },
+    ],
+    table: {
+      caption: 'CycleGAN variants from Table 2 of Mahmud et al. (2024). Correlations compare restored EEG with the reference, and parameters cover the full CycleGAN.',
+      columns: ['Parameters', 'Temporal correlation', 'Spectral correlation', 'Signal-to-noise improvement'],
+      rows: [
+        { label: 'CNN U-Net', cells: ['2.058 M', '0.848', '0.918', '25.619 dB'] },
+        { label: 'CNN FPN', cells: ['2.062 M', '0.857', '0.921', '25.210 dB'] },
+        { label: 'CNN attention FPN', cells: ['2.076 M', '0.869', '0.933', '26.328 dB'] },
+        { label: 'Self-ONN U-Net', cells: ['5.402 M', '0.865', '0.926', '25.873 dB'] },
+        { label: 'Self-ONN FPN', cells: ['5.408 M', '0.876', '0.938', '26.302 dB'] },
+        { label: 'AGO-CycleGAN', cells: ['5.540 M', '0.880', '0.943', '26.497 dB'] },
+      ],
+    },
+    figures: [
+      {
+        image: eegCycleFramework,
+        alt: 'CycleGAN framework diagram. One generator restores motion-corrupted EEG and a second generator maps clean EEG to corrupted EEG. Two discriminators, cycle-consistency losses and identity losses link the two directions.',
+        caption: 'Figure 3 from Mahmud et al. (2024). The AGO-CycleGAN training framework.',
+        credit: sourceArticle(eegCycleDoi),
+        licence: elsevier(2023),
+      },
+      {
+        image: eegCycleBlocks,
+        alt: 'Architecture diagrams of the Self-ONN generator with attention gates on its skip connections, the PatchGAN discriminator, and the guided attention block.',
+        caption: 'Figure 4 from Mahmud et al. (2024). The generator, discriminator and guided attention block.',
+        credit: sourceArticle(eegCycleDoi),
+        licence: elsevier(2023),
+      },
+      {
+        image: eegCycleExamples,
+        alt: 'Six groups of EEG plots, each showing the reference, input and AGO-CycleGAN output. Corrupted inputs with motion and baseline drift are restored towards the reference, and clean inputs remain nearly unchanged.',
+        caption: 'Figure 5 from Mahmud et al. (2024). Reference, input and restored EEG for corrupted segments (a–d) and clean segments (e, f).',
+        credit: sourceArticle(eegCycleDoi),
+        licence: elsevier(2023),
+      },
+    ],
+  },
+  {
+    id: 'spectral-recovery',
+    navLabel: 'Spectral recovery',
+    title: 'Recovering the EEG frequency profile',
+    status: 'Engineering Applications of Artificial Intelligence · 2024',
+    paragraphs: [
+      'Motion artefacts added strong low-frequency power. The delta band rose from 10.7% to 60.1% of total EEG power, while the alpha band fell from 53.2% to 19.1%. After restoration, delta and alpha returned to 11.9% and 50.4%, close to the reference.',
+      'Spectral correlation with the reference increased from 0.128 to 0.943. Power spectra and topographic maps showed the same recovery across the EEG frequency bands.',
+    ],
+    measures: [
+      { value: '93.5%', label: 'Spectral correlation improvement' },
+      { value: '0.943', label: 'Spectral correlation after restoration' },
+      { value: '11.9%', label: 'Restored delta power (reference 10.7%)' },
+    ],
+    table: {
+      caption: 'Share of EEG power in each frequency band across the dataset, from Table 1 of Mahmud et al. (2024).',
+      columns: ['Delta', 'Theta', 'Alpha', 'Beta', 'Gamma'],
+      rows: [
+        { label: 'Reference', cells: ['0.1070', '0.2070', '0.5317', '0.1115', '0.0430'] },
+        { label: 'Motion-corrupted', cells: ['0.6011', '0.1204', '0.1913', '0.0584', '0.0290'] },
+        { label: 'Restored', cells: ['0.1188', '0.2059', '0.5040', '0.1172', '0.0542'] },
+      ],
+    },
+    figures: [
+      {
+        image: eegSpectra,
+        alt: 'Power spectral density plot from 0 to 40 Hz. The motion-corrupted EEG lies far above the reference across all frequencies, while the restored EEG almost overlaps the reference.',
+        caption: 'Figure 6 from Mahmud et al. (2024). Power spectral density of reference, motion-corrupted and restored EEG.',
+        credit: sourceArticle(eegCycleDoi),
+        licence: elsevier(2023),
+      },
+      {
+        image: eegTopography,
+        alt: 'Grid of scalp topographic maps for the whole spectrum and five EEG bands. Maps of motion-corrupted EEG show strong prefrontal power, especially in the delta band, while restored maps resemble the reference maps.',
+        caption: 'Figure 7 from Mahmud et al. (2024). Topographic maps of reference, motion-corrupted and restored EEG across frequency bands.',
+        credit: sourceArticle(eegCycleDoi),
+        licence: elsevier(2023),
       },
     ],
   },
