@@ -226,19 +226,19 @@ export const currentResearch = currentResearchSlugs.map(slug => {
 });
 
 const selections = {
-  biomechanics: [gait.slug, insoles.slug, 'diabetic-neuropathy-gait-emg'],
+  biomechanics: [gait.slug, insoles.slug, 'gait-pattern-modelling', 'diabetic-neuropathy-gait-emg'],
   imaging: [
     'diabetic-foot-thermal-imaging', 'multiphase-liver-ct', kidney.slug,
     'liver-mri-segmentation', 'image-based-curvature-measurement', 'covid-chest-imaging',
   ],
-  // Newest first, by the years of each study's papers or its project dates.
+  // Newest first: latest year, then latest start year, from project dates or paper years.
   signals: [
-    'contactless-cardiovascular-waveforms', 'wearable-cardiac-waveforms', 'multimodal-glucose-estimation',
+    'wearable-cardiac-waveforms', 'contactless-cardiovascular-waveforms', 'nabnet', 'multimodal-glucose-estimation',
     'ecg-restoration-during-mri', 'fetal-ecg-extraction', 'eeg-artefact-restoration',
     'qscare-doppler-flow', 'covidcare-remote-monitoring',
   ],
   spectroscopy: [raman.slug],
-  devices: ['hip-implant-mechanics-and-imaging', 'exoventq-ventilation', 'ecmo-cannulation-simulator'],
+  devices: ['aortic-wall-shear-stress', 'exoventq-ventilation', 'hip-implant-mechanics-and-imaging', 'ecmo-cannulation-simulator'],
   genomics: ['cancer-genomics-reproduction', 'mendelian-rnaseq-outliers'],
   engineering: ['e-tawfeer-energy-management', 'smart-meter-load-and-occupancy', 'ev-charging-demand', 'climate-geopolitical-risk'],
 };

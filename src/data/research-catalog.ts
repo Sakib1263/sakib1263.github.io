@@ -341,7 +341,7 @@ const signals: ResearchProject[] = [
   },
   {
     slug: 'wearable-cardiac-waveforms', area: 'Physiological signal processing',
-    title: 'Wrist PPG restoration to wrist-to-finger PPG translation using cascaded 1D-CycleGANs for improved cardiovascular monitoring via wearables',
+    title: 'Cascaded 1D-CycleGANs for an improved cardiovascular monitoring via wearable wrist PPGs',
     summary: 'A two-stage 1D-CycleGAN pipeline that restores noisy wrist PPG, translates it to finger PPG and improves agreement with ECG-derived heart rate and variability.',
     question: 'Can noisy wrist PPG from a wearable be restored and then translated into finger PPG that follows the heart more closely?',
     context: 'Qatar National Research Fund NPRP12S-0227-190164 · Prince Sattam Bin Abdulaziz University project PSAU/2023/R/1444',
