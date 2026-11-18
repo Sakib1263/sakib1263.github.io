@@ -41,7 +41,7 @@ test('research areas lead to project details, supporting publications, and ongoi
   await page.goto('/research/');
   const researchAreas = page.getByRole('navigation', { name: 'Research areas', exact: true });
   await expect(researchAreas.getByRole('link')).toHaveCount(7);
-  await expect(page.locator('[data-research-project-row]')).toHaveCount(24);
+  await expect(page.locator('[data-research-project-row]')).toHaveCount(27);
   await researchAreas.getByRole('link', { name: 'Biomedical devices & simulation' }).click();
   await expect(page).toHaveURL('/research/#devices');
   await page.getByRole('link', { name: 'Hip implant mechanics, sensing, and loosening detection', exact: true }).click();
@@ -105,7 +105,7 @@ test('research search matches methods, updates areas, and restores the catalogue
   const form = page.getByRole('form', { name: 'Filter research projects' });
   const search = form.getByRole('searchbox', { name: 'Search projects' });
   const areas = page.getByRole('navigation', { name: 'Research areas', exact: true });
-  await expect(form.getByRole('status')).toHaveText('24 entries');
+  await expect(form.getByRole('status')).toHaveText('27 entries');
   await search.fill('Instrumented treadmill');
   await expect(page.locator('#smart-insole-3d-gait-kinetics')).toBeVisible();
   await search.fill('five shoe-mounted markers');
@@ -113,13 +113,13 @@ test('research search matches methods, updates areas, and restores the catalogue
   await search.fill('Döppler');
   await expect(page.locator('#qscare-doppler-flow')).toBeVisible();
   await expect(page.locator('#microbial-raman-biosensing')).toBeHidden();
-  await expect(form.getByRole('status')).toHaveText('1 of 24 entries');
+  await expect(form.getByRole('status')).toHaveText('1 of 27 entries');
   await expect(areas.getByRole('link', { name: /Raman/ })).toHaveCount(0);
   await search.fill('no such research project xyz');
-  await expect(form.getByRole('status')).toHaveText('0 of 24 entries');
+  await expect(form.getByRole('status')).toHaveText('0 of 27 entries');
   await expect(page.getByText('Try a different project name, method, or modality.')).toBeVisible();
   await form.getByRole('button', { name: 'Clear search' }).click();
-  await expect(form.getByRole('status')).toHaveText('24 entries');
+  await expect(form.getByRole('status')).toHaveText('27 entries');
   await expect(search).toBeFocused();
   await page.locator('#microbial-raman-biosensing').getByRole('heading').getByRole('link').click();
   await expect(page).toHaveURL('/research/projects/microbial-raman-biosensing/');

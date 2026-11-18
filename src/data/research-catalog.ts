@@ -17,11 +17,8 @@ import radarEcg from '../assets/research/contactless-cardiovascular-waveforms/fi
 import renalFramework from '../assets/research/renal-tumour-modelling/fig1-framework.png';
 import renalFeatures from '../assets/research/renal-tumour-modelling/fig9-surgical-features.png';
 import liverMasks from '../assets/research/liver-mri-segmentation/fig10-cascade-masks.jpg';
-import liverCascade from '../assets/research/liver-mri-segmentation/fig7-cascade.png';
 import covidPipeline from '../assets/research/covid-chest-imaging/fig3-pipeline.jpg';
-import covidFollowUp from '../assets/research/covid-chest-imaging/fig5b-follow-up.jpg';
 import curvaturePipeline from '../assets/research/image-based-curvature-measurement/fig1-pipeline.jpg';
-import curvatureEstimates from '../assets/research/image-based-curvature-measurement/fig8-angle-estimates.png';
 import ppgExamples from '../assets/research/wearable-cardiac-waveforms/fig8-restoration-examples.png';
 import ppgFramework from '../assets/research/wearable-cardiac-waveforms/fig1-ttr-gan.png';
 import sepsisWorkflow from '../assets/research/sers-sepsis-recognition/fig1-workflow.png';
@@ -34,6 +31,7 @@ import gearboxConfusion from '../assets/research/gearbox-fault-detection/fig7-co
 import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig6-occupancy.png';
 import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-trainer.jpg';
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
+import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 
 function existing(slug: string) {
   const project = projects.find(item => item.slug === slug);
@@ -260,18 +258,17 @@ const imaging: ResearchProject[] = [
   },
   {
     slug: 'liver-mri-segmentation', area: 'Medical imaging',
-    title: 'Liver segmentation in T1-weighted MRI',
-    summary: 'Comparing 24 deep learning architectures and testing whether a cascaded model improves whole-liver segmentation.',
+    title: 'Cascaded deep learning for liver segmentation from T1-weighted MRI',
+    summary: 'Benchmarking 24 deep networks and building a cascaded model that handles MRI slices with little visible liver, reaching a 95.15% Dice score.',
+    question: 'Why do liver segmentation networks struggle on some MRI slices, and can a cascade of general and specialised networks fix it?',
+    context: 'Qatar University High Impact Grant QUHI-CENG-23/24-216',
     doi: '10.3390/s23218890',
-    approach: 'The study benchmarked deep segmentation architectures on T1-weighted MRI and evaluated a cascade that focuses the segmentation stage on the liver region. It also described how model updates could be managed in a cloud-based workflow.',
-    result: 'Using 647 T1-weighted in-phase slices from 20 patients in the public CHAOS dataset, the cascaded network reached a 95.15% Dice score and 92.10% IoU. This exceeded the earlier results reported on the same test set.',
-    measures: [
-      { value: '95.15%', label: 'Liver segmentation Dice' },
-      { value: '92.10%', label: 'Liver segmentation IoU' },
-      { value: '24', label: 'Segmentation networks compared' },
-    ],
-    contribution: 'I contributed to data curation, software implementation, and drafting and revising the paper.',
-    scope: 'The published endpoint is segmentation of the liver on T1-weighted MRI. Tumour segmentation in multiphase CT is addressed in the ongoing CT project.',
+    approach: 'Outlining the liver on MRI supports the assessment of liver disease, but the organ changes size and shape from slice to slice and sits close to the kidneys and spleen. MRI also has no fixed intensity scale like CT. This study compared a wide range of segmentation networks on T1-weighted scans, identified where the best of them failed, designed a cascade around that weakness, and deployed the model in a cloud prototype.',
+    workflow: ['Prepare T1-weighted slices', 'Benchmark 24 networks', 'Cascade general and specialised models'],
+    figures: liverApproachFigures,
+    progress: liverProgress,
+    contribution: 'I contributed to the software implementation and data curation, helped draft the original manuscript, and took part in reviewing and editing it.',
+    scope: 'The study used one public dataset of 20 people without liver disease and evaluated 2D slices with cross-validation, so performance on liver lesions, other scanners and independent cohorts remains to be tested. Multiphase liver and tumour segmentation on CT is the focus of LiPIVOT.',
     relatedProjects: ['multiphase-liver-ct'],
     visual: {
       image: liverMasks,
@@ -280,31 +277,19 @@ const imaging: ResearchProject[] = [
       credit: sourceArticle('10.3390/s23218890'),
       licence: ccBy,
     },
-    figures: [
-      {
-        section: 'approach',
-        image: liverCascade,
-        alt: 'Diagram of the cascade. Each MRI slice goes to a generalised UNet++ network. If the predicted mask is smaller than a threshold, a specialised network re-segments the slice.',
-        caption: 'Figure 7 from Hossain et al. (2023). A generalised network segments every slice. Slices with small predicted masks are passed to a specialised network.',
-        credit: sourceArticle('10.3390/s23218890'),
-        licence: ccBy,
-      },
-    ],
   },
   {
     slug: 'covid-chest-imaging', area: 'Medical imaging',
-    title: 'COVID-19 localisation and grading from chest images',
-    summary: 'Using chest radiographs and CT to outline the lungs, localise infection, and estimate the extent of pulmonary involvement.',
+    title: 'COVID-19 detection, localisation and severity grading from chest X-ray and CT',
+    summary: 'Building the COVID-QU-Ex benchmark of 33,920 chest X-rays and deep learning systems that outline the lungs, localise infection and grade its severity on X-ray and CT.',
+    question: 'Beyond detecting COVID-19, can chest images show where the infection is and how much of the lung it affects?',
+    context: 'Qatar University COVID-19 Emergency Response Grant QUERG-CENG-2020-1 · QNRF UREP28-144-3-046',
     doi: '10.1016/j.compbiomed.2021.105002',
-    approach: 'In the radiograph study, lung segmentation defined the analysis region and infection masks on a separately annotated subset supported localisation and grading. A parallel CT study estimated involvement from segmented lung and infection regions. The subsequent radiograph classification benchmark compared 21 pretrained encoders across four image categories.',
-    result: 'In the radiograph study, lung segmentation reached a 97.99% Dice score and infection segmentation 88.21%. COVID-19 detection had sensitivity and specificity above 99%. The team released COVID-QU-Ex, a collection of 33,920 chest radiographs with lung segmentation annotations. The companion paper describes the separate infection-mask subset.',
-    measures: [
-      { value: '97.99%', label: 'Lung segmentation Dice' },
-      { value: '88.21%', label: 'Infection segmentation Dice' },
-      { value: '33,920', label: 'Radiographs in COVID-QU-Ex' },
-    ],
-    contribution: 'I helped curate and evaluate the radiograph benchmark and contributed to analysis, validation, and interpretation across the chest imaging studies.',
-    scope: 'The reported evaluations use retrospective image collections. Each study has its own imaging modality, annotation protocol and task.',
+    approach: 'During the pandemic, many imaging models only labelled an image as positive or negative, often after training on a few hundred COVID-19 cases. This work took a broader approach: segment the lungs, segment the infection within them, and use the two masks to detect disease, show its location and measure its extent. It was developed on CT and on chest X-ray, the faster and more widely available test, supported by a large public X-ray benchmark.',
+    workflow: ['Curate images and lung masks', 'Segment lungs and infection', 'Detect, localise and grade'],
+    progress: covidProgress,
+    contribution: 'This was one of my earliest research-assistant projects. I contributed substantially to data curation while we assembled the large X-ray benchmark, and to the evaluation and interpretation of the X-ray localisation and severity models. For the CT study I worked on validation, investigation and data curation, and for the pneumonia study on model evaluation and analysis. I also contributed to preparing or reviewing all three manuscripts.',
+    scope: 'These are retrospective studies of public image collections, each with its own annotation protocol and task. X-ray severity was shown as the measured extent of infection, and the CT critical group held only two patients. Clinical use would require prospective validation.',
     related: ['10.3390/diagnostics11050893', '10.5121/csit.2022.122001'],
     relatedProjects: ['covidcare-remote-monitoring'],
     visual: {
@@ -314,30 +299,19 @@ const imaging: ResearchProject[] = [
       credit: sourceArticle('10.1016/j.compbiomed.2021.105002'),
       licence: ccBy,
     },
-    figures: [
-      {
-        section: 'results',
-        image: covidFollowUp,
-        alt: 'Three chest radiographs of one patient on consecutive days, with predicted lung outlines in green and infection outlines in red. Estimated lung involvement rises from 27.1% on day 1 to 46.6% on day 2 and 100% on day 3.',
-        caption: 'Figure 5b from Tahir et al. (2021), cropped to the follow-up example. Predicted infection extent for one patient over three consecutive days.',
-        credit: sourceArticle('10.1016/j.compbiomed.2021.105002'),
-        licence: ccBy,
-      },
-    ],
   },
   {
     slug: 'image-based-curvature-measurement', area: 'Medical imaging',
-    title: 'Quantitative curvature measurement from images',
-    summary: 'Testing an image-based approach to quantify penile curvature on 3D-printed anatomical models.',
+    title: 'Automated penile curvature measurement with deep learning',
+    summary: 'Measuring penile curvature from 2D images with a localisation, segmentation and key-point pipeline, tested on 3D-printed models and compared with a clinical expert.',
+    question: 'Can deep learning measure penile curvature from an ordinary image more consistently than visual assessment and manual tools?',
+    context: 'Qatar University and Sidra Medicine · Hamad Medical Corporation Medical Research Center grant 20841',
     doi: '10.3389/fped.2023.1149318',
-    approach: 'The pipeline localised and segmented each model in the image and used its outline to calculate a curvature angle. Nine 3D models provided a controlled setting to evaluate this measurement workflow.',
-    result: 'Across 913 images of the 3D-printed models, with curvature from 18° to 86°, the mean absolute error of the angle estimate was below 5° for both the images and their segmentation masks.',
-    measures: [
-      { value: '< 5°', label: 'Mean absolute angle error on model images' },
-      { value: '913', label: 'Images of nine 3D-printed models' },
-    ],
-    contribution: 'I assisted with the experiments and helped prepare and revise the manuscript.',
-    scope: 'The main evaluation used 3D-printed models. A small set of patient images was compared with a clinical expert’s assessment, and clinical use would require broader validation.',
+    approach: 'Congenital penile curvature often accompanies hypospadias, which affects about 1 in 300 newborn boys, and the degree of curvature influences the choice of surgical repair. It is usually judged by eye, with a goniometer or with a phone application, and these measurements vary between observers. This study built an automated pipeline that measures the angle from a 2D image, replacing an earlier hard-coded angle calculation with learned anatomical key points.',
+    workflow: ['Localise and crop', 'Segment the shaft', 'Detect key points and calculate the angle'],
+    progress: curvatureProgress,
+    contribution: 'I assisted with the experimental work on automated curvature measurement and contributed to preparing and revising the manuscript.',
+    scope: 'The main evaluation used 3D-printed models under controlled conditions. The patient comparison covered four images with hand-drawn masks, and camera angle, image quality and surgical field conditions can affect the result. Clinical use would need a larger patient dataset and a segmentation step validated on real anatomy.',
     visual: {
       image: curvaturePipeline,
       alt: 'Pipeline diagram. A photograph of a 3D-printed model is localised and cropped, the shaft is segmented, key points are detected, and the curvature angle is calculated. A second approach detects key points on the cropped image directly.',
@@ -345,16 +319,6 @@ const imaging: ResearchProject[] = [
       credit: sourceArticle('10.3389/fped.2023.1149318'),
       licence: ccBy,
     },
-    figures: [
-      {
-        section: 'results',
-        image: curvatureEstimates,
-        alt: 'Two box plots of predicted against true curvature angles for nine models from 18° to 86°, one from images and one from masks. The mask-based estimates spread less around each true angle.',
-        caption: 'Figure 8 from Baray et al. (2023). Estimated angles for each model from the original images (left) and from the segmentation masks (right).',
-        credit: sourceArticle('10.3389/fped.2023.1149318'),
-        licence: ccBy,
-      },
-    ],
   },
 ];
 

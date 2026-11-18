@@ -228,7 +228,10 @@ export const currentResearch = currentResearchSlugs.map(slug => {
 
 const selections = {
   biomechanics: [gait.slug, insoles.slug, 'diabetic-neuropathy-gait-emg'],
-  imaging: ['diabetic-foot-thermal-imaging', 'multiphase-liver-ct', kidney.slug],
+  imaging: [
+    'diabetic-foot-thermal-imaging', 'multiphase-liver-ct', kidney.slug,
+    'liver-mri-segmentation', 'image-based-curvature-measurement', 'covid-chest-imaging',
+  ],
   // Newest first, by the years of each study's papers or its project dates.
   signals: [
     'contactless-cardiovascular-waveforms', 'wearable-cardiac-waveforms', 'multimodal-glucose-estimation',
