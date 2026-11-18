@@ -8,11 +8,9 @@ import ramanShare from '../assets/share/cross-device-raman.jpg';
 import ramanCard from '../assets/research/cross-device-raman/card-enwave-rid.jpg';
 import ramanBenchmarks from '../assets/research/cross-device-raman/fig6-r2-benchmarks.png';
 import kidneyFramework from '../assets/research/kidney-stone-segmentation/fig1-framework.png';
-import nabnetWaveforms from '../assets/research/nabnet/fig7a-waveforms.png';
-import nabnetPipeline from '../assets/research/nabnet/fig1-pipeline.png';
-import nabnetAgreement from '../assets/research/nabnet/fig5-map-agreement.png';
 import ahnGrades from '../assets/research/prenatal-hydronephrosis/fig3-sfu-grades.jpg';
 import ahnSegmentation from '../assets/research/prenatal-hydronephrosis/fig6-segmentation.jpg';
+import { bloodPressureProgress, bloodPressureVisual } from './blood-pressure-milestones';
 import { ccBy, elsevier, sourceArticle } from './figure-credits';
 import { smartInsoleProgress } from './smart-insole-project';
 import { kinetics } from './kinetics';
@@ -224,46 +222,24 @@ export const projects: Project[] = [
   {
     slug: 'nabnet',
     area: 'Physiological signal processing',
-    title: 'Blood pressure waveform modelling with NABNet',
-    summary: 'Reconstructing arterial pressure waveforms from optical pulse and ECG signals, then estimating systolic, diastolic, and mean pressure.',
-    question: 'How accurately can arterial pressure waveforms and their pressure components be estimated from synchronized PPG and ECG?',
+    title: 'Cuffless blood pressure and arterial waveform estimation from PPG and ECG',
+    summary: 'Deep learning methods that estimate systolic and diastolic pressure and reconstruct continuous arterial blood pressure waveforms from PPG and ECG signals.',
+    question: 'Can non-invasive PPG and ECG signals provide accurate blood pressure values and a continuous arterial pressure waveform?',
+    context: 'Qatar National Research Fund NPRP12S-0227-190164 · Qatar University IRCC-2021-001 and QUST-2-CENG-2022-711',
     doi: '10.1016/j.bspc.2022.104247',
     code: 'https://github.com/Sakib1263/NABNet',
-    approach: 'The nested attention-guided BiConvLSTM reconstructs an arterial blood pressure waveform from photoplethysmography and electrocardiography. A component estimation stage supplies pressure values used to recover the waveform scale.',
-    result: 'On the UCI waveform benchmark, the combined waveform and pressure pipeline estimated systolic, diastolic and mean arterial pressure with the following mean absolute errors.',
-    measures: [
-      { value: '2.63 mmHg', label: 'Systolic pressure error' },
-      { value: '1.09 mmHg', label: 'Diastolic pressure error' },
-      { value: '2.37 mmHg', label: 'Mean arterial pressure error' },
+    resources: [
+      { label: 'PPG2ABP code', href: 'https://github.com/nibtehaz/PPG2ABP' },
+      { label: 'UCI dataset', href: 'https://archive.ics.uci.edu/dataset/340/cuff+less+blood+pressure+estimation' },
     ],
-    contribution: 'I led data preparation, implementation, experiments, analysis, visualization, and manuscript preparation.',
-    scope: 'These errors come from retrospective evaluation on intensive-care waveform records. The partition kept records from the same patient together.',
-    related: ['10.1007/s00521-025-11327-x', '10.3390/bioengineering9110692', '10.3390/s22030919', '10.3390/bioengineering9100558'],
-    visual: {
-      image: nabnetWaveforms,
-      alt: 'Three stacked signals over about 1,000 samples: a normalised PPG, a normalised ECG, and arterial blood pressure between about 75 and 115 mmHg. The estimated pressure waveform closely follows the measured one.',
-      caption: 'Figure 7a from Mahmud et al. (2023), cropped to one example. NABNet estimated the arterial pressure waveform (red) from the PPG and ECG inputs above it. Blue shows the measured arterial pressure.',
-      credit: sourceArticle('10.1016/j.bspc.2022.104247'),
-      licence: elsevier(2022),
-    },
-    figures: [
-      {
-        section: 'approach',
-        image: nabnetPipeline,
-        alt: 'Flowchart. One to four input channels, drawn from PPG, its derivatives and ECG, train a 1D segmentation network that predicts a normalised arterial pressure waveform. Systolic and diastolic values from a separate prediction pipeline rescale the waveform before evaluation.',
-        caption: 'Figure 1 from Mahmud et al. (2023). A segmentation network estimates the normalised pressure waveform from one to four input channels. Systolic and diastolic estimates from a separate pipeline restore its scale.',
-        credit: sourceArticle('10.1016/j.bspc.2022.104247'),
-        licence: elsevier(2022),
-      },
-      {
-        section: 'results',
-        image: nabnetAgreement,
-        alt: 'Left: scatter plot of estimated against measured mean arterial pressure from about 60 to 140 mmHg, clustered along the identity line. Right: Bland–Altman plot with most differences in a narrow band around zero.',
-        caption: 'Figure 5 from Mahmud et al. (2023). (a) Regression and (b) Bland–Altman plots for the mean arterial pressure estimates.',
-        credit: sourceArticle('10.1016/j.bspc.2022.104247'),
-        licence: elsevier(2022),
-      },
-    ],
+    approach: 'Cuffs provide intermittent readings, while a continuous arterial pressure waveform usually requires an arterial catheter. This project used PPG and ECG to estimate blood pressure without either limitation. The work first predicted systolic and diastolic values, then reconstructed the waveform from PPG alone, and finally combined pressure prediction with waveform reconstruction.',
+    workflow: ['Prepare PPG and ECG', 'Predict pressure values', 'Reconstruct the waveform'],
+    progress: bloodPressureProgress,
+    contribution: 'For the shallow U-Net study, I led conceptualisation, methodology, software, formal analysis, investigation, data curation, validation, visualisation and manuscript preparation. For PPG2ABP, I contributed to data curation, formal analysis, methodology, investigation, validation and manuscript drafting and revision, and worked with the first author to rework the study for publication. For the combined pipeline, I led development and evaluation of NABNet, including data preparation, implementation, experiments, analysis, visualisation and manuscript preparation.',
+    scope: 'All three studies were developed on the same public intensive-care dataset of clinical finger PPG, and distorted or extreme signals were excluded in two of them. Only the shallow U-Net study tested an external dataset, with 40 people. Motion artefacts from wearable sensors were not resolved, and PPG2ABP is not intended for wrist PPG. Prospective validation is needed before clinical use.',
+    related: ['10.3390/s22030919', '10.3390/bioengineering9110692'],
+    relatedProjects: ['contactless-cardiovascular-waveforms', 'wearable-cardiac-waveforms'],
+    visual: bloodPressureVisual,
   },
   {
     slug: 'prenatal-hydronephrosis',

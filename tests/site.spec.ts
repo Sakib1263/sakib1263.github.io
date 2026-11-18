@@ -231,6 +231,17 @@ test('both gait papers link to their shared research project', async ({ page }) 
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Tai Chi gait', 'NDDNet']);
 });
 
+test('the blood pressure papers link to their shared research project', async ({ page }) => {
+  await page.goto('/publications/');
+  for (const doi of ['10.3390/s22030919', '10.3390/bioengineering9110692', '10.1016/j.bspc.2022.104247']) {
+    await expect(page.locator(`[data-doi="${doi}"]`).getByRole('link', { name: 'Research details', exact: true }))
+      .toHaveAttribute('href', '/research/nabnet/');
+  }
+  await page.goto('/research/nabnet/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Cuffless blood pressure and arterial waveform estimation from PPG and ECG');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Pressure prediction', 'PPG to waveform', 'Hybrid reconstruction']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();
