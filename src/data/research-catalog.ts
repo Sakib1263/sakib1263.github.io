@@ -5,8 +5,6 @@ import insoleFbg from '../assets/research/smart-insoles-diabetic-foot/fig4-fbg-i
 import insoleTemperature from '../assets/research/smart-insoles-diabetic-foot/fig9-temperature-maps.png';
 import dopplerOverview from '../assets/research/qscare-doppler-flow/fig2-overview.png';
 import dopplerRestored from '../assets/research/qscare-doppler-flow/fig7-restored-waveforms.png';
-import mhdFramework from '../assets/research/ecg-restoration-during-mri/fig2-framework.png';
-import mhdSpectra from '../assets/research/ecg-restoration-during-mri/fig6-psd.png';
 import eegSpectra from '../assets/research/eeg-artefact-restoration/fig6-psd.png';
 import eegFramework from '../assets/research/eeg-artefact-restoration/fig3-ago-cyclegan.png';
 import fetalPeaks from '../assets/research/fetal-ecg-extraction/fig6-r-peaks.png';
@@ -28,7 +26,7 @@ import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-tr
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
-import { contactlessProgress, contactlessVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
+import { contactlessProgress, contactlessVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
 function existing(slug: string) {
   const project = projects.find(item => item.slug === slug);
@@ -375,35 +373,19 @@ const signals: ResearchProject[] = [
   },
   {
     slug: 'ecg-restoration-during-mri', area: 'Physiological signal processing',
-    title: 'ECG restoration and R-peak detection during MRI',
-    summary: 'Recovering ECG morphology and heartbeat timing when strong magnetic fields distort the measured signal.',
+    title: 'Deep learning for 12-lead ECG restoration and R-peak detection during MRI',
+    summary: 'Deep learning methods that detect heartbeats and restore 12-lead ECG distorted by the magnetohydrodynamic effect in 1 T, 3 T and 7 T MRI scanners.',
+    question: 'Can deep learning recover ECG morphology and heartbeat timing when an MRI magnetic field distorts the signal?',
+    context: 'Qatar National Research Fund NPRP12S-0227-190164 · Prince Sattam Bin Abdulaziz University PSAU/2024/R/1445 · Qatar University QUST-1-CENG-2023941',
     doi: '10.1016/j.engappai.2024.108483',
-    approach: 'The waveform study evaluated two approaches to recover 12-lead ECG and heartbeat timing under magnetohydrodynamic distortion at 1, 3 and 7 tesla. The companion MHDNet study evaluated attention-based R-peak detection on 3- and 7-tesla recordings.',
-    contribution: 'I led the waveform restoration study design, data curation, model development, experiments and writing, and contributed to MHDNet development and validation.',
-    result: 'Unpaired restoration with MHDGAN improved the spectral correlation of the distorted 12-lead ECG by 92.56%, and the comprehensive MHD2ECGNet restoration by 77.64%. R-peak detection on the MHDGAN output reached a 96.01% F1 score. In the companion MHDNet study, R-peak detection reached 99.83% recall and 99.68% precision at 3 tesla.',
-    measures: [
-      { value: '92.56%', label: 'Spectral correlation improvement (MHDGAN)' },
-      { value: '96.01%', label: 'R-peak detection F1 after restoration' },
-    ],
-    scope: 'Waveform recovery and R-peak detection are distinct objectives, with performance reported for the evaluated MRI recordings.',
+    approach: 'Inside an MRI scanner, blood flowing through the static magnetic field creates a magnetohydrodynamic voltage that overlaps the ECG. This can hide important waveform features and make cardiac gating and patient monitoring difficult. The work began with accurate R-peak detection, then developed a three-phase framework that uses QRS guidance, unpaired restoration and a general 12-lead model.',
+    workflow: ['Locate QRS complexes', 'Restore each ECG lead', 'Generalise to all 12 leads'],
+    progress: mriEcgProgress,
+    contribution: 'For the 12-lead restoration study, I led conceptualisation, data curation, methodology and software development, formal analysis, experiments and manuscript preparation. For Self-Attention MHDNet, I contributed to the investigation, methodology, software, validation and manuscript drafting and revision.',
+    scope: 'The recordings came from young healthy volunteers while the scanners were not acquiring images, so gradient and radio-frequency artefacts were not addressed. Only one 1 T session was available, and low-amplitude P and T waves remained harder to restore. Studies with patients and active MRI scans are needed before clinical use.',
     related: ['10.3390/bioengineering10050542'],
-    visual: {
-      image: mhdFramework,
-      alt: 'Three-phase framework diagram. Phase 1 segments QRS pulse trains from distorted ECG. Phase 2 uses the pulse trains to guide unpaired restoration with a 1D CycleGAN called MHDGAN. Phase 3 trains MHD2ECGNet for general restoration of all 12 leads.',
-      caption: 'Figure 2 from Mahmud et al. (2024). QRS pulse-train segmentation (Phase 1), QRS-guided unpaired restoration with MHDGAN (Phase 2) and general 12-lead restoration with MHD2ECGNet (Phase 3).',
-      credit: sourceArticle('10.1016/j.engappai.2024.108483'),
-      licence: elsevier(2024),
-    },
-    figures: [
-      {
-        section: 'results',
-        image: mhdSpectra,
-        alt: 'Power spectral density plot from 0 to 40 Hz comparing clean ECG, distorted ECG and ECG restored in Phases 2 and 3. The distorted ECG departs from the clean spectrum, with a bump at low frequencies, while the restored signals follow the clean spectrum more closely.',
-        caption: 'Figure 6 from Mahmud et al. (2024). Power spectral density of the clean, distorted and restored ECG.',
-        credit: sourceArticle('10.1016/j.engappai.2024.108483'),
-        licence: elsevier(2024),
-      },
-    ],
+    relatedProjects: ['wearable-cardiac-waveforms', 'eeg-artefact-restoration'],
+    visual: mriEcgVisual,
   },
   {
     slug: 'eeg-artefact-restoration', area: 'Physiological signal processing',

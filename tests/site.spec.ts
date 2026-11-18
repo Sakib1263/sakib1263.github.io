@@ -248,6 +248,12 @@ test('the glucose monitoring project shows its system and results stages', async
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Wearable system', 'Clinical data', 'Glucose estimation', 'Severity classification']);
 });
 
+test('the MRI ECG project presents detection and restoration stages', async ({ page }) => {
+  await page.goto('/research/ecg-restoration-during-mri/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Deep learning for 12-lead ECG restoration and R-peak detection during MRI');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'R-peak detection', 'Phase 1: QRS guidance', 'Phase 2: MHDGAN', 'Phase 3: MHD2ECGNet', 'Cardiac evaluation']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();

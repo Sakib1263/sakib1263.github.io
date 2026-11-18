@@ -17,6 +17,14 @@ import quGmApp from '../assets/research/multimodal-glucose-estimation/fig7-mobil
 import quGmRegression from '../assets/research/multimodal-glucose-estimation/fig9-regression.png';
 import quGmClarke from '../assets/research/multimodal-glucose-estimation/fig11-clarke-grid.png';
 import quGmFeatures from '../assets/research/multimodal-glucose-estimation/fig12-severity-features.png';
+import mriNetwork from '../assets/research/ecg-restoration-during-mri/fig4-mhd2ecgnet.png';
+import mriFramework from '../assets/research/ecg-restoration-during-mri/fig2-framework.png';
+import mriQrsExamples from '../assets/research/ecg-restoration-during-mri/fig5-qrs-examples.png';
+import mriSpectra from '../assets/research/ecg-restoration-during-mri/fig6-psd.png';
+import mriGanExamples from '../assets/research/ecg-restoration-during-mri/fig7-mhdgan-examples.png';
+import mriGeneralExamples from '../assets/research/ecg-restoration-during-mri/fig10-mhd2ecgnet-examples.png';
+import mriHeartRate from '../assets/research/ecg-restoration-during-mri/fig12-heart-rate.png';
+import mriPeakNetwork from '../assets/research/ecg-restoration-during-mri/sa-mhdnet-fig5-network.png';
 import { ccBy, elsevier, sourceArticle } from './figure-credits';
 import type { ResearchPhase, ResearchProject } from './research';
 
@@ -27,6 +35,8 @@ const radarEcgDoi = '10.1016/j.compbiomed.2024.108555';
 const radarPressureDoi = '10.1007/s00521-025-11327-x';
 const ttrDoi = '10.1016/j.eswa.2024.123167';
 const quGmDoi = '10.1109/access.2024.3404971';
+const mriRestorationDoi = '10.1016/j.engappai.2024.108483';
+const mriPeakDoi = '10.3390/bioengineering10050542';
 
 export const contactlessVisual: NonNullable<ResearchProject['visual']> = {
   image: radarFramework,
@@ -456,6 +466,201 @@ export const quGmProgress: ResearchPhase[] = [
         caption: 'Figure 12 from Shuzan et al. (2024). Features selected for severity classification, ranked by importance.',
         credit: sourceArticle(quGmDoi),
         licence: ccBy,
+      },
+    ],
+  },
+];
+
+export const mriEcgVisual: NonNullable<ResearchProject['visual']> = {
+  image: mriFramework,
+  alt: 'Three-phase framework diagram. Phase 1 segments QRS pulse trains from distorted ECG. Phase 2 uses the pulse trains to guide unpaired restoration with a 1D CycleGAN called MHDGAN. Phase 3 trains MHD2ECGNet for general restoration of all 12 leads.',
+  caption: 'Figure 2 from Mahmud et al. (2024). QRS pulse-train segmentation (Phase 1), QRS-guided unpaired restoration with MHDGAN (Phase 2) and general 12-lead restoration with MHD2ECGNet (Phase 3).',
+  credit: sourceArticle(mriRestorationDoi),
+  licence: elsevier(2024),
+};
+
+export const mriEcgProgress: ResearchPhase[] = [
+  {
+    id: 'r-peak-detection',
+    navLabel: 'R-peak detection',
+    title: 'Detecting R-peaks in ECG distorted inside MRI',
+    status: 'Bioengineering · 2023',
+    paragraphs: [
+      'Accurate R-peaks are needed to synchronise cardiac MRI with the heartbeat, but the magnetohydrodynamic (MHD) effect distorts the ECG inside the scanner. This study used public 3 T and 7 T recordings and treated R-peak detection as a 1D segmentation task.',
+      'Self-Attention MHDNet converts three ECG channels into a pulse map of R-peak locations. It combines Self-ONN layers with attention blocks in an encoder–decoder network and was evaluated with five-fold cross-validation that kept each person’s data in one fold.',
+    ],
+    measures: [
+      { value: '99.76%', label: 'F1 score at 3 T' },
+      { value: '99.82%', label: 'F1 score at 7 T' },
+    ],
+    table: {
+      caption: 'R-peak detection and segmentation results from M.H. Chowdhury et al. (2023).',
+      columns: ['Recall', 'Precision', 'F1 score', 'Dice'],
+      rows: [
+        { label: '3 T', cells: ['99.83%', '99.68%', '99.76%', '99.01%'] },
+        { label: '7 T', cells: ['99.87%', '99.78%', '99.82%', '98.36%'] },
+      ],
+    },
+    figures: [
+      {
+        image: mriPeakNetwork,
+        alt: 'Encoder–decoder network taking a three-channel distorted ECG and producing a map of R-peak pulses. Self-ONN layers, pooling, upsampling, concatenation and attention blocks are marked.',
+        caption: 'Figure 5 from M.H. Chowdhury et al. (2023). The Self-Attention MHDNet architecture.',
+        credit: sourceArticle(mriPeakDoi),
+        licence: ccBy,
+      },
+    ],
+  },
+  {
+    id: 'qrs-guidance',
+    navLabel: 'Phase 1: QRS guidance',
+    title: 'Phase 1: locating heartbeats from distorted 12-lead ECG',
+    status: 'Engineering Applications of Artificial Intelligence · 2024',
+    paragraphs: [
+      'The restoration study used a public PhysioNet dataset from 23 healthy volunteers across 29 sessions in 1 T open-bore and 3 T and 7 T closed-bore scanners. The first phase turned distorted 12-lead ECG into QRS pulse trains that could guide restoration.',
+      'Five segmentation networks were compared with session-independent five-fold cross-validation on 15 sessions from nine people. UNet3+ performed best and found 10,776 of 10,780 annotated R-peaks within ±75 ms. It also performed well on the 1 T session after training on 3 T and 7 T data.',
+    ],
+    measures: [
+      { value: '99.96%', label: 'R-peak recall' },
+      { value: '98.45%', label: 'R-peak F1 score' },
+      { value: '4', label: 'Missed R-peaks out of 10,780' },
+    ],
+    table: {
+      caption: 'R-peak detection with UNet3+, from Table 5 of Mahmud et al. (2024).',
+      columns: ['Precision', 'Recall', 'F1 score'],
+      rows: [
+        { label: 'All scanners', cells: ['96.98%', '99.96%', '98.45%'] },
+        { label: '1 T', cells: ['98.88%', '100%', '99.44%'] },
+        { label: '3 T', cells: ['97.72%', '99.98%', '98.84%'] },
+        { label: '7 T', cells: ['94.91%', '99.93%', '97.36%'] },
+      ],
+    },
+    figures: [
+      {
+        image: mriQrsExamples,
+        alt: 'Three examples showing distorted lead II ECG above matching reference and predicted QRS pulse trains from 1 T and 3 T recordings.',
+        caption: 'Figure 5 from Mahmud et al. (2024), cropped to examples a–c. Distorted lead II ECG with reference and predicted QRS pulse trains.',
+        credit: sourceArticle(mriRestorationDoi),
+        licence: elsevier(2024),
+      },
+    ],
+  },
+  {
+    id: 'mhdgan',
+    navLabel: 'Phase 2: MHDGAN',
+    title: 'Phase 2: unpaired restoration with MHDGAN',
+    status: 'QRS-guided 1D-CycleGAN',
+    paragraphs: [
+      'A clean ECG cannot be recorded at the same moment as a distorted one because the scanner’s static field is always present. MHDGAN therefore learned from unpaired clean and distorted ECG from the same sessions. An inverted QRS pulse train was supplied with each distorted signal to keep the restored heartbeats aligned.',
+      'Separate models were trained for each of the 12 leads and two groups of body orientation, giving 24 models. Evaluation used 2,389 segments from 10 sessions in two session-independent folds. Spectral agreement with clean ECG rose from 92.68% to 99.50%, and spectral error fell from 0.0524 to 0.0310.',
+    ],
+    measures: [
+      { value: '92.56%', label: 'Spectral correlation improvement' },
+      { value: '99.50%', label: 'Spectral correlation after restoration' },
+      { value: '24', label: 'Lead and orientation models' },
+    ],
+    table: {
+      caption: 'Spectral performance of MHDGAN against clean ECG, from Table 3 of Mahmud et al. (2024).',
+      columns: ['Before', 'After', 'Improvement', 'Spectral error'],
+      rows: [
+        { label: 'All data', cells: ['92.68%', '99.50%', '92.56%', '0.0524 → 0.0310'] },
+        { label: '1 T', cells: ['94.32%', '98.31%', '58.79%', '0.0477 → 0.0379'] },
+        { label: '3 T', cells: ['93.07%', '99.34%', '88.79%', '0.0505 → 0.0314'] },
+        { label: '7 T', cells: ['92.07%', '99.46%', '92.71%', '0.0541 → 0.0318'] },
+        { label: 'Head-first supine', cells: ['91.68%', '99.30%', '90.54%', '0.0450 → 0.0261'] },
+        { label: 'Feet-first supine or head-first prone', cells: ['93.68%', '99.69%', '94.58%', '0.0599 → 0.0358'] },
+      ],
+    },
+    figures: [
+      {
+        image: mriGanExamples,
+        alt: 'Three examples for ECG leads I, II and III. Each shows an unpaired clean ECG, the distorted ECG, an inverse QRS pulse train and the restored QRS-aligned ECG.',
+        caption: 'Figure 7 from Mahmud et al. (2024), cropped to examples a–c. Clean, distorted and restored ECG with the QRS guide signal.',
+        credit: sourceArticle(mriRestorationDoi),
+        licence: elsevier(2024),
+      },
+      {
+        image: mriSpectra,
+        alt: 'Power spectral density plot from 0 to 40 Hz comparing clean ECG, distorted ECG and ECG restored in Phases 2 and 3. The distorted ECG departs from the clean spectrum, with a bump at low frequencies, while the restored signals follow the clean spectrum more closely.',
+        caption: 'Figure 6 from Mahmud et al. (2024). Power spectral density of the clean, distorted and restored ECG.',
+        credit: sourceArticle(mriRestorationDoi),
+        licence: elsevier(2024),
+      },
+    ],
+  },
+  {
+    id: 'mhd2ecgnet',
+    navLabel: 'Phase 3: MHD2ECGNet',
+    title: 'Phase 3: one model for all 12 leads',
+    status: 'Supervised 1D segmentation',
+    paragraphs: [
+      'Running 24 separate models is impractical during a scan, especially when patient orientation changes. Phase 3 used the aligned MHDGAN outputs as training targets for one network that restores all 12 leads together, without needing a QRS input or separate orientation models.',
+      'MHD2ECGNet combines a nested UNet++ structure with recurrent residual units and modified guided attention. It has 2.647 million parameters, compared with 3.936 million across the 24 MHDGAN generators, and it gave the strongest results among the six compared networks.',
+    ],
+    measures: [
+      { value: '77.64%', label: 'Spectral correlation improvement' },
+      { value: '90.14%', label: 'Correlation with Phase 2 output' },
+      { value: '1', label: 'Model for all 12 leads' },
+    ],
+    table: {
+      caption: 'General 12-lead restoration compared with the Phase 2 output, from Table 4 of Mahmud et al. (2024).',
+      columns: ['Correlation', 'Mean absolute error', 'Spectral improvement'],
+      rows: [
+        { label: 'MHD2ECGNet', cells: ['90.14%', '0.076', '77.64%'] },
+        { label: 'UNet++', cells: ['90.03%', '0.077', '74.46%'] },
+        { label: 'UNet', cells: ['89.85%', '0.078', '66.66%'] },
+        { label: 'Attention-UNet', cells: ['89.82%', '0.078', '64.11%'] },
+        { label: 'UNet3+', cells: ['87.96%', '0.082', '39.46%'] },
+        { label: 'MultiResUNet', cells: ['87.77%', '0.082', '32.63%'] },
+      ],
+    },
+    figures: [
+      {
+        image: mriNetwork,
+        alt: 'Nested MHD2ECGNet architecture with encoder and decoder nodes, modified guided attention blocks and deep supervision, beside an enlarged recurrent residual unit.',
+        caption: 'Figure 4 from Mahmud et al. (2024), cropped to panels a and b. (a) MHD2ECGNet and (b) its recurrent residual unit.',
+        credit: sourceArticle(mriRestorationDoi),
+        licence: elsevier(2024),
+      },
+      {
+        image: mriGeneralExamples,
+        alt: 'Distorted ECG, Phase 2 restored ECG and Phase 3 restored ECG for leads I, II, III and aVR from a 3 tesla recording. Both restored signals show clearer heartbeat patterns.',
+        caption: 'Figure 10 from Mahmud et al. (2024), cropped to four leads. Distorted ECG with the Phase 2 and Phase 3 restorations from a 3 T session.',
+        credit: sourceArticle(mriRestorationDoi),
+        licence: elsevier(2024),
+      },
+    ],
+  },
+  {
+    id: 'cardiac-evaluation',
+    navLabel: 'Cardiac evaluation',
+    title: 'Checking R-peaks, heart rate and variability',
+    status: 'Comparison with expert annotations',
+    paragraphs: [
+      'Restored signals were assessed with an independent R-peak detector and compared with expert annotations. Mean heart rate was 62.40 beats per minute in the reference, 62.63 after MHDGAN and 63.26 after MHD2ECGNet. Heart rate variability (SDNN) was 119.76 ms in the reference, 120.54 ms after MHDGAN and 127.98 ms after MHD2ECGNet.',
+    ],
+    measures: [
+      { value: '96.01%', label: 'MHDGAN R-peak F1 score' },
+      { value: '94.85%', label: 'MHD2ECGNet R-peak F1 score' },
+      { value: '0.93', label: 'Heart-rate correlation with MHDGAN' },
+    ],
+    table: {
+      caption: 'R-peak detection after restoration, from Table 5 of Mahmud et al. (2024).',
+      columns: ['Precision', 'Recall', 'F1 score'],
+      rows: [
+        { label: 'MHDGAN, all leads', cells: ['98.14%', '94.12%', '96.01%'] },
+        { label: 'MHDGAN, lead II', cells: ['99.98%', '98.89%', '99.43%'] },
+        { label: 'MHD2ECGNet, all leads', cells: ['97.12%', '92.43%', '94.85%'] },
+        { label: 'MHD2ECGNet, lead II', cells: ['99.40%', '98.06%', '98.73%'] },
+      ],
+    },
+    figures: [
+      {
+        image: mriHeartRate,
+        alt: 'Line plots of heart rate and heart rate variability across recording sessions for Phase 2 and Phase 3, beside scatter plots of estimated against reference heart rate with correlations of 0.93 and 0.80.',
+        caption: 'Figure 12 from Mahmud et al. (2024). Heart rate and variability trends, with heart-rate correlation for Phases 2 and 3.',
+        credit: sourceArticle(mriRestorationDoi),
+        licence: elsevier(2024),
       },
     ],
   },
