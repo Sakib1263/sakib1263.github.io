@@ -230,7 +230,7 @@ const imaging: ResearchProject[] = [
     title: 'LiPIVOT: liver and tumour segmentation across contrast-enhanced CT phases',
     summary: 'Adapting a medical segmentation foundation model to outline the liver and liver tumours on CT across contrast phases and independent cohorts.',
     question: 'Can fine-tuning a segmentation foundation model on liver CT outperform the model used as it is, and stay reliable on hospitals, scanners and contrast phases it was not trained on?',
-    status: 'Ongoing research', context: 'Qatar University',
+    period: 'January 2025–present', status: 'Ongoing research', context: 'Qatar University',
     approach: 'Liver tumours are assessed on CT scans taken at several times after a contrast injection, and each phase shows the liver and lesions differently. LiPIVOT starts from MedSAM2, a foundation model that segments 3D scans by propagating a mask from one prompted slice to its neighbours. The portal-venous phase is the anchor: the model is first adapted for the liver on that phase, then extended to tumours and to the other phases, and the phase-specific results are finally brought into a common space and combined.',
     workflow: ['Detect the liver and prompt the model', 'Segment through each CT volume', 'Combine the contrast phases'],
     progress: [
