@@ -19,6 +19,7 @@ import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig
 import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-trainer.jpg';
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
+import { aorticWssProgress, aorticWssVisual } from './aortic-wss-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -552,12 +553,19 @@ const devices: ResearchProject[] = [
   },
   {
     slug: 'aortic-wall-shear-stress', area: 'Biomedical devices & simulation',
-    title: 'Estimating aortic wall shear stress from vessel geometry',
-    summary: 'Using multiple views of abdominal aortic aneurysm shapes to approximate computational fluid dynamics outputs.',
+    title: 'Rapid wall shear stress prediction for abdominal aortic aneurysms',
+    summary: 'A deep learning surrogate that predicts time-averaged wall shear stress on abdominal aortic aneurysms from 3D vessel geometry.',
+    question: 'Can deep learning provide a fast alternative to CFD for mapping wall shear stress on aortic aneurysms?',
+    context: 'Qatar University IRCC-2020-002 · Qatar National Research Fund NPRP13S-0108-200024',
     doi: '10.1007/s11517-025-03311-3',
-    approach: 'Represent the geometry from multiple views and train deep models to estimate wall shear stress. The research evaluated predictions against computational fluid dynamics simulations for real and synthetic geometries.',
-    contribution: 'I helped implement and integrate the model, evaluated successive versions, and troubleshot the modelling workflow.',
-    scope: 'The reference is a computational simulation. Agreement depends on the represented geometries, boundary conditions and simulation assumptions.',
+    code: 'https://github.com/atick-faisal/MultiViewUNet-Aneurysm',
+    approach: 'Low wall shear stress is linked with aneurysm progression and rupture risk, but computational fluid dynamics (CFD) is too time-consuming for rapid clinical use. This study built patient and synthetic aneurysm geometries, generated CFD references, converted each 3D shape into multiple 2D views, and trained MultiViewUNet to predict the wall shear stress pattern.',
+    workflow: ['Build geometries and run CFD', 'Render multi-view images', 'Predict wall shear stress'],
+    progress: aorticWssProgress,
+    contribution: 'I helped implement and integrate the deep learning model, evaluated successive versions, and troubleshot the modelling workflow with the core team.',
+    scope: 'CFD was the reference, so agreement depends on the geometries, boundary conditions and simulation assumptions used. The dataset was relatively small, and errors were larger in disturbed flow. The model outputs 256 × 256 images rather than a reconstructed 3D surface, and other haemodynamic measures remain future work.',
+    relatedProjects: ['ecmo-cannulation-simulator'],
+    visual: aorticWssVisual,
   },
 ];
 

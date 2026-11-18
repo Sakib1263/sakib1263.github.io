@@ -293,6 +293,15 @@ test('the microbial SERS project presents each study in order', async ({ page })
   await expect(page.getByRole('heading', { name: 'PRISM-SERS: mapping spectra for unseen analytes' })).toBeVisible();
 });
 
+test('the aortic wall shear stress paper links to its project stages', async ({ page }) => {
+  await page.goto('/publications/');
+  await expect(page.locator('[data-doi="10.1007/s11517-025-03311-3"]').getByRole('link', { name: 'Research details', exact: true }))
+    .toHaveAttribute('href', '/research/aortic-wall-shear-stress/');
+  await page.goto('/research/aortic-wall-shear-stress/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Rapid wall shear stress prediction for abdominal aortic aneurysms');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Geometries and CFD', 'Multi-view representation', 'MultiViewUNet']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();
