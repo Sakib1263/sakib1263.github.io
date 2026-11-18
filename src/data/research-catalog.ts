@@ -12,14 +12,13 @@ import sepsisWorkflow from '../assets/research/sers-sepsis-recognition/fig1-work
 import sepsisEmbeddings from '../assets/research/sers-sepsis-recognition/fig5-embeddings.png';
 import hipDetection from '../assets/research/hip-implant-mechanics-and-imaging/fig8-implant-detection.jpg';
 import hipTrunnion from '../assets/research/hip-implant-mechanics-and-imaging/fig2-trunnion-geometry.png';
-import exoventOverview from '../assets/research/exoventq-ventilation/fig1-overview.png';
-import exoventTest from '../assets/research/exoventq-ventilation/fig12a-cyclic-test.jpg';
 import gearboxConfusion from '../assets/research/gearbox-fault-detection/fig7-confusion-matrix.png';
 import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig6-occupancy.png';
 import ecmoTrainer from '../assets/research/ecmo-cannulation-simulator/fig1gh-trainer.jpg';
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { aorticWssProgress, aorticWssVisual } from './aortic-wss-milestones';
+import { exoventqProgress, exoventqVisual } from './exoventq-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -526,30 +525,18 @@ const devices: ResearchProject[] = [
   },
   {
     slug: 'exoventq-ventilation', area: 'Biomedical devices & simulation',
-    title: 'ExoventQ portable negative-pressure ventilation',
-    summary: 'Building and evaluating a portable prototype with continuous and cyclic negative-pressure modes.',
+    title: 'ExoventQ: a low-cost portable negative-pressure ventilator',
+    summary: 'A student-led respiratory support prototype with continuous and cyclic negative-pressure modes, closed-loop pressure control and safety alarms.',
+    question: 'Can a portable negative-pressure ventilator be built from affordable, readily available components?',
+    context: 'BSc Electrical Engineering senior design project, 2020–2021 · Qatar University QUST-1-CENG-2023-796 · Prince Sattam Bin Abdulaziz University PSAU/2024/R/1445',
     doi: '10.1109/access.2024.3390566',
-    approach: 'The system applies negative pressure around a chamber and controls it through feedback. The team examined pressure tracking, switching between continuous and cyclic operation, and safety mechanisms for emergency release.',
-    result: 'ANSYS stress analysis led to a squircle-shaped polycarbonate vessel designed to withstand up to 50 mbar of vacuum. In full-system tests the prototype tracked set pressures in both cyclic and continuous modes, and a safety switch halts ventilation if the vessel vacuum drops below 40 mbar.',
-    contribution: 'I supported engineering analysis and prototype evaluation, interpreted test results, and contributed to the manuscript.',
-    scope: 'The paper reports engineering performance of the prototype under its test protocol.',
-    visual: {
-      image: exoventOverview,
-      alt: 'Illustration of the system. A patient lies in a pressure vessel connected through a three-way valve to a vacuum pump. A pressure sensor feeds a control circuit linked to a touchscreen interface.',
-      caption: 'Figure 1 from Gaben et al. (2024). The negative-pressure vessel, three-way valve and pump, with pressure feedback to the control circuit and user interface.',
-      credit: sourceArticle('10.1109/access.2024.3390566'),
-      licence: ccBy,
-    },
-    figures: [
-      {
-        section: 'results',
-        image: exoventTest,
-        alt: 'Photograph of the touchscreen during a cyclic-mode test. It shows a pressure waveform with two breaths and readings of 19.66 cmH₂O inspiratory pressure, 4.54 cmH₂O expiratory pressure, a 1:3 I:E ratio and 20 breaths per minute.',
-        caption: 'Figure 12a from Gaben et al. (2024). Interface during a full-system test in cyclic mode. Measured pressures of 19.66 and 4.54 cmH₂O against settings of 20 and 5 cmH₂O.',
-        credit: sourceArticle('10.1109/access.2024.3390566'),
-        licence: ccBy,
-      },
-    ],
+    approach: 'The COVID-19 pandemic exposed global shortages of mechanical ventilators. ExoventQ began as a final-year engineering project to explore a lower-cost alternative that applies negative pressure around the chest instead of delivering positive pressure through the airway. The team designed the pressure vessel, pumping system, control electronics and clinician interface, then tested the integrated prototype.',
+    workflow: ['Design the pressure vessel', 'Build pumping and control', 'Test modes and safety'],
+    progress: exoventqProgress,
+    contribution: 'ExoventQ was developed by a student group as their final-year BSc Electrical Engineering senior design project. I supported the project through engineering analysis, prototype evaluation and interpretation of the test results, contributed to other project tasks, and helped prepare and revise the manuscript.',
+    scope: 'This is an engineering prototype and was not tested on people. Mannequins were used to evaluate the neck and torso seals, but their effect on vessel pressure was not examined in depth. Detailed risk analysis, long-term reliability, user training and clinical studies are needed before patient use.',
+    relatedProjects: ['ecmo-cannulation-simulator'],
+    visual: exoventqVisual,
   },
   {
     slug: 'aortic-wall-shear-stress', area: 'Biomedical devices & simulation',

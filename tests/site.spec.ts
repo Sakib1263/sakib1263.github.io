@@ -302,6 +302,15 @@ test('the aortic wall shear stress paper links to its project stages', async ({ 
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Geometries and CFD', 'Multi-view representation', 'MultiViewUNet']);
 });
 
+test('the ExoventQ paper links to its project stages', async ({ page }) => {
+  await page.goto('/publications/');
+  await expect(page.locator('[data-doi="10.1109/access.2024.3390566"]').getByRole('link', { name: 'Research details', exact: true }))
+    .toHaveAttribute('href', '/research/exoventq-ventilation/');
+  await page.goto('/research/exoventq-ventilation/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('ExoventQ: a low-cost portable negative-pressure ventilator');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Pressure vessel', 'Pumping and control', 'System testing']);
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();
