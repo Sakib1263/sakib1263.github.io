@@ -21,6 +21,7 @@ import { energyAiProgress, energyAiVisual } from './energy-ai-milestones';
 import { smartMeterProgress, smartMeterVisual } from './smart-meter-milestones';
 import { evChargingProgress, evChargingVisual } from './ev-charging-milestones';
 import { climateRiskProgress, climateRiskVisual } from './climate-risk-milestones';
+import { wasteClassificationProgress, wasteClassificationVisual } from './waste-classification-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -705,16 +706,17 @@ const engineering: ResearchProject[] = [
   },
   {
     slug: 'recyclable-waste-classification', area: 'Applied machine learning',
-    title: 'Image classification for recyclable waste',
-    summary: 'Classifying waste images when scenes contain one type of material or several.',
+    title: 'Deep learning for classifying waste in urban street images',
+    summary: 'A two-stage classifier that first finds street images containing garbage and then names the types present, evaluated on 25,000 images from car-mounted cameras.',
+    question: 'Can a network that fuses two pretrained classifiers find garbage in street images and name the types present, even when several appear together?',
     doi: '10.1016/j.wasman.2023.12.014',
-    approach: 'The GCDN-Net study evaluated single-label and multi-label classification on the 25,000-image GIGO dataset. Score-CAM highlighted image regions that influenced predictions.',
-    result: 'GCDN-Net reached 95.77% accuracy for single-label classification. For multi-label classification it reached a mean average precision of 0.69 and a 75.01% F1 score.',
-    measures: [
-      { value: '95.77%', label: 'Single-label accuracy' },
-      { value: '75.01%', label: 'Multi-label F1 score' },
-    ],
+    context: 'Qatar University and University of Doha for Science and Technology · Qatar National Research Fund grant UREP29-205-2-056',
+    approach: 'Growing cities produce more waste, and about a third of global waste is disposed of without proper sorting. Automated sorting and street cleaning need models that recognise waste in real scenes, where several types often lie together against busy backgrounds. This study proposed GCDN-Net, which combines DenseNet201 and Inception-v3. A first stage separates street images with and without garbage, and a second stage names the garbage types present.',
+    workflow: ['Clean and prepare street images', 'Detect garbage in each image', 'Name the waste types present'],
+    progress: wasteClassificationProgress,
     contribution: 'I helped develop the framework and contributed to the evaluation, experimental analysis, interpretation and manuscript review.',
+    scope: 'All images came from one dataset of urban street scenes, and about 3,000 were removed because privacy boxes could be mistaken for garbage. Without bounding boxes, the model reports which waste types are present but cannot locate or count individual items, and busy backgrounds made multi-label classification harder.',
+    visual: wasteClassificationVisual,
   },
   {
     slug: 'rotational-piezoelectric-harvesting', area: 'Intelligent energy systems',

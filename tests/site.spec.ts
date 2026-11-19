@@ -379,6 +379,17 @@ test('satellite segmentation project presents its stages and model comparison', 
   await expect(page.getByRole('table').filter({ hasText: 'MultiResUNet' })).toContainText('0.727');
 });
 
+test('waste classification project presents its stages and linked paper', async ({ page }) => {
+  const title = 'Deep learning for classifying waste in urban street images';
+  await page.goto('/research/');
+  await expect(page.getByRole('link', { name: title, exact: true })).toBeVisible();
+  await page.goto('/research/recyclable-waste-classification/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Data preparation', 'Garbage detection', 'Waste types']);
+  await page.goto('/publications/');
+  await expect(page.locator('[data-doi="10.1016/j.wasman.2023.12.014"] a[href*="recyclable-waste-classification"]').first()).toBeAttached();
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();
