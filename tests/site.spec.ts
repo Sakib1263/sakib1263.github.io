@@ -356,6 +356,19 @@ test('energy AI project presents its section, stages and linked papers', async (
   }
 });
 
+test('smart-meter project presents its stages and linked papers', async ({ page }) => {
+  const title = 'Non-intrusive load and occupancy monitoring from smart-meter data';
+  await page.goto('/research/');
+  await expect(page.getByRole('link', { name: title, exact: true })).toBeVisible();
+  await page.goto('/research/smart-meter-load-and-occupancy/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Load disaggregation', 'Feature fusion', 'Cascaded framework']);
+  await page.goto('/publications/');
+  for (const doi of ['10.1016/j.jobe.2025.113731', '10.1016/j.buildenv.2025.112635']) {
+    await expect(page.locator(`[data-doi="${doi}"] a[href*="smart-meter-load-and-occupancy"]`).first()).toBeAttached();
+  }
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();

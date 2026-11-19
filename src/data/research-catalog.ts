@@ -11,7 +11,6 @@ import curvaturePipeline from '../assets/research/image-based-curvature-measurem
 import sepsisWorkflow from '../assets/research/sers-sepsis-recognition/fig1-workflow.png';
 import sepsisEmbeddings from '../assets/research/sers-sepsis-recognition/fig5-embeddings.png';
 import gearboxConfusion from '../assets/research/gearbox-fault-detection/fig7-confusion-matrix.png';
-import occupancyWeek from '../assets/research/smart-meter-load-and-occupancy/fig6-occupancy.png';
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { aorticWssProgress, aorticWssVisual } from './aortic-wss-milestones';
@@ -19,6 +18,7 @@ import { exoventqProgress, exoventqVisual } from './exoventq-milestones';
 import { hipImplantProgress, hipImplantVisual } from './hip-implant-milestones';
 import { ecmoProgress, ecmoVisual } from './ecmo-milestones';
 import { energyAiProgress, energyAiVisual } from './energy-ai-milestones';
+import { smartMeterProgress, smartMeterVisual } from './smart-meter-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -619,24 +619,20 @@ const genomics: ResearchProject[] = [
 const engineering: ResearchProject[] = [
   {
     slug: 'smart-meter-load-and-occupancy', area: 'Intelligent energy systems & climate analytics',
-    title: 'Non-intrusive appliance load and occupancy estimation',
-    summary: 'Using aggregate smart-meter signals to recover appliance events and infer when a building is occupied.',
+    title: 'Non-intrusive load and occupancy monitoring from smart-meter data',
+    summary: 'Recovering appliance-level electricity use from a single household meter, then using those appliance events to infer when a home is occupied.',
+    question: 'Can one household smart meter show both how individual appliances are used and when a home is occupied, without extra sensors in the home?',
     doi: '10.1016/j.jobe.2025.113731', code: 'https://github.com/Sakib1263/NILOM',
-    period: 'July 2023–July 2024', context: 'Qatar University and Iberdrola Innovation Middle East',
-    approach: 'The cascaded NILOM framework first estimates appliance use from aggregate multichannel measurements and uses inferred device events for occupancy detection. A second study combines appliance-event, statistical and time-of-day features with ensemble classifiers. Both evaluate methods on the ECO dataset.',
-    result: 'In the feature-fusion study, an ensemble of fine-tuned classifiers reached about 91.5% accuracy and a 91.5% F1 score for occupancy on the ECO dataset.',
-    contribution: 'I led the study design, data curation, modelling, validation and original drafting for the cascaded and feature-fusion studies as part of the Iberdrola collaboration.',
-    workflow: ['Prepare multichannel smart-meter records', 'Infer appliance events', 'Estimate and validate occupancy'],
-    scope: 'The results reflect the household, meter and occupancy-label characteristics of the evaluated data. A related study evaluates a separate occupancy model with environmental sensors.',
     related: ['10.1016/j.buildenv.2025.112635'],
+    period: 'July 2023–July 2024', status: 'Published studies and a study under revision',
+    context: 'Qatar University and Iberdrola Innovation Middle East · Iberdrola grant QUEX-CENG-IBERDROLA-23/24-2',
+    approach: 'Appliance-level monitoring usually needs a plug sensor on every device, and occupancy sensing often relies on cameras, motion sensors or Wi-Fi. This project instead uses the aggregate signals a household smart meter already records. It began with a method that reconstructs each appliance\'s power profile, then used the reconstructed appliance activity to detect occupancy, first through multimodal feature fusion and then within one cascaded framework. All three studies use the public Electricity Consumption & Occupancy (ECO) dataset.',
+    workflow: ['Disaggregate appliance loads', 'Convert loads to household events', 'Classify occupancy'],
+    progress: smartMeterProgress,
+    contribution: 'I led all three studies, including study design, data curation, model development, validation, analysis, visualisation and manuscript drafting, as part of the Qatar University–Iberdrola collaboration.',
+    scope: 'All results come from the ECO dataset, which covers six households over about eight months, with occupancy labels for two months in five of them. Evaluation used held-out days or households within this dataset, so performance in new homes, with other meters and in streaming use remains to be established. Results from the disaggregation study under revision are not reported here.',
     relatedProjects: ['e-tawfeer-energy-management'],
-    visual: {
-      image: occupancyWeek,
-      alt: 'Four panels, one per household, each comparing the ground-truth occupancy pulse in blue with the estimated occupancy in green over 168 hours. Most of each week is shaded green for correct estimates, with short red false-positive and blue false-negative periods.',
-      caption: 'Figure 6 from Mahmud et al. (2025), Building and Environment, from the feature-fusion study. Ground-truth and estimated occupancy over one week in four ECO households. Green shading marks correct estimates, red false positives and blue false negatives.',
-      credit: sourceArticle('10.1016/j.buildenv.2025.112635'),
-      licence: ccBy,
-    },
+    visual: smartMeterVisual,
   },
   {
     slug: 'e-tawfeer-energy-management', area: 'Intelligent energy systems & climate analytics',
