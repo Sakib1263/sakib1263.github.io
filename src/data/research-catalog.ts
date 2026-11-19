@@ -42,7 +42,6 @@ const biomechanics: ResearchProject[] = [
     approach: 'Synchronise insole pressures with inertial measurements from the foot and shank. Map the inputs into comparable representations, then compare insole-only, motion-only and combined models against force-platform or instrumented-treadmill references. The evaluation examines held-out participants and the effect of changes in recording hardware and protocol. The main project page sets out each stage in order, with figures and results: the kinematics-only and multimodal benchmarks, KineNeXt++ fusion, and transfer between datasets.',
     contribution: 'I develop the preprocessing and alignment workflows, study how to combine the two modalities, and design model comparisons across participants and datasets.',
     scope: 'This work is in development. Participant-held-out evaluation and transfer between independently collected datasets address different questions about generalisation.',
-    relatedProjects: ['wearable-foot-kinetics', 'kinematics-to-3d-kinetics'],
   },
   {
     slug: 'kinematics-to-3d-kinetics', area: 'Wearable biomechanics',
@@ -53,7 +52,6 @@ const biomechanics: ResearchProject[] = [
     result: 'The paper reports comparisons across walking and running conditions and evaluates when the motion-based estimates agree with measured force and moment profiles.',
     contribution: 'I contributed to the methodology, model development, cross-dataset evaluation, and writing.',
     scope: 'The study uses optical marker trajectories. The ongoing wearable project evaluates inertial inputs and the alignment needed for those measurements.',
-    relatedProjects: ['multimodal-wearable-kinetics', 'wearable-foot-kinetics'],
   },
   {
     slug: 'smart-insoles-diabetic-foot', area: 'Wearable biomechanics',
@@ -65,8 +63,6 @@ const biomechanics: ResearchProject[] = [
     result: 'The fibre-optic insole measured plantar pressure and temperature at the same time with reasonable precision and displayed foot pressure maps, temperature maps and gait-cycle plots in real time. Compared with a commercial plantar pressure system, it used far fewer sensors and cost more than eight times less to develop.',
     contribution: 'I integrated sensors and worked on data acquisition, experiments and analysis for the electronic prototype. I led system development and evaluation for the fibre-optic insole and contributed to testing the graphene temperature sensors.',
     scope: 'These studies evaluate measurement prototypes in controlled experiments. Clinical detection of ulcer onset requires a longitudinal study.',
-    related: ['10.3390/s22197599', '10.1109/jsen.2023.3317768'],
-    relatedProjects: ['diabetic-foot-thermal-imaging'],
     visual: {
       image: insoleFbg,
       alt: 'Three panels: a rendered 3D model of the insole with a spiral optical fibre, the assembled prototype with its fibre cable, and the optical and electronic insoles placed inside a pair of sneakers.',
@@ -116,8 +112,7 @@ const biomechanics: ResearchProject[] = [
     progress: gaitAnalysisProgress,
     contribution: 'In the Tai Chi study, I contributed to gait-data analysis, classical machine learning evaluation, interpretation of the findings and manuscript review. For NDDNet, I contributed to gait-data analysis, deep learning evaluation, interpretation of the findings and manuscript review and revision.',
     scope: 'Both studies are retrospective analyses of public datasets without an external test cohort. The Tai Chi study shows gait differences between experienced and newly trained people, but it does not prove that training caused every difference, and footswitches record timing rather than force. The NDDNet groups contain 13 to 20 people and differ in age and sex balance, so larger clinical cohorts are needed before diagnostic use.',
-    related: ['10.1016/j.compbiomed.2021.105184'],
-    relatedProjects: ['diabetic-neuropathy-gait-emg'],
+    papers: ['10.1016/j.compbiomed.2021.105184'],
     visual: gaitAnalysisVisual,
   },
 ];
@@ -140,7 +135,6 @@ const imaging: ResearchProject[] = [
     contribution: 'I contributed to the study design, software, data curation, validation, visualisation and writing as part of my MSc thesis.',
     scope: 'The surgical model predicts approaches recorded in the study data. Prospective clinical validation would be needed before using it to guide care.',
     resources: [{ label: 'Qatar University MSc thesis', href: 'https://qspace.qu.edu.qa/handle/10576/45080' }],
-    relatedProjects: ['kidney-stone-segmentation', 'prenatal-hydronephrosis'],
     visual: {
       image: renalFramework,
       alt: 'Pipeline diagram. CT slices are filtered to kidney slices, a YOLO model extracts the tumour region, and image features are combined with selected clinical features to classify tumour subtype and predict partial or radical nephrectomy.',
@@ -199,7 +193,6 @@ const imaging: ResearchProject[] = [
     ],
     contribution: 'I developed the multimodal image pipeline: temperature extraction, foot detection, SAM-based segmentation with consensus masks, and cross-modal registration with its landmark-based evaluation. I also prepare the fused model inputs and run the fusion and classification experiments.',
     scope: 'This is ongoing work, so this page gives an overview only. Results will be added as the studies are published. The models use de-identified clinical images and are research tools, not validated for diagnosis.',
-    relatedProjects: ['smart-insoles-diabetic-foot', 'multiphase-liver-ct'],
   },
   {
     slug: 'multiphase-liver-ct', area: 'Medical imaging',
@@ -232,7 +225,6 @@ const imaging: ResearchProject[] = [
     ],
     contribution: 'I lead the LiPIVOT pipeline: curating and quality-checking the eight-dataset CT collection, the LiverSAM training and leave-one-dataset-out evaluation protocol, automatic prompting, and the metrics used to compare fine-tuned and untouched models.',
     scope: 'This is ongoing work, so this page gives an overview only. Results will be added as the studies are published. Scores that use a box prompt drawn from the reference mask are reported separately from fully automatic results. The published liver MRI project is a separate study.',
-    relatedProjects: ['liver-mri-segmentation', 'kidney-stone-segmentation'],
   },
   {
     slug: 'liver-mri-segmentation', area: 'Medical imaging',
@@ -247,7 +239,6 @@ const imaging: ResearchProject[] = [
     progress: liverProgress,
     contribution: 'I contributed to the software implementation and data curation, helped draft the original manuscript, and took part in reviewing and editing it.',
     scope: 'The study used one public dataset of 20 people without liver disease and evaluated 2D slices with cross-validation, so performance on liver lesions, other scanners and independent cohorts remains to be tested. Multiphase liver and tumour segmentation on CT is the focus of LiPIVOT.',
-    relatedProjects: ['multiphase-liver-ct'],
     visual: {
       image: liverMasks,
       alt: 'Four axial MRI slices with small liver regions, shown in three rows: the ground-truth liver outline, the outline predicted by the generalised network, and the outline predicted by the specialised network.',
@@ -268,7 +259,7 @@ const imaging: ResearchProject[] = [
     progress: covidProgress,
     contribution: 'This was one of my earliest research-assistant projects. I contributed substantially to data curation while we assembled the large X-ray benchmark, and to the evaluation and interpretation of the X-ray localisation and severity models. For the CT study I worked on validation, investigation and data curation, and for the pneumonia study on model evaluation and analysis. I also contributed to preparing or reviewing all three manuscripts.',
     scope: 'These are retrospective studies of public image collections, each with its own annotation protocol and task. X-ray severity was shown as the measured extent of infection, and the CT critical group held only two patients. Clinical use would require prospective validation.',
-    related: ['10.3390/diagnostics11050893', '10.5121/csit.2022.122001'],
+    papers: ['10.3390/diagnostics11050893', '10.5121/csit.2022.122001'],
     visual: {
       image: covidPipeline,
       alt: 'Pipeline diagram. A chest radiograph goes to two encoder–decoder networks that produce a lung mask and an infection mask. Superimposing the masks localises the infection, reports 37.6% lung involvement in the example, and gives a COVID-19 positive or negative result.',
@@ -314,8 +305,7 @@ const signals: ResearchProject[] = [
     progress: contactlessProgress,
     contribution: 'For the facial video study, I prepared the deep learning pipeline, contributed to data preprocessing and to video and signal analysis, and supported evaluation, validation and manuscript preparation. For radar ECG, I contributed to the methodology, model development, quantitative evaluation and original draft. For radar arterial pressure, I first proposed exploring one-dimensional reconstruction from raw radar signals, then contributed to the methodology, model implementation, evaluation, interpretation and manuscript review.',
     scope: 'Both radar studies used one public dataset of 30 healthy adults recorded in a controlled clinical setup. Their outputs are normalised waveforms, so they do not provide calibrated blood pressure or a diagnostic ECG. The video model was trained on 26 people and lost accuracy on an independent dataset. Larger and more varied cohorts, including patients, are needed before clinical use.',
-    related: ['10.1016/j.compbiomed.2024.108555', '10.1016/j.bspc.2023.105687'],
-    relatedProjects: ['nabnet', 'wearable-cardiac-waveforms'],
+    papers: ['10.1016/j.compbiomed.2024.108555', '10.1016/j.bspc.2023.105687'],
     visual: contactlessVisual,
   },
   {
@@ -328,10 +318,9 @@ const signals: ResearchProject[] = [
     approach: 'Wrist-worn sensors make long-term pulse monitoring practical, but movement, changing skin contact and noise distort their signals, and wrist PPG carries less detail than clinical finger PPG. Translation Through Restoration GAN (TTR-GAN) handles these as two separate problems. The first 1D-CycleGAN stage removes artefacts from the wrist signal. The second converts the restored signal into finger PPG. Heart rate and variability from ECG then provide an independent check.',
     workflow: ['Restore wrist PPG', 'Translate to finger PPG', 'Validate against ECG'],
     progress: ttrProgress,
-    contribution: 'I led the development and evaluation of TTR-GAN, including the Super-ONN-based 1D-CycleGAN methodology, the experiments, the quantitative and qualitative analysis and the manuscript. For the atrial fibrillation study, I developed the 1D-CycleGAN implementation used for wrist PPG restoration and contributed to conceptualisation, formal analysis and writing. I also contributed to the methodology and evaluation of M2ECG, a related wearable signal study.',
+    contribution: 'I led the development and evaluation of TTR-GAN, including the Super-ONN-based 1D-CycleGAN methodology, the experiments, the quantitative and qualitative analysis and the manuscript. For the atrial fibrillation study, I developed the 1D-CycleGAN implementation used for wrist PPG restoration and contributed to conceptualisation, formal analysis and writing.',
     scope: 'TTR-GAN was developed on one dataset of 22 healthy young adults and was not tested on an independent cohort. Restoration was judged by entropy because no clean reference exists for a corrupted wrist segment. Rare arrhythmic segments from one participant were harder to reproduce, and on-device performance was not reported. Patient data and testing on wearable hardware are the next requirements.',
-    related: ['10.1016/j.bspc.2024.107233', '10.1109/access.2024.3353463'],
-    relatedProjects: ['contactless-cardiovascular-waveforms'],
+    papers: ['10.1016/j.bspc.2024.107233'],
     visual: ttrVisual,
   },
   {
@@ -346,8 +335,7 @@ const signals: ResearchProject[] = [
     progress: dopplerFlowProgress,
     contribution: 'Across the two studies, I worked on waveform extraction and CycleGAN restoration, classifier development, data curation and preprocessing, MATLAB software, analysis, visualisation, and manuscript writing.',
     scope: 'Both studies used one public dataset from 6 healthy volunteers and 12 patients, with testing separated by recording session. The patient class combined several neurocritical conditions, and signal-quality labels were assigned manually. Larger and more diverse cohorts, condition-specific labels and automated quality assessment are needed before clinical use.',
-    related: ['10.3390/diagnostics13122000'],
-    relatedProjects: ['wearable-cardiac-waveforms', 'eeg-artefact-restoration'],
+    papers: ['10.3390/diagnostics13122000'],
     visual: dopplerFlowVisual,
   },
   {
@@ -362,8 +350,7 @@ const signals: ResearchProject[] = [
     progress: mriEcgProgress,
     contribution: 'For the 12-lead restoration study, I led conceptualisation, data curation, methodology and software development, formal analysis, experiments and manuscript preparation. For Self-Attention MHDNet, I contributed to the investigation, methodology, software, validation and manuscript drafting and revision.',
     scope: 'The recordings came from young healthy volunteers while the scanners were not acquiring images, so gradient and radio-frequency artefacts were not addressed. Only one 1 T session was available, and low-amplitude P and T waves remained harder to restore. Studies with patients and active MRI scans are needed before clinical use.',
-    related: ['10.3390/bioengineering10050542'],
-    relatedProjects: ['wearable-cardiac-waveforms', 'eeg-artefact-restoration'],
+    papers: ['10.3390/bioengineering10050542'],
     visual: mriEcgVisual,
   },
   {
@@ -376,10 +363,9 @@ const signals: ResearchProject[] = [
     approach: 'Head and electrode movement can add artefacts far stronger than the EEG itself, which limits recording outside controlled settings. This project first developed MLMRS-Net, a multi-resolution network for reconstructing clean EEG. It then developed AGO-CycleGAN, an attention-guided operational CycleGAN that restores corrupted EEG and recovers its frequency content.',
     workflow: ['Record motion-corrupted EEG', 'Restore the EEG waveform', 'Evaluate time and frequency recovery'],
     progress: eegRestorationProgress,
-    contribution: 'I led the MLMRS-Net and AGO-CycleGAN studies, including model development, implementation, experiments, quantitative and qualitative analysis, and manuscript preparation. I also contributed to related studies on eye and muscle artefact removal.',
+    contribution: 'I led the MLMRS-Net and AGO-CycleGAN studies, including model development, implementation, experiments, quantitative and qualitative analysis, and manuscript preparation. I also contributed to the studies in this project on eye and muscle artefact removal.',
     scope: 'Both studies used the same public dataset of 23 single-channel prefrontal recordings, with motion created by tapping one electrode and a nearby electrode providing the reference. Validation during natural movement, on multi-channel EEG and without a clean reference is still needed.',
-    related: ['10.1007/s00521-022-08111-6', '10.3390/bioengineering10050579', '10.5121/csit.2022.122006'],
-    relatedProjects: ['ecg-restoration-during-mri', 'wearable-cardiac-waveforms'],
+    papers: ['10.1007/s00521-022-08111-6', '10.3390/bioengineering10050579', '10.5121/csit.2022.122006'],
     visual: eegRestorationVisual,
   },
   {
@@ -394,8 +380,7 @@ const signals: ResearchProject[] = [
     progress: fetalEcgProgress,
     contribution: 'For LinkNet++, I contributed substantially to the methodology, model development, experiments, analysis and validation, and manuscript writing and revision. For the 1D-CycleGAN study, I contributed to the deep learning methodology, model assessment, result analysis and interpretation, and manuscript review.',
     scope: 'Both studies used small public datasets from late pregnancy and labour, with limited variation in recording conditions. Scalp ECG and expert annotations provided the references. Validation across more participants, earlier gestation, different devices and fetal heart conditions is needed before clinical use.',
-    related: ['10.1016/j.engappai.2023.106414'],
-    relatedProjects: ['ecg-restoration-during-mri', 'wearable-cardiac-waveforms'],
+    papers: ['10.1016/j.engappai.2023.106414'],
     visual: fetalEcgVisual,
   },
   {
@@ -410,7 +395,6 @@ const signals: ResearchProject[] = [
     progress: quGmProgress,
     contribution: 'I contributed to the machine learning and physiological signal analysis for the glucose monitoring framework, including technical evaluation and manuscript review.',
     scope: 'The models were developed on 139 participants recorded at rest, so larger and more diverse cohorts are needed. Blood pressure is currently measured separately and entered in the application. Severity classification used stratified cross-validation across samples, and longer-term testing during daily use is still required before clinical use.',
-    relatedProjects: ['wearable-cardiac-waveforms', 'nabnet'],
     visual: quGmVisual,
   },
 ];
@@ -426,7 +410,6 @@ const spectroscopy: ResearchProject[] = [
     result: 'The audit found that 68.2% of studies lacked validation that kept biological samples independent across splits. Only 6.2% reported external or major-domain validation.',
     contribution: 'I designed the review, led the corpus audit and evidence synthesis, and prepared the figures, tables and manuscript.',
     scope: 'The percentages describe the studies in the review corpus and the information those publications reported.',
-    relatedProjects: ['cross-device-raman', 'generalizable-microbial-sers', 'sers-sepsis-recognition'],
   },
   {
     slug: 'sers-sepsis-recognition', area: 'Spectroscopic sensing',
@@ -442,7 +425,6 @@ const spectroscopy: ResearchProject[] = [
     ],
     contribution: 'I developed the computational workflow from spectra and preprocessing through data splitting, training, evaluation and interpretation, and helped document the experimental protocol.',
     scope: 'The evaluation concerns the sample preparation, acquisition, labels and cohorts described in the paper. Clinical deployment would require further validation.',
-    relatedProjects: ['cross-device-raman', 'microbial-sers-validation'],
     visual: {
       image: sepsisWorkflow,
       alt: 'Workflow illustration. Blood from sepsis and control subjects is centrifuged to enrich the analyte, which is placed on silver nanorod slides for SERS acquisition. The spectra are preprocessed and classified to separate control samples from five sepsis-causing bacterial strains.',
@@ -469,7 +451,6 @@ const spectroscopy: ResearchProject[] = [
     approach: 'PRISM-SERS studies how portable-device spectra can be mapped to a laboratory reference when target analytes are held out of training, using unpaired data and no class labels at inference. A second workstream benchmarks time-series foundation-model representations for few-shot classification with separated support and query samples.',
     contribution: 'I develop the spectral preprocessing, transfer and classification workflows and design comparisons that account for sample identity and differences between acquisition domains.',
     scope: 'This work is ongoing, and no results have been published yet. The two workstreams address different questions: spectral mapping tests recovery of comparable spectra, while few-shot experiments assess classification from limited examples.',
-    relatedProjects: ['cross-device-raman', 'microbial-sers-validation'],
   },
 ];
 
@@ -486,8 +467,7 @@ const devices: ResearchProject[] = [
     progress: hipImplantProgress,
     contribution: 'For HipXNet, I contributed to the deep learning pipeline, evaluation, data analysis, interpretation and manuscript preparation. In the finite element work, I designed the spiral head–stem model in Fusion 360, reconstructed a commercial implant stem in CAD, and contributed to methodology, software and formal analysis, including the stem-material study. I contributed to the sensor feasibility analysis, the bench-test setup with Hamad Medical Corporation, and the two reviews, including figure preparation for the biomaterials review.',
     scope: 'The finite element and sensor results come from simulations under specified geometries, materials and loads. HipXNet used a small retrospective image collection and five-fold validation. The reviews summarise published evidence, and clinical testing would be needed before any proposed design or method is used in patient care.',
-    related: ['10.3390/polym14204308', '10.3390/bios13010079', '10.3390/ma16041466', '10.1039/d3tb01469j', '10.1016/j.mtcomm.2024.110932'],
-    relatedProjects: ['aortic-wall-shear-stress'],
+    papers: ['10.3390/polym14204308', '10.3390/bios13010079', '10.3390/ma16041466', '10.1039/d3tb01469j', '10.1016/j.mtcomm.2024.110932'],
     visual: hipImplantVisual,
   },
   {
@@ -502,8 +482,7 @@ const devices: ResearchProject[] = [
     progress: ecmoProgress,
     contribution: 'I helped design, build and test the simulator and wrote the Arduino control code for the pump motor used to reproduce pulsatile flow. I also contributed to technical documentation and manuscript preparation, and attended hands-on ECMO training at Hamad General Hospital and Al-Wakra Hospital. The SCOReD presentation received the Best Paper Presentation Award for its presenting author, and the UREP project placed third in the 12th Annual UREP Competition in 2020.',
     scope: 'These papers describe simulator design and prototype testing. They do not report a formal study of trainee learning or clinical outcomes. Further testing by ECMO clinicians and improvements to tubing, sensing and printed materials were still needed.',
-    related: ['10.1016/j.ejccm.2018.12.017', '10.5339/qmj.2019.qccc.61'],
-    relatedProjects: ['exoventq-ventilation'],
+    papers: ['10.1016/j.ejccm.2018.12.017', '10.5339/qmj.2019.qccc.61'],
     visual: ecmoVisual,
   },
   {
@@ -518,7 +497,6 @@ const devices: ResearchProject[] = [
     progress: exoventqProgress,
     contribution: 'ExoventQ was developed by a student group as their final-year BSc Electrical Engineering senior design project. I supported the project through engineering analysis, prototype evaluation and interpretation of the test results, contributed to other project tasks, and helped prepare and revise the manuscript.',
     scope: 'This is an engineering prototype and was not tested on people. Mannequins were used to evaluate the neck and torso seals, but their effect on vessel pressure was not examined in depth. Detailed risk analysis, long-term reliability, user training and clinical studies are needed before patient use.',
-    relatedProjects: ['ecmo-cannulation-simulator'],
     visual: exoventqVisual,
   },
   {
@@ -534,7 +512,6 @@ const devices: ResearchProject[] = [
     progress: aorticWssProgress,
     contribution: 'I helped implement and integrate the deep learning model, evaluated successive versions, and troubleshot the modelling workflow with the core team.',
     scope: 'CFD was the reference, so agreement depends on the geometries, boundary conditions and simulation assumptions used. The dataset was relatively small, and errors were larger in disturbed flow. The model outputs 256 × 256 images rather than a reconstructed 3D surface, and other haemodynamic measures remain future work.',
-    relatedProjects: ['ecmo-cannulation-simulator'],
     visual: aorticWssVisual,
   },
 ];
@@ -550,7 +527,6 @@ const genomics: ResearchProject[] = [
     workflow: ['Prepare RNA-seq data', 'Model expected expression', 'Prioritise outlier genes'],
     contribution: 'I worked on RNA-seq preprocessing, variational autoencoder evaluation, anomaly analysis, gene prioritisation, interpretation of candidate genes and reproducible documentation.',
     scope: 'This was exploratory internship research and has not been published. Candidate genes would need independent biological and clinical validation before supporting a diagnosis.',
-    relatedProjects: ['cancer-genomics-reproduction'],
   },
   {
     slug: 'cancer-genomics-reproduction', area: 'Computational genomics & reproducible analysis',
@@ -616,7 +592,6 @@ const genomics: ResearchProject[] = [
       { label: 'Original SYLVER study', href: 'https://www.nature.com/articles/s41588-025-02108-2' },
       { label: 'Original TRACERx Renal study', href: 'https://pmc.ncbi.nlm.nih.gov/articles/PMC11873726/' },
     ],
-    relatedProjects: ['renal-tumour-modelling', 'mendelian-rnaseq-outliers'],
   },
 ];
 
@@ -627,7 +602,7 @@ const engineering: ResearchProject[] = [
     summary: 'Recovering appliance-level electricity use from a single household meter, then using those appliance events to infer when a home is occupied.',
     question: 'Can one household smart meter show both how individual appliances are used and when a home is occupied, without extra sensors in the home?',
     doi: '10.1016/j.jobe.2025.113731', code: 'https://github.com/Sakib1263/NILOM',
-    related: ['10.1016/j.buildenv.2025.112635'],
+    papers: ['10.1016/j.buildenv.2025.112635'],
     period: 'July 2023–July 2024', status: 'Published studies and a study under revision',
     context: 'Qatar University and Iberdrola Innovation Middle East · Iberdrola grant QUEX-CENG-IBERDROLA-23/24-2',
     approach: 'Appliance-level monitoring usually needs a plug sensor on every device, and occupancy sensing often relies on cameras, motion sensors or Wi-Fi. This project instead uses the aggregate signals a household smart meter already records. It began with a method that reconstructs each appliance\'s power profile, then used the reconstructed appliance activity to detect occupancy, first through multimodal feature fusion and then within one cascaded framework. All three studies use the public Electricity Consumption & Occupancy (ECO) dataset.',
@@ -635,7 +610,6 @@ const engineering: ResearchProject[] = [
     progress: smartMeterProgress,
     contribution: 'I led all three studies, including study design, data curation, model development, validation, analysis, visualisation and manuscript drafting, as part of the Qatar University–Iberdrola collaboration.',
     scope: 'All results come from the ECO dataset, which covers six households over about eight months, with occupancy labels for two months in five of them. Evaluation used held-out days or households within this dataset, so performance in new homes, with other meters and in streaming use remains to be established. Results from the disaggregation study under revision are not reported here.',
-    relatedProjects: ['e-tawfeer-energy-management'],
     visual: smartMeterVisual,
   },
   {
@@ -644,14 +618,13 @@ const engineering: ResearchProject[] = [
     summary: 'Occupancy sensing, privacy-preserving edge analytics and a broad review of deep reinforcement learning for energy systems.',
     question: 'How can AI support adaptive energy decisions while keeping sensitive building and household data protected?',
     doi: '10.1016/j.rser.2025.116481',
-    related: ['10.1007/s00521-025-11348-6'],
+    papers: ['10.1007/s00521-025-11348-6'],
     period: 'August 2024–June 2025', status: 'Published studies and project development', context: 'E-Tawfeer project · Qatar University · Qatar National Research Fund NPRP14S-0401-210122',
     approach: 'E-Tawfeer is a research project on a secure, edge-based energy-efficiency platform that uses AI to support behavioural change. Useful energy decisions depend on knowing how buildings are used, yet detailed occupancy and appliance data can expose private routines. This work moved from compact occupancy sensing, to smart plugs and privacy-preserving analytics, to a wider review of how learning agents can optimise energy systems.',
     workflow: ['Sense building use', 'Analyse data near its source', 'Optimise energy decisions'],
     progress: energyAiProgress,
     contribution: 'I redesigned the occupancy CNN and contributed to the experiments, analysis and manuscript. I contributed to smart-plug design and development and implemented federated-learning concepts. I led the reinforcement learning review, including its design, literature synthesis, taxonomy, comparative analysis, visualisations and manuscript drafting and revision.',
     scope: 'The occupancy results come from three public datasets, and wider testing across building types remains future work. The smart-plug and federated-learning work is presented as development activity, without performance claims. Findings in the review are those reported by the cited studies, and many depend on their simulation settings and benchmarks.',
-    relatedProjects: ['smart-meter-load-and-occupancy'],
     visual: energyAiVisual,
   },
   {
@@ -667,7 +640,6 @@ const engineering: ResearchProject[] = [
     contribution: 'As Lead Machine Learning Engineer, I co-led the resources task, which compiled and organised the studies and data sources used across the challenge. I also contributed to the smart-meter analysis, including exploratory analysis, clustering and time-series modelling.',
     scope: 'The analysis used one network\'s customer data over about 14 months, so patterns may differ elsewhere. Charging times were not recorded, so flagged periods indicate likely rather than confirmed charging, and a spike can also come from other household loads.',
     resources: [{ label: 'Omdena project and reported outcomes', href: 'https://www.omdena.com/projects/ai-ev-charging' }],
-    relatedProjects: ['smart-meter-load-and-occupancy'],
     visual: evChargingVisual,
   },
   {
@@ -683,10 +655,8 @@ const engineering: ResearchProject[] = [
     progress: climateRiskProgress,
     contribution: 'As Junior Machine Learning Engineer and leader of Task 4, I selected the dataset, built the TensorFlow segmentation pipeline, trained and compared the U-Net models, tested them on Sentinel-2 images and wrote the task report. I also worked with the other task teams on the overall model architecture.',
     scope: 'The models were trained on one labelled dataset from a single region, and the Sentinel-2 check was visual because those images had no labels. Within the eight weeks, the pipeline remained a separate tool and was not merged into the team\'s risk scores.',
-    resources: [
-      { label: 'Omdena project and reported outcomes', href: 'https://www.omdena.com/projects/geopolitical-risks' },
-      { label: 'Segmentation models in TensorFlow (GitHub)', href: 'https://github.com/Sakib1263/TF-1D-2D-Segmentation-End2EndPipelines' },
-    ],
+    code: 'https://github.com/Sakib1263/TF-1D-2D-Segmentation-End2EndPipelines',
+    resources: [{ label: 'Omdena project and reported outcomes', href: 'https://www.omdena.com/projects/geopolitical-risks' }],
     visual: climateRiskVisual,
   },
   {
@@ -791,11 +761,11 @@ const addStudyPaper = (doi: string, study: ResearchProject) => {
   if (!matches.includes(study)) matches.push(study);
   researchStudiesByDoi.set(key, matches);
 };
-// A paper links to its main project. Papers without one link to the projects that list them as related work.
+// A paper links to its main project. Further papers link to the project that lists them in `papers`.
 for (const study of researchStudies) if (study.doi) addStudyPaper(study.doi, study);
 const mainProjectPapers = new Set(researchStudiesByDoi.keys());
 for (const study of researchStudies) {
-  study.related?.filter(doi => !mainProjectPapers.has(doi.toLowerCase())).forEach(doi => addStudyPaper(doi, study));
+  study.papers?.filter(doi => !mainProjectPapers.has(doi.toLowerCase())).forEach(doi => addStudyPaper(doi, study));
 }
 
 export function researchStudyFor(slug: string) {

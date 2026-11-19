@@ -119,9 +119,9 @@ h3 { font-size: 1.1rem; line-height: 1.35; font-weight: 680; }
 .run-steps li + li { margin-top: 1.2rem; }
 .reproduction h3 { font-size: 1.07rem; }
 .reproduction pre { width: fit-content; max-width: 100%; margin-block: .6rem; padding: .72rem .88rem; border: 1px solid var(--border); border-radius: 5px; background: var(--surface-subtle); white-space: pre-wrap; overflow-wrap: anywhere; font-size: .86rem; line-height: 1.6; }
-.related-papers { margin-top: 2.5rem; }
-.related-papers ul { list-style: none; padding: 0; margin: 0; }
-.related-papers li { padding-block: .7rem; border-bottom: 1px solid var(--border); line-height: 1.48; }
+.project-links { margin-top: 2.5rem; }
+.project-links ul { list-style: none; padding: 0; margin: 0; }
+.project-links li { padding-block: .7rem; border-bottom: 1px solid var(--border); line-height: 1.48; }
 
 @media (max-width: 940px) {
   .shell { width: min(1040px, calc(100% - 3.25rem)); }

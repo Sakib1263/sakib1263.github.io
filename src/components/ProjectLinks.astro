@@ -1,0 +1,25 @@
+---
+import SiteLink from './SiteLink.astro';
+import type { projectLinks } from '../data/project-links';
+
+// Publications, code, data and other resources, each in its own section at the end of a research page.
+interface Props { links: ReturnType<typeof projectLinks> }
+
+const { links } = Astro.props;
+const external = (href: string) => /^https?:\/\//.test(href);
+---
+
+{links.groups.map(group => (
+  <section class="project-links" aria-labelledby={group.id}>
+    <header class="catalog-section-heading"><h2 id={group.id}>{group.label}</h2></header>
+    {group.id === 'project-code' && <slot name="code-note" />}
+    <ul>
+      {group.items.map(item => (
+        <li>
+          <SiteLink href={item.href} data-project-citation={item.citation ? '' : undefined}>{item.title}{external(item.href) && <> <span aria-hidden="true">↗</span></>}</SiteLink>
+          {item.detail && <small>{item.detail}</small>}
+        </li>
+      ))}
+    </ul>
+  </section>
+))}

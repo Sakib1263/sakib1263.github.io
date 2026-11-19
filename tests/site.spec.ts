@@ -47,8 +47,9 @@ test('research areas lead to project details, supporting publications, and ongoi
   await page.getByRole('link', { name: 'Computational and AI methods for total hip implants', exact: true }).click();
   await expect(page).toHaveURL('/research/hip-implant-mechanics-and-imaging/');
   await expect(page.getByRole('heading', { name: 'My contribution', exact: true })).toBeVisible();
-  await expect(page.getByRole('link', { name: 'Dataset details', exact: true })).toHaveAttribute('href', '/software/#hip-implant-xray');
-  await expect(page.getByRole('link', { name: 'Read the paper', exact: true })).toHaveAttribute('target', '_blank');
+  await expect(page.locator('.research-project-intro a[target="_blank"]')).toHaveCount(0);
+  await expect(page.getByRole('region', { name: 'Data', exact: true }).getByRole('link')).toHaveAttribute('href', '/software/#hip-implant-xray');
+  await expect(page.getByRole('region', { name: 'Publications', exact: true }).getByRole('link').first()).toHaveAttribute('href', /^\/publications\/#paper-/);
   await page.getByRole('link', { name: 'All research' }).click();
   await expect(page).toHaveURL('/research/#hip-implant-mechanics-and-imaging');
   await page.getByRole('link', { name: 'AI-powered smart insoles for 3D gait kinetics', exact: true }).click();
@@ -64,13 +65,15 @@ test('research areas lead to project details, supporting publications, and ongoi
     'Reconstructing 3D kinetics from smart-insole loading',
     'Combining plantar loading with inertial motion',
   ]);
-  await expect(stages.getByRole('link', { name: /^Publication for/ })).toHaveCount(2);
+  await expect(stages.getByRole('link', { name: /^Publication for/ })).toHaveCount(0);
+  await expect(page.getByRole('region', { name: 'Publications', exact: true }).getByRole('link')).toHaveCount(2);
   await expect(page.getByRole('region', { name: 'Scope and validation' })).toContainText('validation of the integrated prototype are planned');
   await page.getByRole('link', { name: 'Details for Combining plantar loading with inertial motion' }).click();
   await expect(page).toHaveURL('/research/multimodal-wearable-kinetics/');
-  await expect(page.getByText('Wearable biomechanics · Ongoing research')).toBeVisible();
+  await expect(page.locator('.research-project-intro .overline')).toHaveText('Wearable biomechanics · 2026–present');
+  await expect(page.locator('.research-intro-detail')).toContainText('Ongoing research');
   await expect(page.getByRole('heading', { name: 'Reported results' })).toHaveCount(0);
-  await expect(page.getByRole('link', { name: 'Reconstructing 3D kinetics from smart-insole loading' })).toHaveAttribute('href', flagship);
+  await expect(page.getByRole('heading', { name: 'Related research' })).toHaveCount(0);
   await page.getByRole('link', { name: 'Project overview' }).click();
   await expect(page).toHaveURL(`${gaitProject}#multimodal-wearable-kinetics`);
   expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBe(320);
@@ -157,8 +160,8 @@ test('the research catalogue retains the case studies and their distinct share c
   const images = new Set<string>();
   for (const slug of slugs) {
     await page.goto(`/research/${slug}/`);
-    await expect(page.getByText('What I led', { exact: true })).toBeInViewport();
-    await expect(page.getByText('What the study found', { exact: true })).toBeInViewport();
+    await expect(page.getByRole('heading', { level: 1 })).toBeInViewport();
+    await expect(page.getByText('What I led', { exact: true })).toHaveCount(0);
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute('content', 'summary_large_image');
     await expect(page.locator('meta[property="og:image:width"]')).toHaveAttribute('content', '1200');
     const image = await page.locator('meta[property="og:image"]').getAttribute('content');
@@ -167,15 +170,33 @@ test('the research catalogue retains the case studies and their distinct share c
     images.add(url.pathname);
   }
   expect(images.size).toBe(3);
-  const disclosure = page.getByRole('region', { name: 'Code and reproduction', exact: true });
-  await expect(disclosure).toContainText('61.5 million parameters');
-  await expect(disclosure.getByRole('link', { name: 'Synthetic demo notebook' })).toHaveAttribute('href', /52285ba\w+\/notebooks\/00_control_center\.ipynb$/);
+  const code = page.getByRole('region', { name: 'Code', exact: true });
+  await expect(code).toContainText('61.5 million parameters');
+  await expect(code.getByRole('link')).toHaveAttribute('href', '/software/#code-cross-device-raman');
   const panels = page.getByRole('group', { name: /compare the original and transformed mean spectra/ });
   await expect(panels).toBeVisible();
   await expect(panels.getByRole('img')).toHaveCount(2);
   const fullSize = page.getByRole('link', { name: 'View full-size figure' }).last();
   const fullSizeUrl = await fullSize.getAttribute('href');
   expect((await request.get(fullSizeUrl!)).headers()['content-type']).toMatch(/^image\//);
+  await page.goto('/software/#code-cross-device-raman');
+  await expect(page.locator('#code-cross-device-raman').getByRole('link', { name: 'Workflow notebook' })).toHaveAttribute('href', /52285ba\w+\/notebooks\/00_control_center\.ipynb$/);
+});
+
+test('research page headers hold only area, years, title, summary and context', async ({ page }) => {
+  for (const path of ['/research/gait-pattern-modelling/', '/research/cross-device-raman/', '/research/projects/plantar-sensing-for-diabetic-foot/', '/research/projects/kidney-disease-imaging/']) {
+    await page.goto(path);
+    const intro = page.locator('.research-project-intro');
+    await expect(intro.locator('a')).not.toHaveText([/paper|code|citation|dataset|thesis/i]);
+    await expect(intro.locator('a[target="_blank"], .button, .study-citation')).toHaveCount(0);
+    await expect(intro.locator('.overline')).toHaveText(/ · \d{4}/);
+    await expect(page.getByRole('heading', { name: /^Related/ })).toHaveCount(0);
+  }
+  await page.goto('/research/gait-pattern-modelling/');
+  const code = page.getByRole('region', { name: 'Code', exact: true }).getByRole('link');
+  await expect(code).toHaveAttribute('href', '/software/#code-gait-pattern-modelling');
+  await code.click();
+  await expect(page.locator('#code-gait-pattern-modelling').getByRole('link', { name: /GitHub repository/ })).toHaveAttribute('href', 'https://github.com/atick-faisal/NDDNet');
 });
 
 test('homepage contact links open the supplied profiles', async ({ page }) => {
@@ -194,7 +215,7 @@ test('homepage contact links open the supplied profiles', async ({ page }) => {
 test('project and paper links round-trip and the citation copies', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto(flagship);
-  await page.getByRole('link', { name: 'Citation', exact: true }).click();
+  await page.locator('[data-project-citation]').click();
   await expect(page).toHaveURL(`/publications/#${paperId}`);
   const paper = page.locator(`#${paperId}`);
   await paper.getByRole('button', { name: /copy citation/i }).click();

@@ -4,16 +4,16 @@ import { getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import KineticsReproduction from '../../components/KineticsReproduction.astro';
 import HydronephrosisExample from '../../components/HydronephrosisExample.astro';
+import ProjectLinks from '../../components/ProjectLinks.astro';
 import ResearchFigure from '../../components/ResearchFigure.astro';
 import ResearchPhase from '../../components/ResearchPhase.astro';
-import { datasetsByStudy } from '../../data/datasets';
 import { kinetics } from '../../data/kinetics';
 import { ramanSource } from '../../data/raman';
-import { openFullText, publicationFor, publicationId } from '../../data/papers';
-import { researchStudyFor, researchStudies } from '../../data/research-catalog';
-import { collectionByStudy, collectionPath } from '../../data/research-projects';
+import { researchStudies } from '../../data/research-catalog';
+import { collectionByStudy, collectionPath, periodYears, studyPeriod } from '../../data/research-projects';
 import type { ResearchProject } from '../../data/research';
-import { doiUrl, sitePath } from '../../lib/site';
+import { projectLinks } from '../../data/project-links';
+import { sitePath } from '../../lib/site';
 import '../../styles/catalog.css';
 import '../../styles/research.css';
 
@@ -27,11 +27,17 @@ const { project } = Astro.props;
 const collection = collectionByStudy.get(project.slug);
 const { visual, resultVisual } = project;
 const resultView = resultVisual && await getImage({ src: resultVisual.image, format: 'webp', width: 960 });
-const paper = project.doi ? publicationFor(project.doi) : undefined;
-const dataset = project.doi ? datasetsByStudy.get(project.doi) : undefined;
-const fullText = project.doi ? openFullText[project.doi] : undefined;
-const relatedPapers = (project.related ?? []).map(publicationFor);
-const relatedProjects = (project.relatedProjects ?? []).map(researchStudyFor);
+// The header carries only the area and years, the title, the project summary, and context such as grants or theses.
+const period = studyPeriod(project);
+const overline = [project.area, period && periodYears(period)].filter(Boolean).join(' · ');
+const introDetail = [project.context, project.status].filter(Boolean).join(' · ');
+// Papers, code, data and other links sit in their own sections at the end of the page.
+const links = projectLinks({
+  dois: [project.doi, ...(project.papers ?? [])],
+  projects: [project.slug],
+  resources: project.resources,
+  citationDoi: project.doi,
+});
 const workflowAvailable = project.slug === kinetics.slug;
 const isRamanCase = project.slug === ramanSource.slug;
 const approachFigures = (project.figures ?? []).filter(figure => figure.section === 'approach');
@@ -46,8 +52,7 @@ const sections = [
   ...(project.scope ? [{ id: 'scope', label: 'Study scope' }] : []),
   ...(project.ongoing ? [{ id: 'ongoing', label: 'Ongoing work' }] : []),
   ...(workflowAvailable ? [{ id: 'reproduce', label: 'Run the workflow' }] : []),
-  ...(relatedPapers.length ? [{ id: 'related-title', label: 'Related publications' }] : []),
-  ...(relatedProjects.length ? [{ id: 'related-projects', label: 'Related research' }] : []),
+  ...links.sections,
 ];
 ---
 
@@ -56,35 +61,10 @@ const sections = [
     <header class="page-intro catalog-intro research-project-intro">
       <SiteLink class="text-link return-link" href={sitePath(`research/#${project.slug}`)}><span aria-hidden="true">←</span> All research</SiteLink>
       {collection && <SiteLink class="text-link return-link project-overview-link" href={sitePath(`${collectionPath(collection.slug)}#${project.slug}`)}>Project overview <span aria-hidden="true">→</span></SiteLink>}
-      <p class="overline">{project.area}{project.status && ` · ${project.status}`}</p>
+      <p class="overline">{overline}</p>
       <h1>{project.title}</h1>
-      <p class="page-lead">{project.question ?? project.summary}</p>
-      {project.evidence && <dl class="research-evidence">
-        <div><dt>What I led</dt><dd>{project.evidence.role}</dd></div>
-        <div><dt>What the study found</dt><dd>{project.evidence.finding}</dd></div>
-      </dl>}
-      {[project.context, project.period].some(Boolean) && <p class="research-intro-detail">{[project.context, project.period].filter(Boolean).join(' · ')}</p>}
-      {paper && <p class="study-citation">{paper.venue} · {paper.year}{paper.onlineYear && ` (online ${paper.onlineYear})`}</p>}
-      {(paper || project.code || project.resources?.length) && <div class="actions">
-        {paper && <SiteLink class="button button-primary" href={doiUrl(paper.doi)}>Read the paper <span aria-hidden="true">↗</span></SiteLink>}
-        {fullText && <SiteLink class="text-link" href={fullText}>Open full text <span aria-hidden="true">↗</span></SiteLink>}
-        {project.code && <SiteLink class="button button-secondary" href={isRamanCase ? ramanSource.source : project.code}>{isRamanCase ? 'Recovered source code' : 'Source code'} <span aria-hidden="true">↗</span></SiteLink>}
-        {project.resources?.map(({ label, href }) => <SiteLink class="text-link" href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
-        {dataset && <>
-          <SiteLink class="text-link" href={sitePath(`software/#${dataset.id}`)}>Dataset details</SiteLink>
-          <SiteLink class="text-link" href={doiUrl(dataset.doi)}>{dataset.platform} record <span aria-hidden="true">↗</span></SiteLink>
-        </>}
-        {workflowAvailable && <SiteLink class="text-link" href="#reproduce">Run the workflow</SiteLink>}
-        {paper && <SiteLink class="text-link" data-project-citation href={sitePath(`publications/#${publicationId(paper.doi)}`)}>Citation</SiteLink>}
-      </div>}
-      {isRamanCase && <section class="research-code-note" aria-labelledby="raman-code-title">
-        <h2 id="raman-code-title">Code and reproduction</h2>
-        <p>The recovered translator has 61.5 million parameters. The paper reports 6.15 million. The synthetic CPU demo exercises four small translators and a classifier. Reproducing the reported results requires matching the published architecture and evaluation protocol. Paper-trained weights are unavailable.</p>
-        <div class="catalog-actions">
-          <SiteLink href={ramanSource.notebook}>Synthetic demo notebook <span aria-hidden="true">↗</span></SiteLink>
-          <SiteLink href={ramanSource.alignment}>Paper and code comparison <span aria-hidden="true">↗</span></SiteLink>
-        </div>
-      </section>}
+      <p class="page-lead">{project.summary}</p>
+      {introDetail && <p class="research-intro-detail">{introDetail}</p>}
     </header>
 
     <div class="catalog-layout content-end">
@@ -98,6 +78,7 @@ const sections = [
 
         <section aria-labelledby="approach">
           <header class="catalog-section-heading"><h2 id="approach">Approach</h2></header>
+          {project.question && <p class="research-section-copy research-question">{project.question}</p>}
           <p class="research-section-copy">{project.approach}</p>
           {project.workflow && <ol class="study-workflow" aria-label="Study workflow">
             {project.workflow.map(step => <li>{step}</li>)}
@@ -148,20 +129,9 @@ const sections = [
         </section>}
         {workflowAvailable && <KineticsReproduction />}
 
-        {relatedPapers.length > 0 && <section class="related-papers" aria-labelledby="related-title">
-          <header class="catalog-section-heading"><h2 id="related-title">Related publications</h2></header>
-          <ul>
-            {relatedPapers.map(publication => (
-              <li><SiteLink href={sitePath(`publications/#${publicationId(publication.doi)}`)}>{publication.title}</SiteLink><small>{publication.venue} · {publication.year}</small></li>
-            ))}
-          </ul>
-        </section>}
-        {relatedProjects.length > 0 && <section class="related-papers" aria-labelledby="related-projects">
-          <header class="catalog-section-heading"><h2 id="related-projects">Related research</h2></header>
-          <ul>
-            {relatedProjects.map(related => <li><SiteLink href={sitePath(`research/${related.slug}/`)}>{related.title}</SiteLink></li>)}
-          </ul>
-        </section>}
+        <ProjectLinks links={links}>
+          {isRamanCase && <p class="research-section-copy" slot="code-note">The recovered translator has 61.5 million parameters. The paper reports 6.15 million. The synthetic CPU demo exercises four small translators and a classifier. Reproducing the reported results requires matching the published architecture and evaluation protocol. Paper-trained weights are unavailable.</p>}
+        </ProjectLinks>
       </div>
     </div>
   </article>

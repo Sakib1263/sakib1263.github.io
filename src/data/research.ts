@@ -69,8 +69,10 @@ export type ResearchProject = {
   ongoing?: string;
   workflow?: string[];
   illustratedExample?: boolean;
-  related?: string[];
-  relatedProjects?: string[];
+  /** The project's own further papers, after the main paper in `doi`. Never list other projects' papers here. */
+  papers?: string[];
+  /** Further repositories that belong to this project, listed on the Software & Data page. */
+  otherCode?: { label: string; href: string; summary: string }[];
   resources?: ResearchLink[];
   resultVisual?: { image: ImageMetadata; alt: string; caption: string; source: ResearchLink; mobileColumns?: [string, string] };
   /** The display figure: shown first on the project page, on homepage cards and as the share image. */
@@ -117,8 +119,6 @@ export const projects: Project[] = [
     scope: 'The results come from nine healthy participants under controlled treadmill conditions. Performance varied across participants and speeds, particularly for some moments.',
     ongoing: 'This study is the foundation of the AI-powered smart-insole project, which now combines plantar loading with wearable motion, tests transfer across devices and develops the insole hardware. The project overview sets out each stage.',
     workflow: ['Smart-insole pressure signals', 'Estimated forces, moments and centre of pressure', 'Comparison with treadmill measurements'],
-    related: ['10.1007/s00521-023-09081-z', '10.3390/s22197599'],
-    relatedProjects: ['multimodal-wearable-kinetics', 'kinematics-to-3d-kinetics'],
     visual: smartInsoleProgress[0].figures![0],
     figures: [{ ...smartInsoleProgress[0].figures![1], section: 'results' }],
   },
@@ -146,8 +146,6 @@ export const projects: Project[] = [
     },
     workflow: ['Identify kidney-containing CT slices', 'Select slices containing stones', 'Trace the stone boundary with KSSNet'],
     scope: 'The five folds separate subjects. The scans came from a single hospital, so the reported scores describe that cohort and protocol.',
-    related: ['10.3390/cancers15123189', '10.1016/j.eswa.2024.124594'],
-    relatedProjects: ['renal-tumour-modelling', 'prenatal-hydronephrosis'],
     visual: {
       image: kidneyFramework,
       alt: 'Pipeline diagram. Abdominal CT volumes are preprocessed, a classifier keeps the slices that contain kidney, a second classifier keeps the slices that contain stones, and a segmentation model outlines the kidney and stones on the remaining slices.',
@@ -188,8 +186,6 @@ export const projects: Project[] = [
       shareImage: ramanShare,
     },
     scope: 'The study used prepared analytes across five instruments, including the laboratory reference. The reported comparisons apply to those samples and acquisition conditions. The Zenodo record explains how to request the restricted files.',
-    related: ['10.1016/j.talanta.2026.130241', '10.1016/j.talanta.2025.129332'],
-    relatedProjects: ['generalizable-microbial-sers', 'microbial-sers-validation'],
     resultVisual: {
       image: ramanComparison,
       alt: 'Four panels compare the original and transformed mean spectra with the Renishaw reference. Shaded bands show one standard deviation.',
@@ -228,17 +224,20 @@ export const projects: Project[] = [
     context: 'Qatar National Research Fund NPRP12S-0227-190164 · Qatar University IRCC-2021-001 and QUST-2-CENG-2022-711',
     doi: '10.1016/j.bspc.2022.104247',
     code: 'https://github.com/Sakib1263/NABNet',
+    otherCode: [{
+      label: 'PPG2ABP',
+      href: 'https://github.com/nibtehaz/PPG2ABP',
+      summary: 'Translates photoplethysmogram signals into continuous arterial blood pressure waveforms with a two-stage deep learning pipeline.',
+    }],
     resources: [
-      { label: 'PPG2ABP code', href: 'https://github.com/nibtehaz/PPG2ABP' },
-      { label: 'UCI dataset', href: 'https://archive.ics.uci.edu/dataset/340/cuff+less+blood+pressure+estimation' },
+      { label: 'UCI cuffless blood pressure dataset', href: 'https://archive.ics.uci.edu/dataset/340/cuff+less+blood+pressure+estimation' },
     ],
     approach: 'Cuffs provide intermittent readings, while a continuous arterial pressure waveform usually requires an arterial catheter. This project used PPG and ECG to estimate blood pressure without either limitation. The work first predicted systolic and diastolic values, then reconstructed the waveform from PPG alone, and finally combined pressure prediction with waveform reconstruction.',
     workflow: ['Prepare PPG and ECG', 'Predict pressure values', 'Reconstruct the waveform'],
     progress: bloodPressureProgress,
     contribution: 'For the shallow U-Net study, I led conceptualisation, methodology, software, formal analysis, investigation, data curation, validation, visualisation and manuscript preparation. For PPG2ABP, I contributed to data curation, formal analysis, methodology, investigation, validation and manuscript drafting and revision, and worked with the first author to rework the study for publication. For the combined pipeline, I led development and evaluation of NABNet, including data preparation, implementation, experiments, analysis, visualisation and manuscript preparation.',
     scope: 'All three studies were developed on the same public intensive-care dataset of clinical finger PPG, and distorted or extreme signals were excluded in two of them. Only the shallow U-Net study tested an external dataset, with 40 people. Motion artefacts from wearable sensors were not resolved, and PPG2ABP is not intended for wrist PPG. Prospective validation is needed before clinical use.',
-    related: ['10.3390/s22030919', '10.3390/bioengineering9110692'],
-    relatedProjects: ['contactless-cardiovascular-waveforms', 'wearable-cardiac-waveforms'],
+    papers: ['10.3390/s22030919', '10.3390/bioengineering9110692'],
     visual: bloodPressureVisual,
   },
   {
@@ -261,8 +260,7 @@ export const projects: Project[] = [
     contribution: 'I contributed to study design and data curation, developed the methods and software, and wrote the original draft with the research team.',
     scope: 'Segmentation and grading used five subject-independent folds on the retrospective QU–HMC–AHN cohort. The earlier region-detection stage used a separate two-fold evaluation. Reported grading performance reflects the curated views and reference grades in that cohort.',
     illustratedExample: true,
-    resources: [{ label: 'Related MSc thesis', href: thesisUrl }],
-    related: ['10.1016/j.bspc.2026.109894', '10.3390/cancers15123189'],
+    resources: [{ label: 'MSc thesis', href: thesisUrl }],
     visual: {
       image: ahnGrades,
       alt: 'Five fetal kidney ultrasound images, one for each severity grade from SFU 0 to SFU IV, each shown above its annotated kidney region. The dark, fluid-filled area inside the kidney is larger at higher grades.',

@@ -5,13 +5,13 @@ import { datasets } from '../data/datasets';
 import { kinetics } from '../data/kinetics';
 import { ramanSource } from '../data/raman';
 import { publicationFor, publicationId } from '../data/papers';
-import { projects } from '../data/research';
+import { softwareEntries } from '../data/software';
 import { doiUrl, profile, sitePath } from '../lib/site';
 import '../styles/catalog.css';
 import '../styles/software.css';
 
 type Link = { label: string; href: string };
-const softwareNotes: Partial<Record<string, { label: string; detail: string; version: Link; guide?: Link }>> = {
+const softwareNotes: Partial<Record<string, { label: string; detail: string; version: Link; guide?: Link; extra?: Link }>> = {
   'superonn-layers': {
     label: 'Versioned library',
     detail: 'The release provides the library and its examples. Setup depends on whether you use the PyTorch or TensorFlow backend.',
@@ -28,6 +28,7 @@ const softwareNotes: Partial<Record<string, { label: string; detail: string; ver
     detail: 'The repository documents a Python 3.11–3.13 CPU notebook with synthetic data. Published-result reproduction remains unresolved and the study spectra require dataset access.',
     version: { label: `Source at ${ramanSource.revision.slice(0, 7)}`, href: ramanSource.source },
     guide: { label: 'Workflow notebook', href: ramanSource.notebook },
+    extra: { label: 'Paper and code comparison', href: ramanSource.alignment },
   },
   'kidney-stone-segmentation': {
     label: 'Study source snapshot',
@@ -43,24 +44,10 @@ const softwareNotes: Partial<Record<string, { label: string; detail: string; ver
   },
 };
 
-const software = [
-  {
-    slug: 'superonn-layers',
-    title: 'SuperONN-Layers',
-    area: 'Reusable library',
-    summary: 'Polynomial 1D and 2D super-operational layers for PyTorch and TensorFlow/Keras, including forward and transposed operations with fixed or trainable offsets.',
-    code: 'https://github.com/Sakib1263/SuperONN-Layers',
-  },
-  ...projects.map(({ title, area, summary, code, doi, slug }) => ({
-    slug,
-    title,
-    area,
-    summary,
-    code,
-    paper: sitePath(`publications/#${publicationId(doi)}`),
-    project: sitePath(`research/${slug}/`),
-  })),
-];
+const software = softwareEntries.map(entry => ({
+  ...entry,
+  notes: softwareNotes[entry.id === 'code-superonn-layers' ? 'superonn-layers' : entry.id === `code-${entry.project}` ? entry.project ?? '' : ''],
+}));
 
 const sections = [
   { id: 'datasets', label: 'Datasets', count: datasets.length },
@@ -138,9 +125,9 @@ const sections = [
             <p>Reusable layers and implementations accompanying my papers.</p>
           </header>
           {software.map(item => {
-            const notes = softwareNotes[item.slug];
+            const { notes } = item;
             return (
-              <article class="catalog-entry software-entry">
+              <article class="catalog-entry software-entry" id={item.id}>
                 <div class="catalog-meta"><span>{item.area}</span>{notes && <strong>{notes.label}</strong>}</div>
                 <div>
                   <h3>{item.title}</h3>
@@ -149,10 +136,11 @@ const sections = [
                   <div class="catalog-actions">
                     {notes && <SiteLink href={notes.version.href}>{notes.version.label} <span aria-hidden="true">↗</span></SiteLink>}
                     {notes?.guide && <SiteLink href={notes.guide.href}>{notes.guide.label}</SiteLink>}
-                    {item.slug === kinetics.slug && <SiteLink href={sitePath(kinetics.verificationPath)}>Demo verification</SiteLink>}
+                    {notes?.extra && <SiteLink href={notes.extra.href}>{notes.extra.label} <span aria-hidden="true">↗</span></SiteLink>}
+                    {item.project === kinetics.slug && item.id === `code-${kinetics.slug}` && <SiteLink href={sitePath(kinetics.verificationPath)}>Demo verification</SiteLink>}
                     <SiteLink href={item.code} aria-label={`GitHub repository for ${item.title}`}>GitHub repository <span aria-hidden="true">↗</span></SiteLink>
-                    {'project' in item && <SiteLink href={item.project}>Project summary</SiteLink>}
-                    {'paper' in item && <SiteLink href={item.paper} aria-label={`Related paper for ${item.title}`}>Related paper</SiteLink>}
+                    {item.project && <SiteLink href={sitePath(`research/${item.project}/`)}>Project summary</SiteLink>}
+                    {item.doi && <SiteLink href={sitePath(`publications/#${publicationId(item.doi)}`)} aria-label={`Related paper for ${item.title}`}>Related paper</SiteLink>}
                   </div>
                 </div>
               </article>

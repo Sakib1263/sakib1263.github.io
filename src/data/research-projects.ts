@@ -32,7 +32,6 @@ export interface Collection {
   contribution: string;
   stages: Stage[];
   scope?: string;
-  related?: string[];
   resources?: { label: string; href: string }[];
   /** Display figure for the project page, homepage card and share image. */
   visual?: ResearchProject['visual'];
@@ -74,7 +73,6 @@ const gait: Collection = {
       study: 'multimodal-wearable-kinetics',
     },
   ],
-  related: ['plantar-sensing-for-diabetic-foot', 'diabetic-neuropathy-gait-emg'],
   visual: smartInsoleVisual,
   approach: smartInsoleApproach,
   workflow: smartInsoleWorkflow,
@@ -112,7 +110,6 @@ const insoles: Collection = {
       doi: '10.1109/jsen.2023.3317768',
     },
   ],
-  related: ['diabetic-foot-thermal-imaging', 'smart-insole-3d-gait-kinetics'],
   visual: diabeticFootVisual,
   approach: diabeticFootApproach,
   workflow: diabeticFootWorkflow,
@@ -156,7 +153,6 @@ const kidney: Collection = {
   approachFigures: kidneyApproachFigures,
   progress: kidneyProgress,
   ongoing: kidneyNextSteps,
-  related: ['multiphase-liver-ct'],
 };
 
 const raman: Collection = {
@@ -191,11 +187,10 @@ const raman: Collection = {
     {
       title: 'PRISM-SERS and transfer to unseen analytes',
       period: 'Ongoing',
-      description: 'Developing class-independent spectral mapping for analytes held out of training. A manuscript is in preparation, and a related workstream studies few-shot recognition.',
+      description: 'Developing class-independent spectral mapping for analytes held out of training. A manuscript is in preparation, and a second workstream studies few-shot recognition.',
       study: 'generalizable-microbial-sers',
     },
   ],
-  resources: [{ label: 'Multi-Instrument SERS Dataset', href: 'https://doi.org/10.5281/zenodo.23372983' }],
   approach: ramanApproach,
   workflow: ramanWorkflow,
   progress: ramanProgress,
@@ -261,16 +256,16 @@ export function periodYears(period: string) {
 }
 
 /** A study without project dates is dated by the publication years of its papers, e.g. "2023–2024". */
-function studyPeriod(study: ReturnType<typeof researchStudyFor>) {
+export function studyPeriod(study: ReturnType<typeof researchStudyFor>) {
   if (study.period) return study.period;
-  const years = [study.doi, ...(study.related ?? [])].flatMap(doi => doi ? [publicationFor(doi).year] : []);
+  const years = [study.doi, ...(study.papers ?? [])].flatMap(doi => doi ? [publicationFor(doi).year] : []);
   if (!years.length) return undefined;
   const first = Math.min(...years), last = Math.max(...years);
   return first === last ? `${first}` : `${first}–${last}`;
 }
 
 function studySearchText(study: ReturnType<typeof researchStudyFor>) {
-  return [study.title, study.summary, study.question, study.approach, study.scope, study.doi, ...(study.related ?? [])];
+  return [study.title, study.summary, study.question, study.approach, study.scope, study.doi, ...(study.papers ?? [])];
 }
 
 export const projectAreas = researchStudyAreas.map(({ id, title, description }) => ({

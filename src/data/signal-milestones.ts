@@ -348,7 +348,7 @@ export const ttrProgress: ResearchPhase[] = [
     title: 'Follow-on study: atrial fibrillation detection',
     status: 'Biomedical Signal Processing and Control · 2025',
     paragraphs: [
-      'A related study applied 1D-CycleGAN restoration to wrist PPG before classifying atrial fibrillation. Restoration raised classification accuracy by 2.94 and 5.08 percentage points in two test splits, and the Self-AFNet classifier reached 96.41% and 97.09%. This study used restoration without the finger PPG translation stage.',
+      'The atrial fibrillation study applied 1D-CycleGAN restoration to wrist PPG before classifying atrial fibrillation. Restoration raised classification accuracy by 2.94 and 5.08 percentage points in two test splits, and the Self-AFNet classifier reached 96.41% and 97.09%. This study used restoration without the finger PPG translation stage.',
     ],
   },
 ];

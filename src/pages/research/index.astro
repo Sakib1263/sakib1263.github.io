@@ -9,7 +9,7 @@ import '../../styles/research.css';
 
 const projectCount = projectAreas.reduce((total, area) => total + area.entries.length, 0) + miscellaneousStudies.length;
 const miscellaneousSearchText = (study: (typeof miscellaneousStudies)[number]) =>
-  [study.title, study.summary, study.question, study.approach, study.scope, study.doi, ...(study.related ?? [])].filter(Boolean).join(' ');
+  [study.title, study.summary, study.question, study.approach, study.scope, study.doi, ...(study.papers ?? [])].filter(Boolean).join(' ');
 ---
 
 <Base title="Research" description="Sakib Mahmud’s research projects in wearable biomechanics, medical imaging, physiological signals, Raman spectroscopy, biomedical devices, genomics, and applied machine learning.">

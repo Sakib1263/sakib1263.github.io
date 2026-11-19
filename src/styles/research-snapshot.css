@@ -117,12 +117,7 @@
     transform-origin: bottom;
     transition: transform 700ms cubic-bezier(.2, .7, .2, 1) calc(var(--bar-index) * 90ms);
   }
-  .research-snapshot[data-animate] .citation-count {
-    opacity: 0;
-    transition: opacity 300ms ease calc(var(--bar-index) * 90ms + 550ms);
-  }
   .research-snapshot[data-animate="in-view"] .citation-bar { transform: scaleY(1); }
-  .research-snapshot[data-animate="in-view"] .citation-count { opacity: 1; }
 }
 
 .snapshot-profiles { border-top: 1px solid var(--border); }

@@ -78,8 +78,9 @@
 .figure-links { display: flex; flex-wrap: wrap; gap: .25rem 1rem; margin-top: .38rem; }
 .result-panels { display: none; }
 .research-detail .study-measures { margin-bottom: 0; }
-.research-detail .related-papers li { padding-inline: .25rem; }
-.research-detail .related-papers small { display: block; margin-top: .2rem; color: var(--text-muted); }
+.research-detail .project-links li { padding-inline: .25rem; }
+.research-detail .project-links small { display: block; margin-top: .2rem; color: var(--text-muted); }
+.research-question { color: var(--text); font-weight: 620; }
 
 @media (max-width: 620px) {
   .research-evidence > div { grid-template-columns: minmax(0, 1fr); }

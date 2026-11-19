@@ -176,4 +176,4 @@ export const diabeticFootProgress: ResearchPhase[] = [
   },
 ];
 
-export const diabeticFootNextSteps = 'Detecting ulcer onset will need longitudinal studies with people with diabetes. The ideas continue in two related projects: SmartWoundCare, which combines colour and thermal images of the foot, and the AI-powered smart-insole project, which uses distributed insole loading to estimate full 3D foot kinetics.';
+export const diabeticFootNextSteps = 'Detecting ulcer onset will need longitudinal studies with people with diabetes.';
