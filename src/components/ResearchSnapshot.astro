@@ -34,7 +34,7 @@ const hasPartialYear = snapshot.yearly.some(({ year }) => year === partialYear);
           <div>
             <dt>{label}</dt>
             <dd>
-              <strong>{number.format(snapshot.totals[key])}</strong>
+              <strong data-count-to={snapshot.totals[key]}>{number.format(snapshot.totals[key])}</strong>
               <small>{number.format(snapshot.recent[key])} since {snapshot.recent.since}</small>
             </dd>
           </div>
@@ -46,8 +46,8 @@ const hasPartialYear = snapshot.yearly.some(({ year }) => year === partialYear);
     <figure class="citation-history" aria-label="Google Scholar yearly citation counts">
       <figcaption>Yearly citations</figcaption>
       <ol class="citation-bars" role="list" style={`--citation-years:${snapshot.yearly.length}`}>
-        {snapshot.yearly.map(({ year, citations }) => (
-          <li data-partial-year={year === partialYear ? '' : undefined}>
+        {snapshot.yearly.map(({ year, citations }, index) => (
+          <li data-partial-year={year === partialYear ? '' : undefined} style={`--bar-index:${index}`}>
             <span class="citation-year">{year}</span>
             <span class="citation-column">
               <span class="citation-count">{number.format(citations)}<span class="citation-unit"> citations</span></span>
@@ -66,3 +66,31 @@ const hasPartialYear = snapshot.yearly.some(({ year }) => year === partialYear);
     </nav>
   </div>
 </section>
+
+<script is:inline>
+  // Runs before first paint: the chart starts empty only when motion is allowed, and animates once in view.
+  (() => {
+    const section = document.currentScript?.previousElementSibling;
+    if (!section || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    section.setAttribute('data-animate', '');
+    const format = new Intl.NumberFormat('en-GB');
+    const countUp = element => {
+      const target = Number(element.dataset.countTo);
+      const start = performance.now();
+      const step = now => {
+        const progress = Math.min((now - start) / 1100, 1);
+        element.textContent = format.format(Math.round(target * (1 - (1 - progress) ** 3)));
+        if (progress < 1) requestAnimationFrame(step);
+      };
+      element.textContent = '0';
+      requestAnimationFrame(step);
+    };
+    const observer = new IntersectionObserver(entries => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      observer.disconnect();
+      section.setAttribute('data-animate', 'in-view');
+      section.querySelectorAll('[data-count-to]').forEach(countUp);
+    }, { threshold: 0.35 });
+    observer.observe(section);
+  })();
+</script>

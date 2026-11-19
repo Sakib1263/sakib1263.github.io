@@ -412,6 +412,26 @@ test('vaccine attitudes project presents its stages and linked paper', async ({ 
   await expect(page.locator('[data-doi="10.1080/10911359.2021.1973642"] a[href*="vaccine-attitudes-analysis"]').first()).toBeAttached();
 });
 
+test('citation chart animates once in view and settles on the real values', async ({ page }) => {
+  await page.goto('/research/');
+  const snapshot = page.locator('.research-snapshot');
+  await snapshot.scrollIntoViewIfNeeded();
+  await expect(snapshot).toHaveAttribute('data-animate', 'in-view');
+  const counts = snapshot.locator('[data-count-to]');
+  await expect(counts.first()).toHaveText(await counts.first().evaluate(element => new Intl.NumberFormat('en-GB').format(Number((element as HTMLElement).dataset.countTo))));
+  await expect.poll(() => snapshot.locator('.citation-bar').last().evaluate(element => getComputedStyle(element).transform)).toBe('matrix(1, 0, 0, 1, 0, 0)');
+});
+
+test('citation chart stays still for reduced motion', async ({ browser }) => {
+  const context = await browser.newContext({ reducedMotion: 'reduce' });
+  const page = await context.newPage();
+  await page.goto('/research/');
+  const snapshot = page.locator('.research-snapshot');
+  await expect(snapshot).not.toHaveAttribute('data-animate');
+  await expect(snapshot.locator('.citation-bar').first()).toHaveCSS('transform', 'none');
+  await context.close();
+});
+
 test('miscellaneous studies have their own research area link', async ({ page }) => {
   await page.goto('/research/');
   const link = page.locator('[data-research-area="miscellaneous"] a');
