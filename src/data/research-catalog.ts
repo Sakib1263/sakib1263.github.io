@@ -22,6 +22,7 @@ import { evChargingProgress, evChargingVisual } from './ev-charging-milestones';
 import { climateRiskProgress, climateRiskVisual } from './climate-risk-milestones';
 import { wasteClassificationProgress, wasteClassificationVisual } from './waste-classification-milestones';
 import { gearboxFaultProgress, gearboxFaultVisual } from './gearbox-fault-milestones';
+import { vaccineAttitudesProgress, vaccineAttitudesVisual } from './vaccine-attitudes-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -757,13 +758,17 @@ const engineering: ResearchProject[] = [
   },
   {
     slug: 'vaccine-attitudes-analysis', area: 'Applied machine learning',
-    title: 'Survey analysis of COVID-19 vaccine attitudes in Qatar',
-    summary: 'Analysing survey responses to identify factors associated with willingness and hesitancy.',
+    title: 'Machine learning analysis of COVID-19 vaccine attitudes in Qatar',
+    summary: 'A survey of 175 residents of Qatar, analysed with statistical tests, machine learning and dominance analysis to find what drives willingness and hesitancy toward COVID-19 vaccination.',
+    question: 'What makes residents of Qatar willing or hesitant to take the COVID-19 vaccine, and can their survey answers predict that attitude?',
     doi: '10.1080/10911359.2021.1973642',
     context: 'Qatar University MSc course project',
-    approach: 'The study used quantitative analysis and machine learning on survey responses from residents in Qatar to examine attitudes to COVID-19 vaccination.',
+    approach: 'By early 2021 Qatar had approved COVID-19 vaccines and made its contact-tracing app, Ehteraz, mandatory in public spaces, yet some residents remained hesitant. Evidence on what drives willingness and hesitancy in the region was limited. This study surveyed residents of Qatar online in English and Arabic, tested how attitudes differed between groups, trained machine learning models to predict attitude from survey answers, and ranked the most influential factors with dominance analysis.',
+    workflow: ['Survey residents online', 'Compare attitudes between groups', 'Predict attitudes and rank factors'],
+    progress: vaccineAttitudesProgress,
     contribution: 'I contributed to the quantitative and machine-learning analysis, interpretation, and manuscript preparation.',
-    scope: 'The study identifies associations within the survey sample and its collection period.',
+    scope: 'The 175 respondents were recruited online rather than sampled at random, and their answers reflect attitudes around April 2021, when vaccines were newly available. Few respondents were unwilling but not hesitant, so that class could not be evaluated, and the factors found are associations rather than causes.',
+    visual: vaccineAttitudesVisual,
   },
 ];
 

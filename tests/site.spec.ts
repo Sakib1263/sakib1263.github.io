@@ -401,6 +401,17 @@ test('gearbox fault project presents its stages and linked paper', async ({ page
   await expect(page.locator('[data-doi="10.1109/access.2024.3412274"] a[href*="gearbox-fault-detection"]').first()).toBeAttached();
 });
 
+test('vaccine attitudes project presents its stages and linked paper', async ({ page }) => {
+  const title = 'Machine learning analysis of COVID-19 vaccine attitudes in Qatar';
+  await page.goto('/research/');
+  await expect(page.getByRole('link', { name: title, exact: true })).toBeVisible();
+  await page.goto('/research/vaccine-attitudes-analysis/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Survey', 'Group differences', 'Prediction', 'Key factors']);
+  await page.goto('/publications/');
+  await expect(page.locator('[data-doi="10.1080/10911359.2021.1973642"] a[href*="vaccine-attitudes-analysis"]').first()).toBeAttached();
+});
+
 test('miscellaneous studies have their own research area link', async ({ page }) => {
   await page.goto('/research/');
   const link = page.locator('[data-research-area="miscellaneous"] a');
