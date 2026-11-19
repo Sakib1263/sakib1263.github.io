@@ -618,7 +618,7 @@ const genomics: ResearchProject[] = [
 
 const engineering: ResearchProject[] = [
   {
-    slug: 'smart-meter-load-and-occupancy', area: 'Intelligent energy systems & climate analytics',
+    slug: 'smart-meter-load-and-occupancy', area: 'Intelligent energy systems',
     title: 'Non-intrusive load and occupancy monitoring from smart-meter data',
     summary: 'Recovering appliance-level electricity use from a single household meter, then using those appliance events to infer when a home is occupied.',
     question: 'Can one household smart meter show both how individual appliances are used and when a home is occupied, without extra sensors in the home?',
@@ -635,7 +635,7 @@ const engineering: ResearchProject[] = [
     visual: smartMeterVisual,
   },
   {
-    slug: 'e-tawfeer-energy-management', area: 'Intelligent energy systems & climate analytics',
+    slug: 'e-tawfeer-energy-management', area: 'Intelligent energy systems',
     title: 'Edge AI and deep reinforcement learning for intelligent energy management',
     summary: 'Occupancy sensing, privacy-preserving edge analytics and a broad review of deep reinforcement learning for energy systems.',
     question: 'How can AI support adaptive energy decisions while keeping sensitive building and household data protected?',
@@ -651,7 +651,7 @@ const engineering: ResearchProject[] = [
     visual: energyAiVisual,
   },
   {
-    slug: 'ev-charging-demand', area: 'Intelligent energy systems & climate analytics',
+    slug: 'ev-charging-demand', area: 'Intelligent energy systems',
     title: 'Electric-vehicle charging demand from smart meters',
     summary: 'Identifying household demand patterns and candidate charging periods to inform distribution network planning.',
     period: 'November 2021–February 2022', context: 'Omdena, Energy Tech Hub and Centre for New Energy Technologies',
@@ -660,7 +660,7 @@ const engineering: ResearchProject[] = [
     resources: [{ label: 'Omdena project and reported outcomes', href: 'https://www.omdena.com/projects/ai-ev-charging' }],
   },
   {
-    slug: 'climate-geopolitical-risk', area: 'Intelligent energy systems & climate analytics',
+    slug: 'climate-geopolitical-risk', area: 'Applied machine learning',
     title: 'Geospatial analysis for climate and geopolitical risk',
     summary: 'Using satellite imagery and land-cover information in a team project on water and energy infrastructure risk in West and Central Africa.',
     period: 'July–October 2021', context: 'Omdena and Finz',
@@ -698,7 +698,7 @@ const engineering: ResearchProject[] = [
     contribution: 'I helped develop the framework and contributed to the evaluation, experimental analysis, interpretation and manuscript review.',
   },
   {
-    slug: 'rotational-piezoelectric-harvesting', area: 'Engineering',
+    slug: 'rotational-piezoelectric-harvesting', area: 'Intelligent energy systems',
     title: 'Rotational piezoelectric energy harvesting',
     summary: 'Combining analytical and prototype work to study how magnetic oscillators affect operation across rotation speeds.',
     doi: '10.1007/978-981-97-3302-6_3',
@@ -724,7 +724,7 @@ export const researchStudyAreas = [
   { id: 'spectroscopy', title: topics.spectroscopy, description: topicDescriptions.spectroscopy, projects: spectroscopy },
   { id: 'devices', title: topics.devices, description: 'Implants, clinical training simulators, ventilation, and computational haemodynamics.', projects: devices },
   { id: 'genomics', title: 'Computational genomics & reproducible analysis', description: 'RNA-seq analysis, candidate gene discovery and independent reproduction of cancer genomics studies.', projects: genomics },
-  { id: 'engineering', title: 'Intelligent energy systems & climate analytics', description: 'Edge AI, occupancy sensing, smart-meter analytics, electric-vehicle demand and climate-risk mapping.', projects: engineering },
+  { id: 'engineering', title: 'Intelligent energy systems', description: 'Edge AI, occupancy sensing, smart-meter analytics, energy harvesting and electric-vehicle demand.', projects: engineering },
 ] as const;
 
 export const researchStudies = researchStudyAreas.flatMap(group => group.projects);

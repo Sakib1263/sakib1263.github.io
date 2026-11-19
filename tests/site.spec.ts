@@ -345,7 +345,7 @@ test('genomics projects use their updated section and dates', async ({ page }) =
 
 test('energy AI project presents its section, stages and linked papers', async ({ page }) => {
   await page.goto('/research/');
-  await expect(page.locator('#engineering')).toHaveText('Intelligent energy systems & climate analytics');
+  await expect(page.locator('#engineering')).toHaveText('Intelligent energy systems');
   await expect(page.getByRole('link', { name: 'Edge AI and deep reinforcement learning for intelligent energy management', exact: true })).toBeVisible();
   await page.goto('/research/e-tawfeer-energy-management/');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Edge AI and deep reinforcement learning for intelligent energy management');

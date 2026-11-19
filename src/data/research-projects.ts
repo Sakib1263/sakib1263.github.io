@@ -246,7 +246,7 @@ const selections = {
   spectroscopy: [raman.slug],
   devices: ['aortic-wall-shear-stress', 'exoventq-ventilation', 'hip-implant-mechanics-and-imaging', 'ecmo-cannulation-simulator'],
   genomics: ['cancer-genomics-reproduction', 'mendelian-rnaseq-outliers'],
-  engineering: ['e-tawfeer-energy-management', 'smart-meter-load-and-occupancy', 'ev-charging-demand', 'climate-geopolitical-risk'],
+  engineering: ['e-tawfeer-energy-management', 'rotational-piezoelectric-harvesting', 'smart-meter-load-and-occupancy', 'ev-charging-demand'],
 };
 
 /** A study without project dates is dated by the publication years of its papers, e.g. "2023–2024". */
