@@ -205,6 +205,8 @@ test('homepage contact links open the supplied profiles', async ({ page }) => {
   for (const [name, href] of [
     ['LinkedIn', 'https://www.linkedin.com/in/sakib1263/'],
     ['ResearchGate', 'https://www.researchgate.net/profile/Sakib-Mahmud-7/research'],
+    ['Web of Science', 'https://www.webofscience.com/wos/author/record/OIT-8107-2025'],
+    ['Scopus', 'https://www.scopus.com/authid/detail.uri?authorId=57211999810'],
   ]) {
     const link = profiles.getByRole('link', { name, exact: true });
     await expect(link).toHaveAttribute('href', href);

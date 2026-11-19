@@ -264,7 +264,12 @@ export function periodYears(period: string) {
 /** A study without project dates is dated by the publication years of its papers, e.g. "2023–2024". */
 export function studyPeriod(study: ReturnType<typeof researchStudyFor>) {
   if (study.period) return study.period;
-  const years = [study.doi, ...(study.papers ?? [])].flatMap(doi => doi ? [publicationFor(doi).year] : []);
+  // A paper counts from the year it first appeared, so an issue dated next year does not push the study into the future.
+  const years = [study.doi, ...(study.papers ?? [])].flatMap(doi => {
+    if (!doi) return [];
+    const paper = publicationFor(doi);
+    return [paper.onlineYear ?? paper.year];
+  });
   if (!years.length) return undefined;
   const first = Math.min(...years), last = Math.max(...years);
   return first === last ? `${first}` : `${first}–${last}`;

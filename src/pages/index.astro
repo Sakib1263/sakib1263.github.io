@@ -7,7 +7,7 @@ import CurrentResearch from '../components/CurrentResearch.astro';
 import portrait from '../assets/sakib-mahmud.jpg';
 import { publicationId, selectedPapers } from '../data/papers';
 import { featuredCollections } from '../data/research-projects';
-import { cvPdfPath, profile, sitePath } from '../lib/site';
+import { cvPdfPath, profile, researchProfiles, sitePath } from '../lib/site';
 import '../styles/home.css';
 
 const homePaperDois = new Set([
@@ -89,11 +89,9 @@ const homePapers = selectedPapers.filter(({ publication }) => homePaperDois.has(
       <div class="home-contact-links">
         <SiteLink class="home-email" href={`mailto:${profile.email}?subject=Research%20inquiry`}>{profile.email}</SiteLink>
         <nav aria-label="Professional and research profiles">
-          <SiteLink href={profile.scholar}>Google Scholar <span aria-hidden="true">↗</span></SiteLink>
-          <SiteLink href={profile.linkedin}>LinkedIn <span aria-hidden="true">↗</span></SiteLink>
-          <SiteLink href={profile.researchGate}>ResearchGate <span aria-hidden="true">↗</span></SiteLink>
-          <SiteLink href={profile.orcid}>ORCID <span aria-hidden="true">↗</span></SiteLink>
-          <SiteLink href={profile.github}>GitHub <span aria-hidden="true">↗</span></SiteLink>
+          {[...researchProfiles, { label: 'LinkedIn', href: profile.linkedin }, { label: 'GitHub', href: profile.github }].map(({ label, href }) => (
+            <SiteLink href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>
+          ))}
         </nav>
       </div>
     </div>

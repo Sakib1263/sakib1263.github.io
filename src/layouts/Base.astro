@@ -4,7 +4,7 @@ import '../styles/theme.css';
 import '../styles/site.css';
 import { getImage } from 'astro:assets';
 import portrait from '../assets/sakib-mahmud.jpg';
-import { navigation, profile, sitePath } from '../lib/site';
+import { navigation, profile, researchProfiles, sitePath } from '../lib/site';
 import { colorModeKey, themeBackgrounds, themeCss } from '../lib/themes';
 
 const { title, description = profile.bio, shareImage = portrait, largeShareImage = false, noIndex = false } = Astro.props;
@@ -26,7 +26,7 @@ const structuredData = {
     worksFor: { '@type': 'CollegeOrUniversity', name: profile.affiliation, department: { '@type': 'Organization', name: profile.department } },
     alumniOf: { '@type': 'CollegeOrUniversity', name: profile.affiliation },
     knowsAbout: ['Biomedical machine learning', 'Wearable biomechanics', 'Medical image segmentation', 'Physiological signal processing', 'Raman spectroscopy'],
-    sameAs: [profile.orcid, profile.scholar, profile.github, profile.linkedin, profile.researchGate],
+    sameAs: [...researchProfiles.map(({ href }) => href), profile.github, profile.linkedin],
   },
 };
 ---
@@ -106,6 +106,7 @@ const structuredData = {
           <SiteLink href={profile.github}>GitHub</SiteLink>
           <SiteLink href={profile.scholar}>Google Scholar</SiteLink>
           <SiteLink href={profile.orcid}>ORCID</SiteLink>
+          <SiteLink href={profile.linkedin}>LinkedIn</SiteLink>
         </nav>
       </div>
     </footer>
