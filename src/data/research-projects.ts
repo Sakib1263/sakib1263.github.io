@@ -235,8 +235,8 @@ const selections = {
   // Newest first: latest year, then latest start year, from project dates or paper years.
   signals: [
     'wearable-cardiac-waveforms', 'contactless-cardiovascular-waveforms', 'multimodal-glucose-estimation',
-    'ecg-restoration-during-mri', 'fetal-ecg-extraction', 'eeg-artefact-restoration',
-    'qscare-doppler-flow', 'nabnet',
+    'mechanocardiogram-to-ecg', 'ecg-restoration-during-mri', 'fetal-ecg-extraction', 'eeg-artefact-restoration',
+    'qscare-doppler-flow', 'presymptomatic-covid-wearables', 'nabnet', 'qucoughscope-covid-audio', 'ppg-respiration-rate',
   ],
   spectroscopy: [raman.slug],
   devices: ['aortic-wall-shear-stress', 'exoventq-ventilation', 'hip-implant-mechanics-and-imaging', 'ecmo-cannulation-simulator'],

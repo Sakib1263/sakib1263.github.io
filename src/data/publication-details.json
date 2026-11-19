@@ -133,7 +133,7 @@
   },
   "10.1016/j.engappai.2023.106130": {
     "summary": "Used a convolutional variational autoencoder with LSTM features to identify unusual resting heart rate patterns in smartwatch records. The study examined anomalies before and after symptom onset in a cohort of 68 people with COVID-19.",
-    "contribution": "I contributed to method and experiment analysis, interpretation, and manuscript review."
+    "contribution": "I contributed to the software, method and experiment analysis, interpretation, and manuscript review and editing."
   },
   "10.3390/bioengineering10050542": {
     "summary": "Detected ECG R peaks under magnetohydrodynamic distortion from MRI. The study evaluated an attention-based detector on 3- and 7-tesla recordings.",
@@ -177,7 +177,7 @@
   },
   "10.3390/bioengineering9100558": {
     "summary": "Estimated respiration rate directly from PPG with a compact ConvMixer network. The study evaluated two public datasets and tested limited fine-tuning across datasets.",
-    "contribution": "I contributed to data curation, technical analysis, and manuscript review."
+    "contribution": "I contributed to data curation, formal analysis and methodology, and to drafting the manuscript."
   },
   "10.3390/polym14204308": {
     "summary": "Reviewed biomaterial selection and preclinical finite element evaluation for total hip implants, covering the effects of stiffness mismatch, stress shielding, wear, fatigue, and micromotion.",
@@ -193,7 +193,7 @@
   },
   "10.3390/diagnostics12040920": {
     "summary": "Compared cough and breath audio for classifying COVID-19 in symptomatic and asymptomatic groups and integrated the classification workflow into an application prototype.",
-    "contribution": "I contributed to technical analysis and validation of the audio pipeline, interpretation, and manuscript review."
+    "contribution": "I contributed to the investigation and methodology, including technical analysis and validation of the audio pipeline, and to drafting the manuscript."
   },
   "10.3390/s22030919": {
     "summary": "Estimated blood pressure from PPG and ECG with a shallow one-dimensional U-Net. Evaluation used records from 942 MIMIC-II patients and an external dataset of 40 participants.",

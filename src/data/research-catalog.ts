@@ -23,6 +23,10 @@ import { climateRiskProgress, climateRiskVisual } from './climate-risk-milestone
 import { wasteClassificationProgress, wasteClassificationVisual } from './waste-classification-milestones';
 import { gearboxFaultProgress, gearboxFaultVisual } from './gearbox-fault-milestones';
 import { vaccineAttitudesProgress, vaccineAttitudesVisual } from './vaccine-attitudes-milestones';
+import { covidWearableProgress, covidWearableVisual, pcovNetDoi, pcovNetPlusDoi } from './covid-wearable-milestones';
+import { quCoughScopeDoi, quCoughScopeProgress, quCoughScopeVisual } from './qucoughscope-milestones';
+import { m2ecgDoi, m2ecgProgress, m2ecgVisual } from './m2ecg-milestones';
+import { respirationRateDoi, respirationRateProgress, respirationRateVisual } from './respiration-rate-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -396,6 +400,63 @@ const signals: ResearchProject[] = [
     contribution: 'I contributed to the machine learning and physiological signal analysis for the glucose monitoring framework, including technical evaluation and manuscript review.',
     scope: 'The models were developed on 139 participants recorded at rest, so larger and more diverse cohorts are needed. Blood pressure is currently measured separately and entered in the application. Severity classification used stratified cross-validation across samples, and longer-term testing during daily use is still required before clinical use.',
     visual: quGmVisual,
+  },
+  {
+    slug: 'presymptomatic-covid-wearables', area: 'Physiological signal processing',
+    title: 'Presymptomatic COVID-19 detection from smartwatch heart rate',
+    summary: 'Personalised anomaly detection on smartwatch resting heart rate that flags COVID-19 infection, often before symptoms begin.',
+    question: 'Can changes in resting heart rate recorded by consumer smartwatches reveal COVID-19 infection before symptoms appear?',
+    doi: pcovNetDoi,
+    papers: [pcovNetPlusDoi],
+    context: 'Qatar University · Qatar National Research Fund UREP28-144-3-046',
+    approach: 'COVID-19 spreads before symptoms appear, and RT-PCR testing rarely happens that early. Smartwatches and fitness trackers already record heart rate and steps around the clock. This project treated infection as an anomaly in each person\'s resting heart rate: a model learns that person\'s normal pattern from the weeks before illness and flags periods it cannot reconstruct. Both studies used public Fitbit data from a Stanford University study of COVID-19.',
+    workflow: ['Derive resting heart rate', 'Learn each person\'s normal pattern', 'Flag anomalies around symptom onset'],
+    progress: covidWearableProgress,
+    contribution: 'For PCovNet, I contributed to the wearable-data analysis, model evaluation, interpretation and manuscript review. For PCovNet+, I worked on the software and on the analysis of the method and experiments, and reviewed and edited the manuscript.',
+    scope: 'Both studies used one public cohort of Fitbit users with self-reported symptom onset, and the infectious period was set from the literature rather than measured for each person. Resting heart rate also changes with other illnesses, stress and daily routine, so a flag points to possible infection rather than a diagnosis. Prospective testing would be needed before real-world use.',
+    visual: covidWearableVisual,
+  },
+  {
+    slug: 'qucoughscope-covid-audio', area: 'Physiological signal processing',
+    title: 'QUCoughScope: COVID-19 screening from cough and breath sounds',
+    summary: 'A web and mobile application that records cough and breath sounds and screens for COVID-19 with stacked deep learning models, for people with and without symptoms.',
+    question: 'Can cough and breath recordings made at home screen for COVID-19 in people with and without symptoms?',
+    doi: quCoughScopeDoi,
+    context: 'Qatar University · Qatar National Research Fund UREP28-144-3-046',
+    approach: 'Many people with COVID-19 have no symptoms and are unlikely to be tested, so they can spread the virus without knowing it, while RT-PCR testing is invasive and depends on clinical resources. Earlier studies suggested that infection changes how people cough and breathe. QUCoughScope combined a public cough and breath dataset with recordings crowdsourced through its own application, trained stacked deep learning models on sound spectrograms, and deployed the best models behind an application that returns a screening result to the user.',
+    workflow: ['Collect cough and breath recordings', 'Classify sound spectrograms', 'Return a screening result in the app'],
+    progress: quCoughScopeProgress,
+    contribution: 'I contributed to the investigation and methodology, including the technical analysis and validation of the audio classification pipeline, and to drafting the manuscript.',
+    scope: 'Recordings came from volunteers who chose to take part, and COVID-19 status and symptoms were reported by participants. The crowdsourced group with symptoms was small, and performance was measured with five-fold cross-validation rather than on a separate prospective cohort. The application is intended as pre-screening to prioritise testing, not as a diagnostic test.',
+    visual: quCoughScopeVisual,
+  },
+  {
+    slug: 'mechanocardiogram-to-ecg', area: 'Physiological signal processing',
+    title: 'ECG estimation from wearable mechanocardiograms',
+    summary: 'Reconstructing ECG waveforms from chest-worn accelerometer and gyroscope signals with a deeply supervised 1D segmentation network, then recovering heart rate and its variability.',
+    question: 'Can chest vibration and rotation signals from a wearable motion sensor reconstruct an ECG accurate enough to measure heart rate and its variability?',
+    doi: m2ecgDoi,
+    context: 'Qatar University, University of Dhaka and Prince Sattam Bin Abdulaziz University · Prince Sattam Bin Abdulaziz University project PSAU/2023/R/1444',
+    approach: 'Wearable ECG relies on electrodes that can loosen or degrade during long use. A chest-worn motion sensor can instead record seismocardiograms (SCG), the chest vibrations from each heartbeat, and gyrocardiograms (GCG), the chest rotations; together these are called mechanocardiograms. M2ECG treated translation from mechanocardiogram to ECG as a 1D segmentation problem, so that one motion sensor could provide an ECG-like signal for cardiac monitoring.',
+    workflow: ['Preprocess SCG and GCG', 'Reconstruct ECG with DS-SA-UNet', 'Measure heart rate and variability'],
+    progress: m2ecgProgress,
+    contribution: 'I contributed to the methodology, data analysis, model evaluation, interpretation and manuscript review.',
+    scope: 'The model was trained and tested on healthy male volunteers at rest, with three volunteers held out in a single split. Recordings from people with coronary artery disease were not used, so reconstruction of abnormal ECGs was not tested. The study presents mechanocardiograms as a complement to ECG rather than a replacement.',
+    visual: m2ecgVisual,
+  },
+  {
+    slug: 'ppg-respiration-rate', area: 'Physiological signal processing',
+    title: 'Respiration rate estimation from PPG',
+    summary: 'A lightweight ConvMixer network that estimates breathing rate directly from photoplethysmogram signals, tested within and across public datasets.',
+    question: 'Can a compact deep learning model estimate respiration rate directly from PPG accurately enough for continuous monitoring?',
+    doi: respirationRateDoi,
+    context: 'Qatar University and Universiti Kebangsaan Malaysia · Qatar National Research Fund NPRP12S-0227-190164',
+    approach: 'Respiration rate is a key vital sign, but outside intensive care it is often counted by hand. PPG sensors in pulse oximeters and wearables already capture breathing-related changes in the pulse. This study estimated respiration rate end to end from short PPG windows, without hand-crafted features, and examined how well a model trained on one population transfers to another.',
+    workflow: ['Clean and segment PPG', 'Estimate respiration rate with ConvMixer', 'Test across datasets'],
+    progress: respirationRateProgress,
+    contribution: 'I contributed to data curation, formal analysis and methodology, and to drafting the manuscript.',
+    scope: 'Both datasets were recorded at rest with clinical or laboratory PPG rather than wearable devices in daily life. Results within each dataset come from five-fold cross-validation, and testing during movement and on wearable hardware would be needed before continuous monitoring.',
+    visual: respirationRateVisual,
   },
 ];
 

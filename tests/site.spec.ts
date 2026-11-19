@@ -41,7 +41,7 @@ test('research areas lead to project details, supporting publications, and ongoi
   await page.goto('/research/');
   const researchAreas = page.getByRole('navigation', { name: 'Research areas', exact: true });
   await expect(researchAreas.getByRole('link')).toHaveCount(8);
-  await expect(page.locator('[data-research-project-row]')).toHaveCount(33);
+  await expect(page.locator('[data-research-project-row]')).toHaveCount(37);
   await researchAreas.getByRole('link', { name: 'Biomedical devices & simulation' }).click();
   await expect(page).toHaveURL('/research/#devices');
   await page.getByRole('link', { name: 'Computational and AI methods for total hip implants', exact: true }).click();
@@ -108,7 +108,7 @@ test('research search matches methods, updates areas, and restores the catalogue
   const form = page.getByRole('form', { name: 'Filter research projects' });
   const search = form.getByRole('searchbox', { name: 'Search projects' });
   const areas = page.getByRole('navigation', { name: 'Research areas', exact: true });
-  await expect(form.getByRole('status')).toHaveText('33 entries');
+  await expect(form.getByRole('status')).toHaveText('37 entries');
   await search.fill('Instrumented treadmill');
   await expect(page.locator('#smart-insole-3d-gait-kinetics')).toBeVisible();
   await search.fill('five shoe-mounted markers');
@@ -116,13 +116,13 @@ test('research search matches methods, updates areas, and restores the catalogue
   await search.fill('Döppler');
   await expect(page.locator('#qscare-doppler-flow')).toBeVisible();
   await expect(page.locator('#microbial-raman-biosensing')).toBeHidden();
-  await expect(form.getByRole('status')).toHaveText('1 of 33 entries');
+  await expect(form.getByRole('status')).toHaveText('1 of 37 entries');
   await expect(areas.getByRole('link', { name: /Raman/ })).toHaveCount(0);
   await search.fill('no such research project xyz');
-  await expect(form.getByRole('status')).toHaveText('0 of 33 entries');
+  await expect(form.getByRole('status')).toHaveText('0 of 37 entries');
   await expect(page.getByText('Try a different project name, method, or modality.')).toBeVisible();
   await form.getByRole('button', { name: 'Clear search' }).click();
-  await expect(form.getByRole('status')).toHaveText('33 entries');
+  await expect(form.getByRole('status')).toHaveText('37 entries');
   await expect(search).toBeFocused();
   await page.locator('#microbial-raman-biosensing').getByRole('heading').getByRole('link').click();
   await expect(page).toHaveURL('/research/projects/microbial-raman-biosensing/');
@@ -451,6 +451,24 @@ test('citation chart stays still for reduced motion', async ({ browser }) => {
   await expect(snapshot).not.toHaveAttribute('data-animate');
   await expect(snapshot.locator('.citation-bar').first()).toHaveCSS('transform', 'none');
   await context.close();
+});
+
+test('the four new signal projects follow the research page format', async ({ page }) => {
+  const projects = [
+    ['presymptomatic-covid-wearables', 'Presymptomatic COVID-19 detection from smartwatch heart rate', ['Approach', 'PCovNet', 'PCovNet+'], 2],
+    ['qucoughscope-covid-audio', 'QUCoughScope: COVID-19 screening from cough and breath sounds', ['Approach', 'Recordings', 'Stacking model', 'Application'], 1],
+    ['mechanocardiogram-to-ecg', 'ECG estimation from wearable mechanocardiograms', ['Approach', 'Data and channels', 'ECG reconstruction', 'Heart rate and HRV'], 1],
+    ['ppg-respiration-rate', 'Respiration rate estimation from PPG', ['Approach', 'Model comparison', 'Across datasets'], 1],
+  ] as const;
+  for (const [slug, title, nav, papers] of projects) {
+    await page.goto('/research/');
+    await expect(page.getByRole('link', { name: title, exact: true })).toHaveAttribute('href', `/research/${slug}/`);
+    await page.goto(`/research/${slug}/`);
+    await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+    await expect(page.locator('.research-project-intro a[target="_blank"]')).toHaveCount(0);
+    await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText([...nav]);
+    await expect(page.getByRole('region', { name: 'Publications', exact: true }).getByRole('link')).toHaveCount(papers);
+  }
 });
 
 test('miscellaneous studies have their own research area link', async ({ page }) => {
