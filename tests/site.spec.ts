@@ -152,8 +152,8 @@ test('the research catalogue retains the case studies and their distinct share c
   await page.goto('/research/#wearable-foot-kinetics');
   await expect(page.locator('#smart-insole-3d-gait-kinetics')).toBeInViewport();
   await expect(page.locator('#plantar-sensing-for-diabetic-foot')).toHaveCount(1);
-  await expect(page.getByRole('region', { name: 'Additional studies' })
-    .getByRole('link', { name: 'GearFaultNet', exact: false })).toHaveAttribute('href', '/research/gearbox-fault-detection/');
+  await expect(page.getByRole('region', { name: 'Miscellaneous studies' })
+    .getByRole('link', { name: 'gearbox fault detection', exact: false })).toHaveAttribute('href', '/research/gearbox-fault-detection/');
   const images = new Set<string>();
   for (const slug of slugs) {
     await page.goto(`/research/${slug}/`);
@@ -388,6 +388,25 @@ test('waste classification project presents its stages and linked paper', async 
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Data preparation', 'Garbage detection', 'Waste types']);
   await page.goto('/publications/');
   await expect(page.locator('[data-doi="10.1016/j.wasman.2023.12.014"] a[href*="recyclable-waste-classification"]').first()).toBeAttached();
+});
+
+test('gearbox fault project presents its stages and linked paper', async ({ page }) => {
+  const title = 'Lightweight deep learning for early gearbox fault detection';
+  await page.goto('/research/');
+  await expect(page.getByRole('link', { name: title, exact: true })).toBeVisible();
+  await page.goto('/research/gearbox-fault-detection/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Data preparation', 'GearFaultNet', 'Results']);
+  await page.goto('/publications/');
+  await expect(page.locator('[data-doi="10.1109/access.2024.3412274"] a[href*="gearbox-fault-detection"]').first()).toBeAttached();
+});
+
+test('miscellaneous studies have their own research area link', async ({ page }) => {
+  await page.goto('/research/');
+  const link = page.locator('[data-research-area="miscellaneous"] a');
+  await expect(link).toHaveAttribute('href', '#miscellaneous');
+  await expect(link).toContainText('Miscellaneous studies');
+  await expect(page.locator('#miscellaneous')).toHaveText('Miscellaneous studies');
 });
 
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {

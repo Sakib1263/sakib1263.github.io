@@ -301,4 +301,4 @@ export const projectAreas = researchStudyAreas.map(({ id, title, description }) 
 }));
 
 const selectedSlugs = new Set(projectAreas.flatMap(area => area.entries.flatMap(({ slug, aliases }) => [slug, ...aliases])));
-export const additionalStudies = researchStudies.filter(study => !selectedSlugs.has(study.slug));
+export const miscellaneousStudies = researchStudies.filter(study => !selectedSlugs.has(study.slug));

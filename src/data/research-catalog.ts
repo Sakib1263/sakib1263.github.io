@@ -10,7 +10,6 @@ import covidPipeline from '../assets/research/covid-chest-imaging/fig3-pipeline.
 import curvaturePipeline from '../assets/research/image-based-curvature-measurement/fig1-pipeline.jpg';
 import sepsisWorkflow from '../assets/research/sers-sepsis-recognition/fig1-workflow.png';
 import sepsisEmbeddings from '../assets/research/sers-sepsis-recognition/fig5-embeddings.png';
-import gearboxConfusion from '../assets/research/gearbox-fault-detection/fig7-confusion-matrix.png';
 import { dspnApproach, dspnPosterUrl, dspnProgress, dspnReportUrl, dspnVisual, dspnWorkflow } from './dspn-project';
 import { covidProgress, curvatureProgress, liverApproachFigures, liverProgress } from './imaging-milestones';
 import { aorticWssProgress, aorticWssVisual } from './aortic-wss-milestones';
@@ -22,6 +21,7 @@ import { smartMeterProgress, smartMeterVisual } from './smart-meter-milestones';
 import { evChargingProgress, evChargingVisual } from './ev-charging-milestones';
 import { climateRiskProgress, climateRiskVisual } from './climate-risk-milestones';
 import { wasteClassificationProgress, wasteClassificationVisual } from './waste-classification-milestones';
+import { gearboxFaultProgress, gearboxFaultVisual } from './gearbox-fault-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -690,19 +690,17 @@ const engineering: ResearchProject[] = [
   },
   {
     slug: 'gearbox-fault-detection', area: 'Applied machine learning',
-    title: 'GearFaultNet vibration-based fault detection',
-    summary: 'A lightweight one-dimensional classifier for detecting gearbox faults from multichannel vibration measurements.',
+    title: 'Lightweight deep learning for early gearbox fault detection',
+    summary: 'GearFaultNet, a compact one-dimensional network that flags a broken gear from four-channel vibration signals, tested on loading conditions it had not seen in training.',
+    question: 'Can a small one-dimensional network detect a broken gear from vibration signals reliably enough for real-time monitoring, even under loads it was not trained on?',
     doi: '10.1109/access.2024.3412274',
-    approach: 'The study classified faults from four vibration channels and evaluated a compact network against ResNet baselines. The comparison examined fault recognition and model complexity on the study recordings.',
-    result: 'GearFaultNet reached 94.04% overall accuracy, correctly classifying 92% of broken-gear windows and 96% of healthy windows.',
+    context: 'Qatar University and Kennesaw State University',
+    approach: 'Gearboxes transmit power in wind and hydro turbines, generators and pumps, and in wind turbines they cause more downtime than any other component. Faults found late lead to unplanned shutdowns and costly repairs. Many detection methods rely on heavy preprocessing or large models that are hard to run in real time. This study built GearFaultNet, a shallow one-dimensional convolutional network that labels short windows of vibration as healthy or broken after simple normalisation.',
+    workflow: ['Segment and normalise vibration signals', 'Classify each window with GearFaultNet', 'Test on unseen loading conditions'],
+    progress: gearboxFaultProgress,
     contribution: 'I contributed to model evaluation, quantitative analysis, interpretation and manuscript review.',
-    visual: {
-      image: gearboxConfusion,
-      alt: 'Two-by-two confusion matrix. 92% of broken-gear windows (3,409) and 96% of healthy windows (3,634) are classified correctly. 8% of broken-gear windows are labelled healthy and 4% of healthy windows are labelled broken.',
-      caption: 'Figure 7 from Dutta et al. (2024). Overall confusion matrix for gear fault detection with GearFaultNet.',
-      credit: sourceArticle('10.1109/access.2024.3412274'),
-      licence: ccBy,
-    },
+    scope: 'The study used one public test-rig dataset with a single fault, a broken gear, compared with healthy operation. Other fault types, gearboxes and sensor layouts were not tested, and the model recognised healthy windows more reliably than broken ones.',
+    visual: gearboxFaultVisual,
   },
   {
     slug: 'recyclable-waste-classification', area: 'Applied machine learning',
