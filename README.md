@@ -64,7 +64,7 @@ The build check verifies internal files and anchors, figure credits, the PDF dow
 
 In the repository's **Settings → Pages**, select **GitHub Actions** as the source. The [Pages workflow](.github/workflows/pages.yml) checks pull requests and deploys updates to `main` after verification passes.
 
-The default canonical origin is `https://sakib1263.github.io`. If moving the site to a different origin or a project subdirectory, configure `SITE_URL` and, when applicable, `SITE_BASE` in the build environment. [Astro deployment guide](https://docs.astro.build/en/guides/deploy/github/)
+The default canonical origin is the custom domain `https://sakibmahmud.dev`, set in the repository's Pages settings with DNS records at Cloudflare. GitHub redirects `sakib1263.github.io` to it. If moving the site to a different origin or a project subdirectory, configure `SITE_URL` and, when applicable, `SITE_BASE` in the build environment. [Astro deployment guide](https://docs.astro.build/en/guides/deploy/github/)
 
 The Google verification file in `public/` supports Search Console ownership on the current domain. The sitemap for Search Console is available at `/sitemap.xml`.
 
