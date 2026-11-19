@@ -2,7 +2,7 @@
 import SiteLink from '../../components/SiteLink.astro';
 import ResearchSnapshot from '../../components/ResearchSnapshot.astro';
 import Base from '../../layouts/Base.astro';
-import { additionalStudies, projectAreas } from '../../data/research-projects';
+import { additionalStudies, periodYears, projectAreas } from '../../data/research-projects';
 import { sitePath } from '../../lib/site';
 import '../../styles/catalog.css';
 import '../../styles/research.css';
@@ -56,7 +56,7 @@ const projectCount = projectAreas.reduce((total, area) => total + area.entries.l
               <article class="catalog-entry research-entry" id={entry.slug} data-research-project-row data-methods={entry.searchText}>
                 <div class="catalog-meta">
                   {entry.aliases.map(slug => <span id={slug} class="research-anchor" aria-hidden="true"></span>)}
-                  {entry.period && <span class="research-period">{entry.period}</span>}
+                  {entry.period && <span class="research-period">{periodYears(entry.period)}</span>}
                 </div>
                 <div>
                   <h3><SiteLink href={sitePath(entry.path)}>{entry.title}</SiteLink></h3>

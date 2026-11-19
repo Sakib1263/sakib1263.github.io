@@ -699,11 +699,42 @@ const engineering: ResearchProject[] = [
   },
   {
     slug: 'rotational-piezoelectric-harvesting', area: 'Intelligent energy systems',
-    title: 'Rotational piezoelectric energy harvesting',
-    summary: 'Combining analytical and prototype work to study how magnetic oscillators affect operation across rotation speeds.',
-    doi: '10.1007/978-981-97-3302-6_3',
-    approach: 'The study pairs a rotational piezoelectric harvester with magnetic oscillators to broaden the operating bandwidth. It evaluates the design using modelling and prototype measurements.',
-    contribution: 'I contributed to technical analysis, interpretation and manuscript review.',
+    title: 'Broadband piezoelectric energy harvesting from rotating systems',
+    summary: 'A piezoelectric beam on a rotating disk, with magnetic coupling to widen the range of speeds at which it produces useful voltage.',
+    question: 'Can magnetic coupling help a rotating piezoelectric harvester produce useful voltage across a wider operating range than a conventional narrowband design?',
+    doi: '10.1007/978-981-97-3302-6_3', period: '2023–2024',
+    context: 'Qatar University · Developed from an MSc course project · Qatar University grant IRCC-2020-017',
+    approach: 'Low-power wireless sensors need long-lasting power sources, but conventional vibration harvesters respond well only in a narrow frequency band. That limits long-term use when operating conditions change. Rotating systems behave nonlinearly, which can be exploited to widen this band. This study placed a piezoelectric harvester on one side of a rotating disk and examined whether gravity and magnetic couplers at the ends of the beam could broaden its response and raise its voltage output.',
+    workflow: ['Model the coupled beam', 'Simulate mode shapes and output', 'Compare coupled and uncoupled designs'],
+    progress: [
+      {
+        id: 'design-and-analysis',
+        navLabel: 'Design and analysis',
+        title: 'Magnetically coupled harvester on a rotating disk',
+        status: 'Book chapter · 2024',
+        paragraphs: [
+          'The harvester uses a beam with a macro-fiber composite, a flexible piezoelectric layer that converts bending into voltage. As the disk turns, gravity and magnetic couplers at the beam ends add nonlinear forces that shape how the beam vibrates.',
+          'An analytical model derived from Euler–Bernoulli beam theory described the magnetically coupled structure. Finite element analysis then examined the beam\'s mode shapes and estimated the output of the rotational harvester.',
+          'Adding the magnetic couplers broadened the operating bandwidth. With an optimal separation distance between the magnets, the coupled models reached a maximum output of 1.3 V at speeds of up to 3,000 rpm.',
+        ],
+        measures: [
+          { value: '1.3 V', label: 'Maximum voltage from the coupled models' },
+          { value: '3,000 rpm', label: 'Rotation speeds considered, up to' },
+        ],
+        table: {
+          caption: 'Elements of the harvester design and their roles.',
+          columns: ['Role'],
+          rows: [
+            { label: 'Rotating disk', cells: ['Supplies the motion, with gravity acting on the beam as it turns'] },
+            { label: 'Macro-fiber composite beam', cells: ['Converts beam bending into electrical voltage'] },
+            { label: 'Magnetic couplers', cells: ['Add coupling at the beam ends to broaden the bandwidth and raise the voltage'] },
+            { label: 'Analytical and finite element models', cells: ['Describe the coupled dynamics, mode shapes and expected output'] },
+          ],
+        },
+      },
+    ],
+    contribution: 'I contributed to the technical analysis of the harvesting concept, interpretation of the results and manuscript review.',
+    scope: 'The reported output comes from the study\'s models and design settings. Performance in a deployed rotating system would depend on its speed range and operating conditions.',
   },
   {
     slug: 'vaccine-attitudes-analysis', area: 'Applied machine learning',

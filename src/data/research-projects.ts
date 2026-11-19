@@ -249,6 +249,17 @@ const selections = {
   engineering: ['e-tawfeer-energy-management', 'rotational-piezoelectric-harvesting', 'smart-meter-load-and-occupancy', 'ev-charging-demand'],
 };
 
+const monthName = /\b(January|February|March|April|May|June|July|August|September|October|November|December)\b/;
+
+/** Shows a date range by year only, e.g. "August 2024–June 2025" becomes "2024–2025". Any detail after " · " is kept. */
+export function periodYears(period: string) {
+  const [range, ...detail] = period.split(' · ');
+  if (!monthName.test(range)) return period;
+  const years = [...new Set(range.match(/\d{4}/g) ?? [])];
+  const end = /present/i.test(range) ? ['present'] : [];
+  return [[...years, ...end].join('–'), ...detail].join(' · ');
+}
+
 /** A study without project dates is dated by the publication years of its papers, e.g. "2023–2024". */
 function studyPeriod(study: ReturnType<typeof researchStudyFor>) {
   if (study.period) return study.period;
