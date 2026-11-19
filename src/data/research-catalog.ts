@@ -20,6 +20,7 @@ import { ecmoProgress, ecmoVisual } from './ecmo-milestones';
 import { energyAiProgress, energyAiVisual } from './energy-ai-milestones';
 import { smartMeterProgress, smartMeterVisual } from './smart-meter-milestones';
 import { evChargingProgress, evChargingVisual } from './ev-charging-milestones';
+import { climateRiskProgress, climateRiskVisual } from './climate-risk-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -669,12 +670,22 @@ const engineering: ResearchProject[] = [
   },
   {
     slug: 'climate-geopolitical-risk', area: 'Applied machine learning',
-    title: 'Geospatial analysis for climate and geopolitical risk',
-    summary: 'Using satellite imagery and land-cover information in a team project on water and energy infrastructure risk in West and Central Africa.',
-    period: 'July–October 2021', context: 'Omdena and Finz',
-    approach: 'My workstream processed geospatial inputs and developed a TensorFlow pipeline for multiclass satellite-image segmentation. The wider team used public data, including satellite imagery and land cover, to build climate and geopolitical risk scores.',
-    contribution: 'I led a task within the international team and implemented remote-sensing preparation and segmentation workflows.',
-    resources: [{ label: 'Omdena project and reported outcomes', href: 'https://www.omdena.com/projects/geopolitical-risks' }],
+    title: 'Satellite image segmentation for climate and geopolitical risk',
+    summary: 'A multiclass segmentation pipeline that maps buildings, vegetation, water and other classes from satellite images, built for a team project on risks to water and energy financing in West and Central Africa.',
+    question: 'Can deep segmentation models map buildings, vegetation and water from satellite images well enough to add local detail to climate and geopolitical risk scores?',
+    period: 'July–October 2021',
+    status: 'Completed team project',
+    context: 'Omdena AI challenge · Project partner Finz',
+    approach: 'Finz helps governments, banks and foundations finance small water and energy units in urban and rural areas. In this eight-week Omdena challenge, an international team studied how climate hazards and geopolitical events threaten such assets in Togo, northern Côte d\'Ivoire and Cameroon. The team built a flood risk map for Togo and a geopolitical risk score from historical conflict events. My task added a satellite-image pipeline to map buildings, vegetation and water around a site.',
+    workflow: ['Select and prepare satellite data', 'Train and compare U-Net models', 'Test on Sentinel-2 images'],
+    progress: climateRiskProgress,
+    contribution: 'As Junior Machine Learning Engineer and leader of Task 4, I selected the dataset, built the TensorFlow segmentation pipeline, trained and compared the U-Net models, tested them on Sentinel-2 images and wrote the task report. I also worked with the other task teams on the overall model architecture.',
+    scope: 'The models were trained on one labelled dataset from a single region, and the Sentinel-2 check was visual because those images had no labels. Within the eight weeks, the pipeline remained a separate tool and was not merged into the team\'s risk scores.',
+    resources: [
+      { label: 'Omdena project and reported outcomes', href: 'https://www.omdena.com/projects/geopolitical-risks' },
+      { label: 'Segmentation models in TensorFlow (GitHub)', href: 'https://github.com/Sakib1263/TF-1D-2D-Segmentation-End2EndPipelines' },
+    ],
+    visual: climateRiskVisual,
   },
   {
     slug: 'gearbox-fault-detection', area: 'Applied machine learning',

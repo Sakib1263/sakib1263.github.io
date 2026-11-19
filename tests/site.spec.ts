@@ -369,6 +369,16 @@ test('smart-meter project presents its stages and linked papers', async ({ page 
   }
 });
 
+test('satellite segmentation project presents its stages and model comparison', async ({ page }) => {
+  const title = 'Satellite image segmentation for climate and geopolitical risk';
+  await page.goto('/research/');
+  await expect(page.getByRole('link', { name: title, exact: true })).toBeVisible();
+  await page.goto('/research/climate-geopolitical-risk/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(title);
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Dataset selection', 'Pipeline', 'Model comparison', 'Sentinel-2 and risk']);
+  await expect(page.getByRole('table').filter({ hasText: 'MultiResUNet' })).toContainText('0.727');
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();
