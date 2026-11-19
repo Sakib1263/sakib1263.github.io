@@ -19,6 +19,7 @@ import { hipImplantProgress, hipImplantVisual } from './hip-implant-milestones';
 import { ecmoProgress, ecmoVisual } from './ecmo-milestones';
 import { energyAiProgress, energyAiVisual } from './energy-ai-milestones';
 import { smartMeterProgress, smartMeterVisual } from './smart-meter-milestones';
+import { evChargingProgress, evChargingVisual } from './ev-charging-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -659,52 +660,12 @@ const engineering: ResearchProject[] = [
     context: 'Omdena AI challenge · Energy Tech Hub and Centre for New Energy Technologies (C4NET)',
     approach: 'Growing electric-vehicle use can create unexpected peak loads and voltage problems on distribution networks, yet tracking charging across many homes is costly. In this eight-week Omdena challenge, an international team of more than 45 contributors used smart-meter data to detect likely charging without extra sensors and to show when it tends to happen. The aim was to give distribution network service providers a clearer picture of charging demand for network planning, upgrades and operations.',
     workflow: ['Gather studies and data sources', 'Prepare and explore meter data', 'Flag likely charging periods'],
-    progress: [
-      {
-        id: 'resources',
-        navLabel: 'Resources',
-        title: 'Building a shared evidence base',
-        status: 'Task co-lead',
-        paragraphs: [
-          'Before modelling, the team needed a shared picture of how charging had been detected from meter data in earlier work. I co-led the resources task, which collected published studies and data sources in a shared library with short summaries.',
-          'The library included work on detecting charging from hourly smart-meter data and on machine learning for charging-infrastructure planning. References were sorted into essential and supporting reading so the other task teams knew where to start, and open datasets used in earlier studies were noted for further exploration.',
-        ],
-      },
-      {
-        id: 'data-exploration',
-        navLabel: 'Data exploration',
-        title: 'Comparing households with and without electric vehicles',
-        status: 'Team analysis',
-        paragraphs: [
-          'The team merged consumption records with power-quality measurements at a common half-hourly resolution, checked data quality and engineered summary features. It then compared households with and without electric vehicles across times of day, days of the week and seasons.',
-          'Households with electric vehicles used more electricity on average, especially in the evening and overnight. Not every night-time spike pointed to a vehicle, however. Some homes showed sharp peaks at the same time every night, a pattern more typical of loads switched on by timer, so separating such loads from charging became a central challenge.',
-        ],
-      },
-      {
-        id: 'charging-detection',
-        navLabel: 'Charging detection',
-        title: 'Flagging likely charging periods',
-        status: 'Delivered to project partners · February 2022',
-        paragraphs: [
-          'For households with electric vehicles, a clustering approach grouped half-hourly readings into low, medium and high consumption, using energy use, a rolling three-hour average and current. High-consumption spikes were flagged as likely charging periods.',
-          'The results were delivered as an Excel tool and a dashboard that show flagged periods by meter and date. The approach finds consumption spikes but cannot confirm on its own that a vehicle caused them. The team proposed follow-on work to identify households with electric vehicles, estimate charging power and recognise vehicle types.',
-        ],
-        table: {
-          caption: 'Main outputs of the challenge and their purpose.',
-          columns: ['Purpose'],
-          rows: [
-            { label: 'Resources library', cells: ['Gives every task team a common set of studies and data sources'] },
-            { label: 'Merged dataset', cells: ['Aligns consumption and power-quality measurements for analysis'] },
-            { label: 'Clustering model', cells: ['Flags consumption spikes that suggest charging'] },
-            { label: 'Excel tool and dashboard', cells: ['Lets network operators review flagged periods by meter and date'] },
-          ],
-        },
-      },
-    ],
+    progress: evChargingProgress,
     contribution: 'As Lead Machine Learning Engineer, I co-led the resources task, which compiled and organised the studies and data sources used across the challenge. I also contributed to the smart-meter analysis, including exploratory analysis, clustering and time-series modelling.',
-    scope: 'This was a collaborative project on partner data that cannot be shared, so the page describes the work without data or results. Flagged periods indicate likely rather than confirmed charging, because a consumption spike can also come from other household loads.',
+    scope: 'The analysis used one network\'s customer data over about 14 months, so patterns may differ elsewhere. Charging times were not recorded, so flagged periods indicate likely rather than confirmed charging, and a spike can also come from other household loads.',
     resources: [{ label: 'Omdena project and reported outcomes', href: 'https://www.omdena.com/projects/ai-ev-charging' }],
     relatedProjects: ['smart-meter-load-and-occupancy'],
+    visual: evChargingVisual,
   },
   {
     slug: 'climate-geopolitical-risk', area: 'Applied machine learning',
