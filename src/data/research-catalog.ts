@@ -18,6 +18,7 @@ import { aorticWssProgress, aorticWssVisual } from './aortic-wss-milestones';
 import { exoventqProgress, exoventqVisual } from './exoventq-milestones';
 import { hipImplantProgress, hipImplantVisual } from './hip-implant-milestones';
 import { ecmoProgress, ecmoVisual } from './ecmo-milestones';
+import { energyAiProgress, energyAiVisual } from './energy-ai-milestones';
 import { gaitAnalysisProgress, gaitAnalysisVisual } from './gait-milestones';
 import { contactlessProgress, contactlessVisual, dopplerFlowProgress, dopplerFlowVisual, eegRestorationProgress, eegRestorationVisual, fetalEcgProgress, fetalEcgVisual, mriEcgProgress, mriEcgVisual, quGmProgress, quGmVisual, ttrProgress, ttrVisual } from './signal-milestones';
 
@@ -617,7 +618,7 @@ const genomics: ResearchProject[] = [
 
 const engineering: ResearchProject[] = [
   {
-    slug: 'smart-meter-load-and-occupancy', area: 'Energy & applied machine learning',
+    slug: 'smart-meter-load-and-occupancy', area: 'Intelligent energy systems & climate analytics',
     title: 'Non-intrusive appliance load and occupancy estimation',
     summary: 'Using aggregate smart-meter signals to recover appliance events and infer when a building is occupied.',
     doi: '10.1016/j.jobe.2025.113731', code: 'https://github.com/Sakib1263/NILOM',
@@ -627,7 +628,8 @@ const engineering: ResearchProject[] = [
     contribution: 'I led the study design, data curation, modelling, validation and original drafting for the cascaded and feature-fusion studies as part of the Iberdrola collaboration.',
     workflow: ['Prepare multichannel smart-meter records', 'Infer appliance events', 'Estimate and validate occupancy'],
     scope: 'The results reflect the household, meter and occupancy-label characteristics of the evaluated data. A related study evaluates a separate occupancy model with environmental sensors.',
-    related: ['10.1016/j.buildenv.2025.112635', '10.1007/s00521-025-11348-6'],
+    related: ['10.1016/j.buildenv.2025.112635'],
+    relatedProjects: ['e-tawfeer-energy-management'],
     visual: {
       image: occupancyWeek,
       alt: 'Four panels, one per household, each comparing the ground-truth occupancy pulse in blue with the estimated occupancy in green over 168 hours. Most of each week is shaded green for correct estimates, with short red false-positive and blue false-negative periods.',
@@ -637,19 +639,23 @@ const engineering: ResearchProject[] = [
     },
   },
   {
-    slug: 'e-tawfeer-energy-management', area: 'Energy & applied machine learning',
-    title: 'E-Tawfeer: edge analytics for residential energy efficiency',
-    summary: 'Developing smart-plug analytics and reviewing deep reinforcement learning for energy-system decisions.',
+    slug: 'e-tawfeer-energy-management', area: 'Intelligent energy systems & climate analytics',
+    title: 'Edge AI and deep reinforcement learning for intelligent energy management',
+    summary: 'Occupancy sensing, privacy-preserving edge analytics and a broad review of deep reinforcement learning for energy systems.',
+    question: 'How can AI support adaptive energy decisions while keeping sensitive building and household data protected?',
     doi: '10.1016/j.rser.2025.116481',
-    period: 'August 2024–June 2025', context: 'Qatar University · Qatar National Research Fund project',
-    approach: 'The engineering work investigated smart plugs and distributed analytics for residential energy management, including federated learning. The linked review examines deep reinforcement learning across generation, storage, grid operations and market applications.',
-    result: 'The review maps decision problems to reinforcement learning approaches and discusses deployment challenges including safe operation and transfer from simulation.',
-    contribution: 'I contributed to smart-plug development and implemented federated-learning concepts. I led the review design, taxonomy, evidence synthesis, visualisation and writing.',
-    scope: 'The review synthesises published results. The engineering work documents development activity on the energy platform.',
+    related: ['10.1007/s00521-025-11348-6'],
+    period: 'August 2024–June 2025', status: 'Published studies and project development', context: 'E-Tawfeer project · Qatar University · Qatar National Research Fund NPRP14S-0401-210122',
+    approach: 'E-Tawfeer is a research project on a secure, edge-based energy-efficiency platform that uses AI to support behavioural change. Useful energy decisions depend on knowing how buildings are used, yet detailed occupancy and appliance data can expose private routines. This work moved from compact occupancy sensing, to smart plugs and privacy-preserving analytics, to a wider review of how learning agents can optimise energy systems.',
+    workflow: ['Sense building use', 'Analyse data near its source', 'Optimise energy decisions'],
+    progress: energyAiProgress,
+    contribution: 'I redesigned the occupancy CNN and contributed to the experiments, analysis and manuscript. I contributed to smart-plug design and development and implemented federated-learning concepts. I led the reinforcement learning review, including its design, literature synthesis, taxonomy, comparative analysis, visualisations and manuscript drafting and revision.',
+    scope: 'The occupancy results come from three public datasets, and wider testing across building types remains future work. The smart-plug and federated-learning work is presented as development activity, without performance claims. Findings in the review are those reported by the cited studies, and many depend on their simulation settings and benchmarks.',
     relatedProjects: ['smart-meter-load-and-occupancy'],
+    visual: energyAiVisual,
   },
   {
-    slug: 'ev-charging-demand', area: 'Energy & applied machine learning',
+    slug: 'ev-charging-demand', area: 'Intelligent energy systems & climate analytics',
     title: 'Electric-vehicle charging demand from smart meters',
     summary: 'Identifying household demand patterns and candidate charging periods to inform distribution network planning.',
     period: 'November 2021–February 2022', context: 'Omdena, Energy Tech Hub and Centre for New Energy Technologies',
@@ -658,7 +664,7 @@ const engineering: ResearchProject[] = [
     resources: [{ label: 'Omdena project and reported outcomes', href: 'https://www.omdena.com/projects/ai-ev-charging' }],
   },
   {
-    slug: 'climate-geopolitical-risk', area: 'Energy & applied machine learning',
+    slug: 'climate-geopolitical-risk', area: 'Intelligent energy systems & climate analytics',
     title: 'Geospatial analysis for climate and geopolitical risk',
     summary: 'Using satellite imagery and land-cover information in a team project on water and energy infrastructure risk in West and Central Africa.',
     period: 'July–October 2021', context: 'Omdena and Finz',
@@ -722,7 +728,7 @@ export const researchStudyAreas = [
   { id: 'spectroscopy', title: topics.spectroscopy, description: topicDescriptions.spectroscopy, projects: spectroscopy },
   { id: 'devices', title: topics.devices, description: 'Implants, clinical training simulators, ventilation, and computational haemodynamics.', projects: devices },
   { id: 'genomics', title: 'Computational genomics & reproducible analysis', description: 'RNA-seq analysis, candidate gene discovery and independent reproduction of cancer genomics studies.', projects: genomics },
-  { id: 'engineering', title: topics.engineering, description: topicDescriptions.engineering, projects: engineering },
+  { id: 'engineering', title: 'Intelligent energy systems & climate analytics', description: 'Edge AI, occupancy sensing, smart-meter analytics, electric-vehicle demand and climate-risk mapping.', projects: engineering },
 ] as const;
 
 export const researchStudies = researchStudyAreas.flatMap(group => group.projects);

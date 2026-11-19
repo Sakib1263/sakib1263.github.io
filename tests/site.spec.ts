@@ -343,6 +343,19 @@ test('genomics projects use their updated section and dates', async ({ page }) =
   await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'SYLVER', 'TRACERx Renal']);
 });
 
+test('energy AI project presents its section, stages and linked papers', async ({ page }) => {
+  await page.goto('/research/');
+  await expect(page.locator('#engineering')).toHaveText('Intelligent energy systems & climate analytics');
+  await expect(page.getByRole('link', { name: 'Edge AI and deep reinforcement learning for intelligent energy management', exact: true })).toBeVisible();
+  await page.goto('/research/e-tawfeer-energy-management/');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Edge AI and deep reinforcement learning for intelligent energy management');
+  await expect(page.getByRole('navigation', { name: 'Project sections' }).getByRole('link')).toContainText(['Approach', 'Occupancy sensing', 'Edge and privacy', 'DRL review']);
+  await page.goto('/publications/');
+  for (const doi of ['10.1007/s00521-025-11348-6', '10.1016/j.rser.2025.116481']) {
+    await expect(page.locator(`[data-doi="${doi}"] a[href*="e-tawfeer-energy-management"]`).first()).toBeAttached();
+  }
+});
+
 test('site navigation and section links stay in the current tab', async ({ page, context }) => {
   await page.goto('/');
   await page.getByRole('link', { name: 'Explore research' }).click();
