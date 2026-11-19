@@ -10,7 +10,7 @@ const finalPresentation = { label: 'Omdena EnergyHub team, final presentation (2
 export const evChargingVisual: NonNullable<ResearchProject['visual']> = {
   image: hourlyConsumption,
   alt: 'Bar chart of average half-hourly consumption by hour of day for households without (blue) and with (orange) an electric vehicle. Households with a vehicle use more at every hour, rising from about 0.25 kWh overnight lows to about 0.57 kWh at 19:00 and 20:00, compared with about 0.33 kWh at the evening peak for other households.',
-  caption: 'Average consumption by hour of day for households without (0) and with (1) an electric vehicle. From the team\'s final report.',
+  caption: 'Average consumption by hour of day for households without (0) and with (1) an electric vehicle. From the team’s final report.',
   credit: finalReport,
 };
 
@@ -41,7 +41,7 @@ export const evChargingProgress: ResearchPhase[] = [
       { value: '93%', label: 'Vehicle households in the medium or high consumption groups' },
     ],
     table: {
-      caption: 'Household groups identified in the exploratory analysis, from the team\'s final report.',
+      caption: 'Household groups identified in the exploratory analysis, from the team’s final report.',
       columns: ['Share of households', 'What the analysis showed'],
       rows: [
         { label: 'Electric vehicle owners', cells: ['5.6%', 'Higher use at every hour, especially from 18:00 to 05:00'] },
@@ -54,13 +54,13 @@ export const evChargingProgress: ResearchPhase[] = [
       {
         image: consumptionProfiles,
         alt: 'Grouped bar chart of the percentage of households in low, medium and high consumption groups. Without a vehicle: about 23% low, 56% medium and 20% high. With a vehicle: about 7% low, 35% medium and 58% high.',
-        caption: 'Share of households without (0) and with (1) an electric vehicle in each consumption group. Low is the first quartile, high the fourth and medium the range between. From the team\'s final report.',
+        caption: 'Share of households without (0) and with (1) an electric vehicle in each consumption group. Low is the first quartile, high the fourth and medium the range between. From the team’s final report.',
         credit: finalReport,
       },
       {
         image: eveningPeaks,
         alt: 'Two histograms of how many late-evening consumption peaks each household had in a year, with a zoomed lower panel. Households with a vehicle (orange) all have fewer than about 60 peaks, while a separate group of households without a vehicle (green) has between about 80 and 290 peaks, clustering near 170 to 180.',
-        caption: 'Number of consumption peaks at 23:00 or midnight per household in one year, for households without (0) and with (1) an electric vehicle. The lower panel zooms in on the upper one. From the team\'s final report.',
+        caption: 'Number of consumption peaks at 23:00 or midnight per household in one year, for households without (0) and with (1) an electric vehicle. The lower panel zooms in on the upper one. From the team’s final report.',
         credit: finalReport,
       },
     ],
@@ -92,8 +92,8 @@ export const evChargingProgress: ResearchPhase[] = [
     figures: [
       {
         image: chargingDashboard,
-        alt: 'Line chart of one household\'s half-hourly consumption over a day, with a second line for the charging flag. Consumption stays below about 1.3 kWh until late afternoon, jumps to about 4 kWh for about three and a half hours while the flag is 1, then falls back below 1 kWh.',
-        caption: 'Dashboard view for one household with an electric vehicle on a day in October: half-hourly consumption in kWh (blue) and the charging flag (orange). From the team\'s final presentation, cropped to remove the meter ID and filter settings.',
+        alt: 'Line chart of one household’s half-hourly consumption over a day, with a second line for the charging flag. Consumption stays below about 1.3 kWh until late afternoon, jumps to about 4 kWh for about three and a half hours while the flag is 1, then falls back below 1 kWh.',
+        caption: 'Dashboard view for one household with an electric vehicle on a day in October: half-hourly consumption in kWh (blue) and the charging flag (orange). From the team’s final presentation, cropped to remove the meter ID and filter settings.',
         credit: finalPresentation,
       },
     ],

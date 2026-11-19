@@ -471,6 +471,14 @@ test('the four new signal projects follow the research page format', async ({ pa
   }
 });
 
+test('papers on a project overview without their own study page link back to the overview', async ({ page }) => {
+  await page.goto('/publications/');
+  for (const doi of ['10.3390/s22197599', '10.1109/jsen.2023.3317768']) {
+    await expect(page.locator(`[data-doi="${doi}"]`).getByRole('link', { name: 'Research details', exact: true }))
+      .toHaveAttribute('href', '/research/projects/plantar-sensing-for-diabetic-foot/');
+  }
+});
+
 test('miscellaneous studies have their own research area link', async ({ page }) => {
   await page.goto('/research/');
   const link = page.locator('[data-research-area="miscellaneous"] a');

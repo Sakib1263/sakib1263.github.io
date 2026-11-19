@@ -65,7 +65,7 @@ export const dspnProgress: ResearchPhase[] = [
     id: 'classification',
     navLabel: 'Classifying gait',
     title: 'Classifying control, diabetic and ulcer gait',
-    status: 'QNRF UREP23-031-2-014 · 2020–2021',
+    status: 'Qatar National Research Fund UREP23-031-2-014 · 2020–2021',
     paragraphs: [
       'The COVID-19 lockdown in 2020 stopped data collection in hospitals and clinics, so the classifiers were developed on published force-plate recordings from Akashi et al. (2008, Clinical Biomechanics). Those recordings cover vertical ground reaction force and EMG from 76 people: 21 controls, 21 with diabetes but no ulcer, and 34 with current or previous foot ulcers. The force signals were segmented into steps and normalised, and 33 statistical, spectral and wavelet features were extracted for each subject.',
       'MATLAB’s Classification Learner was trained with five-fold cross-validation, holding out 20% of subjects in each fold. Fine k-nearest neighbours and quadratic, medium Gaussian and cubic support vector machines performed best. Controls were recognised most reliably and diabetic subjects without ulcers least reliably, with a recall of 70%.',
@@ -100,7 +100,7 @@ export const dspnProgress: ResearchPhase[] = [
     id: 'gait-emg',
     navLabel: 'Gait and EMG analysis',
     title: 'Gait-cycle and EMG analysis',
-    status: 'QNRF NPRP12S-0227-190164 · April–June 2021',
+    status: 'Qatar National Research Fund NPRP12S-0227-190164 · April–June 2021',
     paragraphs: [
       'In 2021 the work continued within a Qatar National Research Fund project on wearable monitoring of diabetic sensorimotor polyneuropathy. I used machine learning to analyse gait-cycle measurements together with electromyography, the electrical activity of the leg muscles during walking, to study wearable markers of distal symmetric polyneuropathy.',
     ],

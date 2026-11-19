@@ -102,6 +102,7 @@ export const projects: Project[] = [
     question: 'How much of the force and moment profile measured by an instrumented treadmill can be recovered from insole signals?',
     doi: '10.1109/jbhi.2025.3605296',
     code: kinetics.repository,
+    context: 'Qatar University · Pressure-only baseline for the AI-powered smart-insole project',
     approach: 'Ke2KeNet maps the 16 vertical-loading channels of each Moticon insole to eight treadmill-referenced waveforms per foot: three forces, three moments, and the anterior–posterior and mediolateral centre of pressure. Separate one-dimensional models were trained for each output and compared with instrumented-treadmill recordings across walking and running speeds. A sensor-relevance analysis then tested whether all 16 pressure channels were needed.',
     result: 'For the average gait cycles, Pearson correlation exceeded 0.95 for every output except the right-foot vertical moment, and the estimated vertical force was closer to the treadmill than the summed insole channels. Reducing the layout from 16 to eight pressure locations per foot gave broadly comparable accuracy.',
     measures: [
@@ -130,6 +131,7 @@ export const projects: Project[] = [
     question: 'Can a model delineate small kidney stones more accurately by narrowing the search before segmentation?',
     doi: '10.1016/j.bspc.2026.109894',
     code: 'https://github.com/Sakib1263/Kidney-Stone-Segmentation',
+    context: 'Qatar University MSc research · Qatar University Student Grant QUST-1-CENG-2023-795 and Medical Research Council grant MRC01-21-1027',
     approach: 'Two classifiers first identify kidney-containing slices and then stone-containing slices. The kidney stone segmentation network, KSSNet, processes the selected images and reuses features learned from kidney tissue segmentation.',
     result: 'Slice selection improved the same KSSNet model. Its stone Dice score rose from 90.13% without scope reduction to 93.10% with kidney-slice selection only and 97.44% with both stages. The slice classifier reached an overall F1 score of 94.45%.',
     measures: [
@@ -169,6 +171,7 @@ export const projects: Project[] = [
     title: 'Cross-device Raman spectroscopy',
     summary: 'Aligning spectra from portable Raman instruments to a laboratory reference for bacterial analyte classification.',
     question: 'Can spectra recorded on different instruments support more consistent recognition of the same analyte classes?',
+    workflow: ['Record spectra on five instruments', 'Transform portable spectra with SERS-D2DNet', 'Classify with SuperRaman'],
     doi: '10.1016/j.saa.2025.126931',
     code: ramanSource.repository,
     context: 'Qatar University · Qatar National Research Fund-supported bacterial diagnostics research',
@@ -250,6 +253,7 @@ export const projects: Project[] = [
     code: 'https://github.com/Sakib1263/AHN-Severity-Stratification',
     period: '2022–2023',
     context: 'Hamad Medical Corporation, Sidra Medicine and Qatar University',
+    workflow: ['Locate the kidney region', 'Segment with KUSNet and grade with PHCNet', 'Combine views into one grade'],
     approach: 'The study collected ultrasound images from 164 subjects. After curation, 2,062 images from 163 subjects were annotated for the kidney region. The workflow locates the region, outlines it with KUSNet, and predicts one of five severity grades with PHCNet. Weighted voting combines grades across ultrasound views at the subject level.',
     result: 'KUSNet segmented the kidney with a 92.1% Dice score. With segmented views, five-grade classification reached 93.9% subject-level accuracy and an 89.0% F1 score. The two tasks were evaluated separately.',
     measures: [

@@ -10,7 +10,7 @@ const copernicus = {
 
 export const climateRiskVisual: NonNullable<ResearchProject['visual']> = {
   image: sentinelSegmentation,
-  alt: 'Four panels for one Sentinel-2 test scene: the input band in false colour, with a no-data strip along the right edge; the model\'s predicted pixel values in greyscale; the mask after thresholding, with white marking pixels assigned to the class; and the polygons traced from that mask.',
+  alt: 'Four panels for one Sentinel-2 test scene: the input band in false colour, with a no-data strip along the right edge; the model’s predicted pixel values in greyscale; the mask after thresholding, with white marking pixels assigned to the class; and the polygons traced from that mask.',
   caption: 'One Sentinel-2 test scene processed by the trained model: the input band, the predicted pixel values, the mask after thresholding and the polygons traced from it. From the Task 4 report.',
   credit: taskReport,
   licence: copernicus,
@@ -91,16 +91,16 @@ export const climateRiskProgress: ResearchPhase[] = [
     title: 'Testing on Sentinel-2 images and linking to risk scores',
     status: 'Final report · 2021',
     paragraphs: [
-      'Finz planned to work with Sentinel-2 images, so the trained models were also run on Sentinel-2 scenes, where they marked trees, crops and water bodies. A separate task team wrote scripts to fetch and store Sentinel-2 tiles for Togo, Côte d\'Ivoire and Cameroon.',
+      'Finz planned to work with Sentinel-2 images, so the trained models were also run on Sentinel-2 scenes, where they marked trees, crops and water bodies. A separate task team wrote scripts to fetch and store Sentinel-2 tiles for Togo, Côte d’Ivoire and Cameroon.',
       'To grow the training data later, the pipeline can also label new images. A trained model proposes polygons, a person refines them, and the new labels are added to the database for retraining.',
-      'Within the wider project, segmentation was meant to add local detail to the team\'s risk models. The share of a scene covered by a class follows from its pixel count: in a 512 × 512 image of 1 km², 100,000 water pixels would cover about 0.38 km², or 38% of the area. More water nearby, for example, could raise the weight given to flood risk. Combining these shares with the flood and geopolitical scores was left for follow-on work.',
+      'Within the wider project, segmentation was meant to add local detail to the team’s risk models. The share of a scene covered by a class follows from its pixel count: in a 512 × 512 image of 1 km², 100,000 water pixels would cover about 0.38 km², or 38% of the area. More water nearby, for example, could raise the weight given to flood risk. Combining these shares with the flood and geopolitical scores was left for follow-on work.',
     ],
     table: {
       caption: 'Main outputs of the challenge and what each provides.',
       columns: ['What it provides'],
       rows: [
         { label: 'Flood risk map for Togo', cells: ['Five risk levels from a hazard map (rainfall, slope, drainage density and soil) and a vulnerability map (land cover, population density and distance to rivers)'] },
-        { label: 'Geopolitical risk score', cells: ['Mean and maximum risk for a location in Côte d\'Ivoire from conflict events recorded since 1997, weighted by time, distance and event type'] },
+        { label: 'Geopolitical risk score', cells: ['Mean and maximum risk for a location in Côte d’Ivoire from conflict events recorded since 1997, weighted by time, distance and event type'] },
         { label: 'Segmentation pipeline', cells: ['Share of a 1 km² area covered by buildings, vegetation, water and other classes'] },
         { label: 'Resources library', cells: ['210 datasets, articles, videos and tutorials gathered by the team'] },
       ],

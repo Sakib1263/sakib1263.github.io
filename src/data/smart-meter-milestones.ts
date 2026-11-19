@@ -101,7 +101,7 @@ export const smartMeterProgress: ResearchPhase[] = [
       { value: '47 ms', label: 'Reported inference time for both networks' },
     ],
     table: {
-      caption: 'Occupancy detection reported by Mahmud et al. (2025), Journal of Building Engineering. Single-signal rows come from the study\'s appliance-wise ablation.',
+      caption: 'Occupancy detection reported by Mahmud et al. (2025), Journal of Building Engineering. Single-signal rows come from the study’s appliance-wise ablation.',
       columns: ['Accuracy', 'F1 score', 'Specificity'],
       rows: [
         { label: 'Aggregate meter signal, no disaggregation', cells: ['61.35%', '60.88%', '62.68%'] },

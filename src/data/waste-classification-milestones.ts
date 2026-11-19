@@ -25,7 +25,7 @@ export const wasteClassificationProgress: ResearchPhase[] = [
     paragraphs: [
       'The study used the public GIGO dataset of 25,000 images taken by two car-mounted cameras on city streets: 9,352 with garbage and 15,648 without. Garbage images carry labels for four types, and one image can show several: bulky waste such as sofas and fridges, garbage bags, cardboard and litter.',
       'Faces and number plates in the dataset are hidden by grey or yellow boxes, which a model could mistake for garbage. About 3,000 affected images were removed, leaving 7,410 garbage images, and 8,760 images without garbage were sampled to balance the classes. Each dataset was split 70%, 10% and 20% for training, validation and testing, and every model was evaluated with five-fold cross-validation.',
-      'Horizontal flips and rotations of up to 30 degrees raised the training images to about 5,000 per class. Images were resized to 224 × 224 pixels and normalised with the dataset\'s mean and standard deviation.',
+      'Horizontal flips and rotations of up to 30 degrees raised the training images to about 5,000 per class. Images were resized to 224 × 224 pixels and normalised with the dataset’s mean and standard deviation.',
     ],
     measures: [
       { value: '16,170', label: 'Cleaned images used' },

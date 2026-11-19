@@ -90,7 +90,7 @@ export const vaccineAttitudesProgress: ResearchPhase[] = [
     title: 'Predicting attitude from survey answers',
     status: 'Machine learning',
     paragraphs: [
-      'The 19 answers were encoded as 68 dummy variables, and twelve classifiers were compared in Python with five-fold cross-validation and an 80:20 split. The task was to predict each respondent\'s attitude class. Ensemble and tree-based methods were the most stable, and random forest gave the lowest mean absolute error, 0.2057.',
+      'The 19 answers were encoded as 68 dummy variables, and twelve classifiers were compared in Python with five-fold cross-validation and an 80:20 split. The task was to predict each respondent’s attitude class. Ensemble and tree-based methods were the most stable, and random forest gave the lowest mean absolute error, 0.2057.',
       'K-nearest neighbours had the best average across the four testing metrics, with 80.00% accuracy and 84.43% recall, while many other models had much lower recall. It worked best with two neighbours, which suggests the responses do not form large clusters.',
       'Predicting the seven-level scores directly was harder, and hesitancy was harder to predict than willingness. Random forest again performed best, with a mean absolute error of 0.35 for willingness and 0.71 for hesitancy.',
     ],

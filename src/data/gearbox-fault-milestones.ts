@@ -24,7 +24,7 @@ export const gearboxFaultProgress: ResearchPhase[] = [
     title: 'Preparing four-channel vibration data',
     status: 'IEEE Access · 2024',
     paragraphs: [
-      'The study used the public Gear Box Fault Diagnosis dataset, recorded on SpectraQuest\'s gearbox fault simulator. Four accelerometers on the gearbox body measured vibration for a healthy gear and a broken gear under ten loading conditions, from 0% to 90% in steps of 10%.',
+      'The study used the public Gear Box Fault Diagnosis dataset, recorded on SpectraQuest’s gearbox fault simulator. Four accelerometers on the gearbox body measured vibration for a healthy gear and a broken gear under ten loading conditions, from 0% to 90% in steps of 10%.',
       'Each channel was cut into windows of 512 samples. Training windows overlapped by half to give the network more examples. Each channel was then standardised to zero mean and unit variance and scaled to a range of −0.2 to 0.2, simple steps that keep preprocessing fast.',
       'The folds were split by load. Each of the ten folds held out one loading condition for testing and trained on the others, so the model was always tested on a load it had not seen. This also avoids the overlap between training and test data that shuffling windows before splitting can create.',
     ],

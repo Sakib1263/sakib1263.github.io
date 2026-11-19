@@ -213,6 +213,12 @@ for (const collection of collections) {
   }
 }
 
+/** Papers attached directly to a project overview stage, without a study page of their own. */
+export const collectionByPaper = new Map<string, Collection>();
+for (const collection of collections) {
+  for (const stage of collection.stages) if (stage.doi) collectionByPaper.set(stage.doi.toLowerCase(), collection);
+}
+
 /** Ongoing projects with the catalogue's own title, summary and page, so the homepage and research pages always match. */
 export const currentResearch = currentResearchSlugs.map(slug => {
   const study = researchStudyFor(slug);
