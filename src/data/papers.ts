@@ -52,14 +52,7 @@ export function bibtexKey(doi: string) {
   return doi.replace(/[^\w]+/g, '-');
 }
 
-type Publication = (typeof publications)[number];
-
-export function citationText(publication: Publication) {
-  const authors = publication.authors.map(displayAuthor).join(', ');
-  const volume = publication.volume ? `, ${publication.volume}${publication.issue ? `(${publication.issue})` : ''}` : '';
-  const locator = publication.articleNumber ? `Article ${publication.articleNumber}` : publication.pages;
-  return `${authors} (${publication.year}). ${publication.title}. ${publication.venue}${volume}${locator ? `, ${locator}` : ''}. https://doi.org/${publication.doi}`;
-}
+export type Publication = (typeof publications)[number];
 
 export const openFullText: Readonly<Record<string, string>> = {
   '10.1016/j.saa.2025.126931': 'https://manara.qnl.qa/articles/journal_contribution/Deep_learning-based_cross-device_standardization_of_surface-enhanced_Raman_spectroscopy_for_enhanced_bacterial_recognition/30664580',
@@ -90,16 +83,80 @@ export const openFullText: Readonly<Record<string, string>> = {
 export const thesisUrl = 'https://qspace.qu.edu.qa/bitstream/handle/10576/45080/Sakib%20Mahmud_%20OGS%20Approved%20Thesis.pdf?isAllowed=n&sequence=1';
 
 export const paperResources: Readonly<Record<string, { label: string; href: string }[]>> = {
-  '10.1109/jbhi.2025.3605296': [
-    { label: 'Study dataset (Huawei Wang)', href: 'https://doi.org/10.5281/zenodo.7422031' },
-  ],
   '10.1016/j.eswa.2024.124594': [
     { label: 'Related MSc thesis', href: thesisUrl },
   ],
-  '10.3390/bioengineering9110692': [
-    { label: 'Original implementation', href: 'https://github.com/nibtehaz/PPG2ABP' },
-    { label: 'UCI dataset', href: 'https://archive.ics.uci.edu/dataset/340/cuff+less+blood+pressure+estimation' },
-  ],
+};
+
+// Code that a paper itself names. Project code on the research pages is added to these on each card.
+export const paperCode: Readonly<Record<string, string>> = {
+  '10.3390/s22030919': 'https://github.com/Sakib1263/NABNet',
+  '10.3390/bioengineering9110692': 'https://github.com/nibtehaz/PPG2ABP',
+  '10.1016/j.engappai.2023.106130': 'https://github.com/farhanfuadabir/PCovNet',
+};
+
+const datasetLinks = {
+  huaweiWang: { label: 'Study dataset (Huawei Wang)', href: 'https://doi.org/10.5281/zenodo.7422031' },
+  gaitNdd: { label: 'Gait in Neurodegenerative Disease dataset', href: 'https://physionet.org/content/gaitndd/1.0.0/' },
+  taiChi: { label: 'Tai Chi gait dataset', href: 'https://physionet.org/content/taichidb/1.0.1/' },
+  kidneyStoneCt: { label: 'Kidney stone CT dataset', href: 'https://doi.org/10.5281/zenodo.6042410' },
+  chaos: { label: 'CHAOS dataset', href: 'https://chaos.grand-challenge.org/' },
+  kits21: { label: 'KiTS21 dataset', href: 'https://kits-challenge.org/kits21/' },
+  radarVitals: { label: 'Clinical radar vital signs dataset', href: 'https://doi.org/10.6084/m9.figshare.12186516' },
+  mhdEcg: { label: 'MHD-corrupted ECG dataset', href: 'https://physionet.org/content/mhd-effect-ecg-mri/1.0.0/' },
+  maus: { label: 'MAUS dataset', href: 'https://doi.org/10.21227/q4td-yd35' },
+  mechanocardiograms: { label: 'Mechanocardiograms with ECG reference dataset', href: 'https://doi.org/10.21227/vfcs-k196' },
+  motionArtifact: { label: 'Motion artifact EEG dataset', href: 'https://physionet.org/content/motion-artifact/1.0.0/' },
+  ubfc: { label: 'UBFC-rPPG dataset', href: 'https://sites.google.com/view/ybenezeth/ubfcrppg' },
+  adfecg: { label: 'Abdominal and direct fetal ECG dataset', href: 'https://physionet.org/content/adfecgdb/1.0.0/' },
+  fetalAnnotated: { label: 'Annotated fetal ECG dataset', href: 'https://doi.org/10.6084/m9.figshare.c.4740794' },
+  tcd: { label: 'Transcranial Doppler dataset', href: 'https://ieee-dataport.org/open-access/transcranial-doppler-ultrasound-database-philips-cx50-ultrasound-system' },
+  eegDenoise: { label: 'EEGdenoiseNet dataset', href: 'https://github.com/ncclabsustech/EEGdenoiseNet' },
+  uciBp: { label: 'UCI cuffless blood pressure dataset', href: 'https://archive.ics.uci.edu/dataset/340/cuff+less+blood+pressure+estimation' },
+  vortal: { label: 'VORTAL dataset', href: 'https://peterhcharlton.github.io/RRest/vortal_dataset.html' },
+  bidmc: { label: 'BIDMC dataset', href: 'https://physionet.org/content/bidmc/1.0.0/' },
+  wearables1: { label: 'Stanford wearables data, phase 1 (zip)', href: 'https://storage.googleapis.com/gbsc-gcp-project-ipop_public/COVID-19/COVID-19-Wearables.zip' },
+  wearables2: { label: 'Stanford wearables data, phase 2 (zip)', href: 'https://storage.googleapis.com/gbsc-gcp-project-ipop_public/COVID-19-Phase2/COVID-19-Phase2-Wearables.zip' },
+  qucoughscope: { label: 'QUCoughScope cough dataset', href: 'https://www.kaggle.com/datasets/tawsifurrahman/qucoughscope-covid19-cough-dataset' },
+  gearbox: { label: 'Gearbox fault diagnosis dataset', href: 'https://www.kaggle.com/datasets/brjapon/gearbox-fault-diagnosis' },
+  gigo: { label: 'GIGO dataset', href: 'https://doi.org/10.21942/uva.20750044' },
+  studentRoom: { label: 'Student room occupancy dataset', href: 'https://doi.org/10.7910/DVN/BIIFAJ' },
+  uciOccupancy: { label: 'UCI occupancy detection dataset', href: 'https://archive.ics.uci.edu/dataset/357/occupancy+detection' },
+};
+
+// Public datasets each paper used, taken from its dataset description and data availability statement.
+export const paperDatasets: Readonly<Record<string, { label: string; href: string }[]>> = {
+  '10.1109/jbhi.2025.3605296': [datasetLinks.huaweiWang],
+  '10.1007/s10489-023-04557-w': [datasetLinks.gaitNdd],
+  '10.1016/j.compbiomed.2021.105184': [datasetLinks.taiChi],
+  '10.1016/j.bspc.2026.109894': [datasetLinks.kidneyStoneCt],
+  '10.3390/s23218890': [datasetLinks.chaos],
+  '10.3390/cancers15123189': [datasetLinks.kits21],
+  '10.1007/s00521-025-11327-x': [datasetLinks.radarVitals],
+  '10.1016/j.compbiomed.2024.108555': [datasetLinks.radarVitals],
+  '10.1016/j.engappai.2024.108483': [datasetLinks.mhdEcg],
+  '10.3390/bioengineering10050542': [datasetLinks.mhdEcg],
+  '10.1016/j.eswa.2024.123167': [datasetLinks.maus],
+  '10.1109/access.2024.3353463': [datasetLinks.mechanocardiograms],
+  '10.1016/j.engappai.2023.107514': [datasetLinks.motionArtifact],
+  '10.1007/s00521-022-08111-6': [datasetLinks.motionArtifact],
+  '10.1016/j.bspc.2023.105687': [datasetLinks.ubfc],
+  '10.1016/j.eswa.2023.121196': [datasetLinks.adfecg, datasetLinks.fetalAnnotated],
+  '10.1016/j.engappai.2023.106414': [datasetLinks.adfecg, datasetLinks.fetalAnnotated],
+  '10.3390/diagnostics13122000': [datasetLinks.tcd],
+  '10.1016/j.bspc.2023.104882': [datasetLinks.tcd],
+  '10.3390/bioengineering10050579': [datasetLinks.eegDenoise],
+  '10.5121/csit.2022.122006': [datasetLinks.eegDenoise],
+  '10.1016/j.bspc.2022.104247': [datasetLinks.uciBp],
+  '10.3390/bioengineering9110692': [datasetLinks.uciBp],
+  '10.3390/s22030919': [datasetLinks.uciBp],
+  '10.3390/bioengineering9100558': [datasetLinks.vortal, datasetLinks.bidmc],
+  '10.1016/j.compbiomed.2022.105682': [datasetLinks.wearables1],
+  '10.1016/j.engappai.2023.106130': [datasetLinks.wearables1, datasetLinks.wearables2],
+  '10.3390/diagnostics12040920': [datasetLinks.qucoughscope],
+  '10.1109/access.2024.3412274': [datasetLinks.gearbox],
+  '10.1016/j.wasman.2023.12.014': [datasetLinks.gigo],
+  '10.1007/s00521-025-11348-6': [datasetLinks.studentRoom, datasetLinks.uciOccupancy],
 };
 
 const readingNotes = {

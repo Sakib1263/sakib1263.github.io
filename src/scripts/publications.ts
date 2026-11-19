@@ -235,7 +235,7 @@ document.querySelectorAll<HTMLButtonElement>('[data-citation]').forEach(button =
       try {
         await navigator.clipboard.writeText(citation);
         fallback.hidden = true;
-        status.textContent = 'Citation copied.';
+        status.textContent = 'BibTeX copied.';
       } catch {
         textarea.value = citation;
         fallback.hidden = false;

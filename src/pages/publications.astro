@@ -3,13 +3,14 @@ import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
 import { datasetsByStudy } from '../data/datasets';
 import {
-  bibtexKey, citationText, displayAuthor, openFullText, paperResources,
+  bibtexKey, displayAuthor, openFullText, paperCode, paperDatasets, paperResources,
   publicationId, publications, publicationDetails, selectedPapers, topicDescriptions, topics,
 } from '../data/papers';
 import { caseStudyProjects } from '../data/research';
 import { researchStudiesByDoi } from '../data/research-catalog';
 import { collectionByPaper, collectionPath } from '../data/research-projects';
 import journalData from '../data/journal-metrics.json';
+import { bibtexEntry } from '../lib/bibtex';
 import { doiUrl, profile, researchProfiles, sitePath } from '../lib/site';
 import '../styles/catalog.css';
 import '../styles/publications.css';
@@ -137,7 +138,10 @@ const journalMetrics: Readonly<Record<string, {
                 const projects = researchStudiesByDoi.get(publication.doi.toLowerCase()) ?? [];
                 // A paper without its own study page links to the project overview that lists it.
                 const overview = projects.length ? undefined : collectionByPaper.get(publication.doi.toLowerCase());
-                const codeLinks = [...new Set(projects.flatMap(project => project.code && project.doi?.toLowerCase() === publication.doi.toLowerCase() ? [project.code] : []))];
+                const codeLinks = [...new Set([
+                  ...projects.flatMap(project => project.code && project.doi?.toLowerCase() === publication.doi.toLowerCase() ? [project.code] : []),
+                  ...(paperCode[publication.doi] ? [paperCode[publication.doi]] : []),
+                ])];
                 const dataset = datasetsByStudy.get(publication.doi);
                 const { summary, contribution } = publicationDetails(publication.doi);
                 const metrics = journalMetrics[publication.bibliography.issn ?? ''];
@@ -185,16 +189,17 @@ const journalMetrics: Readonly<Record<string, {
                         {overview && <SiteLink data-research-project={id} href={sitePath(collectionPath(overview.slug))}>Research details</SiteLink>}
                         {codeLinks.map(href => <SiteLink href={href}>Code <span aria-hidden="true">↗</span></SiteLink>)}
                         {openFullText[publication.doi] && <SiteLink href={openFullText[publication.doi]}>Open full text <span aria-hidden="true">↗</span></SiteLink>}
+                        {paperDatasets[publication.doi]?.map(({ label, href }) => <SiteLink data-paper-dataset href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
                         {paperResources[publication.doi]?.map(({ label, href }) => <SiteLink href={href}>{label} <span aria-hidden="true">↗</span></SiteLink>)}
                         {dataset && <>
                           <SiteLink href={sitePath(`software/#${dataset.id}`)}>Dataset details</SiteLink>
                           <SiteLink href={doiUrl(dataset.doi)}>{dataset.platform} record <span aria-hidden="true">↗</span></SiteLink>
                         </>}
                         <SiteLink href={sitePath(`publications/#${id}`)} aria-label={`Permalink to ${publication.title}`}>Permalink</SiteLink>
-                        <button type="button" data-citation={citationText(publication)} aria-label={`Copy citation for ${publication.title}`} hidden>Copy citation</button>
+                        <button type="button" data-citation={bibtexEntry(publication)} aria-label={`Copy BibTeX citation for ${publication.title}`} hidden>Copy BibTeX</button>
                       </div>
-                      <label class="citation-fallback" hidden>Copy this citation
-                        <textarea rows="3" readonly></textarea>
+                      <label class="citation-fallback" hidden>Copy this BibTeX entry
+                        <textarea rows="10" readonly spellcheck="false"></textarea>
                       </label>
                       <p class="citation-status" role="status"></p>
                     </div>

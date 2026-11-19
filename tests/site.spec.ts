@@ -212,17 +212,20 @@ test('homepage contact links open the supplied profiles', async ({ page }) => {
   }
 });
 
-test('project and paper links round-trip and the citation copies', async ({ page, context }) => {
+test('project and paper links round-trip and the BibTeX entry copies', async ({ page, context }) => {
   await context.grantPermissions(['clipboard-read', 'clipboard-write']);
   await page.goto(flagship);
   await page.locator('[data-project-citation]').click();
   await expect(page).toHaveURL(`/publications/#${paperId}`);
   const paper = page.locator(`#${paperId}`);
-  await paper.getByRole('button', { name: /copy citation/i }).click();
-  await expect(paper.getByRole('status')).toHaveText('Citation copied.');
-  const citation = await page.evaluate(() => navigator.clipboard.readText());
-  expect(citation).toContain('Mahmud');
-  expect(citation).toContain('https://doi.org/10.1109/jbhi.2025.3605296');
+  await paper.getByRole('button', { name: /copy bibtex/i }).click();
+  await expect(paper.getByRole('status')).toHaveText('BibTeX copied.');
+  // The Windows clipboard stores line breaks as CRLF.
+  const citation = (await page.evaluate(() => navigator.clipboard.readText())).replace(/\r\n/g, '\n');
+  const bibliography = await (await page.request.get('/publications.bib')).text();
+  expect(citation).toMatch(/^@article\{10-1109-jbhi-2025-3605296,\n/);
+  expect(bibliography.split('\n\n')).toContain(citation.trimEnd());
+  expect(citation).toContain('doi = {10.1109/jbhi.2025.3605296}');
   await page.getByRole('combobox', { name: 'Topic', exact: true }).selectOption('imaging');
   await expect(paper).toBeHidden();
   await page.getByRole('button', { name: 'Clear filters' }).click();

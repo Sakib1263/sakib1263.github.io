@@ -182,7 +182,7 @@
 .catalog-actions button:hover { color: var(--text); }
 .citation-status:not(:empty) { margin-top: .3rem; color: var(--link); font-size: .85rem; }
 .citation-fallback { display: grid; margin-top: .4rem; gap: .25rem; color: var(--text-muted); font-size: .85rem; }
-.citation-fallback textarea { width: 100%; padding: .45rem; font: inherit; color: var(--text); background: var(--surface); border: 1px solid var(--border-control); border-radius: 3px; }
+.citation-fallback textarea { width: 100%; padding: .45rem; font: .8rem/1.45 ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--text); background: var(--surface); border: 1px solid var(--border-control); border-radius: 3px; }
 
 @media (max-width: 620px) {
   .publication-profiles { align-items: start; flex-direction: column; }

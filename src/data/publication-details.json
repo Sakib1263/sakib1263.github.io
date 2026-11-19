@@ -72,7 +72,7 @@
     "contribution": "I supported engineering analysis and prototype evaluation, interpreted test results, and helped write and revise the paper."
   },
   "10.1016/j.eswa.2024.124594": {
-    "summary": "Combined kidney localisation, segmentation, and multi-view ultrasound classification to estimate prenatal hydronephrosis severity. The study evaluated grading at the subject level for 164 subjects.",
+    "summary": "Combined kidney localisation, segmentation, and multi-view ultrasound classification to estimate prenatal hydronephrosis severity. The study evaluated grading at the subject level for a curated cohort of 163 subjects.",
     "contribution": "I led ultrasound data curation, developed the segmentation and grading models, and drafted the manuscript."
   },
   "10.1016/j.eswa.2024.123167": {
