@@ -420,6 +420,7 @@ const signals: ResearchProject[] = [
     otherCode: [{
       label: 'PCovNet+',
       href: 'https://github.com/farhanfuadabir/PCovNet',
+      doi: pcovNetPlusDoi,
       summary: 'CNN-VAE anomaly detection with LSTM embeddings that flags COVID-19 infection from smartwatch resting heart rate.',
     }],
     context: 'Qatar University · Qatar National Research Fund UREP28-144-3-046',

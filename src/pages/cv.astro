@@ -1,7 +1,10 @@
 ---
 import SiteLink from '../components/SiteLink.astro';
 import Base from '../layouts/Base.astro';
-import { awards, certifications, cvUpdated, cvUpdatedLabel, education, internships, languages, positions, technicalSkills } from '../data/cv';
+import { awards, certifications, cvUpdated, cvUpdatedLabel, education, fundedProjects, internships, languages, positions, technicalSkills } from '../data/cv';
+import { datasets } from '../data/datasets';
+import { publications } from '../data/papers';
+import { softwareEntries } from '../data/software';
 import { cvPdfPath, profile, sitePath } from '../lib/site';
 import '../styles/catalog.css';
 import '../styles/cv.css';
@@ -9,10 +12,17 @@ import '../styles/cv.css';
 const sections = [
   { id: 'education-title', label: 'Education' },
   { id: 'positions-title', label: 'Experience' },
+  { id: 'funded-title', label: 'Funded projects' },
+  { id: 'outputs-title', label: 'Research outputs' },
   { id: 'skills-title', label: 'Technical skills' },
   { id: 'certifications-title', label: 'Certifications' },
   { id: 'awards-title', label: 'Awards & distinctions' },
   { id: 'languages-title', label: 'Languages' },
+];
+const outputs = [
+  { title: 'Publications', count: publications.length, href: sitePath('publications/'), detail: `Journal articles, conference papers, and a book chapter, each with a summary, my contribution, and links to code and data.` },
+  { title: 'Published datasets', count: datasets.length, href: sitePath('software/#datasets'), detail: `Dataset records on Zenodo and Kaggle, with contents, access, licence, and my role.` },
+  { title: 'Research software', count: softwareEntries.length, href: sitePath('software/#code-title'), detail: `Code repositories, including the SuperONN-Layers library and implementations accompanying my papers.` },
 ];
 const experience = [
   { entries: positions },
@@ -97,7 +107,7 @@ const experience = [
         <section aria-labelledby="positions-title">
           <header class="catalog-section-heading">
             <h2 id="positions-title">Research and professional experience</h2>
-            <p>Academic, clinical, and industry work, with links to related projects and papers.</p>
+            <p>Academic, clinical, and industry work, with links to the related research projects.</p>
           </header>
           {experience.map(({ entries, heading }) => (
             <>
@@ -123,6 +133,46 @@ const experience = [
               ))}
             </>
           ))}
+        </section>
+
+        <section aria-labelledby="funded-title">
+          <header class="catalog-section-heading">
+            <h2 id="funded-title">Funded research projects</h2>
+            <p>Grant-funded projects I contributed to, newest first.</p>
+          </header>
+          {fundedProjects.map(project => (
+            <article class="catalog-entry cv-entry" id={project.id}>
+              <div class="catalog-meta">
+                <span class="cv-date">{project.dates}</span>
+              </div>
+              <div>
+                <h3>{project.title}</h3>
+                <p class="cv-organization">{project.funder}</p>
+                <p class="cv-summary">{project.summary}</p>
+                {project.project && <div class="catalog-actions">
+                  <SiteLink href={project.project.href} aria-label={`Research details for ${project.title}`}>{project.project.label}</SiteLink>
+                </div>}
+              </div>
+            </article>
+          ))}
+        </section>
+
+        <section aria-labelledby="outputs-title">
+          <header class="catalog-section-heading">
+            <h2 id="outputs-title">Research outputs</h2>
+            <p>Full records live on the Publications and Software &amp; Data pages.</p>
+          </header>
+          <ul class="cv-list" role="list">
+            {outputs.map(({ title, count, href, detail }) => (
+              <li class="catalog-entry cv-entry cv-compact-entry">
+                <span class="catalog-meta cv-date">{count} {count === 1 ? 'record' : 'records'}</span>
+                <div>
+                  <h3><SiteLink href={href}>{title}</SiteLink></h3>
+                  <p class="cv-detail">{detail}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </section>
 
         <section aria-labelledby="skills-title">

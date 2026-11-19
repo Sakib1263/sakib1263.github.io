@@ -591,7 +591,7 @@ test('the CV highlights education and provides a navigable experience timeline o
   await expect(page.getByRole('link', { name: 'Download CV (PDF)' })).toBeVisible();
   const sections = page.getByRole('navigation', { name: 'CV sections' });
   await expect(sections.getByRole('link')).toHaveText([
-    'Education', 'Experience', 'Technical skills', 'Certifications', 'Awards & distinctions', 'Languages',
+    'Education', 'Experience', 'Funded projects', 'Research outputs', 'Technical skills', 'Certifications', 'Awards & distinctions', 'Languages',
   ]);
   await sections.getByRole('link', { name: 'Education', exact: true }).click();
   await expect(page).toHaveURL('/cv/#education-title');
@@ -617,6 +617,15 @@ test('the CV highlights education and provides a navigable experience timeline o
   await expect(experience.getByRole('heading', { name: 'Administrative Assistant', exact: true })).toBeVisible();
   await expect(experience.getByRole('heading', { name: 'Earlier internships and apprenticeships' })).toBeVisible();
   await expect(page.getByRole('heading', { name: 'Selected research contributions' })).toHaveCount(0);
+  await expect(experience.getByRole('link', { name: 'Electric-vehicle charging project' })).toHaveAttribute('href', '/research/ev-charging-demand/');
+
+  await sections.getByRole('link', { name: 'Funded projects', exact: true }).click();
+  await expect(page).toHaveURL('/cv/#funded-title');
+  const funded = page.getByRole('region', { name: 'Funded research projects' });
+  await expect(funded.getByRole('article')).toHaveCount(11);
+  await expect(funded.getByRole('link', { name: /Research details for QSCare/ })).toHaveAttribute('href', '/research/qscare-doppler-flow/');
+  const outputs = page.getByRole('region', { name: 'Research outputs' });
+  await expect(outputs.getByRole('link')).toHaveText(['Publications', 'Published datasets', 'Research software']);
 
   await sections.getByRole('link', { name: 'Certifications', exact: true }).click();
   await expect(page).toHaveURL('/cv/#certifications-title');

@@ -5,6 +5,8 @@ type Dataset = {
   platform: 'Zenodo' | 'Kaggle';
   doi: string;
   studyDoi: string;
+  /** The research page that describes the study. */
+  project: string;
   access: 'Access by request' | 'Public dataset';
   facts: string[];
   summary: string;
@@ -23,6 +25,7 @@ export const datasets: Dataset[] = [
     platform: 'Zenodo',
     doi: '10.5281/zenodo.23372983',
     studyDoi: '10.1016/j.saa.2025.126931',
+    project: 'cross-device-raman',
     access: 'Access by request',
     facts: ['29,545 spectra', '20 analyte classes', '5 instruments', 'Version 1.0.0'],
     summary: 'Surface-enhanced Raman spectra from four portable instruments and one laboratory reference. The recordings support research on spectral alignment and analyte classification across devices. See the Zenodo record to request the files.',
@@ -42,6 +45,7 @@ export const datasets: Dataset[] = [
     platform: 'Kaggle',
     doi: '10.34740/kaggle/dsv/3122958',
     studyDoi: '10.1016/j.compbiomed.2021.105002',
+    project: 'covid-chest-imaging',
     access: 'Public dataset',
     facts: ['33,920 chest radiographs', '11,956 COVID-19 images', 'Lung segmentation masks'],
     summary: 'Chest X-rays from COVID-19, other infections, and normal cases. The companion study used lung masks to outline the lungs and a separately annotated subset to localise infection and grade severity.',
@@ -62,11 +66,12 @@ export const datasets: Dataset[] = [
     platform: 'Kaggle',
     doi: '10.34740/kaggle/dsv/3078704',
     studyDoi: '10.1109/access.2022.3173424',
+    project: 'hip-implant-mechanics-and-imaging',
     access: 'Public dataset',
     facts: ['200 images for implant localisation', '206 images for loosening classification'],
     summary: 'Hip implant radiographs for two tasks in the HipXNet study. One subset has expert annotations for locating the implant. The other supports classification of aseptic loosening.',
     contribution: 'I helped develop and evaluate the HipXNet pipeline and contributed to data analysis, interpretation, and writing.',
-    credit: 'The Kaggle release credits Tawsifur Rahman, Muhammad E. H. Chowdhury, Amith Khandakar, and Yazan Qiblawey as dataset creators.',
+    credit: 'The dataset DOI lists Tawsifur Rahman, Muhammad E. H. Chowdhury, Amith Khandakar, and Yazan Qiblawey as creators. The Kaggle description also credits the wider study team, including me.',
     license: { label: 'CC0 1.0', href: 'https://creativecommons.org/publicdomain/zero/1.0/' },
     files: 'The study describes expert-annotated implant radiographs for localisation and radiographs labelled fixed or loose for classification.',
     evaluation: {

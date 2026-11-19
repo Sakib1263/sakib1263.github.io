@@ -36,9 +36,9 @@ export const softwareEntries: SoftwareEntry[] = [
       id: `code-${study.slug}`, title: study.title, area: study.area, summary: study.summary,
       code: study.code, project: study.slug, doi: study.doi,
     }] : []),
-    ...(study.otherCode ?? []).map(({ label, href, summary }) => ({
+    ...(study.otherCode ?? []).map(({ label, href, summary, doi }) => ({
       id: `code-${study.slug}-${slugify(label)}`, title: label, area: study.area, summary,
-      code: href, project: study.slug,
+      code: href, project: study.slug, doi,
     })),
   ]),
 ];

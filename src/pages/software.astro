@@ -111,6 +111,7 @@ const sections = [
                   {dataset.credit && <p class="dataset-credit">{dataset.credit}</p>}
                   <div class="catalog-actions">
                     <SiteLink href={doiUrl(dataset.doi)} aria-label={`${dataset.platform} record for ${dataset.title}`}>{dataset.platform} record <span aria-hidden="true">↗</span></SiteLink>
+                    <SiteLink href={sitePath(`research/${dataset.project}/`)}>Project summary</SiteLink>
                     <SiteLink href={sitePath(`publications/#${publicationId(study.doi)}`)} aria-label={`Related paper for ${dataset.title}`} title={study.title}>Related paper</SiteLink>
                   </div>
                 </div>

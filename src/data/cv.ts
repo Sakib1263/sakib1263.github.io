@@ -1,10 +1,14 @@
 import { sitePath } from '../lib/site';
 import { publicationId } from './papers';
 
-export const cvUpdated = '2026-11-16';
+export const cvUpdated = '2026-11-19';
 export const cvUpdatedLabel = new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(new Date(cvUpdated));
 
 type CvLink = { label: string; href: string };
+
+function projectLink(label: string, slug: string): CvLink {
+  return { label, href: sitePath(`research/${slug}/`) };
+}
 
 const chowdhury: CvLink = {
   label: 'Muhammad E. H. Chowdhury',
@@ -44,11 +48,11 @@ export const positions: Appointment[] = [
       'Write manuscripts, figures, progress reports, and reviewer responses with clinical, engineering, and external collaborators.',
     ],
     links: [
-      { label: 'Wearable kinetics project', href: sitePath('research/projects/smart-insole-3d-gait-kinetics/') },
-      { label: 'SmartWoundCare project', href: sitePath('research/diabetic-foot-thermal-imaging/') },
-      { label: 'LiPIVOT project', href: sitePath('research/multiphase-liver-ct/') },
-      { label: 'Cross-device Raman project', href: sitePath('research/cross-device-raman/') },
-      paperLink('Reinforcement learning review', '10.1016/j.rser.2025.116481'),
+      projectLink('Wearable kinetics project', 'projects/smart-insole-3d-gait-kinetics'),
+      projectLink('SmartWoundCare project', 'diabetic-foot-thermal-imaging'),
+      projectLink('LiPIVOT project', 'multiphase-liver-ct'),
+      projectLink('Cross-device Raman project', 'cross-device-raman'),
+      projectLink('E-Tawfeer energy project', 'e-tawfeer-energy-management'),
     ],
   },
   {
@@ -64,8 +68,7 @@ export const positions: Appointment[] = [
       'Led method development, evaluation, visualisation, and manuscript drafting for two first-author papers from the project.',
     ],
     links: [
-      paperLink('Joint load and occupancy study', '10.1016/j.jobe.2025.113731'),
-      paperLink('Occupancy feature-fusion study', '10.1016/j.buildenv.2025.112635'),
+      projectLink('Smart-meter load and occupancy project', 'smart-meter-load-and-occupancy'),
     ],
   },
   {
@@ -79,6 +82,7 @@ export const positions: Appointment[] = [
       'Preprocessed RNA-seq data and evaluated variational autoencoders for identifying unusual expression patterns and prioritising genes.',
       'Interpreted candidate anomalies and documented the analysis so the workflow could be repeated.',
     ],
+    links: [projectLink('Mendelian RNA-seq project', 'mendelian-rnaseq-outliers')],
   },
   {
     id: 'hamad-medical-corporation-research-assistant',
@@ -92,7 +96,7 @@ export const positions: Appointment[] = [
       'Used YOLO to locate regions of interest and convolutional models to segment kidney and fluid boundaries. Developed a workflow to grade prenatal hydronephrosis from multiple ultrasound views.',
       'Contributed to ethics submissions, protocols, and data-governance documents. Prepared figures and manuscript material for the clinical collaboration.',
     ],
-    links: [{ label: 'Prenatal hydronephrosis project', href: sitePath('research/prenatal-hydronephrosis/') }],
+    links: [projectLink('Prenatal hydronephrosis project', 'prenatal-hydronephrosis')],
   },
   {
     id: 'omdena-machine-learning',
@@ -106,8 +110,8 @@ export const positions: Appointment[] = [
       'Junior Machine Learning Engineer and Task Leader, July–October 2021. Used geospatial tools and built a TensorFlow pipeline for multiclass satellite-image segmentation in a project on climate and geopolitical risks in West and Central Africa.',
     ],
     links: [
-      { label: 'Electric-vehicle charging project', href: 'https://www.omdena.com/projects/ai-ev-charging' },
-      { label: 'Climate and geopolitical risk project', href: 'https://www.omdena.com/projects/geopolitical-risks' },
+      projectLink('Electric-vehicle charging project', 'ev-charging-demand'),
+      projectLink('Climate and geopolitical risk project', 'climate-geopolitical-risk'),
     ],
   },
   {
@@ -125,9 +129,11 @@ export const positions: Appointment[] = [
       'Supported project proposals, ethics documentation, experimental planning, manuscript preparation, and reproducible analysis with clinical and engineering teams.',
     ],
     links: [
-      paperLink('HipXNet study', '10.1109/access.2022.3173424'),
-      paperLink('Blood-pressure study', '10.3390/s22030919'),
-      paperLink('Doppler waveform study', '10.1016/j.bspc.2023.104882'),
+      projectLink('Doppler waveform project', 'qscare-doppler-flow'),
+      projectLink('Hip implant project', 'hip-implant-mechanics-and-imaging'),
+      projectLink('Blood-pressure project', 'nabnet'),
+      projectLink('Fibre-optic insole project', 'smart-insoles-diabetic-foot'),
+      projectLink('Neuropathy gait project', 'diabetic-neuropathy-gait-emg'),
     ],
   },
   {
@@ -141,7 +147,10 @@ export const positions: Appointment[] = [
       'Integrated electronic pressure and temperature sensors into a wearable insole. Prepared sensor recordings and evaluated classical machine learning methods in MATLAB for diabetes severity classification.',
       'Contributed to an extracorporeal membrane oxygenation (ECMO) cannulation simulator for clinical training. Attended hands-on ECMO training at Hamad General Hospital and Al-Wakra Hospital.',
     ],
-    links: [paperLink('ECMO simulator paper', '10.1109/scored.2019.8896240')],
+    links: [
+      projectLink('Smart insole project', 'projects/plantar-sensing-for-diabetic-foot'),
+      projectLink('ECMO simulator project', 'ecmo-cannulation-simulator'),
+    ],
   },
   {
     id: 'qatar-university-academic-advising',
@@ -181,6 +190,107 @@ export const internships: Appointment[] = [
     organization: 'Engineering Consultants Group, Qatar',
     dates: 'April–June 2019',
     summary: 'Trained on building electrical systems, extra-low-voltage systems, and construction documentation. Used DIALux for lighting design and AutoCAD for electrical distribution, and prepared an HVAC single-line diagram as the final project.',
+  },
+];
+
+type FundedProject = {
+  id: string;
+  title: string;
+  funder: string;
+  dates: string;
+  summary: string;
+  /** The research page that covers the project, if there is one. */
+  project?: CvLink;
+};
+
+/** Funded projects I worked on, newest first, as listed in the CV. */
+export const fundedProjects: FundedProject[] = [
+  {
+    id: 'funded-smart-insole-kinetics',
+    title: 'AI-powered smart insole for real-time 3D plantar kinetics monitoring',
+    funder: 'Qatar University Collaborative Grant QUCG-CENG-26/27-942',
+    dates: 'March 2026–present',
+    summary: 'Estimating 3D plantar kinetics from smart-insole pressure and, separately, from full-body kinematics, and now combining the two in one multimodal framework.',
+    project: { label: 'Research details', href: sitePath('research/projects/smart-insole-3d-gait-kinetics/') },
+  },
+  {
+    id: 'funded-smartwoundcare',
+    title: 'SmartWoundCare: AI-enabled diabetic foot ulcer severity classification from thermal and visual images',
+    funder: 'Qatar University High Impact Grant QUHI-CENG-25/26-721',
+    dates: 'July 2025–February 2026',
+    summary: 'Built a paired colour and thermal imaging pipeline with foot segmentation, cross-modal registration, and a comparison of fusion strategies for ulcer severity grading.',
+    project: { label: 'Research details', href: sitePath('research/diabetic-foot-thermal-imaging/') },
+  },
+  {
+    id: 'funded-e-tawfeer',
+    title: 'E-Tawfeer: Secure edge-based energy-efficiency platform using AI for behavioural change',
+    funder: 'Qatar National Research Fund NPRP14S-0401-210122',
+    dates: 'August 2024–June 2025',
+    summary: 'Contributed to smart plugs, AI-driven energy management, and federated learning for privacy-preserving analytics. Led a review of deep reinforcement learning for the Energy Internet.',
+    project: { label: 'Research details', href: sitePath('research/e-tawfeer-energy-management/') },
+  },
+  {
+    id: 'funded-smart-meter-presence',
+    title: 'Non-intrusive presence detection from smart meter data',
+    funder: 'Qatar University External Grant QUEX-CENG-IBERDROLA-23/24-2 with Iberdrola Innovation Middle East',
+    dates: 'July 2023–July 2024',
+    summary: 'Developed appliance load monitoring from aggregated smart-meter data and a cascaded framework that uses it to improve household occupancy detection.',
+    project: { label: 'Research details', href: sitePath('research/smart-meter-load-and-occupancy/') },
+  },
+  {
+    id: 'funded-qscare',
+    title: 'QSCare: Smart wearable AI-based cardiovascular disease detection system',
+    funder: 'Qatar University High Impact Grant QUHI-CENG-22/23-548',
+    dates: 'June 2022–June 2023',
+    summary: 'Extracted cerebral artery waveforms from transcranial Doppler audio, restored low-quality waveforms with 1D CycleGANs, and classified healthy and intensive-care recordings.',
+    project: { label: 'Research details', href: sitePath('research/qscare-doppler-flow/') },
+  },
+  {
+    id: 'funded-antenatal-hydronephrosis',
+    title: 'Severity stratification of antenatal hydronephrosis using deep learning and ultrasonography',
+    funder: 'Hamad Medical Corporation Internal Grant MRC-01-21-1027',
+    dates: 'January 2022–August 2023',
+    summary: 'Created the HMC-QU-AHN ultrasound benchmark with Hamad Medical Corporation and Sidra Medicine, and developed hydronephrosis detection and severity grading from segmented kidney and fluid regions.',
+    project: { label: 'Research details', href: sitePath('research/prenatal-hydronephrosis/') },
+  },
+  {
+    id: 'funded-hip-implants',
+    title: 'Smart wireless biomimetic composite implants for bone revision surgery retardation',
+    funder: 'Qatar National Research Fund NPRP11S-0102-180178',
+    dates: 'July 2021–May 2022',
+    summary: 'Built hip implant, femur, and pelvis models, ran finite-element analysis across gait scenarios, developed X-ray loosening classification, and set up in vitro tests with Hamad Medical Corporation.',
+    project: { label: 'Research details', href: sitePath('research/hip-implant-mechanics-and-imaging/') },
+  },
+  {
+    id: 'funded-dspn-wearable',
+    title: 'Contactless ANFIS-EMG wearable device for diabetic sensorimotor polyneuropathy',
+    funder: 'Qatar National Research Fund NPRP12S-0227-190164',
+    dates: 'April–June 2021',
+    summary: 'Developed machine learning methods for monitoring distal symmetric polyneuropathy from gait-cycle and EMG data.',
+    project: { label: 'Research details', href: sitePath('research/diabetic-neuropathy-gait-emg/') },
+  },
+  {
+    id: 'funded-covidcare',
+    title: 'COVIDCARE: IoT platform for remote monitoring of COVID-19 vital signs',
+    funder: 'Qatar University Emergency Response Concept Development Grant ERCD-CENG-2020-1',
+    dates: 'December 2020–March 2021',
+    summary: 'Developed wearable PPG and ECG acquisition hardware and deep learning methods for estimating physiological parameters.',
+  },
+  {
+    id: 'funded-smart-insoles',
+    title: 'Smart insoles for diabetic foot monitoring',
+    funder: 'Qatar National Research Fund Undergraduate Research Experience Program UREP23-031-2-014',
+    dates: 'January–May 2020',
+    summary: 'Built electronic and fibre-optic smart insoles that measure plantar pressure and temperature together in real time, and classified diabetes severity with classical machine learning.',
+    project: { label: 'Research details', href: sitePath('research/projects/plantar-sensing-for-diabetic-foot/') },
+  },
+  {
+    id: 'funded-ecmo-emulator',
+    title: 'Extracorporeal membrane oxygenation (ECMO) emulator development',
+    funder: 'Qatar National Research Fund Undergraduate Research Experience Program UREP22-003-2-001',
+    dates: 'August 2018–October 2019',
+    summary: 'Developed an ECMO emulator for clinician training and attended hands-on ECMO training at Hamad General Hospital and Al-Wakra Hospital.',
+    project: { label: 'Research details', href: sitePath('research/ecmo-cannulation-simulator/') },
   },
 ];
 

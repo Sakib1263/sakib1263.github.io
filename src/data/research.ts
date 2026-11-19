@@ -72,7 +72,7 @@ export type ResearchProject = {
   /** The project's own further papers, after the main paper in `doi`. Never list other projects' papers here. */
   papers?: string[];
   /** Further repositories that belong to this project, listed on the Software & Data page. */
-  otherCode?: { label: string; href: string; summary: string }[];
+  otherCode?: { label: string; href: string; summary: string; doi?: string }[];
   resources?: ResearchLink[];
   resultVisual?: { image: ImageMetadata; alt: string; caption: string; source: ResearchLink; mobileColumns?: [string, string] };
   /** The display figure: shown first on the project page, on homepage cards and as the share image. */
@@ -230,6 +230,7 @@ export const projects: Project[] = [
     otherCode: [{
       label: 'PPG2ABP',
       href: 'https://github.com/nibtehaz/PPG2ABP',
+      doi: '10.3390/bioengineering9110692',
       summary: 'Translates photoplethysmogram signals into continuous arterial blood pressure waveforms with a two-stage deep learning pipeline.',
     }],
     resources: [
