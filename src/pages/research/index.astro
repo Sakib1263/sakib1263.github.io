@@ -7,7 +7,9 @@ import { sitePath } from '../../lib/site';
 import '../../styles/catalog.css';
 import '../../styles/research.css';
 
-const projectCount = projectAreas.reduce((total, area) => total + area.entries.length, 0);
+const projectCount = projectAreas.reduce((total, area) => total + area.entries.length, 0) + additionalStudies.length;
+const additionalSearchText = (study: (typeof additionalStudies)[number]) =>
+  [study.title, study.summary, study.question, study.approach, study.scope, study.doi, ...(study.related ?? [])].filter(Boolean).join(' ');
 ---
 
 <Base title="Research" description="Sakib Mahmud’s research projects in wearable biomechanics, medical imaging, physiological signals, Raman spectroscopy, biomedical devices, genomics, and applied machine learning.">
@@ -41,6 +43,11 @@ const projectCount = projectAreas.reduce((total, area) => total + area.entries.l
               <SiteLink href={`#${id}`}><span>{title}</span><span class="catalog-count" aria-hidden="true" data-area-count>{entries.length}</span></SiteLink>
             </li>
           ))}
+          {additionalStudies.length > 0 && (
+            <li data-research-area="additional">
+              <SiteLink href="#additional"><span>Additional studies</span><span class="catalog-count" aria-hidden="true" data-area-count>{additionalStudies.length}</span></SiteLink>
+            </li>
+          )}
         </ul>
       </nav>
 
@@ -67,19 +74,20 @@ const projectCount = projectAreas.reduce((total, area) => total + area.entries.l
             ))}
           </section>
         ))}
+        {additionalStudies.length > 0 && (
+          <section class="research-group research-archive" aria-labelledby="additional" data-research-group="additional">
+            <header class="catalog-section-heading">
+              <h2 id="additional">Additional studies</h2>
+            </header>
+            <ul>
+              {additionalStudies.map(study => (
+                <li id={study.slug} data-research-project-row data-methods={additionalSearchText(study)}><SiteLink href={sitePath(`research/${study.slug}/`)}>{study.title}</SiteLink></li>
+              ))}
+            </ul>
+          </section>
+        )}
       </div>
     </div>
-    <section class="research-archive content-end" aria-labelledby="additional-title">
-      <header class="catalog-section-heading">
-        <h2 id="additional-title">Additional studies and software</h2>
-        <p>Explore individual studies, reviews, and research tools. For citations, browse the <SiteLink href={sitePath('publications/')}>full publication list</SiteLink>.</p>
-      </header>
-      <ul>
-        {additionalStudies.map(study => (
-          <li id={study.slug}><SiteLink href={sitePath(`research/${study.slug}/`)}>{study.title}</SiteLink></li>
-        ))}
-      </ul>
-    </section>
   </div>
 </Base>
 
