@@ -286,13 +286,5 @@ export const projects: Project[] = [
   },
 ];
 
-function projectFor(slug: string) {
-  const project = projects.find(candidate => candidate.slug === slug);
-  if (!project) throw new Error(`Unknown featured project: ${slug}`);
-  return project;
-}
-
-export const caseStudyProjects = ['wearable-foot-kinetics', 'kidney-stone-segmentation', 'cross-device-raman'].map(projectFor);
-
 /** Ongoing projects shown on the homepage, by research-catalogue slug. Titles and descriptions come from the catalogue. */
 export const currentResearchSlugs = ['multimodal-wearable-kinetics', 'diabetic-foot-thermal-imaging', 'multiphase-liver-ct'];

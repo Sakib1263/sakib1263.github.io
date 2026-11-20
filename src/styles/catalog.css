@@ -1,18 +1,16 @@
 .page-intro.catalog-intro { padding-block: clamp(1.3rem, 2.9vw, 2.2rem) .95rem; }
 .catalog-intro .page-lead { margin-top: .45rem; }
 
+/* Title and lead on the left, page actions kept together on the right. */
 .catalog-heading {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
-  flex-wrap: wrap;
-  gap: .65rem 1.25rem;
+  gap: .75rem 2rem;
 }
 
-.catalog-heading .actions { margin-top: 0; }
-
-.quick-study-links { display: flex; flex-wrap: wrap; gap: .1rem 1rem; margin-top: .55rem; }
-.quick-study-links a { display: inline-flex; align-items: center; gap: .3rem; min-height: 28px; font-size: .84rem; font-weight: 620; }
+.catalog-heading .page-lead { max-width: 62ch; }
+.catalog-heading .actions { flex-wrap: nowrap; justify-content: flex-end; margin-top: 0; }
 
 .catalog-index h2 {
   font-size: .96rem;
@@ -133,6 +131,8 @@
 }
 
 @media (max-width: 850px) {
+  .catalog-heading { grid-template-columns: minmax(0, 1fr); }
+  .catalog-heading .actions { flex-wrap: wrap; justify-content: flex-start; }
   .catalog-layout { grid-template-columns: minmax(0, 1fr); }
   .catalog-index { position: static; }
   .catalog-index ul {

@@ -6,7 +6,6 @@ import {
   bibtexKey, displayAuthor, openFullText, paperCode, paperDatasets, paperResources,
   publicationId, publications, publicationDetails, selectedPapers, topicDescriptions, topics,
 } from '../data/papers';
-import { caseStudyProjects } from '../data/research';
 import { researchStudiesByDoi } from '../data/research-catalog';
 import { collectionByPaper, collectionPath } from '../data/research-projects';
 import journalData from '../data/journal-metrics.json';
@@ -38,16 +37,13 @@ const journalMetrics: Readonly<Record<string, {
       <div class="catalog-heading">
         <div>
           <h1>Publications</h1>
-          <p class="page-lead">Study summaries and my contributions across six research areas.</p>
+          <p class="page-lead">Study summaries, my contributions, and links to code and data across multiple research areas.</p>
         </div>
         <div class="actions">
           <SiteLink class="button button-primary" href={sitePath('publications/?view=selected#bibliography')}>{selectedDois.size} selected papers</SiteLink>
           <SiteLink class="text-link" href={sitePath('publications.bib')} data-bibtex-full download>Download all publications (BibTeX) <span aria-hidden="true">↓</span></SiteLink>
         </div>
       </div>
-      <nav class="quick-study-links" aria-label="Featured paper shortcuts">
-        {caseStudyProjects.map(({ doi, evidence, title }) => <SiteLink href={`#${publicationId(doi)}`}>{evidence?.label ?? title}</SiteLink>)}
-      </nav>
       <nav class="publication-profiles" aria-labelledby="research-profiles">
         <h2 id="research-profiles">Research profiles</h2>
         <ul>
