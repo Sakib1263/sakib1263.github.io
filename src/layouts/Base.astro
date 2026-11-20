@@ -40,6 +40,8 @@ const structuredData = {
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content={themeBackgrounds.light} />
     <script define:vars={{ colorModeKey, themeBackgrounds }}>
+      // Lets CSS reserve the theme button's place before the page paints, so the header never shifts.
+      document.documentElement.classList.add('has-js');
       try {
         if (localStorage.getItem(colorModeKey) === 'dark') {
           document.documentElement.dataset.colorMode = 'dark';
@@ -80,7 +82,7 @@ const structuredData = {
             return <SiteLink href={href} aria-current={current}>{label}</SiteLink>;
           })}
         </nav>
-        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Dark mode" aria-pressed="false" hidden>
+        <button class="theme-toggle" type="button" data-theme-toggle aria-label="Dark mode" aria-pressed="false">
           <svg class="theme-moon" aria-hidden="true" width="21" height="21" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20.9 13.3a9 9 0 0 1-10.2-10.2 9 9 0 1 0 10.2 10.2Z" />
           </svg>

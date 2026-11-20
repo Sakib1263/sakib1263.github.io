@@ -10,14 +10,15 @@
   --accent-strong: color-mix(in srgb, var(--accent) 45%, var(--text));
 }
 
+/* While the theme changes, colours fade in place; layout, scroll and images are untouched. */
 @media screen and (prefers-reduced-motion: no-preference) {
-  ::view-transition { pointer-events: none; }
-  ::view-transition-group(root),
-  ::view-transition-old(root),
-  ::view-transition-new(root) { animation-duration: 160ms; }
-
   :root[data-color-mode-animate],
-  :root[data-color-mode-animate] :is(.site-header, .site-footer, .home-hero, .home-contact, .catalog-index, .catalog-section-heading, .publication-filters, .project-card, .button) {
-    transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease;
+  :root[data-color-mode-animate] *,
+  :root[data-color-mode-animate] *::before,
+  :root[data-color-mode-animate] *::after {
+    transition: background-color 260ms ease, border-color 260ms ease, color 260ms ease, fill 260ms ease, stroke 260ms ease, outline-color 260ms ease, text-decoration-color 260ms ease;
+  }
+  :root[data-color-mode-animate] .theme-toggle svg {
+    transition: opacity 200ms ease, transform 320ms cubic-bezier(.2, .8, .2, 1), color 260ms ease;
   }
 }

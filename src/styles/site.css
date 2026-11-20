@@ -44,21 +44,34 @@ a:hover { color: var(--text); }
 .masthead nav a { display: inline-flex; align-items: center; min-height: 44px; padding: .4rem .65rem; color: var(--text-muted); text-decoration: none; font-size: .93rem; font-weight: 610; border-radius: 5px; }
 .masthead nav a:hover { color: var(--link); text-decoration: underline; }
 .masthead nav a[aria-current] { color: var(--link); background: var(--surface-tint); }
+/* Shown only when scripts run (the class is set in <head>), so the slot exists from the first paint. */
 .theme-toggle {
-  display: grid;
+  display: none;
   place-items: center;
   width: 44px;
   height: 44px;
   padding: 0;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: 8px;
   background: transparent;
   color: var(--text-muted);
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
-.theme-toggle:hover { background: var(--surface-subtle); color: var(--link); }
-.theme-toggle .theme-sun, .theme-toggle[aria-pressed="true"] .theme-moon { display: none; }
-.theme-toggle[aria-pressed="true"] .theme-sun { display: block; }
+.has-js .theme-toggle { display: grid; }
+.theme-toggle svg { grid-area: 1 / 1; }
+/* The icon follows the page's colour mode, which is set before paint, so it is right from the start. */
+.theme-toggle .theme-sun,
+:root[data-color-mode="dark"] .theme-toggle .theme-moon { opacity: 0; transform: rotate(-90deg) scale(.55); }
+:root[data-color-mode="dark"] .theme-toggle .theme-sun { opacity: 1; transform: none; }
+.theme-toggle:active { background: var(--surface-subtle); }
+@media (hover: hover) {
+  .theme-toggle:hover { background: var(--surface-subtle); color: var(--link); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .theme-toggle svg { transition: opacity 200ms ease, transform 320ms cubic-bezier(.2, .8, .2, 1); }
+}
 
 h1, h2, h3 { margin: 0; overflow-wrap: break-word; }
 h1 { font-size: clamp(2.15rem, 4.4vw, 3.65rem); font-weight: 740; line-height: 1.08; letter-spacing: -.045em; }
